@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\EmpAcc as Authenticatable;
@@ -10,7 +9,10 @@ class EmpAcc extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    // Specify the table name
     protected $table = 'emp_acc';
+
+    protected $primaryKey = 'empid';
 
 
     protected $fillable = [
@@ -32,6 +34,11 @@ class EmpAcc extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['emppass'] = bcrypt($value);
+    }
+
+    public static function getEmpAccById($id)
+    {
+        return DB::table('emp_acc')->where('acc_count', $id)->first();
     }
 
     public function getAuthPassword()

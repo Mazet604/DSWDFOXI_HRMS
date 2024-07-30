@@ -14,19 +14,19 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/basicinfo', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::get('/background', function () {
-    return Inertia::render('Background');
-})->middleware(['auth', 'verified'])->name('background');
+    Route::get('/background', function () {
+        return Inertia::render('Background');
+    })->name('background');
 
-Route::get('/otherinfo', function () {
-    return Inertia::render('OtherInfo');
-})->middleware(['auth', 'verified'])->name('otherinfo');
+    Route::get('/otherinfo', function () {
+        return Inertia::render('OtherInfo');
+    })->name('otherinfo');
 
-Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

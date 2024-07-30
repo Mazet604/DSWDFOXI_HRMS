@@ -1,35 +1,312 @@
+<template>
+    <AppLayout>
+        <div class="w-full">
+            <h1 class="mb-4 text-3xl font-bold">OTHER INFO</h1>
+            <TabView v-model:activeIndex="activeTab" class="no-background">
+                <TabPanel header="CS ELIGIBILITY">
+                    <DataTable :value="cseligibilityData" class="mt-8" :paginator="true" :rows="5">
+                        <Column field="level" header="LEVEL OF EDUCATION"></Column>
+                        <Column field="school" header="NAME OF SCHOOL"></Column>
+                        <Column field="course" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
+                        <Column field="dates" header="INCLUSIVE DATES (FROM - TO)"></Column>
+                        <Column field="highestLevel" header="HIGHEST LEVEL EARNED"></Column>
+                        <Column field="yearGraduated" header="YEAR GRADUATED"></Column>
+                        <Column field="scholarships" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
+                    </DataTable>
+                </TabPanel>
+                <TabPanel header="VOLUNTARY WORK">
+                    <DataTable :value="voluntaryworkData" class="mt-8" :paginator="true" :rows="5">
+                        <Column field="level" header="LEVEL OF EDUCATION"></Column>
+                        <Column field="school" header="NAME OF SCHOOL"></Column>
+                        <Column field="course" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
+                        <Column field="dates" header="INCLUSIVE DATES (FROM - TO)"></Column>
+                        <Column field="highestLevel" header="HIGHEST LEVEL EARNED"></Column>
+                        <Column field="yearGraduated" header="YEAR GRADUATED"></Column>
+                        <Column field="scholarships" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
+                    </DataTable>
+                </TabPanel>
+                <TabPanel header="LEARNING & DEVELOPMENT">
+                    <DataTable :value="learndevData" class="mt-8" :paginator="true" :rows="5">
+                        <Column field="level" header="LEVEL OF EDUCATION"></Column>
+                    </DataTable>
+                </TabPanel>
+                <TabPanel header="GOVERNMENT ID">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="border-box">
+                            <div>
+                                <label class="label-field">SSS ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.sssId" />
+                            </div>
+                            <div>
+                                <label class="label-field">PAG-IBIG ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" />
+                            </div>
+                            <div>
+                                <label class="label-field">TIN ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.tinId" />
+                            </div>
+                        </div>
+                        <div class="border-box">
+                            <div>
+                                <label class="label-field">GSIS ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.gsisId" />
+                            </div>
+                            <div>
+                                <label class="label-field">PHILHEALTH ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="border-box">
+                            <div>
+                                <label class="label-field">GOV'T. ISSUED ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.govIssuedId" />
+                            </div>
+                            <div>
+                                <label class="label-field">DATE ISSUED:</label>
+                                <input class="input-field" type="date" v-model="governmentIdFields.dateIssued" />
+                            </div>
+                        </div>
+                        <div class="border-box">
+                            <div>
+                                <label class="label-field">ID/LICENSE/PASSPORT NO.:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.licenseNo" />
+                            </div>
+                            <div>
+                                <label class="label-field">PLACE OF ISSUANCE:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.placeIssued" />
+                            </div>
+                        </div>
+                    </div>
+                </TabPanel>
+                <TabPanel header="RECOGNITION AND DISTINCTIONS">
+                    <DataTable :value="recogdistData" class="mt-8" :paginator="true" :rows="5">
+                        <Column field="skill" header="SKILLS"></Column>
+                    </DataTable>
+                </TabPanel>
+            </TabView>
+            <div class="flex justify-end gap-4 mt-6">
+                <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+            </div>
+        </div>
+
+        <!-- Add CS Eligibility Modal -->
+        <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                <div class="p-4">
+                    <div class="text-center">
+                        <h2 class="text-xl font-semibold mb-4">Add CS Eligibility</h2>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="label-field">LEVEL OF EDUCATION</label>
+                            <input class="input-field" type="text" v-model="newCSEligibility.level" />
+                        </div>
+                        <div>
+                            <label class="label-field">NAME OF SCHOOL</label>
+                            <input class="input-field" type="text" v-model="newCSEligibility.school" />
+                        </div>
+                        <div>
+                            <label class="label-field">BASIC EDUCATION|DEGREE|COURSE</label>
+                            <input class="input-field" type="text" v-model="newCSEligibility.course" />
+                        </div>
+                        <div>
+                            <label class="label-field">INCLUSIVE DATES (FROM - TO)</label>
+                            <input class="input-field" type="text" v-model="newCSEligibility.dates" />
+                        </div>
+                        <div>
+                            <label class="label-field">HIGHEST LEVEL EARNED</label>
+                            <input class="input-field" type="text" v-model="newCSEligibility.highestLevel" />
+                        </div>
+                        <div>
+                            <label class="label-field">YEAR GRADUATED</label>
+                            <input class="input-field" type="text" v-model="newCSEligibility.yearGraduated" />
+                        </div>
+                        <div>
+                            <label class="label-field">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
+                            <input class="input-field" type="text" v-model="newCSEligibility.scholarships" />
+                        </div>
+                    </div>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <button @click="hideAddCSEligibilityDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                            Cancel
+                        </button>
+                        <button @click="addCSEligibility" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Voluntary Work Modal -->
+        <div v-if="showAddVoluntaryWorkDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                <div class="p-4">
+                    <div class="text-center">
+                        <h2 class="text-xl font-semibold mb-4">Add Voluntary Work</h2>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="label-field">LEVEL OF EDUCATION</label>
+                            <input class="input-field" type="text" v-model="newVoluntaryWork.level" />
+                        </div>
+                        <div>
+                            <label class="label-field">NAME OF SCHOOL</label>
+                            <input class="input-field" type="text" v-model="newVoluntaryWork.school" />
+                        </div>
+                        <div>
+                            <label class="label-field">BASIC EDUCATION|DEGREE|COURSE</label>
+                            <input class="input-field" type="text" v-model="newVoluntaryWork.course" />
+                        </div>
+                        <div>
+                            <label class="label-field">INCLUSIVE DATES (FROM - TO)</label>
+                            <input class="input-field" type="text" v-model="newVoluntaryWork.dates" />
+                        </div>
+                        <div>
+                            <label class="label-field">HIGHEST LEVEL EARNED</label>
+                            <input class="input-field" type="text" v-model="newVoluntaryWork.highestLevel" />
+                        </div>
+                        <div>
+                            <label class="label-field">YEAR GRADUATED</label>
+                            <input class="input-field" type="text" v-model="newVoluntaryWork.yearGraduated" />
+                        </div>
+                        <div>
+                            <label class="label-field">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
+                            <input class="input-field" type="text" v-model="newVoluntaryWork.scholarships" />
+                        </div>
+                    </div>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <button @click="hideAddVoluntaryWorkDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                            Cancel
+                        </button>
+                        <button @click="addVoluntaryWork" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Learning & Development Modal -->
+        <div v-if="showAddLearndevDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                <div class="p-4">
+                    <div class="text-center">
+                        <h2 class="text-xl font-semibold mb-4">Add Learning & Development</h2>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="label-field">LEVEL OF EDUCATION</label>
+                            <input class="input-field" type="text" v-model="newLearndev.level" />
+                        </div>
+                    </div>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <button @click="hideAddLearndevDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                            Cancel
+                        </button>
+                        <button @click="addLearndev" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Recognition & Distinctions Modal -->
+        <div v-if="showAddRecogdistDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                <div class="p-4">
+                    <div class="text-center">
+                        <h2 class="text-xl font-semibold mb-4">Add Recognition & Distinctions</h2>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="label-field">SKILLS</label>
+                            <input class="input-field" type="text" v-model="newRecogdist.skill" />
+                        </div>
+                    </div>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <button @click="hideAddRecogdistDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                            Cancel
+                        </button>
+                        <button @click="addRecogdist" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Update Success Modal -->
+        <div v-if="showSuccessDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                <div class="p-4">
+                    <div class="text-center">
+                        <i class="fas fa-check-circle text-4xl mb-4" style="color: green;"></i>
+                        <h2 class="text-xl font-semibold mb-4">Updated Successfully!</h2>
+                        <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
+                    </div>
+                    <div class="flex justify-center">
+                        <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AppLayout>
+</template>
+
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import Button from 'primevue/button';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import InputText from 'primevue/inputtext';
-import Calendar from 'primevue/calendar';
-import Splitter from 'primevue/splitter';
-import SplitterPanel from 'primevue/splitterpanel';
-import Accordion from 'primevue/accordion';
-import AccordionTab from 'primevue/accordiontab';
-import Menu from 'primevue/menu';
+import AppLayout from '@/Layouts/AppLayout.vue';
 
 const activeTab = ref(0);
 
 const cseligibilityData = ref([
-    { level: 'Example Level', school: 'Example School', course: 'Example Course', dates: '2020 - 2024', highestLevel: 'Bachelor\'s Degree', yearGraduated: 2024, scholarships: 'Scholarship Example' }
+    { level: 'Level 1', school: 'School 1', course: 'Course 1', dates: '2020 - 2021', highestLevel: 'High School', yearGraduated: 2021, scholarships: 'Scholarship 1' },
+    { level: 'Level 2', school: 'School 2', course: 'Course 2', dates: '2019 - 2020', highestLevel: 'Bachelor', yearGraduated: 2020, scholarships: 'Scholarship 2' },
+    { level: 'Level 3', school: 'School 3', course: 'Course 3', dates: '2018 - 2019', highestLevel: 'Master', yearGraduated: 2019, scholarships: 'Scholarship 3' },
+    { level: 'Level 4', school: 'School 4', course: 'Course 4', dates: '2017 - 2018', highestLevel: 'PhD', yearGraduated: 2018, scholarships: 'Scholarship 4' },
+    { level: 'Level 5', school: 'School 5', course: 'Course 5', dates: '2016 - 2017', highestLevel: 'High School', yearGraduated: 2017, scholarships: 'Scholarship 5' },
+    { level: 'Level 6', school: 'School 6', course: 'Course 6', dates: '2015 - 2016', highestLevel: 'Bachelor', yearGraduated: 2016, scholarships: 'Scholarship 6' }
 ]);
 
 const voluntaryworkData = ref([
-    { level: 'Example Level', school: 'Example School', course: 'Example Course', dates: '2020 - 2024', highestLevel: 'Bachelor\'s Degree', yearGraduated: 2024, scholarships: 'Scholarship Example' }
+    { level: 'Level 1', school: 'School 1', course: 'Course 1', dates: '2020 - 2021', highestLevel: 'High School', yearGraduated: 2021, scholarships: 'Scholarship 1' },
+    { level: 'Level 2', school: 'School 2', course: 'Course 2', dates: '2019 - 2020', highestLevel: 'Bachelor', yearGraduated: 2020, scholarships: 'Scholarship 2' },
+    { level: 'Level 3', school: 'School 3', course: 'Course 3', dates: '2018 - 2019', highestLevel: 'Master', yearGraduated: 2019, scholarships: 'Scholarship 3' },
+    { level: 'Level 4', school: 'School 4', course: 'Course 4', dates: '2017 - 2018', highestLevel: 'PhD', yearGraduated: 2018, scholarships: 'Scholarship 4' },
+    { level: 'Level 5', school: 'School 5', course: 'Course 5', dates: '2016 - 2017', highestLevel: 'High School', yearGraduated: 2017, scholarships: 'Scholarship 5' },
+    { level: 'Level 6', school: 'School 6', course: 'Course 6', dates: '2015 - 2016', highestLevel: 'Bachelor', yearGraduated: 2016, scholarships: 'Scholarship 6' }
 ]);
 
 const learndevData = ref([
-    { level: 'Example Level' }
+    { level: 'Level 1' },
+    { level: 'Level 2' },
+    { level: 'Level 3' },
+    { level: 'Level 4' },
+    { level: 'Level 5' },
+    { level: 'Level 6' }
 ]);
 
 const recogdistData = ref([
-    { skill: 'EXAMPLE SKILLS' }
+    { skill: 'Skill 1' },
+    { skill: 'Skill 2' },
+    { skill: 'Skill 3' },
+    { skill: 'Skill 4' },
+    { skill: 'Skill 5' },
+    { skill: 'Skill 6' }
 ]);
 
 const governmentIdFields = ref({
@@ -39,160 +316,149 @@ const governmentIdFields = ref({
     philHealthId: '272-2034',
     tinId: '09223512331',
     govIssuedId: 'DSWD EMPLOYEE ID',
-    dateIssued: new Date(),
+    dateIssued: '2024-07-24',
     licenseNo: '272-2034',
     placeIssued: 'QUEZON CITY'
 });
 
-const updateProfile = () => {
-    alert('Profile updated');
+const showUpdateDialog = ref(false);
+const showAddCSEligibilityDialog = ref(false);
+const showAddVoluntaryWorkDialog = ref(false);
+const showAddLearndevDialog = ref(false);
+const showAddRecogdistDialog = ref(false);
+const showSuccessDialog = ref(false);
+
+const newCSEligibility = ref({
+    level: '',
+    school: '',
+    course: '',
+    dates: '',
+    highestLevel: '',
+    yearGraduated: '',
+    scholarships: ''
+});
+
+const newVoluntaryWork = ref({
+    level: '',
+    school: '',
+    course: '',
+    dates: '',
+    highestLevel: '',
+    yearGraduated: '',
+    scholarships: ''
+});
+
+const newLearndev = ref({
+    level: ''
+});
+
+const newRecogdist = ref({
+    skill: ''
+});
+
+const confirmUpdate = () => {
+    showUpdateDialog.value = true;
 };
 
-const items = ref([
-    {
-        label: 'Basic Info',
-        icon: 'pi pi-fw pi-user',
-        command: () => { window.location.href = route('dashboard'); }
-    },
-    {
-        label: 'Background',
-        icon: 'pi pi-fw pi-briefcase',
-        command: () => { window.location.href = route('background'); }
-    },
-    {
-        label: 'Other Info',
-        icon: 'pi pi-fw pi-info-circle',
-        command: () => { window.location.href = route('otherinfo'); }
-    }
-]);
+const hideUpdateDialog = () => {
+    showUpdateDialog.value = false;
+};
 
-const logout = () => {
-    router.post(route('logout'));
+const confirmAdd = () => {
+    const currentTab = activeTab.value;
+    if (currentTab === 0) showAddCSEligibilityDialog.value = true;
+    else if (currentTab === 1) showAddVoluntaryWorkDialog.value = true;
+    else if (currentTab === 2) showAddLearndevDialog.value = true;
+    else if (currentTab === 4) showAddRecogdistDialog.value = true;
+};
+
+const hideAddCSEligibilityDialog = () => {
+    showAddCSEligibilityDialog.value = false;
+};
+
+const hideAddVoluntaryWorkDialog = () => {
+    showAddVoluntaryWorkDialog.value = false;
+};
+
+const hideAddLearndevDialog = () => {
+    showAddLearndevDialog.value = false;
+};
+
+const hideAddRecogdistDialog = () => {
+    showAddRecogdistDialog.value = false;
+};
+
+const hideSuccessDialog = () => {
+    showSuccessDialog.value = false;
+};
+
+const updateProfile = () => {
+    hideUpdateDialog();
+    showSuccessDialog.value = true;
+};
+
+const addCSEligibility = () => {
+    cseligibilityData.value.push({ ...newCSEligibility.value });
+    hideAddCSEligibilityDialog();
+    showSuccessDialog.value = true;
+};
+
+const addVoluntaryWork = () => {
+    voluntaryworkData.value.push({ ...newVoluntaryWork.value });
+    hideAddVoluntaryWorkDialog();
+    showSuccessDialog.value = true;
+};
+
+const addLearndev = () => {
+    learndevData.value.push({ ...newLearndev.value });
+    hideAddLearndevDialog();
+    showSuccessDialog.value = true;
+};
+
+const addRecogdist = () => {
+    recogdistData.value.push({ ...newRecogdist.value });
+    hideAddRecogdistDialog();
+    showSuccessDialog.value = true;
 };
 </script>
 
-<template>
-    <Head title="Dashboard" />
-    <head>
-        <link rel="stylesheet" href="path/to/app.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    </head>
-        <!-- Main Content Area -->
-        <div class="flex flex-col min-h-screen">
-            <div class="flex flex-1">
-                <aside class="relative w-64 p-4 overflow-hidden bg-gradient-to-t from-blue-900 to-blue-500">
-                    <!-- Background Image -->
-                    <img src="images/bgthisd.png" alt="Sidebar Background" class="absolute top-0 left-0 object-cover w-full h-full opacity-30">
-                    <!-- Gradient Overlay -->
-                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-blue-900 to-blue-500 opacity-70"></div>
-                    <!-- Content -->
-                    <div class="relative z-10">
-                        <!-- Logo -->
-                        <img src="images/dswd-logo.png" alt="Logo" class="h-16 mx-auto mb-4">
-                        <!-- User Profile Section -->
-                        <Accordion activeIndex={0} class="w-full custom-accordion">
-                            <AccordionTab header="USER PROFILE">
-                                <Menu :model="items" class="w-full" />
-                            </AccordionTab>
-                        </Accordion>
-                        <button class="fixed p-2 mt-4 text-lg text-white bg-red-600 rounded bottom-4 left-4" @click="logout">Log-out</button>
-                    </div>
-                </aside>
-                <main class="relative flex-1 p-8 overflow-hidden bg-custom">
-                    <!-- Background Image -->
-                    <img src="images/bgwhiteredblue.png" alt="Main Background" class="absolute top-0 left-0 object-cover w-full h-full opacity-30">
-                    <!-- Gradient Overlay -->
-                    <div class="absolute top-0 left-0 w-full h-full opacity-0 bg-gradient-to-t from-white to-transparent"></div>
-                    <!-- Content -->
-                    <div class="relative flex flex-1">
-                        <div class="w-full">
-                            <h1 class="mb-4 text-3xl font-bold">OTHER INFO</h1>
-                            <TabView v-model:activeIndex="activeTab" class="no-background">
-                                <TabPanel header="CS ELIGIBILITY">
-                                    <DataTable :value="cseligibilityData" class="mt-8">
-                                        <Column field="level" header="LEVEL OF EDUCATION"></Column>
-                                        <Column field="school" header="NAME OF SCHOOL"></Column>
-                                        <Column field="course" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
-                                        <Column field="dates" header="INCLUSIVE DATES (FROM - TO)"></Column>
-                                        <Column field="highestLevel" header="HIGHEST LEVEL EARNED"></Column>
-                                        <Column field="yearGraduated" header="YEAR GRADUATED"></Column>
-                                        <Column field="scholarships" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
-                                    </DataTable>
-                                </TabPanel>
-                                <TabPanel header="VOLUNTARY WORK">
-                                    <DataTable :value="voluntaryworkData" class="mt-8">
-                                        <Column field="level" header="LEVEL OF EDUCATION"></Column>
-                                        <Column field="school" header="NAME OF SCHOOL"></Column>
-                                        <Column field="course" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
-                                        <Column field="dates" header="INCLUSIVE DATES (FROM - TO)"></Column>
-                                        <Column field="highestLevel" header="HIGHEST LEVEL EARNED"></Column>
-                                        <Column field="yearGraduated" header="YEAR GRADUATED"></Column>
-                                        <Column field="scholarships" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
-                                    </DataTable>
-                                </TabPanel>
-                                <TabPanel header="LEARNING & DEVELOPMENT">
-                                    <DataTable :value="learndevData" class="mt-8">
-                                        <Column field="level" header="LEVEL OF EDUCATION"></Column>
-                                    </DataTable>
-                                </TabPanel>
-                                <TabPanel header="GOVERNMENT ID">
-                                    <Splitter style="height: 300px;">
-                                        <SplitterPanel size={50}>
-                                            <div class="grid grid-cols-2 gap-4">
-                                                <div>
-                                                    <label class="block mb-2 text-sm font-bold text-gray-700">SSS ID:</label>
-                                                    <InputText class="w-full p-2 border rounded" v-model="governmentIdFields.sssId" />
-                                                </div>
-                                                <div>
-                                                    <label class="block mb-2 text-sm font-bold text-gray-700">GSIS ID:</label>
-                                                    <InputText class="w-full p-2 border rounded" v-model="governmentIdFields.gsisId" />
-                                                </div>
-                                                <div>
-                                                    <label class="block mb-2 text-sm font-bold text-gray-700">PAG-IBIG ID:</label>
-                                                    <InputText class="w-full p-2 border rounded" v-model="governmentIdFields.pagIbigId" />
-                                                </div>
-                                                <div>
-                                                    <label class="block mb-2 text-sm font-bold text-gray-700">PHILHEALTH ID:</label>
-                                                    <InputText class="w-full p-2 border rounded" v-model="governmentIdFields.philHealthId" />
-                                                </div>
-                                                <div>
-                                                    <label class="block mb-2 text-sm font-bold text-gray-700">TIN ID:</label>
-                                                    <InputText class="w-full p-2 border rounded" v-model="governmentIdFields.tinId" />
-                                                </div>
-                                            </div>
-                                        </SplitterPanel>
-                                        <SplitterPanel size={50}>
-                                            <div class="grid grid-cols-2 gap-4">
-                                                <div>
-                                                    <label class="block mb-2 text-sm font-bold text-gray-700">GOV'T. ISSUED ID:</label>
-                                                    <InputText class="w-full p-2 border rounded" v-model="governmentIdFields.govIssuedId" />
-                                                </div>
-                                                <div>
-                                                    <label class="block mb-2 text-sm font-bold text-gray-700">ID/LICENSE/PASSPORT NO.:</label>
-                                                    <InputText class="w-full p-2 border rounded" v-model="governmentIdFields.licenseNo" />
-                                                </div>
-                                                <div>
-                                                    <label class="block mb-2 text-sm font-bold text-gray-700">DATE ISSUED:</label>
-                                                    <Calendar class="w-full p-2 border rounded" v-model="governmentIdFields.dateIssued" dateFormat="dd/mm/yy" />
-                                                </div>
-                                                <div>
-                                                    <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF ISSUANCE:</label>
-                                                    <InputText class="w-full p-2 border rounded" v-model="governmentIdFields.placeIssued" />
-                                                </div>
-                                            </div>
-                                        </SplitterPanel>
-                                    </Splitter>
-                                </TabPanel>
-                                <TabPanel header="RECOGNITION AND DISTINCTIONS">
-                                    <DataTable :value="recogdistData" class="mt-8">
-                                        <Column field="skill" header="SKILLS"></Column>
-                                    </DataTable>
-                                </TabPanel>
-                            </TabView>
-                            <Button label="UPDATE" class="float-right px-8 py-2 mt-6 text-white bg-green-500 rounded-lg" @click="updateProfile" />
-                        </div>
-                    </div>
-                </main>
-            </div>
-        </div>
-</template>
+<style scoped>
+.bg-cover {
+    background-size: cover;
+}
+
+.bg-center {
+    background-position: center;
+}
+
+.border-box {
+    padding: 1rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.label-field {
+    margin-bottom: 0.25rem;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 2rem 0;
+}
+
+@media (max-width: 640px) {
+    .fixed {
+        position: static;
+    }
+}
+</style>

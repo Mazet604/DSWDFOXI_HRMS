@@ -32,12 +32,12 @@ const submit = () => {
         <Head title="Log in" />
 
         <div class="flex items-center justify-center min-h-screen bg-cover bg-center" style="background-image: url('/images/background-image.png');">
-            <div class="bg-white shadow-md rounded-lg p-8 max-w-lg w-full">
-                <div class="flex justify-center mb-8">
-                    <img src="/images/dswd-logo.png" alt="DSWD Logo" class="h-40" />
+            <div class="bg-white shadow-md rounded-lg p-4 sm:p-6 lg:p-8 max-w-xs sm:max-w-md lg:max-w-lg w-full">
+                <div class="flex justify-center mb-6 lg:mb-8">
+                    <img src="/images/dswd-logo1.png" alt="DSWD Logo" class="h-20 lg:h-40" />
                 </div>
 
-                <div class="text-center text-2xl font-semibold mb-4">Human Resource Management System</div>
+                <div class="text-center text-xl lg:text-2xl font-semibold mb-4">Human Resource Management System</div>
 
                 <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
                     {{ status }}

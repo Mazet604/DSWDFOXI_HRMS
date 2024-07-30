@@ -26,12 +26,29 @@ class AuthenticatedSessionController extends Controller
     {
         $credentials = $request->only('empuser', 'emppass');
 
-        if (Auth::attempt(['empuser' => $credentials['empuser'], 'password' => $credentials['emppass']], $request->boolean('remember'))) {
+        if (isset($credentials['empuser'])) {
+            $empuser = $credentials['empuser'];
+        } else {
+            // Handle the case where 'empuser' does not exist
+            $empuser = null; // or set a default value
+            // Optionally, log an error or return an error message
+        }
+
+        if (isset($credentials['emppass'])) {
+            $emppass = $credentials['emppass'];
+        } else {
+            // Handle the case where 'emppass' does not exist
+            $emppass = null; // or set a default value
+            // Optionally, log an error or return an error message
+        }
+
+        if (Auth::attempt(['empuser' => $empuser, 'password' => $emppass], $request->boolean('remember'))) {
             $request->session()->regenerate();
 
             return redirect()->intended(route('dashboard'));
         }
 
+        // Handle failed authentication
         return back()->withErrors([
             'empuser' => 'The provided credentials do not match our records.',
         ]);
