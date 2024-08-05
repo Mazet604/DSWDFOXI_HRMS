@@ -5,31 +5,56 @@
             <TabView v-model:activeIndex="activeTab" class="no-background">
                 <TabPanel header="CS ELIGIBILITY">
                     <DataTable :value="cseligibilityData" class="mt-8" :paginator="true" :rows="5">
-                        <Column field="level" header="LEVEL OF EDUCATION"></Column>
-                        <Column field="school" header="NAME OF SCHOOL"></Column>
-                        <Column field="course" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
-                        <Column field="dates" header="INCLUSIVE DATES (FROM - TO)"></Column>
-                        <Column field="highestLevel" header="HIGHEST LEVEL EARNED"></Column>
-                        <Column field="yearGraduated" header="YEAR GRADUATED"></Column>
-                        <Column field="scholarships" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
+                        <Column field="eli_service" header="CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE"></Column>
+                        <Column field="eli_rating" header="RATING (IF APPLICABLE)"></Column>
+                        <Column field="eli_doe" header="DATE OF EXAMINATION/CONFERMENT"></Column>
+                        <Column field="eli_poe" header="PLACE OF EXAMINATION/CONFERMENT"></Column>
+                        <Column field="eli_license_no" header="LICENSE (IF APPLICABLE)"></Column>
+                        <Column field="eli_licen_valid" header="VALIDITY"></Column>
                     </DataTable>
+                    <div class="flex justify-end gap-4 mt-6">
+                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                        <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                    </div>
                 </TabPanel>
                 <TabPanel header="VOLUNTARY WORK">
                     <DataTable :value="voluntaryworkData" class="mt-8" :paginator="true" :rows="5">
-                        <Column field="level" header="LEVEL OF EDUCATION"></Column>
-                        <Column field="school" header="NAME OF SCHOOL"></Column>
-                        <Column field="course" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
-                        <Column field="dates" header="INCLUSIVE DATES (FROM - TO)"></Column>
-                        <Column field="highestLevel" header="HIGHEST LEVEL EARNED"></Column>
-                        <Column field="yearGraduated" header="YEAR GRADUATED"></Column>
-                        <Column field="scholarships" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
+                        <Column field="vol_name" header="NAME & ADDRESS OF ORGANIZATION (WRITE IN FULL)"></Column>
+                        <Column field="vol_fr" header="INCLUSIVE DATES (MM/DD/YYYY) FROM"></Column>
+                        <Column field="vol_to" header="INCLUSIVE DATES (MM/DD/YYYY) TO"></Column>
+                        <Column field="vol_hrs" header="NUMBER OF HOURS"></Column>
+                        <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
                     </DataTable>
+                    <div class="flex justify-end gap-4 mt-6">
+                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                        <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                    </div>
                 </TabPanel>
                 <TabPanel header="LEARNING & DEVELOPMENT">
                     <DataTable :value="learndevData" class="mt-8" :paginator="true" :rows="5">
-                        <Column field="level" header="LEVEL OF EDUCATION"></Column>
+                        <Column field="learn_title" header="TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)"></Column>
+                        <Column field="learn_fr" header="INCLUSIVE DATES (MM/DD/YYYY) FROM"></Column>
+                        <Column field="learn_to" header="INCLUSIVE DATES (MM/DD/YYYY) TO"></Column>
+                        <Column field="learn_hrs" header="NUMBER OF HOURS"></Column>
+                        <Column field="learn_type" header="TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)"></Column>
+                        <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
                     </DataTable>
+                    <div class="flex justify-end gap-4 mt-6">
+                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                        <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                    </div>
                 </TabPanel>
+
+                <TabPanel header="RECOGNITION AND DISTINCTIONS">
+                    <DataTable :value="recogdistData" class="mt-8" :paginator="true" :rows="5">
+                        <Column field="recog_name" header="NON-ACADEMIC DISTINCTIONS/RESTRICTIONS"></Column>
+                    </DataTable>
+                    <div class="flex justify-end gap-4 mt-6">
+                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                        <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                    </div>
+                </TabPanel>
+
                 <TabPanel header="GOVERNMENT ID">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="border-box">
@@ -57,203 +82,295 @@
                             </div>
                         </div>
                     </div>
-                    <div class="divider"></div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="border-box">
-                            <div>
-                                <label class="label-field">GOV'T. ISSUED ID:</label>
-                                <input class="input-field" type="text" v-model="governmentIdFields.govIssuedId" />
+                    <div class="flex justify-end gap-4 mt-6">
+                        <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                    </div>
+                </TabPanel>
+                <TabPanel header="OTHER INFORMATION">
+                    <div class="other-info">
+                        <div class="pagination">
+                            <button @click="previousPage" :disabled="currentPage === 1">&laquo; Previous</button>
+                            <button @click="nextPage" :disabled="currentPage === totalPages">Next &raquo;</button>
+                        </div>
+                        <div v-if="currentPage === 1">
+                            <h2>34. Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</h2>
+                            <div class="form-group">
+                                <label>a. within the third degree?</label>
+                                <input type="radio" v-model="otherInfo.degree" value="Yes" /> Yes
+                                <input type="radio" v-model="otherInfo.degree" value="No" /> No
                             </div>
-                            <div>
-                                <label class="label-field">DATE ISSUED:</label>
-                                <input class="input-field" type="date" v-model="governmentIdFields.dateIssued" />
+                            <div class="form-group">
+                                <label>b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
+                                <input type="radio" v-model="otherInfo.degreeFourth" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.degreeFourthDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.degreeFourth" value="No" /> No
                             </div>
                         </div>
-                        <div class="border-box">
-                            <div>
-                                <label class="label-field">ID/LICENSE/PASSPORT NO.:</label>
-                                <input class="input-field" type="text" v-model="governmentIdFields.licenseNo" />
+                        <div v-if="currentPage === 2">
+                            <h2>35. a. Have you ever been found guilty of any administrative offense?</h2>
+                            <div class="form-group">
+                                <input type="radio" v-model="otherInfo.adminOffense" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.adminOffenseDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.adminOffense" value="No" /> No
                             </div>
-                            <div>
-                                <label class="label-field">PLACE OF ISSUANCE:</label>
-                                <input class="input-field" type="text" v-model="governmentIdFields.placeIssued" />
+                            <h2>b. Have you been criminally charged before any court?</h2>
+                            <div class="form-group">
+                                <input type="radio" v-model="otherInfo.criminalCharge" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.criminalChargeDetails" placeholder="If YES, give details" />
+                                <input type="date" v-model="otherInfo.dateFiled" placeholder="Date Filed" />
+                                <input type="text" v-model="otherInfo.statusOfCase" placeholder="Status of Case/s" />
+                                <input type="radio" v-model="otherInfo.criminalCharge" value="No" /> No
+                            </div>
+                        </div>
+                        <div v-if="currentPage === 3">
+                            <h2>36. Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</h2>
+                            <div class="form-group">
+                                <input type="radio" v-model="otherInfo.convictedCrime" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.convictedCrimeDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.convictedCrime" value="No" /> No
+                            </div>
+                            <h2>37. Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</h2>
+                            <div class="form-group">
+                                <input type="radio" v-model="otherInfo.separatedService" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.separatedServiceDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.separatedService" value="No" /> No
+                            </div>
+                        </div>
+                        <div v-if="currentPage === 4">
+                            <h2>38. a. Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</h2>
+                            <div class="form-group">
+                                <input type="radio" v-model="otherInfo.candidateElection" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.candidateElectionDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.candidateElection" value="No" /> No
+                            </div>
+                            <h2>b. Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</h2>
+                            <div class="form-group">
+                                <input type="radio" v-model="otherInfo.resignedGovtService" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.resignedGovtService" value="No" /> No
+                            </div>
+                        </div>
+                        <div v-if="currentPage === 5">
+                            <h2>39. Have you acquired the status of an immigrant or permanent resident of another country?</h2>
+                            <div class="form-group">
+                                <input type="radio" v-model="otherInfo.immigrantStatus" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.immigrantStatusDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.immigrantStatus" value="No" /> No
+                            </div>
+                            <h2>40. Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</h2>
+                            <div class="form-group">
+                                <label>a. Are you a member of any indigenous group?</label>
+                                <input type="radio" v-model="otherInfo.indigenousGroup" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.indigenousGroupDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.indigenousGroup" value="No" /> No
+                            </div>
+                            <div class="form-group">
+                                <label>b. Are you a person with disability?</label>
+                                <input type="radio" v-model="otherInfo.disability" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.disabilityDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.disability" value="No" /> No
+                            </div>
+                            <div class="form-group">
+                                <label>c. Are you a solo parent?</label>
+                                <input type="radio" v-model="otherInfo.soloParent" value="Yes" /> Yes
+                                <input type="text" v-model="otherInfo.soloParentDetails" placeholder="If YES, give details" />
+                                <input type="radio" v-model="otherInfo.soloParent" value="No" /> No
                             </div>
                         </div>
                     </div>
-                </TabPanel>
-                <TabPanel header="RECOGNITION AND DISTINCTIONS">
-                    <DataTable :value="recogdistData" class="mt-8" :paginator="true" :rows="5">
-                        <Column field="skill" header="SKILLS"></Column>
-                    </DataTable>
+                    <div class="flex justify-end gap-4 mt-6">
+                        <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                    </div>
                 </TabPanel>
             </TabView>
-            <div class="flex justify-end gap-4 mt-6">
-                <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
-                <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
-            </div>
-        </div>
 
-        <!-- Add CS Eligibility Modal -->
-        <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                <div class="p-4">
-                    <div class="text-center">
-                        <h2 class="text-xl font-semibold mb-4">Add CS Eligibility</h2>
+            <!-- Add CS Eligibility Modal -->
+            <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h2 class="text-xl font-semibold mb-4">Add CS Eligibility</h2>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label class="label-field">CAREER SERVICE/RA 1080</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.service" />
+                            </div>
+                            <div>
+                                <label class="label-field">RATING (IF APPLICABLE)</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.rating" />
+                            </div>
+                            <div>
+                                <label class="label-field">DATE OF EXAMINATION/CONFERMENT</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.dateOfExam" />
+                            </div>
+                            <div>
+                                <label class="label-field">PLACE OF EXAMINATION/CONFERMENT</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.placeOfExam" />
+                            </div>
+                            <div>
+                                <label class="label-field">LICENSE (IF APPLICABLE)</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.license" />
+                            </div>
+                            <div>
+                                <label class="label-field">VALIDITY</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.validity" />
+                            </div>
+                        </div>
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button @click="hideAddCSEligibilityDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                Cancel
+                            </button>
+                            <button @click="addCSEligibility" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                Add
+                            </button>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 gap-4">
-                        <div>
-                            <label class="label-field">LEVEL OF EDUCATION</label>
-                            <input class="input-field" type="text" v-model="newCSEligibility.level" />
+                </div>
+            </div>
+
+            <!-- Add Voluntary Work Modal -->
+            <div v-if="showAddVoluntaryWorkDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h2 class="text-xl font-semibold mb-4">Add Voluntary Work</h2>
                         </div>
-                        <div>
-                            <label class="label-field">NAME OF SCHOOL</label>
-                            <input class="input-field" type="text" v-model="newCSEligibility.school" />
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label class="label-field">NAME & ADDRESS OF ORGANIZATION (WRITE IN FULL)</label>
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.name" />
+                            </div>
+                            <div>
+                                <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.from" />
+                            </div>
+                            <div>
+                                <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.to" />
+                            </div>
+                            <div>
+                                <label class="label-field">NUMBER OF HOURS</label>
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.hours" />
+                            </div>
+                            <div>
+                                <label class="label-field">POSITION / NATURE OF WORK</label>
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.position" />
+                            </div>
                         </div>
-                        <div>
-                            <label class="label-field">BASIC EDUCATION|DEGREE|COURSE</label>
-                            <input class="input-field" type="text" v-model="newCSEligibility.course" />
-                        </div>
-                        <div>
-                            <label class="label-field">INCLUSIVE DATES (FROM - TO)</label>
-                            <input class="input-field" type="text" v-model="newCSEligibility.dates" />
-                        </div>
-                        <div>
-                            <label class="label-field">HIGHEST LEVEL EARNED</label>
-                            <input class="input-field" type="text" v-model="newCSEligibility.highestLevel" />
-                        </div>
-                        <div>
-                            <label class="label-field">YEAR GRADUATED</label>
-                            <input class="input-field" type="text" v-model="newCSEligibility.yearGraduated" />
-                        </div>
-                        <div>
-                            <label class="label-field">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
-                            <input class="input-field" type="text" v-model="newCSEligibility.scholarships" />
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button @click="hideAddVoluntaryWorkDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                Cancel
+                            </button>
+                            <button @click="addVoluntaryWork" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                Add
+                            </button>
                         </div>
                     </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddCSEligibilityDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                </div>
+            </div>
+
+            <!-- Add Learning & Development Modal -->
+            <div v-if="showAddLearndevDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h2 class="text-xl font-semibold mb-4">Add Learning & Development</h2>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label class="label-field">TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)</label>
+                                <input class="input-field" type="text" v-model="newLearndev.title" />
+                            </div>
+                            <div>
+                                <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
+                                <input class="input-field" type="text" v-model="newLearndev.from" />
+                            </div>
+                            <div>
+                                <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
+                                <input class="input-field" type="text" v-model="newLearndev.to" />
+                            </div>
+                            <div>
+                                <label class="label-field">NUMBER OF HOURS</label>
+                                <input class="input-field" type="text" v-model="newLearndev.hours" />
+                            </div>
+                            <div>
+                                <label class="label-field">TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)</label>
+                                <input class="input-field" type="text" v-model="newLearndev.type" />
+                            </div>
+                            <div>
+                                <label class="label-field">CONDUCTED/SPONSORED BY (WRITE IN FULL)</label>
+                                <input class="input-field" type="text" v-model="newLearndev.conducted" />
+                            </div>
+                        </div>
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button @click="hideAddLearndevDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                Cancel
+                            </button>
+                            <button @click="addLearndev" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Recognition & Distinctions Modal -->
+            <div v-if="showAddRecogdistDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h2 class="text-xl font-semibold mb-4">Add Recognition & Distinctions</h2>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label class="label-field">NON-ACADEMIC DISTINCTIONS/RESTRICTIONS</label>
+                                <input class="input-field" type="text" v-model="newRecogdist.skill" />
+                            </div>
+                        </div>
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button @click="hideAddRecogdistDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                Cancel
+                            </button>
+                            <button @click="addRecogdist" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Confirmation Modal -->
+            <div v-if="showUpdateDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-md w-full p-6 text-center">
+                    <i class="fas fa-exclamation-triangle text-4xl mb-4" style="color: red;"></i>
+                    <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
+                    <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
+                    <div class="flex justify-center gap-4">
+                        <button @click="hideUpdateDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
                             Cancel
                         </button>
-                        <button @click="addCSEligibility" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
-                            Add
+                        <button @click="updateProfile" class="py-2 px-4 rounded bg-red-600 text-white hover:bg-red-700">
+                            Confirm
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Add Voluntary Work Modal -->
-        <div v-if="showAddVoluntaryWorkDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                <div class="p-4">
-                    <div class="text-center">
-                        <h2 class="text-xl font-semibold mb-4">Add Voluntary Work</h2>
-                    </div>
-                    <div class="grid grid-cols-1 gap-4">
-                        <div>
-                            <label class="label-field">LEVEL OF EDUCATION</label>
-                            <input class="input-field" type="text" v-model="newVoluntaryWork.level" />
+            <!-- Update Success Modal -->
+            <div v-if="showSuccessDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <i class="fas fa-check-circle text-4xl mb-4" style="color: green;"></i>
+                            <h2 class="text-xl font-semibold mb-4">Updated Successfully!</h2>
+                            <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                         </div>
-                        <div>
-                            <label class="label-field">NAME OF SCHOOL</label>
-                            <input class="input-field" type="text" v-model="newVoluntaryWork.school" />
+                        <div class="flex justify-center">
+                            <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                Back
+                            </button>
                         </div>
-                        <div>
-                            <label class="label-field">BASIC EDUCATION|DEGREE|COURSE</label>
-                            <input class="input-field" type="text" v-model="newVoluntaryWork.course" />
-                        </div>
-                        <div>
-                            <label class="label-field">INCLUSIVE DATES (FROM - TO)</label>
-                            <input class="input-field" type="text" v-model="newVoluntaryWork.dates" />
-                        </div>
-                        <div>
-                            <label class="label-field">HIGHEST LEVEL EARNED</label>
-                            <input class="input-field" type="text" v-model="newVoluntaryWork.highestLevel" />
-                        </div>
-                        <div>
-                            <label class="label-field">YEAR GRADUATED</label>
-                            <input class="input-field" type="text" v-model="newVoluntaryWork.yearGraduated" />
-                        </div>
-                        <div>
-                            <label class="label-field">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
-                            <input class="input-field" type="text" v-model="newVoluntaryWork.scholarships" />
-                        </div>
-                    </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddVoluntaryWorkDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
-                            Cancel
-                        </button>
-                        <button @click="addVoluntaryWork" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
-                            Add
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Learning & Development Modal -->
-        <div v-if="showAddLearndevDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                <div class="p-4">
-                    <div class="text-center">
-                        <h2 class="text-xl font-semibold mb-4">Add Learning & Development</h2>
-                    </div>
-                    <div class="grid grid-cols-1 gap-4">
-                        <div>
-                            <label class="label-field">LEVEL OF EDUCATION</label>
-                            <input class="input-field" type="text" v-model="newLearndev.level" />
-                        </div>
-                    </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddLearndevDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
-                            Cancel
-                        </button>
-                        <button @click="addLearndev" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
-                            Add
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Recognition & Distinctions Modal -->
-        <div v-if="showAddRecogdistDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                <div class="p-4">
-                    <div class="text-center">
-                        <h2 class="text-xl font-semibold mb-4">Add Recognition & Distinctions</h2>
-                    </div>
-                    <div class="grid grid-cols-1 gap-4">
-                        <div>
-                            <label class="label-field">SKILLS</label>
-                            <input class="input-field" type="text" v-model="newRecogdist.skill" />
-                        </div>
-                    </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddRecogdistDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
-                            Cancel
-                        </button>
-                        <button @click="addRecogdist" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
-                            Add
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Update Success Modal -->
-        <div v-if="showSuccessDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                <div class="p-4">
-                    <div class="text-center">
-                        <i class="fas fa-check-circle text-4xl mb-4" style="color: green;"></i>
-                        <h2 class="text-xl font-semibold mb-4">Updated Successfully!</h2>
-                        <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
-                    </div>
-                    <div class="flex justify-center">
-                        <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
-                            Back
-                        </button>
                     </div>
                 </div>
             </div>
@@ -261,164 +378,192 @@
     </AppLayout>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { Head } from '@inertiajs/vue3';
+<script>
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
-import TabView from 'primevue/tabview';
-import TabPanel from 'primevue/tabpanel';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import AppLayout from '@/Layouts/AppLayout.vue';
 
-const activeTab = ref(0);
+export default {
+    components: {
+        AppLayout, Button, DataTable, Column
+    },
+    setup() {
+        const activeTab = ref(0);
+        const currentPage = ref(1);
+        const totalPages = ref(5);
 
-const cseligibilityData = ref([
-    { level: 'Level 1', school: 'School 1', course: 'Course 1', dates: '2020 - 2021', highestLevel: 'High School', yearGraduated: 2021, scholarships: 'Scholarship 1' },
-    { level: 'Level 2', school: 'School 2', course: 'Course 2', dates: '2019 - 2020', highestLevel: 'Bachelor', yearGraduated: 2020, scholarships: 'Scholarship 2' },
-    { level: 'Level 3', school: 'School 3', course: 'Course 3', dates: '2018 - 2019', highestLevel: 'Master', yearGraduated: 2019, scholarships: 'Scholarship 3' },
-    { level: 'Level 4', school: 'School 4', course: 'Course 4', dates: '2017 - 2018', highestLevel: 'PhD', yearGraduated: 2018, scholarships: 'Scholarship 4' },
-    { level: 'Level 5', school: 'School 5', course: 'Course 5', dates: '2016 - 2017', highestLevel: 'High School', yearGraduated: 2017, scholarships: 'Scholarship 5' },
-    { level: 'Level 6', school: 'School 6', course: 'Course 6', dates: '2015 - 2016', highestLevel: 'Bachelor', yearGraduated: 2016, scholarships: 'Scholarship 6' }
-]);
+        const previousPage = () => {
+            if (currentPage.value > 1) {
+                currentPage.value -= 1;
+            }
+        };
 
-const voluntaryworkData = ref([
-    { level: 'Level 1', school: 'School 1', course: 'Course 1', dates: '2020 - 2021', highestLevel: 'High School', yearGraduated: 2021, scholarships: 'Scholarship 1' },
-    { level: 'Level 2', school: 'School 2', course: 'Course 2', dates: '2019 - 2020', highestLevel: 'Bachelor', yearGraduated: 2020, scholarships: 'Scholarship 2' },
-    { level: 'Level 3', school: 'School 3', course: 'Course 3', dates: '2018 - 2019', highestLevel: 'Master', yearGraduated: 2019, scholarships: 'Scholarship 3' },
-    { level: 'Level 4', school: 'School 4', course: 'Course 4', dates: '2017 - 2018', highestLevel: 'PhD', yearGraduated: 2018, scholarships: 'Scholarship 4' },
-    { level: 'Level 5', school: 'School 5', course: 'Course 5', dates: '2016 - 2017', highestLevel: 'High School', yearGraduated: 2017, scholarships: 'Scholarship 5' },
-    { level: 'Level 6', school: 'School 6', course: 'Course 6', dates: '2015 - 2016', highestLevel: 'Bachelor', yearGraduated: 2016, scholarships: 'Scholarship 6' }
-]);
+        const nextPage = () => {
+            if (currentPage.value < totalPages.value) {
+                currentPage.value += 1;
+            }
+        };
 
-const learndevData = ref([
-    { level: 'Level 1' },
-    { level: 'Level 2' },
-    { level: 'Level 3' },
-    { level: 'Level 4' },
-    { level: 'Level 5' },
-    { level: 'Level 6' }
-]);
+        const governmentIdFields = ref({
+            sssId: '',
+            pagIbigId: '',
+            tinId: '',
+            gsisId: '',
+            philHealthId: ''
+        });
 
-const recogdistData = ref([
-    { skill: 'Skill 1' },
-    { skill: 'Skill 2' },
-    { skill: 'Skill 3' },
-    { skill: 'Skill 4' },
-    { skill: 'Skill 5' },
-    { skill: 'Skill 6' }
-]);
+        const otherInfo = ref({
+            degree: '',
+            degreeFourth: '',
+            degreeFourthDetails: '',
+            adminOffense: '',
+            adminOffenseDetails: '',
+            criminalCharge: '',
+            criminalChargeDetails: '',
+            dateFiled: '',
+            statusOfCase: '',
+            convictedCrime: '',
+            convictedCrimeDetails: '',
+            separatedService: '',
+            separatedServiceDetails: '',
+            candidateElection: '',
+            candidateElectionDetails: '',
+            resignedGovtService: '',
+            resignedGovtServiceDetails: '',
+            immigrantStatus: '',
+            immigrantStatusDetails: '',
+            indigenousGroup: '',
+            indigenousGroupDetails: '',
+            disability: '',
+            disabilityDetails: '',
+            soloParent: '',
+            soloParentDetails: ''
+        });
 
-const governmentIdFields = ref({
-    sssId: '09223512331',
-    gsisId: '272-2034',
-    pagIbigId: '09223512331',
-    philHealthId: '272-2034',
-    tinId: '09223512331',
-    govIssuedId: 'DSWD EMPLOYEE ID',
-    dateIssued: '2024-07-24',
-    licenseNo: '272-2034',
-    placeIssued: 'QUEZON CITY'
-});
+        const cseligibilityData = ref([]);
+        const voluntaryworkData = ref([]);
+        const learndevData = ref([]);
+        const recogdistData = ref([]);
 
-const showUpdateDialog = ref(false);
-const showAddCSEligibilityDialog = ref(false);
-const showAddVoluntaryWorkDialog = ref(false);
-const showAddLearndevDialog = ref(false);
-const showAddRecogdistDialog = ref(false);
-const showSuccessDialog = ref(false);
+        const fetchCSEligibilityData = async () => {
+            try {
+                const response = await axios.get('/emp_eligibility/CSEligibilityData');
+                cseligibilityData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching CS Eligibility data:', error);
+            }
+        };
 
-const newCSEligibility = ref({
-    level: '',
-    school: '',
-    course: '',
-    dates: '',
-    highestLevel: '',
-    yearGraduated: '',
-    scholarships: ''
-});
+        const fetchVoluntaryWorkData = async () => {
+            try {
+                const response = await axios.get('/emp_voluntary/VoluntaryWorkData');
+                voluntaryworkData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching Voluntary Work data:', error);
+            }
+        };
 
-const newVoluntaryWork = ref({
-    level: '',
-    school: '',
-    course: '',
-    dates: '',
-    highestLevel: '',
-    yearGraduated: '',
-    scholarships: ''
-});
+        const fetchLearndevData = async () => {
+            try {
+                const response = await axios.get('/emp_learning/LearndevData');
+                learndevData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching Learning & Development data:', error);
+            }
+        };
 
-const newLearndev = ref({
-    level: ''
-});
+        const fetchRecogdistData = async () => {
+            try {
+                const response = await axios.get('/emp_recog/RecogdistData');
+                recogdistData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching Recognition & Distinctions data:', error);
+            }
+        };
 
-const newRecogdist = ref({
-    skill: ''
-});
+        const fetchSSSId = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/sssId/SSSId');
+                governmentIdFields.value.sssId = response.data.sssId;
+            } catch (error) {
+                console.error('Error fetching SSS ID:', error);
+            }
+        };
 
-const confirmUpdate = () => {
-    showUpdateDialog.value = true;
-};
+        const fetchPagIbigId = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/pagIbigId/PagIbigId');
+                governmentIdFields.value.pagIbigId = response.data.pagIbigId;
+            } catch (error) {
+                console.error('Error fetching Pag-IBIG ID:', error);
+            }
+        };
 
-const hideUpdateDialog = () => {
-    showUpdateDialog.value = false;
-};
+        const fetchGSISId = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/gsisId/GSISId');
+                governmentIdFields.value.gsisId = response.data.gsisId;
+            } catch (error) {
+                console.error('Error fetching GSIS ID:', error);
+            }
+        };
 
-const confirmAdd = () => {
-    const currentTab = activeTab.value;
-    if (currentTab === 0) showAddCSEligibilityDialog.value = true;
-    else if (currentTab === 1) showAddVoluntaryWorkDialog.value = true;
-    else if (currentTab === 2) showAddLearndevDialog.value = true;
-    else if (currentTab === 4) showAddRecogdistDialog.value = true;
-};
+        const fetchTINId = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/tinId/TINId');
+                governmentIdFields.value.tinId = response.data.tinId;
+            } catch (error) {
+                console.error('Error fetching TIN ID:', error);
+            }
+        };
 
-const hideAddCSEligibilityDialog = () => {
-    showAddCSEligibilityDialog.value = false;
-};
+        const fetchPhilHealthId = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/philHealthId/PhilHealthId');
+                governmentIdFields.value.philHealthId = response.data.philHealthId;
+            } catch (error) {
+                console.error('Error fetching PhilHealth ID:', error);
+            }
+        };
 
-const hideAddVoluntaryWorkDialog = () => {
-    showAddVoluntaryWorkDialog.value = false;
-};
+        onMounted(() => {
+            fetchCSEligibilityData();
+            fetchVoluntaryWorkData();
+            fetchLearndevData();
+            fetchRecogdistData();
+            fetchSSSId();
+            fetchPagIbigId();
+            fetchGSISId();
+            fetchTINId();
+            fetchPhilHealthId();
+        });
 
-const hideAddLearndevDialog = () => {
-    showAddLearndevDialog.value = false;
-};
-
-const hideAddRecogdistDialog = () => {
-    showAddRecogdistDialog.value = false;
-};
-
-const hideSuccessDialog = () => {
-    showSuccessDialog.value = false;
-};
-
-const updateProfile = () => {
-    hideUpdateDialog();
-    showSuccessDialog.value = true;
-};
-
-const addCSEligibility = () => {
-    cseligibilityData.value.push({ ...newCSEligibility.value });
-    hideAddCSEligibilityDialog();
-    showSuccessDialog.value = true;
-};
-
-const addVoluntaryWork = () => {
-    voluntaryworkData.value.push({ ...newVoluntaryWork.value });
-    hideAddVoluntaryWorkDialog();
-    showSuccessDialog.value = true;
-};
-
-const addLearndev = () => {
-    learndevData.value.push({ ...newLearndev.value });
-    hideAddLearndevDialog();
-    showSuccessDialog.value = true;
-};
-
-const addRecogdist = () => {
-    recogdistData.value.push({ ...newRecogdist.value });
-    hideAddRecogdistDialog();
-    showSuccessDialog.value = true;
+        return {
+            activeTab,
+            currentPage,
+            totalPages,
+            previousPage,
+            nextPage,
+            governmentIdFields,
+            cseligibilityData,
+            voluntaryworkData,
+            learndevData,
+            recogdistData,
+            fetchCSEligibilityData,
+            fetchVoluntaryWorkData,
+            fetchLearndevData,
+            fetchRecogdistData,
+            fetchSSSId,
+            fetchPagIbigId,
+            fetchGSISId,
+            fetchTINId,
+            fetchPhilHealthId,
+            otherInfo
+        };
+    }
 };
 </script>
 
@@ -454,6 +599,16 @@ const addRecogdist = () => {
     height: 1px;
     background-color: #e5e7eb;
     margin: 2rem 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
 }
 
 @media (max-width: 640px) {

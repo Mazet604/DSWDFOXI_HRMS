@@ -2,62 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
-use Inertia\Response;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): Response
-    {
-        return Inertia::render('Profile/Edit', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
-        ]);
+    public function update(Request $request)
+{
+    $validated = $request->validate([
+        'emp_fname' => 'required|string|max:35',
+        'emp_mname' => 'nullable|string|max:35',
+        'emp_lname' => 'required|string|max:35',
+        'emp_dob' => 'required|date',
+        'emps_ex' => 'required|string|max:10',
+        'emp_blood' => 'required|string|max:10',
+        'emp_height' => 'required|numeric',
+        'emp_weight' => 'required|integer',
+        'emp_cnum' => 'required|string|max:15',
+        'emp_mail' => 'required|string|max:35|email',
+        'emp_idlicense' => 'nullable|string|max:35',
+        'emp_idplace' => 'nullable|string|max:35',
+        'emp_iduse' => 'nullable|string|max:35',
+        'emp_iddate' => 'nullable|date',
+        'emp_telnum' => 'nullable|string|max:15',
+        'emp_religion' => 'nullable|string|max:35',
+        'empage' => 'nullable|integer',
+        'User_type' => 'nullable|integer',
+        'other_40b' => 'nullable|string|max:5',
+        'esignature' => 'nullable|string|max:35',
+        'emp_disability' => 'nullable|string|max:5',
+        'emp_ip' => 'nullable|string|max:5',
+        'emp_pwd' => 'nullable|string|max:35',
+        'emp_ip_group' => 'nullable|string|max:35',
+        'emp_citizen' => 'required|string|max:30',
+        'emp_country' => 'required|string|max:60',
+        'emp_house' => 'nullable|string|max:20',
+        'emp_street' => 'nullable|string|max:20',
+        'emp_subd' => 'nullable|string|max:30',
+        'emp_brgy' => 'nullable|string|max:20',
+        'emp_city' => 'nullable|string|max:20',
+        'emp_prov' => 'nullable|string|max:20',
+        'emp_region' => 'nullable|string|max:20',
+        'emp_datereg' => 'nullable|date',
+        'emp_pob' => 'required|string|max:20',
+        'emp_zip' => 'nullable|string|max:6',
+    ]);
+
+    $employee = Employee::where('empid', Auth::user()->empid)->first();
+    if ($employee) {
+        $employee->update($validated);
+    } else {
+        return Redirect::route('dashboard')->withErrors('Employee not found.');
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit');
-    }
-
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
+    return Redirect::route('dashboard')->with('success', 'Profile updated successfully.');
+}
 }

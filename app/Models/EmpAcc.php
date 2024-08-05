@@ -1,7 +1,9 @@
 <?php
+
+// app/Models/EmpAcc.php
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\EmpAcc as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -12,9 +14,10 @@ class EmpAcc extends Authenticatable
     // Specify the table name
     protected $table = 'emp_acc';
 
+    // Specify the primary key field
     protected $primaryKey = 'empid';
 
-
+    // Specify the fillable fields
     protected $fillable = [
         'empid',
         'empuser',
@@ -22,25 +25,24 @@ class EmpAcc extends Authenticatable
         'emppass',
     ];
 
+    // Specify the hidden fields
     protected $hidden = [
         'emppass',
         'remember_token',
     ];
 
+    // Specify the casts
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
+    // Mutator to hash the password before saving it
     public function setPasswordAttribute($value)
     {
         $this->attributes['emppass'] = bcrypt($value);
     }
 
-    public static function getEmpAccById($id)
-    {
-        return DB::table('emp_acc')->where('acc_count', $id)->first();
-    }
-
+    // Override to get the password for authentication
     public function getAuthPassword()
     {
         return $this->emppass;

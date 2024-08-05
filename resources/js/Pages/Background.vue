@@ -38,6 +38,9 @@
                                 <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
                                 <input class="input-field" type="text" v-model="fields.spouseTelNo.value"/>
                             </div>
+                            <br><br>
+                            <div></div>
+                            
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">FATHER'S SURNAME</label>
                                 <input class="input-field" type="text" v-model="fields.fatherSurname.value"/>
@@ -54,6 +57,9 @@
                                 <label class="block mb-2 text-sm font-bold text-gray-700">EXT. NAME</label>
                                 <input class="input-field" type="text" v-model="fields.fatherExtName.value"/>
                             </div>
+                            <br><br> 
+                            <div></div>
+
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">MOTHER'S MAIDEN NAME</label>
                                 <input class="input-field" type="text" v-model="fields.motherMaidenName.value"/>
@@ -74,29 +80,30 @@
                     </TabPanel>
                     <TabPanel header="EDUCATION">
                         <DataTable :value="educationData" class="mt-8" :paginator="true" :rows="5">
-                            <Column field="level" header="LEVEL OF EDUCATION"></Column>
-                            <Column field="school" header="NAME OF SCHOOL"></Column>
-                            <Column field="course" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
-                            <Column field="dates" header="INCLUSIVE DATES (FROM - TO)"></Column>
-                            <Column field="highestLevel" header="HIGHEST LEVEL EARNED"></Column>
-                            <Column field="yearGraduated" header="YEAR GRADUATED"></Column>
-                            <Column field="scholarships" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
+                            <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
+                            <Column field="educ_school" header="NAME OF SCHOOL"></Column>
+                            <Column field="educ_degree" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
+                            <Column field="educ_from" header="INCLUSIVE DATES (FROM - TO)"></Column>
+                            <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED"></Column>
+                            <Column field="educ_year_grad" header="YEAR GRADUATED"></Column>
+                            <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="ORGANIZATION">
                         <DataTable :value="organizationData" class="mt-8" :paginator="true" :rows="5">
-                            <Column field="level" header="LEVEL OF EDUCATION"></Column>
+                            <Column field="org_name" header="Organizations"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="WORK EXPERIENCE">
                         <DataTable :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
-                            <Column field="dates" header="INCLUSIVE DATES (FROM - TO)"></Column>
-                            <Column field="position" header="POSITION"></Column>
-                            <Column field="department" header="DEPARTMENT|AGENCY|OFFICE|COMPANY"></Column>
-                            <Column field="salary" header="MONTHLY SALARY"></Column>
-                            <Column field="grade" header="SALARY GRADE"></Column>
-                            <Column field="appointment" header="STATUS OF APPOINTMENT"></Column>
-                            <Column field="govService" header="GOV'T SERVICE"></Column>
+                            <Column field="workfr" header="INCLUSIVE DATES (FROM)"></Column>
+                            <Column field="workto" header="INCLUSIVE DATES (TO)"></Column>
+                            <Column field="work_pos" header="POSITION"></Column>
+                            <Column field="work_dept" header="DEPARTMENT|AGENCY|OFFICE|COMPANY"></Column>
+                            <Column field="work_salary" header="MONTHLY SALARY"></Column>
+                            <Column field="work_salarygrade" header="SALARY GRADE"></Column>
+                            <Column field="work_stat" header="STATUS OF APPOINTMENT"></Column>
+                            <Column field="work_gov" header="GOV'T SERVICE"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="SKILLS">
@@ -106,15 +113,15 @@
                     </TabPanel>
                     <TabPanel header="REFERENCES">
                         <DataTable :value="referencesData" class="mt-8" :paginator="true" :rows="5">
-                            <Column field="fullName" header="FULL NAME"></Column>
-                            <Column field="address" header="ADDRESS"></Column>
-                            <Column field="phone" header="TELEPHONE NUMBER"></Column>
+                            <Column field="full_name" header="FULL NAME"></Column>
+                            <Column field="ref_add" header="ADDRESS"></Column>
+                            <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
                         </DataTable>
                     </TabPanel>
                 </TabView>
             </div>
             <div class="flex justify-end gap-4 mt-6">
-                <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
                 <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
             </div>
         </div>
@@ -150,31 +157,31 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">LEVEL OF EDUCATION</label>
-                            <input class="input-field" type="text" v-model="newEducation.level" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_level" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">NAME OF SCHOOL</label>
-                            <input class="input-field" type="text" v-model="newEducation.school" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_school" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">BASIC EDUCATION|DEGREE|COURSE</label>
-                            <input class="input-field" type="text" v-model="newEducation.course" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_degree" />
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM - TO)</label>
-                            <input class="input-field" type="text" v-model="newEducation.dates" />
+                            <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM)</label>
+                            <input class="input-field" type="text" v-model="newEducation.educ_from" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">HIGHEST LEVEL EARNED</label>
-                            <input class="input-field" type="text" v-model="newEducation.highestLevel" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_hl_earned" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">YEAR GRADUATED</label>
-                            <input class="input-field" type="text" v-model="newEducation.yearGraduated" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_year_grad" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
-                            <input class="input-field" type="text" v-model="newEducation.scholarships" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_academic_honor" />
                         </div>
                     </div>
                     <div class="flex justify-center gap-4 mt-4">
@@ -198,8 +205,8 @@
                     </div>
                     <div class="grid grid-cols-1 gap-4">
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">LEVEL OF EDUCATION</label>
-                            <input class="input-field" type="text" v-model="newOrganization.level" />
+                            <label class="block mb-2 text-sm font-bold text-gray-700">ORGANIZATION NAME</label>
+                            <input class="input-field" type="text" v-model="newOrganization.org_name" />
                         </div>
                     </div>
                     <div class="flex justify-center gap-4 mt-4">
@@ -223,32 +230,36 @@
                     </div>
                     <div class="grid grid-cols-1 gap-4">
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM - TO)</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.dates" />
+                            <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM)</label>
+                            <input class="input-field" type="text" v-model="newWorkExperience.workfr" />
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (TO)</label>
+                            <input class="input-field" type="text" v-model="newWorkExperience.workto" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">POSITION</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.position" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_pos" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">DEPARTMENT|AGENCY|OFFICE|COMPANY</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.department" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_dept" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">MONTHLY SALARY</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.salary" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_salary" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">SALARY GRADE</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.grade" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_salarygrade" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">STATUS OF APPOINTMENT</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.appointment" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_stat" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">GOV'T SERVICE</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.govService" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_gov" />
                         </div>
                     </div>
                     <div class="flex justify-center gap-4 mt-4">
@@ -297,16 +308,28 @@
                     </div>
                     <div class="grid grid-cols-1 gap-4">
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">FULL NAME</label>
-                            <input class="input-field" type="text" v-model="newReference.fullName" />
+                            <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                            <input class="input-field" type="text" v-model="newReference.ref_fname" />
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE INITIAL</label>
+                            <input class="input-field" type="text" v-model="newReference.ref_mname" />
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME</label>
+                            <input class="input-field" type="text" v-model="newReference.ref_lname" />
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">EXTENSION NAME</label>
+                            <input class="input-field" type="text" v-model="newReference.ref_xname" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">ADDRESS</label>
-                            <input class="input-field" type="text" v-model="newReference.address" />
+                            <input class="input-field" type="text" v-model="newReference.ref_add" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER</label>
-                            <input class="input-field" type="text" v-model="newReference.phone" />
+                            <input class="input-field" type="text" v-model="newReference.ref_cnum" />
                         </div>
                     </div>
                     <div class="flex justify-center gap-4 mt-4">
@@ -321,7 +344,7 @@
             </div>
         </div>
 
-        <!-- Update/Add Success Modal -->
+        <!-- Success Modal -->
         <div v-if="showSuccessDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
             <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
                 <div class="p-4">
@@ -331,9 +354,7 @@
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
                     <div class="flex justify-center">
-                        <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
-                            Back
-                        </button>
+                        <button @click="showSuccessDialog = false" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">Back</button>
                     </div>
                 </div>
             </div>
@@ -341,208 +362,331 @@
     </AppLayout>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+
+<script>
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 
-const activeTab = ref(0);
-const fields = ref({
-    spouseSurname: { label: 'Spouse Surname', type: 'text', value: '' },
-    spouseFirstName: { label: 'Spouse First Name', type: 'text', value: '' },
-    spouseMiddleName: { label: 'Spouse Middle Name', type: 'text', value: '' },
-    spouseExtName: { label: 'Spouse Ext. Name', type: 'text', value: '' },
-    spouseOccupation: { label: 'Spouse Occupation', type: 'text', value: '' },
-    spouseBusinessName: { label: 'Spouse Business Name', type: 'text', value: '' },
-    spouseBusinessAddress: { label: 'Spouse Business Address', type: 'text', value: '' },
-    spouseTelNo: { label: 'Spouse Tel. No.', type: 'text', value: '' },
-    fatherSurname: { label: 'Father Surname', type: 'text', value: '' },
-    fatherFirstName: { label: 'Father First Name', type: 'text', value: '' },
-    fatherMiddleName: { label: 'Father Middle Name', type: 'text', value: '' },
-    fatherExtName: { label: 'Father Ext. Name', type: 'text', value: '' },
-    motherMaidenName: { label: 'Mother Maiden Name', type: 'text', value: '' },
-    motherSurname: { label: 'Mother Surname', type: 'text', value: '' },
-    motherFirstName: { label: 'Mother First Name', type: 'text', value: '' },
-    motherMiddleName: { label: 'Mother Middle Name', type: 'text', value: '' },
-});
+export default {
+    components: {
+        AppLayout, Button, DataTable, Column
+    },
+    setup() {
+        const activeTab = ref(0);
+        const fields = ref({
+            spouseSurname: { label: 'Spouse Surname', type: 'text', value: '' },
+            spouseFirstName: { label: 'Spouse First Name', type: 'text', value: '' },
+            spouseMiddleName: { label: 'Spouse Middle Name', type: 'text', value: '' },
+            spouseExtName: { label: 'Spouse Ext. Name', type: 'text', value: '' },
+            spouseOccupation: { label: 'Spouse Occupation', type: 'text', value: '' },
+            spouseBusinessName: { label: 'Spouse Business Name', type: 'text', value: '' },
+            spouseBusinessAddress: { label: 'Spouse Business Address', type: 'text', value: '' },
+            spouseTelNo: { label: 'Spouse Tel. No.', type: 'text', value: '' },
+            fatherSurname: { label: 'Father Surname', type: 'text', value: '' },
+            fatherFirstName: { label: 'Father First Name', type: 'text', value: '' },
+            fatherMiddleName: { label: 'Father Middle Name', type: 'text', value: '' },
+            fatherExtName: { label: 'Father Ext. Name', type: 'text', value: '' },
+            motherMaidenName: { label: 'Mother Maiden Name', type: 'text', value: '' },
+            motherSurname: { label: 'Mother Surname', type: 'text', value: '' },
+            motherFirstName: { label: 'Mother First Name', type: 'text', value: '' },
+            motherMiddleName: { label: 'Mother Middle Name', type: 'text', value: '' }
+        });
 
-const educationData = ref([
-    { level: 'Example Level 1', school: 'Example School 1', course: 'Example Course 1', dates: '2020 - 2024', highestLevel: 'Bachelor\'s Degree', yearGraduated: 2024, scholarships: 'Scholarship Example 1' },
-    { level: 'Example Level 2', school: 'Example School 2', course: 'Example Course 2', dates: '2018 - 2022', highestLevel: 'Bachelor\'s Degree', yearGraduated: 2022, scholarships: 'Scholarship Example 2' },
-    { level: 'Example Level 3', school: 'Example School 3', course: 'Example Course 3', dates: '2016 - 2020', highestLevel: 'Bachelor\'s Degree', yearGraduated: 2020, scholarships: 'Scholarship Example 3' },
-    { level: 'Example Level 4', school: 'Example School 4', course: 'Example Course 4', dates: '2014 - 2018', highestLevel: 'Bachelor\'s Degree', yearGraduated: 2018, scholarships: 'Scholarship Example 4' },
-    { level: 'Example Level 5', school: 'Example School 5', course: 'Example Course 5', dates: '2012 - 2016', highestLevel: 'Bachelor\'s Degree', yearGraduated: 2016, scholarships: 'Scholarship Example 5' },
-    { level: 'Example Level 6', school: 'Example School 6', course: 'Example Course 6', dates: '2010 - 2014', highestLevel: 'Bachelor\'s Degree', yearGraduated: 2014, scholarships: 'Scholarship Example 6' },
-]);
+        const educationData = ref([]);
+        const organizationData = ref([]);
+        const workExperienceData = ref([]);
+        const skillsData = ref([]);
+        const referencesData = ref([]);
+        const newEducation = ref({
+            educ_level: '',
+            educ_school: '',
+            educ_degree: '',
+            educ_from: '',
+            educ_hl_earned: '',
+            educ_year_grad: '',
+            educ_academic_honor: ''
+        });
 
-const organizationData = ref([
-    { level: 'Example Level 1' },
-    { level: 'Example Level 2' },
-    { level: 'Example Level 3' },
-    { level: 'Example Level 4' },
-    { level: 'Example Level 5' },
-    { level: 'Example Level 6' },
-]);
+        const newOrganization = ref({
+            org_name: ''
+        });
 
-const workExperienceData = ref([
-    { dates: '2019 - 2020', position: 'Position 1', department: 'Department 1', salary: '1000', grade: '1', appointment: 'Appointment 1', govService: 'Yes' },
-    { dates: '2018 - 2019', position: 'Position 2', department: 'Department 2', salary: '2000', grade: '2', appointment: 'Appointment 2', govService: 'No' },
-    { dates: '2017 - 2018', position: 'Position 3', department: 'Department 3', salary: '3000', grade: '3', appointment: 'Appointment 3', govService: 'Yes' },
-    { dates: '2016 - 2017', position: 'Position 4', department: 'Department 4', salary: '4000', grade: '4', appointment: 'Appointment 4', govService: 'No' },
-    { dates: '2015 - 2016', position: 'Position 5', department: 'Department 5', salary: '5000', grade: '5', appointment: 'Appointment 5', govService: 'Yes' },
-    { dates: '2014 - 2015', position: 'Position 6', department: 'Department 6', salary: '6000', grade: '6', appointment: 'Appointment 6', govService: 'No' },
-]);
+        const newWorkExperience = ref({
+            workfr: '',
+            workto: '',
+            work_pos: '',
+            work_dept: '',
+            work_salary: '',
+            work_salarygrade: '',
+            work_stat: '',
+            work_gov: ''
+        });
 
-const skillsData = ref([
-    { skill: 'Skill 1' },
-    { skill: 'Skill 2' },
-    { skill: 'Skill 3' },
-    { skill: 'Skill 4' },
-    { skill: 'Skill 5' },
-    { skill: 'Skill 6' },
-]);
+        const newSkill = ref({
+            skill: ''
+        });
 
-const referencesData = ref([
-    { fullName: 'Full Name 1', address: 'Address 1', phone: 'Phone 1' },
-    { fullName: 'Full Name 2', address: 'Address 2', phone: 'Phone 2' },
-    { fullName: 'Full Name 3', address: 'Address 3', phone: 'Phone 3' },
-    { fullName: 'Full Name 4', address: 'Address 4', phone: 'Phone 4' },
-    { fullName: 'Full Name 5', address: 'Address 5', phone: 'Phone 5' },
-    { fullName: 'Full Name 6', address: 'Address 6', phone: 'Phone 6' },
-]);
+        const newReference = ref({
+            ref_fname: '',
+            ref_mname: '',
+            ref_lname: '',
+            ref_xname: '',
+            ref_add: '',
+            ref_cnum: ''
+        });
 
-const showUpdateDialog = ref(false);
-const showAddEducationDialog = ref(false);
-const showAddOrganizationDialog = ref(false);
-const showAddWorkExperienceDialog = ref(false);
-const showAddSkillsDialog = ref(false);
-const showAddReferencesDialog = ref(false);
-const showSuccessDialog = ref(false);
+        const showAddEducationDialog = ref(false);
+        const showAddOrganizationDialog = ref(false);
+        const showAddWorkExperienceDialog = ref(false);
+        const showAddSkillsDialog = ref(false);
+        const showAddReferencesDialog = ref(false);
+        const showSuccessDialog = ref(false);
 
-const newEducation = ref({
-    level: '',
-    school: '',
-    course: '',
-    dates: '',
-    highestLevel: '',
-    yearGraduated: '',
-    scholarships: ''
-});
+        const openAddDialog = () => {
+            if (activeTab.value === 1) {
+                showAddEducationDialog.value = true;
+            } else if (activeTab.value === 2) {
+                showAddOrganizationDialog.value = true;
+            } else if (activeTab.value === 3) {
+                showAddWorkExperienceDialog.value = true;
+            } else if (activeTab.value === 4) {
+                showAddSkillsDialog.value = true;
+            } else if (activeTab.value === 5) {
+                showAddReferencesDialog.value = true;
+            }
+        };
 
-const newOrganization = ref({
-    level: ''
-});
+        const fetchEducationData = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/education/EducationData');
+                educationData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching education data:', error);
+            }
+        };
 
-const newWorkExperience = ref({
-    dates: '',
-    position: '',
-    department: '',
-    salary: '',
-    grade: '',
-    appointment: '',
-    govService: ''
-});
+        const fetchOrganizationData = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/emp_org/OrganizationData');
+                organizationData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching organization data:', error);
+            }
+        };
 
-const newSkill = ref({
-    skill: ''
-});
+        const fetchWorkExperienceData = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/emp_work/WorkExperienceData');
+                workExperienceData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching organization data:', error);
+            }
+        };
 
-const newReference = ref({
-    fullName: '',
-    address: '',
-    phone: ''
-});
+        const fetchSkillsData = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/emp_skills/SkillsData');
+                skillsData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching organization data:', error);
+            }
+        };
 
-const confirmUpdate = () => {
-    showUpdateDialog.value = true;
-};
+        const fetchReferencesData = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/emp_reference/ReferencesData');
+                referencesData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching organization data:', error);
+            }
+        };
 
-const hideUpdateDialog = () => {
-    showUpdateDialog.value = false;
-};
+        const addEducation = async () => {
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/education/AddEducationData', newEducation.value);
+                educationData.value.push(response.data);
+                showAddEducationDialog.value = false;
+                showSuccessDialog.value = true;
+                clearNewEducationForm();
+            } catch (error) {
+                console.error('Error adding education data:', error);
+            }
+        };
 
-const confirmAdd = () => {
-    switch (activeTab.value) {
-        case 1:
-            showAddEducationDialog.value = true;
-            break;
-        case 2:
-            showAddOrganizationDialog.value = true;
-            break;
-        case 3:
-            showAddWorkExperienceDialog.value = true;
-            break;
-        case 4:
-            showAddSkillsDialog.value = true;
-            break;
-        case 5:
-            showAddReferencesDialog.value = true;
-            break;
-        default:
-            break;
+        const addOrganization = async () => {
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/emp_org/AddOrganizationData', newOrganization.value);
+                organizationData.value.push(response.data);
+                showAddOrganizationDialog.value = false;
+                showSuccessDialog.value = true;
+                clearNewOrganizationForm();
+            } catch (error) {
+                console.error('Error adding organization data:', error);
+            }
+        };
+
+        const addWorkExperience = async () => {
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/emp_work/AddWorkExperienceData', newWorkExperience.value);
+                workExperienceData.value.push(response.data);
+                showAddWorkExperienceDialog.value = false;
+                showSuccessDialog.value = true;
+                clearNewWorkExperienceForm();
+            } catch (error) {
+                console.error('Error adding work experience data:', error);
+            }
+        };
+
+        const addSkill = async () => {
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/emp_skills/AddSkillData', newSkill.value);
+                skillsData.value.push(response.data);
+                showAddSkillsDialog.value = false;
+                showSuccessDialog.value = true;
+                clearNewSkillForm();
+            } catch (error) {
+                console.error('Error adding skill data:', error);
+            }
+        };
+
+        const addReference = async () => {
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/emp_reference/AddReferenceData', newReference.value);
+                referencesData.value.push(response.data);
+                showAddReferencesDialog.value = false;
+                showSuccessDialog.value = true;
+                clearNewReferenceForm();
+            } catch (error) {
+                console.error('Error adding reference data:', error);
+            }
+        };
+
+        const clearNewEducationForm = () => {
+            newEducation.value = {
+                educ_level: '',
+                educ_school: '',
+                educ_degree: '',
+                educ_from: '',
+                educ_hl_earned: '',
+                educ_year_grad: '',
+                educ_academic_honor: ''
+            };
+        };
+
+        const clearNewOrganizationForm = () => {
+            newOrganization.value = {
+                org_name: ''
+            };
+        };
+
+        const clearNewWorkExperienceForm = () => {
+            newWorkExperience.value = {
+                workfr: '',
+                workto: '',
+                work_pos: '',
+                work_dept: '',
+                work_salary: '',
+                work_salarygrade: '',
+                work_stat: '',
+                work_gov: ''
+            };
+        };
+
+        const clearNewSkillForm = () => {
+            newSkill.value = {
+                skill: ''
+            };
+        };
+
+        const clearNewReferenceForm = () => {
+            newReference.value = {
+                ref_fname: '',
+                ref_mname: '',
+                ref_lname: '',
+                ref_xname: '',
+                ref_add: '',
+                ref_cnum: ''
+            };
+        };
+
+        const hideAddEducationDialog = () => {
+            showAddEducationDialog.value = false;
+        };
+
+        const hideAddOrganizationDialog = () => {
+            showAddOrganizationDialog.value = false;
+        };
+
+        const hideAddWorkExperienceDialog = () => {
+            showAddWorkExperienceDialog.value = false;
+        };
+
+        const hideAddSkillsDialog = () => {
+            showAddSkillsDialog.value = false;
+        };
+
+        const hideAddReferencesDialog = () => {
+            showAddReferencesDialog.value = false;
+        };
+
+        const hideSuccessDialog = () => {
+            showSuccessDialog.value = false;
+        };
+
+        onMounted(fetchEducationData);
+        onMounted(fetchOrganizationData);
+        onMounted(fetchWorkExperienceData);
+        onMounted(fetchSkillsData);
+        onMounted(fetchReferencesData);
+
+        return {
+            activeTab,
+            fields,
+            educationData,
+            organizationData,
+            workExperienceData,
+            skillsData,
+            referencesData,
+            newEducation,
+            newOrganization,
+            newWorkExperience,
+            newSkill,
+            newReference,
+            showAddEducationDialog,
+            showAddOrganizationDialog,
+            showAddWorkExperienceDialog,
+            showAddSkillsDialog,
+            showAddReferencesDialog,
+            showSuccessDialog,
+            addEducation,
+            addOrganization,
+            addWorkExperience,
+            addSkill,
+            addReference,
+            clearNewEducationForm,
+            clearNewOrganizationForm,
+            clearNewWorkExperienceForm,
+            clearNewSkillForm,
+            clearNewReferenceForm,
+            openAddDialog,
+            hideAddEducationDialog,
+            hideAddOrganizationDialog,
+            hideAddWorkExperienceDialog,
+            hideAddSkillsDialog,
+            hideAddReferencesDialog,
+            hideSuccessDialog,
+            fetchEducationData,
+            fetchOrganizationData,
+            fetchWorkExperienceData,
+            fetchSkillsData,
+            fetchReferencesData
+        };
     }
-};
-
-const hideAddEducationDialog = () => {
-    showAddEducationDialog.value = false;
-};
-
-const hideAddOrganizationDialog = () => {
-    showAddOrganizationDialog.value = false;
-};
-
-const hideAddWorkExperienceDialog = () => {
-    showAddWorkExperienceDialog.value = false;
-};
-
-const hideAddSkillsDialog = () => {
-    showAddSkillsDialog.value = false;
-};
-
-const hideAddReferencesDialog = () => {
-    showAddReferencesDialog.value = false;
-};
-
-const hideSuccessDialog = () => {
-    showSuccessDialog.value = false;
-};
-
-const updateProfile = () => {
-    hideUpdateDialog();
-    showSuccessDialog.value = true;
-};
-
-const addEducation = () => {
-    educationData.value.push({ ...newEducation.value });
-    hideAddEducationDialog();
-    showSuccessDialog.value = true;
-};
-
-const addOrganization = () => {
-    organizationData.value.push({ ...newOrganization.value });
-    hideAddOrganizationDialog();
-    showSuccessDialog.value = true;
-};
-
-const addWorkExperience = () => {
-    workExperienceData.value.push({ ...newWorkExperience.value });
-    hideAddWorkExperienceDialog();
-    showSuccessDialog.value = true;
-};
-
-const addSkill = () => {
-    skillsData.value.push({ ...newSkill.value });
-    hideAddSkillsDialog();
-    showSuccessDialog.value = true;
-};
-
-const addReference = () => {
-    referencesData.value.push({ ...newReference.value });
-    hideAddReferencesDialog();
-    showSuccessDialog.value = true;
 };
 </script>
 

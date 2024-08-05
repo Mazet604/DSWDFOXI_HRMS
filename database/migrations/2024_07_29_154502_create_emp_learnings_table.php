@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emp_learning', function (Blueprint $table) {
-            $table->increments('learn_count');  
-            $table->string('empid', 7);  
-            $table->string('learn_title', 35);  
+            $table->increments('learn_count');
+            $table->string('empid', 7);
+            $table->string('learn_title', 35);
             $table->date('learn_fr');
             $table->date('learn_to');
             $table->integer('learn_hrs');
-            $table->string('learn_type', 35);  
-            $table->string('learn_con', 45); 
-            $table->timestamps();  // Add timestamps for created_at and updated_at
+            $table->string('learn_type', 35);
+            $table->string('learn_con', 45);
+            $table->timestamps();
 
             // Define foreign key constraint with onDelete and onUpdate actions
             $table->foreign('empid')

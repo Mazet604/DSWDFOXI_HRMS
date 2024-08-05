@@ -12,20 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sssinfo', function (Blueprint $table) {
-            $table->increments('sss_count');  
+            $table->increments('sss_count');
             $table->string('empid', 7);
             $table->string('sss_num', 20);
             $table->string('sss_type', 200);
-            $table->decimal('sss_amt', 10,2);
-            $table->decimal('sss_stat', 10,2);
-            $table->decimal('sss_ec', 10,2);
-            $table->timestamps();  // Add timestamps for created_at and updated_at
+            $table->decimal('sss_amt', 10, 2);
+            $table->decimal('sss_stat', 10, 2);
+            $table->decimal('sss_ec', 10, 2);
+            $table->timestamps();
 
             // Define foreign key constraint with onDelete and onUpdate actions
             $table->foreign('empid')
                   ->references('empid')
                   ->on('emp_acc')
-                  ->onUpdate('cascade');
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
         });
     }
 

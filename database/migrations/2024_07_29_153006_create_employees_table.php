@@ -11,35 +11,35 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee', function (Blueprint $table) {
-            $table->increments('emp_count');  
-            $table->string('empid',7);
-            $table->string('emp_fname',35);
-            $table->string('emp_mname',35);
-            $table->string('emp_lname',35);
-            $table->string('emp_ext',10);
+        Schema::create('employees', function (Blueprint $table) {
+            $table->increments('emp_count'); // Primary key
+            $table->string('empid', 7)->unique(); // Ensure empid is unique if used as a reference
+            $table->string('emp_fname', 35);
+            $table->string('emp_mname', 35)->nullable();
+            $table->string('emp_lname', 35);
+            $table->string('emp_ext', 10)->nullable();
             $table->date('emp_dob');
-            $table->string('emps_ex',10);
-            $table->string('emp_blood',10);
-            $table->decimal('emp_height',3,2);
+            $table->string('emps_ex', 10);
+            $table->string('emp_blood', 10);
+            $table->decimal('emp_height', 5, 2);
             $table->integer('emp_weight');
-            $table->integer('emp_cnum');
-            $table->string('emp_email',35);
-            $table->string('emp_idlicense',35);
-            $table->string('emp_idplace',35);
-            $table->string('emp_iduse',35);
-            $table->date('emp_iddate');
-            $table->integer('emp_telnum');
-            $table->string('emp_religion',35);
-            $table->integer('empage');
-            $table->integer('User_type');
-            $table->string('other_40b',5);
-            $table->string('esignature',35);//accepts pdf,png,jpeg only
-            $table->string('emp_disability',5);//yes or no if no fill up in emp_pwd
-            $table->string('emp_ip',5); //yes or no if no fill up in emp_ip_group
-            $table->string('emp_pwd',35);
-            $table->string('emp_ip_group',35);
-            $table->timestamps();  // Add timestamps for created_at and updated_at
+            $table->string('emp_cnum', 15);
+            $table->string('emp_mail', 35)->unique(); // Ensure email is unique
+            $table->string('emp_idlicense', 35)->nullable();
+            $table->string('emp_idplace', 35)->nullable();
+            $table->string('emp_iduse', 35)->nullable();
+            $table->date('emp_iddate')->nullable();
+            $table->string('emp_telnum', 15)->nullable();
+            $table->string('emp_religion', 35)->nullable();
+            $table->integer('empage')->nullable();
+            $table->integer('User_type')->nullable();
+            $table->string('other_40b', 5)->nullable();
+            $table->string('esignature', 35)->nullable(); // accepts pdf,png,jpeg only
+            $table->string('emp_disability', 5)->nullable(); // yes or no if no fill up in emp_pwd
+            $table->string('emp_ip', 5)->nullable(); // yes or no if no fill up in emp_ip_group
+            $table->string('emp_pwd', 35)->nullable();
+            $table->string('emp_ip_group', 35)->nullable();
+            $table->timestamps(); // Add timestamps for created_at and updated_at
 
             // Define foreign key constraint with onDelete and onUpdate actions
             $table->foreign('empid')
@@ -54,6 +54,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employee');
+        Schema::dropIfExists('employees');
     }
 };

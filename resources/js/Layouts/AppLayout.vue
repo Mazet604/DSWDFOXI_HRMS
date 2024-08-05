@@ -1,78 +1,3 @@
-<template>
-    <div class="flex min-h-screen bg-gray-100" @click="closeDropdown">
-        <!-- Sidebar -->
-        <aside class="relative w-64 bg-blue-900 text-white p-4 flex flex-col" @click.stop>
-            <!-- Sidebar Background Image -->
-            <img src="/images/bgthisd.png" alt="Sidebar Background" class="absolute inset-0 w-full h-full object-cover opacity-30" />
-            <div class="relative z-10 flex flex-col flex-1">
-                <div class="text-center">
-                    <img src="/images/dswd-logo.png" alt="DSWD Logo" class="mx-auto mb-4 h-22" />
-                </div>
-                <div class="search-bar mb-4">
-                    <input type="text" placeholder="Search..." />
-                    <i class="fas fa-search"></i>
-                </div>
-                <nav class="flex-1">
-                    <div class="custom-accordion">
-                        <div class="custom-accordion-header" @click="toggleAccordion">
-                            <span class="font-bold">USER PROFILE</span>
-                            <i :class="{'rotate-180': isAccordionOpen}" class="fas fa-chevron-down"></i>
-                        </div>
-                        <div v-show="isAccordionOpen" class="custom-accordion-content">
-                            <ul class="custom-menu">
-                                <li @click="navigateTo('dashboard')">
-                                    <i class="fas fa-user mr-2"></i>
-                                    Basic Info
-                                </li>
-                                <li @click="navigateTo('background')">
-                                    <i class="fas fa-briefcase mr-2"></i>
-                                    Background
-                                </li>
-                                <li @click="navigateTo('otherinfo')">
-                                    <i class="fas fa-info-circle mr-2"></i>
-                                    Other Info
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <button @click="confirmLogout" class="mt-4 py-2 px-4 rounded bg-red-600 text-white hover:bg-red-700">
-                    Log-out
-                </button>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="relative flex-1 p-8">
-            <!-- Main Content Background Image -->
-            <img src="/images/bgwhiteredblue.png" alt="Main Background" class="absolute inset-0 w-full h-full object-cover opacity-30" />
-            <div class="relative z-10">
-                <slot></slot>
-            </div>
-        </main>
-
-        <!-- Logout Confirmation Modal -->
-        <div v-if="showLogoutDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
-                <div class="p-4">
-                    <div class="text-center">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-4" style="color: red;"></i>
-                        <h2 class="text-xl font-semibold mb-4">Are you sure you want to Log-out?</h2>
-                    </div>
-                    <div class="flex justify-center gap-4">
-                        <button @click="hideLogoutDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
-                            Cancel
-                        </button>
-                        <button @click="logout" class="py-2 px-4 rounded bg-red-600 text-white hover:bg-red-700">
-                            Confirm
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
 <script setup>
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
@@ -104,6 +29,81 @@ const closeDropdown = () => {
     // Prevent the dropdown from closing when clicking on the sidebar or dropdown content
 };
 </script>
+
+<template>
+    <div class="flex min-h-screen bg-gray-100" @click="closeDropdown">
+        <!-- Sidebar -->
+        <aside class="relative flex flex-col w-64 p-4 text-white bg-blue-900" @click.stop>
+            <!-- Sidebar Background Image -->
+            <img src="/images/bgthisd.png" alt="Sidebar Background" class="absolute inset-0 object-cover w-full h-full opacity-30" />
+            <div class="relative z-10 flex flex-col flex-1">
+                <div class="text-center">
+                    <img src="/images/dswd-logo.png" alt="DSWD Logo" class="mx-auto mb-4 h-22" />
+                </div>
+                <div class="mb-4 search-bar">
+                    <input type="text" placeholder="Search..." />
+                    <i class="fas fa-search"></i>
+                </div>
+                <nav class="flex-1">
+                    <div class="custom-accordion">
+                        <div class="custom-accordion-header" @click="toggleAccordion">
+                            <span class="font-bold">USER PROFILE</span>
+                            <i :class="{'rotate-180': isAccordionOpen}" class="fas fa-chevron-down"></i>
+                        </div>
+                        <div v-show="isAccordionOpen" class="custom-accordion-content">
+                            <ul class="custom-menu">
+                                <li @click="navigateTo('dashboard')">
+                                    <i class="mr-2 fas fa-user"></i>
+                                    Basic Info
+                                </li>
+                                <li @click="navigateTo('background')">
+                                    <i class="mr-2 fas fa-briefcase"></i>
+                                    Background
+                                </li>
+                                <li @click="navigateTo('otherinfo')">
+                                    <i class="mr-2 fas fa-info-circle"></i>
+                                    Other Info
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <button @click="confirmLogout" class="px-4 py-2 mt-4 text-white bg-red-600 rounded hover:bg-red-700">
+                    Log-out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="relative flex-1 p-8">
+            <!-- Main Content Background Image -->
+            <img src="/images/bgwhiteredblue.png" alt="Main Background" class="absolute inset-0 object-cover w-full h-full opacity-30" />
+            <div class="relative z-10">
+                <slot></slot>
+            </div>
+        </main>
+
+        <!-- Logout Confirmation Modal -->
+        <div v-if="showLogoutDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
+                <div class="p-4">
+                    <div class="text-center">
+                        <i class="mb-4 text-4xl fas fa-exclamation-triangle" style="color: red;"></i>
+                        <h2 class="mb-4 text-xl font-semibold">Are you sure you want to Log-out?</h2>
+                    </div>
+                    <div class="flex justify-center gap-4">
+                        <button @click="hideLogoutDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">
+                            Cancel
+                        </button>
+                        <button @click="logout" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
 
 <style scoped>
 .custom-accordion-header {

@@ -13,22 +13,23 @@ return new class extends Migration
     {
         Schema::create('emp_spouse', function (Blueprint $table) {
             $table->increments('spouse_count');
-            $table->unsignedInteger('emp_count');  
-            $table->string('spouse_fname',35);
-            $table->string('spouse_mname',35);
-            $table->string('spouse_lname',35);
-            $table->string('spouse_xname',10);
-            $table->string('spouse_occup',35);
-            $table->string('spouse_office',35);
-            $table->string('spouse_busadd',150);
-            $table->integer('spouse_tel');
-            $table->timestamps();  // Add timestamps for created_at and updated_ats
+            $table->unsignedInteger('emp_count');
+            $table->string('spouse_fname', 35);
+            $table->string('spouse_mname', 35)->nullable();
+            $table->string('spouse_lname', 35);
+            $table->string('spouse_xname', 10)->nullable();
+            $table->string('spouse_occup', 35);
+            $table->string('spouse_office', 35);
+            $table->string('spouse_busadd', 150);
+            $table->string('spouse_tel', 15);
+            $table->timestamps();
 
             // Define foreign key constraint
             $table->foreign('emp_count')
-            ->references('emp_count')
-            ->on('employee')
-            ->onUpdate('cascade');
+                  ->references('emp_count')
+                  ->on('employees')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
         });
     }
 

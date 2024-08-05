@@ -12,20 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('philhealthinfo', function (Blueprint $table) {
-            $table->increments('phl_count');  
+            $table->increments('phl_count');
             $table->string('empid', 7);
             $table->string('ph_lid', 20);
             $table->string('phl_stat', 200);
-            $table->decimal('phl_com', 10,2);
-            $table->decimal('phl_mem', 10,2);
-            $table->decimal('phl_emp', 10,2);
-            $table->timestamps();  // Add timestamps for created_at and updated_at
+            $table->decimal('phl_com', 10, 2);
+            $table->decimal('phl_mem', 10, 2);
+            $table->decimal('phl_emp', 10, 2);
+            $table->timestamps();
 
             // Define foreign key constraint with onDelete and onUpdate actions
             $table->foreign('empid')
                   ->references('empid')
                   ->on('emp_acc')
-                  ->onUpdate('cascade');
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
         });
     }
 
