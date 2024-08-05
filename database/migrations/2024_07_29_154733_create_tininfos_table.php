@@ -12,17 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tininfo', function (Blueprint $table) {
-            $table->increments('tin_count');
+            $table->increments('tin_count');  
             $table->string('empid', 7);
             $table->string('tin_id', 20);
-            $table->timestamps();
+            $table->timestamps();  // Add timestamps for created_at and updated_at
 
             // Define foreign key constraint with onDelete and onUpdate actions
             $table->foreign('empid')
                   ->references('empid')
                   ->on('emp_acc')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                  ->onUpdate('cascade');
         });
     }
 

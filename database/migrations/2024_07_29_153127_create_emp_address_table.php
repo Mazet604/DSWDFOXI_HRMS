@@ -12,28 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emp_address', function (Blueprint $table) {
-            $table->increments('add_count'); // Primary key
-            $table->unsignedInteger('emp_count'); // Foreign key column
-            $table->string('emp_citizen', 30);
-            $table->string('emp_country', 60); // 60 for the countries with high character count
-            $table->string('emp_house', 20);
-            $table->string('emp_street', 20);
-            $table->string('emp_subd', 30); // 30 for subdivisions with high character count
-            $table->string('emp_brgy', 20);
-            $table->string('emp_city', 20);
-            $table->string('emp_prov', 20);
-            $table->string('emp_region', 20);
-            $table->date('emp_datereg');
-            $table->string('emp_pob', 20);
-            $table->string('emp_zip', 6);
-            $table->timestamps(); // Add timestamps for created_at and updated_at
+            $table->increments('add_count');
+            $table->unsignedInteger('emp_count');    
+            $table->string('emp_house',20)->nullable();
+            $table->string('emp_street',30)->nullable();
+            $table->string('emp_subd',60)->nullable(); //30 for subdivisions with high character count
+            $table->string('emp_brgy',60);
+            $table->string('emp_city',60);
+            $table->string('emp_prov',60);
+            $table->string('emp_region',60);
+            $table->string('emp_country',60); //60 for the countries with high character count
+            $table->string('emp_zip',6);
+            $table->timestamps();  // Add timestamps for created_at and updated_at
 
             // Define foreign key constraint
             $table->foreign('emp_count')
-                ->references('emp_count')
-                ->on('employees')
-                ->onUpdate('cascade')
-                ->onDelete('cascade'); // Ensure the foreign key constraint matches
+            ->references('emp_count')
+            ->on('employee')
+            ->onUpdate('cascade');
         });
     }
 

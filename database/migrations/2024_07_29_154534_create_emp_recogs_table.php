@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('emp_recog', function (Blueprint $table) {
             $table->increments('recog_count');  
             $table->string('empid', 7);  
-            $table->string('recog_name', 45);  
+            $table->string('recog_name', 100);  
             $table->timestamps();  // Add timestamps for created_at and updated_at
 
             // Define foreign key constraint with onDelete and onUpdate actions

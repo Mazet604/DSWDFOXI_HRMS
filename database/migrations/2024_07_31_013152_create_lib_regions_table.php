@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('education_level', function (Blueprint $table) {
-            $table->increments('lvl_count');  // Primary key
-            $table->string('level_name', 100)->nullable();  
-            $table->timestamps();
+        Schema::create('lib_regions', function (Blueprint $table) {
+            $table->string('psgc')->primary();  
+            $table->string('col_region', 60);  
+            $table->timestamps();  // Add timestamps for created_at and updated_at
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('education_level');
+        Schema::dropIfExists('lib_regions');
     }
 };

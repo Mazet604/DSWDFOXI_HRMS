@@ -14,9 +14,8 @@ class CreateEmpAccTable extends Migration
     public function up()
     {
         Schema::create('emp_acc', function (Blueprint $table) {
-            $table->string('empid', 20)->unique();
+            $table->string('empid', 20)->primary()->unique();
             $table->string('empmail', 35)->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->char('empuser', 35);
             $table->string('emppass');
             $table->rememberToken();
@@ -31,7 +30,7 @@ class CreateEmpAccTable extends Migration
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->string('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
@@ -41,13 +40,12 @@ class CreateEmpAccTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('emp_acc');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
-}
+};
+

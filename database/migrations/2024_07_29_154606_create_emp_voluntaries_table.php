@@ -12,22 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emp_voluntary', function (Blueprint $table) {
-            $table->increments('vol_count');
-            $table->string('empid', 7);
-            $table->string('vol_name', 35);
-            $table->string('vol_add', 35);
-            $table->date('vol_fr');
-            $table->date('vol_to');
-            $table->integer('vol_hrs');
-            $table->string('vol_pos', 35);
-            $table->timestamps();
+            $table->increments('vol_count');  
+            $table->string('empid', 7);  
+            $table->string('vol_name', 35)->nullable();  
+            $table->string('vol_add', 35)->nullable();  
+            $table->date('vol_fr')->nullable(); 
+            $table->date('vol_to')->nullable(); 
+            $table->integer('vol_hrs')->nullable();
+            $table->string('vol_pos', 35)->nullable(); 
+            $table->timestamps();  // Add timestamps for created_at and updated_at
 
             // Define foreign key constraint with onDelete and onUpdate actions
             $table->foreign('empid')
                   ->references('empid')
                   ->on('emp_acc')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                  ->onUpdate('cascade');
         });
     }
 

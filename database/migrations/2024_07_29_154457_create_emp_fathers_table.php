@@ -12,19 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emp_father', function (Blueprint $table) {
-            $table->increments('father_count');
-            $table->unsignedInteger('emp_count');
-            $table->string('father_fname', 35);
-            $table->string('father_mname', 35);
-            $table->string('father_lname', 35);
-            $table->string('father_xname', 10);
-            $table->timestamps();
+            $table->increments('father_count');  
+            $table->unsignedInteger('emp_count'); 
+            $table->string('father_fname',35)->nullable();
+            $table->string('father_mname',35)->nullable();
+            $table->string('father_lname',35)->nullable();
+            $table->string('father_xname',10)->nullable();
+            $table->timestamps();  // Add timestamps for created_at and updated_ats
 
             // Define foreign key constraint
             $table->foreign('emp_count')
-                  ->references('emp_count')
-                  ->on('employees')
-                  ->onUpdate('cascade');
+            ->references('emp_count')
+            ->on('employee')
+            ->onUpdate('cascade');
         });
     }
 

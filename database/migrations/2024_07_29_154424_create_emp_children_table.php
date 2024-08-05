@@ -14,18 +14,18 @@ return new class extends Migration
         Schema::create('emp_child', function (Blueprint $table) {
             $table->increments('child_count');
             $table->unsignedInteger('emp_count');
-            $table->string('child_fname', 35);
-            $table->string('child_mname', 35);
-            $table->string('child_lname', 35);
-            $table->string('child_xname', 35);
+            $table->string('child_fname',35)->nullable();   
+            $table->string('child_mname',35)->nullable();
+            $table->string('child_lname',35)->nullable();
+            $table->string('child_xname',10)->nullable();
             $table->date('child_dob');
-            $table->timestamps();
+            $table->timestamps();  // Add timestamps for created_at and updated_at
 
             // Define foreign key constraint
             $table->foreign('emp_count')
-                  ->references('emp_count')
-                  ->on('employees')
-                  ->onUpdate('cascade');
+            ->references('emp_count')
+            ->on('employee')
+            ->onUpdate('cascade');
         });
     }
 

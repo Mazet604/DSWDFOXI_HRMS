@@ -13,21 +13,22 @@ return new class extends Migration
     {
         Schema::create('emp_emergency', function (Blueprint $table) {
             $table->increments('emer_count');
-            $table->unsignedInteger('emp_count');
-            $table->string('emer_fname', 35);
-            $table->string('emer_mname', 35);
-            $table->string('emer_lname', 35);
-            $table->string('emer_xname', 10);
+            $table->unsignedInteger('emp_count'); //unsigned integer since increment reference must not be negative
+            $table->string('emer_fname',35);
+            $table->string('emer_mname',35);
+            $table->string('emer_lname',35);
+            $table->string('emer_xname',10)->nullable();
             $table->integer('emer_cnum');
-            $table->timestamps();
+            $table->timestamps();  // Add timestamps for created_at and updated_at
 
             // Define foreign key constraint
             $table->foreign('emp_count')
-                  ->references('emp_count')
-                  ->on('employees')
-                  ->onUpdate('cascade');
+            ->references('emp_count')
+            ->on('employee')
+            ->onUpdate('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.

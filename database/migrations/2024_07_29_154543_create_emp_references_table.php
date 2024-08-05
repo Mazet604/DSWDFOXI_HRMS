@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('ref_fname', 35);
             $table->string('ref_mname', 35);
             $table->string('ref_lname', 35);
-            $table->string('ref_xname', 10);
+            $table->string('ref_xname', 10)->nullable();
             $table->string('ref_add', 150);
             $table->integer('ref_cnum');
             $table->timestamps();  // Add timestamps for created_at and updated_ats

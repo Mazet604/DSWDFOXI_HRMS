@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emp_org', function (Blueprint $table) {
-            $table->increments('org_count');
-            $table->string('empid', 7);
-            $table->string('org_name', 100);
-            $table->timestamps();
+            $table->increments('org_count');  
+            $table->string('empid', 7);  
+            $table->string('org_name', 100)->nullable();  
+            $table->timestamps();  // Add timestamps for created_at and updated_at
 
             // Define foreign key constraint with onDelete and onUpdate actions
             $table->foreign('empid')
