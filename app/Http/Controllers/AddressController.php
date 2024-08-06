@@ -7,7 +7,7 @@ use App\Models\lib_region;
 use App\Models\lib_province;
 use App\Models\lib_city;
 use App\Models\lib_brgy;
-use App\Model\emp_address;
+use App\Model\EmpAddress;
 use App\Models\Employee;
 
 class AddressController extends Controller
@@ -18,8 +18,7 @@ class AddressController extends Controller
         // Assuming $user is retrieved from the authenticated user
         $user = $request->user();
 
-        $emp_address = emp_address::where('emp_count', $user->emp_count)->first(); // Fetch emp_address using emp_count
-        $emp_acc = emp_address::where('emp_count', $user->emp_count)->first();
+        $emp_address = EmpAddress::where('emp_count', $user->emp_count)->first(); // Fetch emp_address using emp_count
 
         if (!$emp_address) {
             return response()->json(['error' => 'Address not found'], 404);
@@ -27,12 +26,13 @@ class AddressController extends Controller
 
         $selectedRegion = $emp_address->emp_region;
         $selectedProvince = $emp_address->emp_prov;
-        //$selectedCity = $emp_address->emp_city;
+        ////$selectedCity = $emp_address->emp_city;
         //$selectedBarangay = $emp_address->emp_brgy;
+        $country = $emp_address -> emp_country;
         return response()->json([
             'selectedRegion' => $selectedRegion, 
             'selectedProvince' => $selectedProvince,
-            //'selectedCity' => $selectedCity,
+            'selectedCity' => $selectedCity,
             //'selectedBarangay' => $selectedBarangay,
         ]);
     }
@@ -65,7 +65,7 @@ class AddressController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    }*/
+    }
 
     /*public function getSelectedBarangayOptions()
     {
