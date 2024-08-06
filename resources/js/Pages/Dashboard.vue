@@ -88,6 +88,10 @@
               <TabPanel header="ADDRESS">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">COUNTRY</label>
+                    <input type="text" class="input-field" v-model="fields.country" :disabled="!isEditing" />
+                  </div>
+                  <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
                     <select class="input-field" v-model="selectedRegion" :disabled="!isEditing">
                       <option v-for="option in selectedRegionOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
@@ -96,13 +100,13 @@
                   <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
                     <select class="input-field" v-model="selectedProvince" :disabled="!isEditing">
-                      <option v-for="option in provinceOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                      <option v-for="option in selectedProvinceOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                   </div>
                   <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
                     <select class="input-field" v-model="selectedCity" :disabled="!isEditing">
-                      <option v-for="option in cityOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                      <option v-for="option in selectedCityOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                   </div>
                   <div>
@@ -120,7 +124,7 @@
                   <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
                     <select class="input-field" v-model="selectedBarangay" :disabled="!isEditing">
-                      <option v-for="option in barangayOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                      <option v-for="option in selectedBarangayOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                   </div>
                 </div>
@@ -228,6 +232,9 @@ export default {
         emailadd: '',
         pass: '',
         selectedRegion:'',
+        selectedProvince:'',
+        selectedCity:'',
+        selectedBarangay:'',
       },
       isEditing: false,
       errorMessage: '',
@@ -238,6 +245,9 @@ export default {
       bloodTypeOptions:[],
       extOptions:[],
       selectedRegionOptions:[],
+      selectedProvinceOptions:[],
+      selectedCityOptions:[],
+      selectedBarangayOptions:[],
     };
   },
   methods: {
@@ -298,6 +308,42 @@ export default {
       }
     },
 
+    async fetchSelectedProvinceOptions() {
+      try {
+        const response = await fetch('/address/selectedprovince-options');
+        if (!response.ok) {
+          throw new Error('Failed to fetch address options');
+        }
+        this.selectedProvinceOptions = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async fetchSelectedCityOptions() {
+      try {
+        const response = await fetch('/address/selectedcity-options');
+        if (!response.ok) {
+          throw new Error('Failed to fetch address options');
+        }
+        this.selectedCityOptions = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async fetchSelectedBarangayOptions() {
+      try {
+        const response = await fetch('/address/selectedbarangay-options');
+        if (!response.ok) {
+          throw new Error('Failed to fetch address options');
+        }
+        this.selectedBarangayOptions = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     async fetchFullName() {
       try {
         const response = await axios.get('http://127.0.0.1:8000/employee/fullname');
@@ -341,6 +387,9 @@ export default {
       try {
         const response = await axios.get('http://127.0.0.1:8000/address/Address');
         this.fields.selectedRegion = response.data.selectedRegion;
+        this.fields.selectedProvince = response.data.selectedProvince;
+        this.fields.selectedCity = response.data.selectedCity;
+        this.fields.selectedBarangay = response.data.selectedBarangay;
       } catch (error) {
         if (error.response && error.response.status === 500) {
           this.errorMessage = 'Internal Server Error. Please try again later.';
@@ -400,8 +449,11 @@ export default {
     this.fetchBloodTypeOptions();
     this.fetchExtOptions();
     this.fetchSelectedRegionOptions();
-  }
-};
+    this.fetchSelectedProvinceOptions();
+    this.fetchSelectedCityOptions();
+    this.fetchSelectedBarangayOptions();
+}};
+
 </script>
 
   <script setup>

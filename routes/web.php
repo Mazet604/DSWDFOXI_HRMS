@@ -74,6 +74,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/address/Address', [AddressController::class, 'getAddress']);
     Route::get('/address/selectedregion-options', [AddressController::class, 'getSelectedRegionOptions']);
+    Route::get('/address/selectedprovince-options', [AddressController::class, 'getSelectedProvinceOptions']);
+    Route::get('/address/selectedcity-options', [AddressController::class, 'getSelectedCityOptions']);
+    Route::get('/address/selectedbarangay-options', [AddressController::class, 'getSelectedBarangayOptions']);
 
     Route::get('/education/EducationData', [BackgroundController::class, 'getEducationData']);
     Route::post('/education/AddEducationData', [BackgroundController::class, 'addEducationData']);
