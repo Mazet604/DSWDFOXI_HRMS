@@ -13,7 +13,7 @@
                         <Column field="eli_licen_valid" header="VALIDITY"></Column>
                     </DataTable>
                     <div class="flex justify-end gap-4 mt-6">
-                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="showAddCSEligibilityDialog = true" />
                         <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
                     </div>
                 </TabPanel>
@@ -26,7 +26,7 @@
                         <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
                     </DataTable>
                     <div class="flex justify-end gap-4 mt-6">
-                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="showAddVoluntaryWorkDialog = true" />
                         <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
                     </div>
                 </TabPanel>
@@ -40,21 +40,21 @@
                         <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
                     </DataTable>
                     <div class="flex justify-end gap-4 mt-6">
-                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="showAddLearndevDialog = true" />
                         <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
                     </div>
                 </TabPanel>
-
+                
                 <TabPanel header="RECOGNITION AND DISTINCTIONS">
                     <DataTable :value="recogdistData" class="mt-8" :paginator="true" :rows="5">
                         <Column field="recog_name" header="NON-ACADEMIC DISTINCTIONS/RESTRICTIONS"></Column>
                     </DataTable>
                     <div class="flex justify-end gap-4 mt-6">
-                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="confirmAdd" />
+                        <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="showAddRecogdistDialog = true" />
                         <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
                     </div>
                 </TabPanel>
-
+                
                 <TabPanel header="GOVERNMENT ID">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="border-box">
@@ -194,27 +194,27 @@
                         <div class="grid grid-cols-1 gap-4">
                             <div>
                                 <label class="label-field">CAREER SERVICE/RA 1080</label>
-                                <input class="input-field" type="text" v-model="newCSEligibility.service" />
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_service" />
                             </div>
                             <div>
                                 <label class="label-field">RATING (IF APPLICABLE)</label>
-                                <input class="input-field" type="text" v-model="newCSEligibility.rating" />
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_rating" />
                             </div>
                             <div>
                                 <label class="label-field">DATE OF EXAMINATION/CONFERMENT</label>
-                                <input class="input-field" type="text" v-model="newCSEligibility.dateOfExam" />
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_doe" />
                             </div>
                             <div>
                                 <label class="label-field">PLACE OF EXAMINATION/CONFERMENT</label>
-                                <input class="input-field" type="text" v-model="newCSEligibility.placeOfExam" />
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_poe" />
                             </div>
                             <div>
                                 <label class="label-field">LICENSE (IF APPLICABLE)</label>
-                                <input class="input-field" type="text" v-model="newCSEligibility.license" />
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_license_no" />
                             </div>
                             <div>
                                 <label class="label-field">VALIDITY</label>
-                                <input class="input-field" type="text" v-model="newCSEligibility.validity" />
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_licen_valid" />
                             </div>
                         </div>
                         <div class="flex justify-center gap-4 mt-4">
@@ -239,23 +239,23 @@
                         <div class="grid grid-cols-1 gap-4">
                             <div>
                                 <label class="label-field">NAME & ADDRESS OF ORGANIZATION (WRITE IN FULL)</label>
-                                <input class="input-field" type="text" v-model="newVoluntaryWork.name" />
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.vol_name" />
                             </div>
                             <div>
                                 <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
-                                <input class="input-field" type="text" v-model="newVoluntaryWork.from" />
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.vol_fr" />
                             </div>
                             <div>
                                 <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                <input class="input-field" type="text" v-model="newVoluntaryWork.to" />
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.vol_to" />
                             </div>
                             <div>
                                 <label class="label-field">NUMBER OF HOURS</label>
-                                <input class="input-field" type="text" v-model="newVoluntaryWork.hours" />
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.vol_hrs" />
                             </div>
                             <div>
                                 <label class="label-field">POSITION / NATURE OF WORK</label>
-                                <input class="input-field" type="text" v-model="newVoluntaryWork.position" />
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.vol_pos" />
                             </div>
                         </div>
                         <div class="flex justify-center gap-4 mt-4">
@@ -280,27 +280,27 @@
                         <div class="grid grid-cols-1 gap-4">
                             <div>
                                 <label class="label-field">TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)</label>
-                                <input class="input-field" type="text" v-model="newLearndev.title" />
+                                <input class="input-field" type="text" v-model="newLearndev.learn_title" />
                             </div>
                             <div>
                                 <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
-                                <input class="input-field" type="text" v-model="newLearndev.from" />
+                                <input class="input-field" type="text" v-model="newLearndev.learn_fr" />
                             </div>
                             <div>
                                 <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                <input class="input-field" type="text" v-model="newLearndev.to" />
+                                <input class="input-field" type="text" v-model="newLearndev.learn_to" />
                             </div>
                             <div>
                                 <label class="label-field">NUMBER OF HOURS</label>
-                                <input class="input-field" type="text" v-model="newLearndev.hours" />
+                                <input class="input-field" type="text" v-model="newLearndev.learn_hrs" />
                             </div>
                             <div>
                                 <label class="label-field">TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)</label>
-                                <input class="input-field" type="text" v-model="newLearndev.type" />
+                                <input class="input-field" type="text" v-model="newLearndev.learn_type" />
                             </div>
                             <div>
                                 <label class="label-field">CONDUCTED/SPONSORED BY (WRITE IN FULL)</label>
-                                <input class="input-field" type="text" v-model="newLearndev.conducted" />
+                                <input class="input-field" type="text" v-model="newLearndev.learn_con" />
                             </div>
                         </div>
                         <div class="flex justify-center gap-4 mt-4">
@@ -325,7 +325,7 @@
                         <div class="grid grid-cols-1 gap-4">
                             <div>
                                 <label class="label-field">NON-ACADEMIC DISTINCTIONS/RESTRICTIONS</label>
-                                <input class="input-field" type="text" v-model="newRecogdist.skill" />
+                                <input class="input-field" type="text" v-model="newRecogdist.recog_name" />
                             </div>
                         </div>
                         <div class="flex justify-center gap-4 mt-4">
@@ -529,6 +529,81 @@ export default {
             }
         };
 
+        const showAddCSEligibilityDialog = ref(false);
+        const showAddVoluntaryWorkDialog = ref(false);
+        const showAddLearndevDialog = ref(false);
+        const showAddRecogdistDialog = ref(false);
+
+        const newCSEligibility = ref({
+            eli_service: '',
+            eli_rating: '',
+            eli_doe: '',
+            eli_poe: '',
+            eli_license_no: '',
+            eli_licen_valid: ''
+        });
+
+        const newVoluntaryWork = ref({
+            vol_name: '',
+            vol_fr: '',
+            vol_to: '',
+            vol_hrs: '',
+            vol_pos: ''
+        });
+
+        const newLearndev = ref({
+            learn_title: '',
+            learn_fr: '',
+            learn_to: '',
+            learn_hrs: '',
+            learn_type: '',
+            learn_con: ''
+        });
+
+        const newRecogdist = ref({
+            recog_name: ''
+        });
+
+        const addCSEligibility = async () => {
+            try {
+                const response = await axios.post('/emp_eligibility/AddCSEligibility', newCSEligibility.value);
+                cseligibilityData.value.push(response.data);
+                showAddCSEligibilityDialog.value = false;
+            } catch (error) {
+                console.error('Error adding CS Eligibility:', error);
+            }
+        };
+
+        const addVoluntaryWork = async () => {
+            try {
+                const response = await axios.post('/emp_voluntary/AddVoluntaryWork', newVoluntaryWork.value);
+                voluntaryworkData.value.push(response.data);
+                showAddVoluntaryWorkDialog.value = false;
+            } catch (error) {
+                console.error('Error adding Voluntary Work:', error);
+            }
+        };
+
+        const addLearndev = async () => {
+            try {
+                const response = await axios.post('/emp_learning/AddLearndev', newLearndev.value);
+                learndevData.value.push(response.data);
+                showAddLearndevDialog.value = false;
+            } catch (error) {
+                console.error('Error adding Learning & Development:', error);
+            }
+        };
+
+        const addRecogdist = async () => {
+            try {
+                const response = await axios.post('/emp_recog/AddRecogdist', newRecogdist.value);
+                recogdistData.value.push(response.data);
+                showAddRecogdistDialog.value = false;
+            } catch (error) {
+                console.error('Error adding Recognition & Distinctions:', error);
+            }
+        };
+
         onMounted(() => {
             fetchCSEligibilityData();
             fetchVoluntaryWorkData();
@@ -552,6 +627,18 @@ export default {
             voluntaryworkData,
             learndevData,
             recogdistData,
+            showAddCSEligibilityDialog,
+            showAddVoluntaryWorkDialog,
+            showAddLearndevDialog,
+            showAddRecogdistDialog,
+            newCSEligibility,
+            newVoluntaryWork,
+            newLearndev,
+            newRecogdist,
+            addCSEligibility,
+            addVoluntaryWork,
+            addLearndev,
+            addRecogdist,
             fetchCSEligibilityData,
             fetchVoluntaryWorkData,
             fetchLearndevData,

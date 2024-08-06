@@ -40,41 +40,55 @@ class EmployeeController extends Controller
     }
 
     public function getPersonalInfo()
-    {
-        try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
-            }
-
-            $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
-            $emp_acc= EmpAcc::where('empid', $user->empid)->first();
-            if (!$employee) {
-                return response()->json(['error' => 'Employee not found'], 404);
-            }
-
-            $empUser = $emp_acc->empuser;
-            $empID = $emp_acc->empid;
-            $firstName = $employee->emp_fname;
-            $middleName = $employee->emp_mname;
-            $lastName = $employee->emp_lname;
-            $suffix = $employee->emp_ext;
-            $citizenship = $employee->emp_citizen;
-            $birthday = $employee->emp_dob;
-            $placeOfBirth = $employee->emp_pob;
-            $sex = $employee->emp_sex;
-            $civilStatus = $employee->emp_civ_stat;
-            $height = $employee->emp_height;
-            $weight = $employee->emp_weight;
-            $bloodType = $employee->emp_blood;
-            return response()->json(['empUser' => $empUser,'empID' => $empID, 'firstName' => $firstName, 'middleName' => $middleName, 'lastName' => $lastName
-            , 'suffix' => $suffix, 'citizenship' => $citizenship, 'birthday' => $birthday, 'placeOfBirth' => $placeOfBirth
-            , 'sex' => $sex, 'civilStatus' => $civilStatus, 'height' => $height, 'weight' => $weight
-            , 'bloodType' => $bloodType]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+{
+    try {
+        $user = Auth::user(); // Get the currently authenticated user
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
         }
+
+        $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
+        $emp_acc = EmpAcc::where('empid', $user->empid)->first();
+        if (!$employee) {
+            return response()->json(['error' => 'Employee not found'], 404);
+        }
+
+        $empUser = $emp_acc->empuser;
+        $empID = (string) $emp_acc->empid; // Ensure empID is cast to a string
+        $firstName = $employee->emp_fname;
+        $middleName = $employee->emp_mname;
+        $lastName = $employee->emp_lname;
+        $suffix = $employee->emp_ext;
+        $citizenship = $employee->emp_citizen;
+        $birthday = $employee->emp_dob;
+        $placeOfBirth = $employee->emp_pob;
+        $sex = $employee->emp_sex;
+        $civilStatus = $employee->emp_civ_stat;
+        $height = $employee->emp_height;
+        $weight = $employee->emp_weight;
+        $bloodType = $employee->emp_blood;
+
+        return response()->json([
+            'empUser' => $empUser,
+            'empID' => $empID,
+            'firstName' => $firstName,
+            'middleName' => $middleName,
+            'lastName' => $lastName,
+            'suffix' => $suffix,
+            'citizenship' => $citizenship,
+            'birthday' => $birthday,
+            'placeOfBirth' => $placeOfBirth,
+            'sex' => $sex,
+            'civilStatus' => $civilStatus,
+            'height' => $height,
+            'weight' => $weight,
+            'bloodType' => $bloodType
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
 
     public function getSecurityandContact()
     {

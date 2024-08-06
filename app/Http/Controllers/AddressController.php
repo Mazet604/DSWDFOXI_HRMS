@@ -32,8 +32,7 @@ class AddressController extends Controller
         return response()->json([
             'selectedRegion' => $selectedRegion, 
             'selectedProvince' => $selectedProvince,
-            'country' => $country,
-            //'selectedCity' => $selectedCity,
+            'selectedCity' => $selectedCity,
             //'selectedBarangay' => $selectedBarangay,
         ]);
     }
@@ -67,8 +66,8 @@ class AddressController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    
-    public function getSelectedBarangayOptions()
+
+    /*public function getSelectedBarangayOptions()
     {
         try {
             $selectedBarangayOptions = lib_brgy::all(['psgc as value', 'col_brgy as label']);

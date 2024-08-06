@@ -98,6 +98,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/gsisId/GSISId', [OtherInfoController::class, 'getGSISId']);
     Route::get('/philHealthId/PhilHealthId', [OtherInfoController::class, 'getPhilHealthId']);
     Route::get('/tinId/TINId', [OtherInfoController::class, 'getTINId']);
+    Route::post('/emp_eligibility/AddCSEligibility', [OtherInfoController::class, 'addCSEligibility']);
+    Route::post('/emp_voluntary/AddVoluntaryWork', [OtherInfoController::class, 'addVoluntaryWork']);
+    Route::post('/emp_learning/AddLearndev', [OtherInfoController::class, 'addLearndev']);
+    Route::post('/emp_recog/AddRecogdist', [OtherInfoController::class, 'addRecogdist']);
+
+
 
 });
 

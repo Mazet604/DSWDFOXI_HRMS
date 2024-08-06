@@ -638,11 +638,14 @@ export default {
             showSuccessDialog.value = false;
         };
 
-        onMounted(fetchEducationData);
-        onMounted(fetchOrganizationData);
-        onMounted(fetchWorkExperienceData);
-        onMounted(fetchSkillsData);
-        onMounted(fetchReferencesData);
+        onMounted(() => {
+            fetchEducationData();
+            fetchOrganizationData();
+            fetchWorkExperienceData();
+            fetchSkillsData();
+            fetchReferencesData();
+        });
+
 
         return {
             activeTab,

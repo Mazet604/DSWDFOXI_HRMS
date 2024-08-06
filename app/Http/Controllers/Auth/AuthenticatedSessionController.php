@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\EmpAcc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session; // Import Session
@@ -18,40 +19,41 @@ class AuthenticatedSessionController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $credentials = $request->validate([
-            'empuser' => ['required', 'string'],
-            'emppass' => ['required', 'string'],
-        ]);
-    
-        if (Auth::attempt(['empuser' => $credentials['empuser'], 'password' => $credentials['emppass']])) {
-            $request->session()->regenerate();
-            $user = auth()->user();
-            $request->session()->put('user_email', $user->empmail);
-            $request->session()->put('user_id', $user->empid);
-    
-            Log::info('User logged in, email and ID stored in session: ' . $user->empmail . ', ' . $user->empid);
-    
-            // Generate and send OTP
-            try {
-                $otp = EmailHelper::generateOTP();
-                Session::put('otp', $otp);
-                EmailHelper::sendOTPEmail($user->empmail, $otp);
-    
-                return redirect()->route('otp.form')->with([
-                    'message' => 'Login successful, OTP sent',
-                    'otp_required' => true
-                ]);
-            } catch (\Exception $e) {
-                Log::error("Failed to send OTP: " . $e->getMessage());
-                return back()->withErrors(['otp' => 'Failed to send OTP. Please try again later.']);
-            }
+{
+    $credentials = $request->validate([
+        'empuser' => ['required', 'string'],
+        'emppass' => ['required', 'string'],
+    ]);
+
+    if (Auth::attempt(['empuser' => $credentials['empuser'], 'password' => $credentials['emppass']])) {
+        $request->session()->regenerate();
+        $user = auth()->user();
+        $request->session()->put('user_email', $user->empmail);
+        $request->session()->put('user_id', (string) $user->empid); // Ensure empID is stored as a string
+
+        Log::info('User logged in, email and ID stored in session: ' . $user->empmail . ', ' . $user->empid);
+
+        // Generate and send OTP
+        try {
+            $otp = EmailHelper::generateOTP();
+            Session::put('otp', $otp);
+            EmailHelper::sendOTPEmail($user->empmail, $otp);
+
+            return redirect()->route('otp.form')->with([
+                'message' => 'Login successful, OTP sent',
+                'otp_required' => true
+            ]);
+        } catch (\Exception $e) {
+            Log::error("Failed to send OTP: " . $e->getMessage());
+            return back()->withErrors(['otp' => 'Failed to send OTP. Please try again later.']);
         }
-    
-        return back()->withErrors([
-            'empuser' => 'The provided credentials do not match our records.',
-        ]);
     }
+
+    return back()->withErrors([
+        'empuser' => 'The provided credentials do not match our records.',
+    ]);
+}
+
     
     public function sendOtp(Request $request)
     {
@@ -73,7 +75,7 @@ class AuthenticatedSessionController extends Controller
     
         if ($sessionOtp === $inputOtp) {
             $userId = Session::get('user_id');
-            $user = User::find($userId);
+            $user = EmpAcc::find($userId);
     
             if ($user) {
                 // OTP verified, display user data
@@ -85,6 +87,7 @@ class AuthenticatedSessionController extends Controller
             return back()->withErrors(['otp' => 'Invalid OTP.']);
         }
     }
+    
 
     public function destroy(Request $request)
     {
@@ -92,6 +95,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        session::flush();
 
         return redirect('/');
     }

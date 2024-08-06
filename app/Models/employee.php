@@ -12,7 +12,10 @@ class employee extends Model
     protected $table = 'employee';
     protected $primaryKey = 'empid'; // Set the primary key to empid
     public $incrementing = false; // Since empid is not auto-incrementing
-
+    protected $casts = [
+        'empid' => 'string',
+    ];
+    
     // Define the relationship with the EmpAcc model
     public function empAcc()
     {
