@@ -27,12 +27,12 @@ class AddressController extends Controller
 
         $selectedRegion = $emp_address->emp_region;
         $selectedProvince = $emp_address->emp_prov;
-        $selectedCity = $emp_address->emp_city;
+        //$selectedCity = $emp_address->emp_city;
         //$selectedBarangay = $emp_address->emp_brgy;
         return response()->json([
             'selectedRegion' => $selectedRegion, 
             'selectedProvince' => $selectedProvince,
-            'selectedCity' => $selectedCity,
+            //'selectedCity' => $selectedCity,
             //'selectedBarangay' => $selectedBarangay,
         ]);
     }
@@ -57,7 +57,7 @@ class AddressController extends Controller
         }
     }
 
-    public function getSelectedCityOptions()
+    /*public function getSelectedCityOptions()
     {
         try {
             $selectedCityOptions = lib_city::all(['psgc as value', 'col_citymuni as label']);
@@ -65,7 +65,7 @@ class AddressController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    }
+    }*/
 
     /*public function getSelectedBarangayOptions()
     {

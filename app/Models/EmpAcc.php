@@ -16,7 +16,8 @@ class EmpAcc extends Authenticatable
 
     // Specify the primary key field
     protected $primaryKey = 'empid';
-
+    public $incrementing = false;
+    protected $keyType = 'string';
     // Specify the fillable fields
     protected $fillable = [
         'empid',
