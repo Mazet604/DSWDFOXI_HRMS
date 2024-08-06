@@ -11,7 +11,6 @@ class lib_brgy extends Model
 
     protected $table = 'lib_brgies';
     protected $primaryKey = 'psgc';
-    public $incrementing = true;
-    public $timestamps = true;
+    public $incrementing = false;
     protected $fillable = ['psgc', 'col_brgy'];
 }

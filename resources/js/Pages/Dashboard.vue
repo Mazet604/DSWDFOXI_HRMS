@@ -21,11 +21,11 @@
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">USER NAME</label>
-                    <input type="text" class="input-field" v-model="fields.empUser" disabled />
+                    <input type="text" class="input-field text-color" v-model="fields.empUser" disabled />
                   </div>
                   <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYEE ID</label>
-                    <input type="text" class="input-field" v-model="fields.empID" disabled  />
+                    <input type="text" class="input-field text-color" v-model="fields.empID" disabled />
                   </div>
                   <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
@@ -235,6 +235,7 @@ export default {
         selectedProvince:'',
         selectedCity:'',
         selectedBarangay:'',
+        country:'',
       },
       isEditing: false,
       errorMessage: '',
@@ -298,51 +299,40 @@ export default {
 
     async fetchSelectedRegionOptions() {
       try {
-        const response = await fetch('/address/selectedregion-options');
-        if (!response.ok) {
-          throw new Error('Failed to fetch address options');
-        }
-        this.selectedRegionOptions = await response.json();
+        const response = await axios.get('http://127.0.0.1:8000/api/selectedregion-options');
+        this.selectedRegionOptions = response.data;
       } catch (error) {
-        console.error(error);
+        this.errorMessage = 'Failed to load regions.';
       }
     },
 
     async fetchSelectedProvinceOptions() {
       try {
-        const response = await fetch('/address/selectedprovince-options');
-        if (!response.ok) {
-          throw new Error('Failed to fetch address options');
-        }
-        this.selectedProvinceOptions = await response.json();
+        const response = await axios.get('http://127.0.0.1:8000/api/selectedprovince-options');
+        this.selectedProvinceOptions = response.data;
       } catch (error) {
-        console.error(error);
+        this.errorMessage = 'Failed to load provinces.';
       }
     },
 
     async fetchSelectedCityOptions() {
       try {
-        const response = await fetch('/address/selectedcity-options');
-        if (!response.ok) {
-          throw new Error('Failed to fetch address options');
-        }
-        this.selectedCityOptions = await response.json();
+        const response = await axios.get('/http://127.0.0.1:8000api/selectedcity-options');
+        this.selectedCityOptions = response.data;
       } catch (error) {
-        console.error(error);
+        this.errorMessage = 'Failed to load cities.';
       }
     },
 
     async fetchSelectedBarangayOptions() {
       try {
-        const response = await fetch('/address/selectedbarangay-options');
-        if (!response.ok) {
-          throw new Error('Failed to fetch address options');
-        }
-        this.selectedBarangayOptions = await response.json();
+        const response = await axios.get('http://127.0.0.1:8000/api/selectedbarangay-options');
+        this.selectedBarangayOptions = response.data;
       } catch (error) {
-        console.error(error);
+        this.errorMessage = 'Failed to load barangays.';
       }
     },
+
 
     async fetchFullName() {
       try {
@@ -385,11 +375,12 @@ export default {
 
     async fetchAddress() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/address/Address');
+        const response = await axios.get('http://127.0.0.1:8000/api/Address');
         this.fields.selectedRegion = response.data.selectedRegion;
         this.fields.selectedProvince = response.data.selectedProvince;
         this.fields.selectedCity = response.data.selectedCity;
         this.fields.selectedBarangay = response.data.selectedBarangay;
+        this.fields.country = response.data.country;
       } catch (error) {
         if (error.response && error.response.status === 500) {
           this.errorMessage = 'Internal Server Error. Please try again later.';
@@ -478,6 +469,10 @@ export default {
   <style scoped>
   .bg-cover {
     background-size: cover;
+  }
+
+  .text-color {
+  color: #707A88;
   }
 
   .bg-center {

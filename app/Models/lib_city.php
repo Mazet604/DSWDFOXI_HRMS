@@ -11,7 +11,6 @@ class lib_city extends Model
 
     protected $table = 'lib_cities';
     protected $primaryKey = 'psgc';
-    public $incrementing = true;
-    public $timestamps = true;
+    public $incrementing = false;
     protected $fillable = ['psgc', 'col_citymuni'];
 }

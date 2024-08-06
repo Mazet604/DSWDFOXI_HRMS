@@ -1,6 +1,5 @@
 <?php
 
-// app/Models/EmpAcc.php
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,6 +15,7 @@ class EmpAcc extends Authenticatable
 
     // Specify the primary key field
     protected $primaryKey = 'empid';
+    public $incrementing = false;
 
     // Specify the fillable fields
     protected $fillable = [

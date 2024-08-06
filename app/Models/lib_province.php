@@ -11,7 +11,6 @@ class lib_province extends Model
 
     protected $table = 'lib_provinces';
     protected $primaryKey = 'psgc';
-    public $incrementing = true;
-    public $timestamps = true;
+    public $incrementing = false;
     protected $fillable = ['psgc', 'col_province'];
 }
