@@ -676,6 +676,27 @@ export default {
             });
         };
 
+        const searchQuery = ref('');
+
+        const search = () => {
+            const searchLower = searchQuery.value.toLowerCase();
+            if (searchLower.includes('family')) {
+                activeTab.value = 0;
+            } else if (searchLower.includes('education')) {
+                activeTab.value = 1;
+            } else if (searchLower.includes('organization')) {
+                activeTab.value = 2;
+            } else if (searchLower.includes('work')) {
+                activeTab.value = 3;
+            } else if (searchLower.includes('skills')) {
+                activeTab.value = 4;
+            } else if (searchLower.includes('references')) {
+                activeTab.value = 5;
+            } else {
+                alert('No matching tab found.');
+            }
+        };
+
         onMounted(() => {
             fetchEducationData();
             fetchOrganizationData();
@@ -683,7 +704,6 @@ export default {
             fetchSkillsData();
             fetchReferencesData();
         });
-
 
         return {
             activeTab,
@@ -730,7 +750,9 @@ export default {
             confirmUpdate,
             hideUpdateDialog,
             updateProfile,
-            inputEditor
+            inputEditor,
+            searchQuery,
+            search
         };
     }
 };

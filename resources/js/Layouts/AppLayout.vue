@@ -136,22 +136,22 @@ const search = () => {
     } else if (searchLower.includes('references')) {
         navigateTo('background');
         activeTab.value = 5;
-    } else if (searchLower.includes('cs eligibility')) {
+    } else if (searchLower.includes('eligibility')) {
         navigateTo('otherinfo');
         activeTab.value = 0;
-    } else if (searchLower.includes('voluntary work')) {
+    } else if (searchLower.includes('voluntary')) {
         navigateTo('otherinfo');
         activeTab.value = 1;
-    } else if (searchLower.includes('learning & development')) {
+    } else if (searchLower.includes('learning')) {
         navigateTo('otherinfo');
         activeTab.value = 2;
-    } else if (searchLower.includes('recognition and distinctions')) {
+    } else if (searchLower.includes('recognition')) {
         navigateTo('otherinfo');
         activeTab.value = 3;
-    } else if (searchLower.includes('government id')) {
+    } else if (searchLower.includes('government')) {
         navigateTo('otherinfo');
         activeTab.value = 4;
-    } else if (searchLower.includes('other information')) {
+    } else if (searchLower.includes('other')) {
         navigateTo('otherinfo');
         activeTab.value = 5;
     } else {
