@@ -28,7 +28,16 @@ class DatabaseSeeder extends Seeder
             'empid' => '11-0071',
             'empuser' => 'tdadlawan',
             'emppass' => Hash::make('adlawan@2023'),
-            'empmail' => 'adlawan117@example.com',
+            'empmail' => 'adlawan117@gmail.com',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('emp_acc')->insert([
+            'empid' => '11-0072',
+            'empuser' => 'mnartiaga',
+            'emppass' => Hash::make('artiaga@2023'),
+            'empmail' => 'mnpartiaga03450@usep.edu.ph',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

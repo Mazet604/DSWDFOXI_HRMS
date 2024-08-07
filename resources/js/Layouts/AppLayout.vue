@@ -1,35 +1,3 @@
-<script setup>
-import { ref } from 'vue';
-import { router } from '@inertiajs/vue3';
-
-const isAccordionOpen = ref(true); // Ensure the accordion is open by default for demonstration
-const showLogoutDialog = ref(false);
-
-const toggleAccordion = () => {
-    isAccordionOpen.value = !isAccordionOpen.value;
-};
-
-const navigateTo = (routeName) => {
-    router.visit(route(routeName), { preserveState: true }); // Use preserveState to keep the dropdown open
-};
-
-const confirmLogout = () => {
-    showLogoutDialog.value = true;
-};
-
-const hideLogoutDialog = () => {
-    showLogoutDialog.value = false;
-};
-
-const logout = () => {
-    router.post(route('logout'));
-};
-
-const closeDropdown = () => {
-    // Prevent the dropdown from closing when clicking on the sidebar or dropdown content
-};
-</script>
-
 <template>
     <div class="flex min-h-screen bg-gray-100" @click="closeDropdown">
         <!-- Sidebar -->
@@ -41,7 +9,7 @@ const closeDropdown = () => {
                     <img src="/images/dswd-logo.png" alt="DSWD Logo" class="mx-auto mb-4 h-22" />
                 </div>
                 <div class="mb-4 search-bar">
-                    <input type="text" placeholder="Search..." />
+                    <input type="text" placeholder="Search..." v-model="searchQuery" @keyup.enter="search" />
                     <i class="fas fa-search"></i>
                 </div>
                 <nav class="flex-1">
@@ -104,6 +72,98 @@ const closeDropdown = () => {
         </div>
     </div>
 </template>
+
+<script setup>
+import { ref, watch } from 'vue';
+import { router } from '@inertiajs/vue3';
+
+const isAccordionOpen = ref(true); // Ensure the accordion is open by default for demonstration
+const showLogoutDialog = ref(false);
+const searchQuery = ref('');
+const activeTab = ref(0);
+const activeSubTab = ref(0);
+
+const toggleAccordion = () => {
+    isAccordionOpen.value = !isAccordionOpen.value;
+};
+
+const navigateTo = (routeName) => {
+    router.visit(route(routeName), { preserveState: true }); // Use preserveState to keep the dropdown open
+};
+
+const confirmLogout = () => {
+    showLogoutDialog.value = true;
+};
+
+const hideLogoutDialog = () => {
+    showLogoutDialog.value = false;
+};
+
+const logout = () => {
+    router.post(route('logout'));
+};
+
+const closeDropdown = () => {
+    // Prevent the dropdown from closing when clicking on the sidebar or dropdown content
+};
+
+const search = () => {
+    const searchLower = searchQuery.value.toLowerCase();
+    if (searchLower.includes('personal info')) {
+        navigateTo('dashboard');
+        activeTab.value = 0;
+    } else if (searchLower.includes('address')) {
+        navigateTo('dashboard');
+        activeTab.value = 1;
+    } else if (searchLower.includes('security')) {
+        navigateTo('dashboard');
+        activeTab.value = 2;
+    } else if (searchLower.includes('family')) {
+        navigateTo('background');
+        activeTab.value = 0;
+    } else if (searchLower.includes('education')) {
+        navigateTo('background');
+        activeTab.value = 1;
+    } else if (searchLower.includes('organization')) {
+        navigateTo('background');
+        activeTab.value = 2;
+    } else if (searchLower.includes('work experience')) {
+        navigateTo('background');
+        activeTab.value = 3;
+    } else if (searchLower.includes('skills')) {
+        navigateTo('background');
+        activeTab.value = 4;
+    } else if (searchLower.includes('references')) {
+        navigateTo('background');
+        activeTab.value = 5;
+    } else if (searchLower.includes('cs eligibility')) {
+        navigateTo('otherinfo');
+        activeTab.value = 0;
+    } else if (searchLower.includes('voluntary work')) {
+        navigateTo('otherinfo');
+        activeTab.value = 1;
+    } else if (searchLower.includes('learning & development')) {
+        navigateTo('otherinfo');
+        activeTab.value = 2;
+    } else if (searchLower.includes('recognition and distinctions')) {
+        navigateTo('otherinfo');
+        activeTab.value = 3;
+    } else if (searchLower.includes('government id')) {
+        navigateTo('otherinfo');
+        activeTab.value = 4;
+    } else if (searchLower.includes('other information')) {
+        navigateTo('otherinfo');
+        activeTab.value = 5;
+    } else {
+        alert('No matching tab found.');
+    }
+};
+
+watch(activeTab, (newValue) => {
+    // Additional logic if needed when the activeTab changes
+    console.log('Active tab changed to:', newValue);
+});
+</script>
 
 <style scoped>
 .custom-accordion-header {
