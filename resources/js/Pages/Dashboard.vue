@@ -156,7 +156,10 @@
             </TabView>
           </div>
           <Button label="UPDATE" v-if="!isEditing" class="float-right px-8 py-2 mt-6 text-white bg-green-500 rounded-lg update-button" @click="toggleEditing" />
-          <Button label="SAVE" v-if="isEditing" class="float-right px-8 py-2 mt-6 text-white bg-blue-500 rounded-lg update-button" @click="confirmUpdate" />
+        <div v-if="isEditing" class="float-right mt-6 space-x-4">
+          <Button label="CANCEL" class="px-8 py-2 text-white rounded-lg custom-cancel-button" @click="cancelEditing" />
+          <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg update-button" @click="confirmUpdate" />
+        </div>
         </div>
       </div>
 
@@ -238,6 +241,7 @@ export default {
         country:'',
       },
       isEditing: false,
+      originalFields: {}, // Added to store original data before editing
       errorMessage: '',
       showUpdateDialog: false,
       showSuccessDialog: false,
@@ -405,7 +409,14 @@ export default {
       }
     },
     toggleEditing() {
+      if (!this.isEditing) {
+        this.originalFields = JSON.parse(JSON.stringify(this.fields)); // Store the current state of fields
+      }
       this.isEditing = !this.isEditing;
+    },
+    cancelEditing() {
+      this.fields = JSON.parse(JSON.stringify(this.originalFields)); // Revert fields to the original state
+      this.isEditing = false;
     },
     confirmUpdate() {
       this.showUpdateDialog = true;
@@ -466,39 +477,49 @@ export default {
   };
   </script>
 
-  <style scoped>
-  .bg-cover {
-    background-size: cover;
-  }
+<style scoped>
+.bg-cover {
+  background-size: cover;
+}
 
-  .text-color {
+.text-color {
   color: #707A88;
-  }
+}
 
-  .bg-center {
-    background-position: center;
-  }
+.bg-center {
+  background-position: center;
+}
 
-  .border-box {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: none;
-  }
+.border-box {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: none;
+}
 
-  .input-field {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 
-  .update-button {
-    margin-bottom: 20px;
-  }
+.update-button {
+  margin-bottom: 20px;
+}
 
-  .blur-md {
-    filter: blur(8px);
-  }
-  </style>
+.blur-md {
+  filter: blur(8px);
+}
+
+.custom-cancel-button {
+  background-color: #dc3545 !important; /* Red background for cancel button */
+  border-color: #dc3545 !important; /* Red border for cancel button */
+}
+
+.custom-cancel-button:hover {
+  background-color: #e57373 !important; /* Lighter red for hover state */
+  border-color: #e57373 !important; /* Lighter red border for hover state */
+}
+</style>
