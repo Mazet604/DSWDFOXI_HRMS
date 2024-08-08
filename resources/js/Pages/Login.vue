@@ -1,5 +1,4 @@
 <template>
-    <GuestLayout>
         <Head title="Log in" />
 
         <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/background-image.png');">
@@ -41,7 +40,6 @@
                 </form>
             </div>
         </div>
-    </GuestLayout>
 </template>
 
 <script setup>

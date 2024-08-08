@@ -146,14 +146,6 @@
                   <label class="block mb-2 text-sm font-bold text-gray-700">EMAIL ADDRESS</label>
                   <input type="text" class="input-field" v-model="fields.emailadd" :disabled="!isEditing" />
                 </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">PASSWORD</label>
-                  <input :type="showPassword ? 'text' : 'password'" class="input-field" v-model="fields.pass" :disabled="!isEditing" />
-                  <div class="mt-2">
-                    <input type="checkbox" id="showPassword" v-model="showPassword" :disabled="!isEditing">
-                    <label for="showPassword" class="ml-2 text-sm font-bold text-gray-700">Show Password</label>
-                  </div>
-                </div>
               </div>
             </TabPanel>
           </TabView>

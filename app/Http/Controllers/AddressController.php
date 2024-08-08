@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmpAddress;
 use Illuminate\Http\Request;
 use App\Models\lib_region;
 use App\Models\lib_province;
 use App\Models\lib_city;
 use App\Models\lib_brgy;
-use App\Model\EmpAddress;
 use App\Models\Employee;
 
 class AddressController extends Controller
@@ -30,9 +30,8 @@ class AddressController extends Controller
         //$selectedBarangay = $emp_address->emp_brgy;
         $country = $emp_address -> emp_country;
         return response()->json([
-            'selectedRegion' => $selectedRegion, 
+            'selectedRegion' => $selectedRegion,
             'selectedProvince' => $selectedProvince,
-            'selectedCity' => $selectedCity,
             //'selectedBarangay' => $selectedBarangay,
         ]);
     }
