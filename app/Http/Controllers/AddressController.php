@@ -8,7 +8,7 @@ use App\Models\lib_province;
 use App\Models\lib_city;
 use App\Models\lib_brgy;
 use App\Model\EmpAddress;
-use App\Models\Employee;
+use App\Models\employee;
 
 class AddressController extends Controller
 {
@@ -17,23 +17,30 @@ class AddressController extends Controller
     {
         // Assuming $user is retrieved from the authenticated user
         $user = $request->user();
-
-        $emp_address = EmpAddress::where('emp_count', $user->emp_count)->first(); // Fetch emp_address using emp_count
-
+    
+        // Log the emp_count value
+        \Log::info('User emp_count: ' . $user->emp_count);
+    
+        // Fetch employee using user ID
+        $employee = employee::where('emp_count', $user->emp_count)->first();
+    
+        if (!$employee) {
+            \Log::error('Employee not found for emp_count: ' . $user->emp_count);
+            return response()->json(['error' => 'Employee not found'], 404);
+        }
+    
+        // Fetch emp_address using emp_count
+        $emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first();
+    
         if (!$emp_address) {
             return response()->json(['error' => 'Address not found'], 404);
         }
-
-        $selectedRegion = $emp_address->emp_region;
-        $selectedProvince = $emp_address->emp_prov;
-        //$selectedCity = $emp_address->emp_city;
-        //$selectedBarangay = $emp_address->emp_brgy;
-        $country = $emp_address -> emp_country;
+    
         return response()->json([
-            'selectedRegion' => $selectedRegion, 
-            'selectedProvince' => $selectedProvince,
-            //'selectedCity' => $selectedCity,
-            //'selectedBarangay' => $selectedBarangay,
+            'selectedRegion' => $emp_address->emp_region,
+            'selectedProvince' => $emp_address->emp_prov,
+            'selectedCity' => $emp_address->emp_city,
+            'selectedBarangay' => $emp_address->emp_brgy,
         ]);
     }
 

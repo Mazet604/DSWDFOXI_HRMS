@@ -88,10 +88,6 @@
               <TabPanel header="ADDRESS">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">COUNTRY</label>
-                    <input type="text" class="input-field" v-model="fields.country" :disabled="!isEditing" />
-                  </div>
-                  <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
                     <select class="input-field" v-model="selectedRegion" :disabled="!isEditing">
                       <option v-for="option in selectedRegionOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
@@ -299,7 +295,7 @@ export default {
 
     async fetchSelectedRegionOptions() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/selectedregion-options');
+        const response = await axios.get('address/selectedregion-options');
         this.selectedRegionOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load regions.';
@@ -308,30 +304,30 @@ export default {
 
     async fetchSelectedProvinceOptions() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/selectedprovince-options');
+        const response = await axios.get('address/selectedprovince-options');
         this.selectedProvinceOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load provinces.';
       }
     },
 
-    async fetchSelectedCityOptions() {
+    /*async fetchSelectedCityOptions() {
       try {
-        const response = await axios.get('/http://127.0.0.1:8000api/selectedcity-options');
+        const response = await axios.get('address/selectedcity-options');
         this.selectedCityOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load cities.';
       }
     },
 
-    async fetchSelectedBarangayOptions() {
+    /*async fetchSelectedBarangayOptions() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/selectedbarangay-options');
+        const response = await axios.get('address/selectedbarangay-options');
         this.selectedBarangayOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load barangays.';
       }
-    },
+    },*/
 
 
     async fetchFullName() {
@@ -375,20 +371,20 @@ export default {
 
     async fetchAddress() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/Address');
-        this.fields.selectedRegion = response.data.selectedRegion;
-        this.fields.selectedProvince = response.data.selectedProvince;
-        this.fields.selectedCity = response.data.selectedCity;
-        this.fields.selectedBarangay = response.data.selectedBarangay;
-        this.fields.country = response.data.country;
-      } catch (error) {
-        if (error.response && error.response.status === 500) {
-          this.errorMessage = 'Internal Server Error. Please try again later.';
-        } else {
-          this.errorMessage = 'An error occurred. Please try again.';
-        }
-      }
-    },
+            const response = await axios.get('address/Address');
+            this.fields.selectedRegion = response.data.selectedRegion;
+            this.fields.selectedProvince = response.data.selectedProvince;
+            this.fields.selectedCity = response.data.selectedCity;
+            this.fields.selectedBarangay = response.data.selectedBarangay;
+            this.fields.country = response.data.country;
+          } catch (error) {
+            if (error.response && error.response.status === 500) {
+              this.errorMessage = 'Internal Server Error. Please try again later.';
+            } else {
+              this.errorMessage = 'An error occurred. Please try again.';
+            }
+          }
+        },
     async fetchSecurityandContact() {
       try {
         const response = await axios.get('http://127.0.0.1:8000/employee/SecurityandContact');
@@ -441,8 +437,8 @@ export default {
     this.fetchExtOptions();
     this.fetchSelectedRegionOptions();
     this.fetchSelectedProvinceOptions();
-    this.fetchSelectedCityOptions();
-    this.fetchSelectedBarangayOptions();
+    /*this.fetchSelectedCityOptions();
+    this.fetchSelectedBarangayOptions();*/
 }};
 
 </script>
@@ -455,9 +451,7 @@ export default {
   import TabPanel from 'primevue/tabpanel';
 
   const activeTab = ref(0);
-
   const showPassword = ref(false);
-
   const isHovered = ref(false);
   const isUnblurred = ref(false);
 

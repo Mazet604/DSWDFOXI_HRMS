@@ -14,4 +14,9 @@ class EmpAddress extends Model
         'emp_subd', 'emp_brgy', 'emp_city', 'emp_prov', 'emp_region', 'emp_datereg',
         'emp_pob', 'emp_zip'
     ];
+
+    public function employee()
+    {
+        return $this->belongsTo(employee::class, 'emp_count', 'emp_count');
+    }
 }
