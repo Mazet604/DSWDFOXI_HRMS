@@ -79,43 +79,43 @@
                         </div>
                     </TabPanel>
                     <TabPanel header="EDUCATION">
-                        <DataTable :value="educationData" class="mt-8" :paginator="true" :rows="5">
-                            <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
-                            <Column field="educ_school" header="NAME OF SCHOOL"></Column>
-                            <Column field="educ_degree" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
-                            <Column field="educ_from" header="INCLUSIVE DATES (FROM - TO)"></Column>
-                            <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED"></Column>
-                            <Column field="educ_year_grad" header="YEAR GRADUATED"></Column>
-                            <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
+                        <DataTable :value="educationData" class="mt-8" :paginator="true" :rows="5" editable>
+                            <Column field="educ_level" header="LEVEL OF EDUCATION" :editor="inputEditor"></Column>
+                            <Column field="educ_school" header="NAME OF SCHOOL" :editor="inputEditor"></Column>
+                            <Column field="educ_degree" header="BASIC EDUCATION|DEGREE|COURSE" :editor="inputEditor"></Column>
+                            <Column field="educ_from" header="INCLUSIVE DATES (FROM - TO)" :editor="inputEditor"></Column>
+                            <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED" :editor="inputEditor"></Column>
+                            <Column field="educ_year_grad" header="YEAR GRADUATED" :editor="inputEditor"></Column>
+                            <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE" :editor="inputEditor"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="ORGANIZATION">
-                        <DataTable :value="organizationData" class="mt-8" :paginator="true" :rows="5">
-                            <Column field="org_name" header="Organizations"></Column>
+                        <DataTable :value="organizationData" class="mt-8" :paginator="true" :rows="5" editable>
+                            <Column field="org_name" header="Organizations" :editor="inputEditor"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="WORK EXPERIENCE">
-                        <DataTable :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
-                            <Column field="workfr" header="INCLUSIVE DATES (FROM)"></Column>
-                            <Column field="workto" header="INCLUSIVE DATES (TO)"></Column>
-                            <Column field="work_pos" header="POSITION"></Column>
-                            <Column field="work_dept" header="DEPARTMENT|AGENCY|OFFICE|COMPANY"></Column>
-                            <Column field="work_salary" header="MONTHLY SALARY"></Column>
-                            <Column field="work_salarygrade" header="SALARY GRADE"></Column>
-                            <Column field="work_stat" header="STATUS OF APPOINTMENT"></Column>
-                            <Column field="work_gov" header="GOV'T SERVICE"></Column>
+                        <DataTable :value="workExperienceData" class="mt-8" :paginator="true" :rows="5" editable>
+                            <Column field="workfr" header="INCLUSIVE DATES (FROM)" :editor="inputEditor"></Column>
+                            <Column field="workto" header="INCLUSIVE DATES (TO)" :editor="inputEditor"></Column>
+                            <Column field="work_pos" header="POSITION" :editor="inputEditor"></Column>
+                            <Column field="work_dept" header="DEPARTMENT|AGENCY|OFFICE|COMPANY" :editor="inputEditor"></Column>
+                            <Column field="work_salary" header="MONTHLY SALARY" :editor="inputEditor"></Column>
+                            <Column field="work_salarygrade" header="SALARY GRADE" :editor="inputEditor"></Column>
+                            <Column field="work_stat" header="STATUS OF APPOINTMENT" :editor="inputEditor"></Column>
+                            <Column field="work_gov" header="GOV'T SERVICE" :editor="inputEditor"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="SKILLS">
-                        <DataTable :value="skillsData" class="mt-8" :paginator="true" :rows="5">
-                            <Column field="skill" header="SKILLS"></Column>
+                        <DataTable :value="skillsData" class="mt-8" :paginator="true" :rows="5" editable>
+                            <Column field="skill" header="SKILLS" :editor="inputEditor"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="REFERENCES">
-                        <DataTable :value="referencesData" class="mt-8" :paginator="true" :rows="5">
-                            <Column field="full_name" header="FULL NAME"></Column>
-                            <Column field="ref_add" header="ADDRESS"></Column>
-                            <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
+                        <DataTable :value="referencesData" class="mt-8" :paginator="true" :rows="5" editable>
+                            <Column field="full_name" header="FULL NAME" :editor="inputEditor"></Column>
+                            <Column field="ref_add" header="ADDRESS" :editor="inputEditor"></Column>
+                            <Column field="ref_cnum" header="TELEPHONE NUMBER" :editor="inputEditor"></Column>
                         </DataTable>
                     </TabPanel>
                 </TabView>
@@ -350,7 +350,7 @@
                 <div class="p-4">
                     <div class="text-center">
                         <i class="fas fa-check-circle text-4xl mb-4" style="color: green;"></i>
-                        <h2 class="text-xl font-semibold mb-4">Added Successfully!</h2>
+                        <h2 class="text-xl font-semibold mb-4">Updated Successfully!</h2>
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
                     <div class="flex justify-center">
@@ -361,7 +361,6 @@
         </div>
     </AppLayout>
 </template>
-
 
 <script>
 import axios from 'axios';
@@ -446,6 +445,7 @@ export default {
         const showAddSkillsDialog = ref(false);
         const showAddReferencesDialog = ref(false);
         const showSuccessDialog = ref(false);
+        const showUpdateDialog = ref(false);
 
         const openAddDialog = () => {
             if (activeTab.value === 1) {
@@ -638,6 +638,65 @@ export default {
             showSuccessDialog.value = false;
         };
 
+        const confirmUpdate = () => {
+            showUpdateDialog.value = true;
+        };
+
+        const hideUpdateDialog = () => {
+            showUpdateDialog.value = false;
+        };
+
+        const updateProfile = async () => {
+            try {
+                if (activeTab.value === 1) {
+                    await axios.post('http://127.0.0.1:8000/education/UpdateEducationData', educationData.value);
+                } else if (activeTab.value === 2) {
+                    await axios.post('http://127.0.0.1:8000/emp_org/UpdateOrganizationData', organizationData.value);
+                } else if (activeTab.value === 3) {
+                    await axios.post('http://127.0.0.1:8000/emp_work/UpdateWorkExperienceData', workExperienceData.value);
+                } else if (activeTab.value === 4) {
+                    await axios.post('http://127.0.0.1:8000/emp_skills/UpdateSkillsData', skillsData.value);
+                } else if (activeTab.value === 5) {
+                    await axios.post('http://127.0.0.1:8000/emp_reference/UpdateReferencesData', referencesData.value);
+                }
+                showUpdateDialog.value = false;
+                showSuccessDialog.value = true;
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showUpdateDialog.value = false;
+            }
+        };
+
+        const inputEditor = (slotProps) => {
+            return h('input', {
+                type: 'text',
+                class: 'input-field',
+                value: slotProps.data[slotProps.field],
+                onInput: (event) => slotProps.data[slotProps.field] = event.target.value
+            });
+        };
+
+        const searchQuery = ref('');
+
+        const search = () => {
+            const searchLower = searchQuery.value.toLowerCase();
+            if (searchLower.includes('family')) {
+                activeTab.value = 0;
+            } else if (searchLower.includes('education')) {
+                activeTab.value = 1;
+            } else if (searchLower.includes('organization')) {
+                activeTab.value = 2;
+            } else if (searchLower.includes('work')) {
+                activeTab.value = 3;
+            } else if (searchLower.includes('skills')) {
+                activeTab.value = 4;
+            } else if (searchLower.includes('references')) {
+                activeTab.value = 5;
+            } else {
+                alert('No matching tab found.');
+            }
+        };
+
         onMounted(() => {
             fetchEducationData();
             fetchOrganizationData();
@@ -645,7 +704,6 @@ export default {
             fetchSkillsData();
             fetchReferencesData();
         });
-
 
         return {
             activeTab,
@@ -666,6 +724,7 @@ export default {
             showAddSkillsDialog,
             showAddReferencesDialog,
             showSuccessDialog,
+            showUpdateDialog,
             addEducation,
             addOrganization,
             addWorkExperience,
@@ -687,7 +746,13 @@ export default {
             fetchOrganizationData,
             fetchWorkExperienceData,
             fetchSkillsData,
-            fetchReferencesData
+            fetchReferencesData,
+            confirmUpdate,
+            hideUpdateDialog,
+            updateProfile,
+            inputEditor,
+            searchQuery,
+            search
         };
     }
 };

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmpAddress;
 use Illuminate\Http\Request;
 use App\Models\lib_region;
 use App\Models\lib_province;
 use App\Models\lib_city;
 use App\Models\lib_brgy;
-use App\Model\EmpAddress;
-use App\Models\employee;
+use App\Models\Employee;
 
 class AddressController extends Controller
 {
@@ -35,12 +35,17 @@ class AddressController extends Controller
         if (!$emp_address) {
             return response()->json(['error' => 'Address not found'], 404);
         }
-    
+
+        $selectedRegion = $emp_address->emp_region;
+        $selectedProvince = $emp_address->emp_prov;
+        //$selectedCity = $emp_address->emp_city;
+        //$selectedBarangay = $emp_address->emp_brgy;
+        $country = $emp_address -> emp_country;
         return response()->json([
-            'selectedRegion' => $emp_address->emp_region,
-            'selectedProvince' => $emp_address->emp_prov,
-            'selectedCity' => $emp_address->emp_city,
-            'selectedBarangay' => $emp_address->emp_brgy,
+            'selectedRegion' => $selectedRegion, 
+            'selectedProvince' => $selectedProvince,
+            'selectedCity' => $selectedCity,
+            //'selectedBarangay' => $selectedBarangay,
         ]);
     }
 

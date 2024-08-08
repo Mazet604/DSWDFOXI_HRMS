@@ -15,6 +15,7 @@ import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
+import 'primeicons/primeicons.css';
 
 
 // Import PrimeVue CSS
