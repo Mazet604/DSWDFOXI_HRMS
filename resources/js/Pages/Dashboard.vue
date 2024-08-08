@@ -472,7 +472,8 @@ export default {
   }
 
   .text-color {
-  color: #707A88;
+    color: #707A88;
+    cursor: not-allowed;
   }
 
   .bg-center {

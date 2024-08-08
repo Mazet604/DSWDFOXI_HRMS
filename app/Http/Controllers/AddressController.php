@@ -32,7 +32,7 @@ class AddressController extends Controller
         return response()->json([
             'selectedRegion' => $selectedRegion, 
             'selectedProvince' => $selectedProvince,
-            'selectedCity' => $selectedCity,
+            //'selectedCity' => $selectedCity,
             //'selectedBarangay' => $selectedBarangay,
         ]);
     }
