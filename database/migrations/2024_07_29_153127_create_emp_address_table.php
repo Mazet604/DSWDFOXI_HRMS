@@ -15,7 +15,6 @@ return new class extends Migration
             $table->increments('add_count');
             $table->unsignedInteger('emp_count');    
             $table->string('emp_house',20)->nullable();
-            $table->string('emp_street',30)->nullable();
             $table->string('emp_subd',60)->nullable(); //30 for subdivisions with high character count
             $table->string('emp_brgy',60);
             $table->string('emp_city',60);

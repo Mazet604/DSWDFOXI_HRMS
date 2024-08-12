@@ -28,7 +28,11 @@ class EmployeeController extends Controller
     
             // Fetch the suffix from lib_suffixes table para dili number mugawas
             $suffix = lib_suffix::where('lib1_count', $employee->emp_ext)->first();
-            $emp_ext = $suffix ? $suffix->lib1_suffix : $employee->emp_ext;
+            if ($suffix && ($suffix->lib1_suffix === '0' || strtolower($suffix->lib1_suffix) === 'none')) {
+                $emp_ext = null;
+            } else {
+                $emp_ext = $suffix ? $suffix->lib1_suffix : $employee->emp_ext;
+            }
             
     
             $fullName = $employee->emp_lname . ', ' . $employee->emp_fname . ' ' . $employee->emp_mname . ' ' . $emp_ext;
@@ -54,7 +58,7 @@ class EmployeeController extends Controller
         }
 
         $empUser = $emp_acc->empuser;
-        $empID = (string) $emp_acc->empid; // Ensure empID is cast to a string
+        $empID = $emp_acc->empid;
         $firstName = $employee->emp_fname;
         $middleName = $employee->emp_mname;
         $lastName = $employee->emp_lname;
@@ -191,7 +195,7 @@ class EmployeeController extends Controller
     public function ExtOptions()
     {
         try {
-            $extOptions = lib_blood_type::all(['lib1_count', 'lib1_suffix']);
+            $extOptions = lib_suffix::all(['lib1_count', 'lib1_suffix']);
             return response()->json($extOptions);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

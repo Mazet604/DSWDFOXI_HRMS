@@ -12,5 +12,6 @@ class lib_province extends Model
     protected $table = 'lib_provinces';
     protected $primaryKey = 'psgc';
     public $incrementing = false;
-    protected $fillable = ['psgc', 'col_province'];
+    protected $fillable = ['psgc', 'col_province', 'reg_code'];
+    
 }

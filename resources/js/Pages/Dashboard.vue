@@ -236,14 +236,14 @@ export default {
         mobilenum: '',
         telnum: '',
         emailadd: '',
+        pass: '',
         selectedRegion:'',
         selectedProvince:'',
-        selectedCity:'',
-        selectedBarangay:'',
-        country:'',
+
       },
+
       isEditing: false,
-      originalFields: {}, // Added to store original data before editing
+      originalFields: {},
       errorMessage: '',
       showUpdateDialog: false,
       showSuccessDialog: false,
@@ -253,8 +253,6 @@ export default {
       extOptions:[],
       selectedRegionOptions:[],
       selectedProvinceOptions:[],
-      selectedCityOptions:[],
-      selectedBarangayOptions:[],
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
@@ -331,7 +329,7 @@ export default {
 
     async fetchSelectedRegionOptions() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/selectedregion-options');
+        const response = await axios.get('/employee/selectedregion-options');
         this.selectedRegionOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load regions.';
@@ -340,31 +338,12 @@ export default {
 
     async fetchSelectedProvinceOptions() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/selectedprovince-options');
+        const response = await axios.get('/employee/selectedprovince-options');
         this.selectedProvinceOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load provinces.';
       }
     },
-
-    async fetchSelectedCityOptions() {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/selectedcity-options');
-        this.selectedCityOptions = response.data;
-      } catch (error) {
-        this.errorMessage = 'Failed to load cities.';
-      }
-    },
-
-    async fetchSelectedBarangayOptions() {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/selectedbarangay-options');
-        this.selectedBarangayOptions = response.data;
-      } catch (error) {
-        this.errorMessage = 'Failed to load barangays.';
-      }
-    },
-
 
     async fetchFullName() {
       try {
@@ -372,11 +351,7 @@ export default {
         this.fullName = response.data.fullName;
         this.empPosition = response.data.empPosition;
       } catch (error) {
-        if (error.response && error.response.status === 500) {
-          this.errorMessage = 'Internal Server Error. Please try again later.';
-        } else {
-          this.errorMessage = 'An error occurred. Please try again.';
-        }
+          this.errorMessage = 'Failed to load full name.';
       }
     },
     async fetchPersonalInfo() {
@@ -397,27 +372,20 @@ export default {
         this.fields.weight = response.data.weight;
         this.fields.bloodType = response.data.bloodType;
       } catch (error) {
-        if (error.response && error.response.status === 500) {
-          this.errorMessage = 'Internal Server Error. Please try again later.';
-        } else {
-          this.errorMessage = 'An error occurred. Please try again.';
-        }
+          this.errorMessage = 'Failed to load personal information.';
       }
     },
 
     async fetchAddress() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/Address');
+        const response = await axios.get('http://127.0.0.1:8000/employee/Address');
         this.fields.selectedRegion = response.data.selectedRegion;
         this.fields.selectedProvince = response.data.selectedProvince;
         this.fields.selectedCity = response.data.selectedCity;
         this.fields.selectedBarangay = response.data.selectedBarangay;
+        this.fields.country = response.data.country;
       } catch (error) {
-        if (error.response && error.response.status === 500) {
-          this.errorMessage = 'Internal Server Error. Please try again later.';
-        } else {
-          this.errorMessage = 'An error occurred. Please try again.';
-        }
+          this.errorMessage = 'Failed to load address.';
       }
     },
     async fetchSecurityandContact() {
@@ -427,11 +395,7 @@ export default {
         this.fields.telnum = response.data.telnum;
         this.fields.emailadd = response.data.emailadd;
       } catch (error) {
-        if (error.response && error.response.status === 500) {
-          this.errorMessage = 'Internal Server Error. Please try again later.';
-        } else {
-          this.errorMessage = 'An error occurred. Please try again.';
-        }
+          this.errorMessage = 'Failed to load security and contact information.';
       }
     },
     toggleEditing() {
@@ -493,8 +457,6 @@ export default {
     this.fetchExtOptions();
     this.fetchSelectedRegionOptions();
     this.fetchSelectedProvinceOptions();
-    this.fetchSelectedCityOptions();
-    this.fetchSelectedBarangayOptions();
   }
 };
 </script>
