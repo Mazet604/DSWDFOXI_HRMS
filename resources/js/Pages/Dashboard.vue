@@ -42,7 +42,7 @@
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">Age</label>
-                  <input type="text" class="input-field" :value="calculatedAge" disabled />
+                  <input type="text" class="input-field text-color" :value="calculatedAge" disabled />
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
@@ -93,10 +93,6 @@
             <TabPanel header="ADDRESS" :active="activeSubTab === 'address'">
               <!-- Address Fields -->
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">COUNTRY</label>
-                  <input type="text" class="input-field" v-model="fields.country" :disabled="!isEditing" />
-                </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
                   <select class="input-field" v-model="fields.selectedRegion" :disabled="!isEditing">
@@ -282,11 +278,9 @@ export default {
     methods: {
 
     validateMobileNumber() {
-      // Remove any non-numeric characters and limit the length to 11
       this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
     },
     validateTelephoneNumber() {
-      // Remove any non-numeric characters and limit the length to 10
       this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
     },
 
@@ -418,7 +412,6 @@ export default {
         this.fields.selectedProvince = response.data.selectedProvince;
         this.fields.selectedCity = response.data.selectedCity;
         this.fields.selectedBarangay = response.data.selectedBarangay;
-        this.fields.country = response.data.country;
       } catch (error) {
         if (error.response && error.response.status === 500) {
           this.errorMessage = 'Internal Server Error. Please try again later.';
@@ -513,6 +506,10 @@ export default {
 
 .text-color {
   color: #707A88;
+}
+
+.text-color:hover{
+  cursor: not-allowed;
 }
 
 .bg-center {
