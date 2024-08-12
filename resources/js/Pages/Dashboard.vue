@@ -259,6 +259,9 @@ export default {
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
+      isHovered: false,
+      isUnblurred: false,
+
     };
   },
 
@@ -401,6 +404,11 @@ export default {
           this.errorMessage = 'Failed to load security and contact information.';
       }
     },
+
+    toggleBlur() {
+        this.isUnblurred = !this.isUnblurred;
+    },
+
     toggleEditing() {
       if (!this.isEditing) {
         this.originalFields = JSON.parse(JSON.stringify(this.fields)); // Store the current state of fields
