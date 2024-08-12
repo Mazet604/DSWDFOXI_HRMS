@@ -8,7 +8,10 @@ use App\Models\education;
 use App\Models\emp_org;
 use App\Models\emp_reference;
 use App\Models\emp_work;
+use App\Models\emp_child;
 use App\Models\emp_skills;
+use App\Models\employee;
+use App\Models\EmpFamily;
 
 class BackgroundController extends Controller
 {
@@ -19,7 +22,7 @@ class BackgroundController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-    
+
             // Select only the required columns
             $educationData = Education::where('empid', $user->empid)
                 ->select(
@@ -31,11 +34,11 @@ class BackgroundController extends Controller
                     'educ_academic_honor', 
                     'educ_hl_earned')
                 ->get();
-    
+
             if ($educationData->isEmpty()) {
                 return response()->json(['error' => 'Data not found'], 404);
             }
-    
+
             return response()->json($educationData);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -49,16 +52,16 @@ class BackgroundController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-    
+
             // Select only the required columns
             $organizationData = emp_org::where('empid', $user->empid)
                 ->select('org_name')
                 ->get();
-    
+
             if ($organizationData->isEmpty()) {
                 return response()->json(['error' => 'Data not found'], 404);
             }
-    
+
             return response()->json($organizationData);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -72,7 +75,7 @@ class BackgroundController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-    
+
             // Select only the required columns
             $workExperienceData = emp_work::where('empid', $user->empid)
                 ->select(
@@ -85,11 +88,11 @@ class BackgroundController extends Controller
                     'work_stat',
                     'work_gov')
                 ->get();
-    
+
             if ($workExperienceData->isEmpty()) {
                 return response()->json(['error' => 'Data not found'], 404);
             }
-    
+
             return response()->json($workExperienceData);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -103,16 +106,16 @@ class BackgroundController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-    
+
             // Select only the required columns
             $skillsData = emp_skills::where('empid', $user->empid)
                 ->select('skill')
                 ->get();
-    
+
             if ($skillsData->isEmpty()) {
                 return response()->json(['error' => 'Data not found'], 404);
             }
-    
+
             return response()->json($skillsData);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -270,5 +273,117 @@ class BackgroundController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-}
 
+    private function getEmpCountFromEmpId($empid)
+    {
+        $employee = Employee::where('empid', $empid)->first();
+        return $employee ? $employee->emp_count : null;
+    }
+
+    public function getFamilyData()
+    {
+        try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            // Fetch the employee using empid to get the emp_count
+            $employee = Employee::where('empid', $user->empid)->first();
+            if (!$employee) {
+                return response()->json(['error' => 'Employee not found'], 404);
+            }
+
+            // Fetch family data using emp_count
+            $familyData = EmpFamily::getFamilyData($employee->emp_count);
+
+            return response()->json($familyData);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function updateFamilyData(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            // Fetch the employee using empid to get the emp_count
+            $employee = Employee::where('empid', $user->empid)->first();
+            if (!$employee) {
+                return response()->json(['error' => 'Employee not found'], 404);
+            }
+
+            // Update family data using emp_count
+            EmpFamily::updateFamilyData($employee->emp_count, $request->all());
+
+            return response()->json(['success' => 'Family data updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function addChildData(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+
+            $employee = Employee::where('empid', $user->empid)->first();
+            if (!$employee) {
+                return response()->json(['error' => 'Employee not found'], 404);
+            }
+
+            // Get emp_count from empid
+            $child = emp_child::where('emp_count', $employee->emp_count)->first();
+            if (!$child) {
+                return response()->json(['error' => 'Employee count not found'], 404);
+            }
+
+            $child->child_fname = $request->input('child_fname');
+            $child->child_mname = $request->input('child_mname');
+            $child->child_lname = $request->input('child_lname');
+            $child->child_xname = $request->input('child_xname');
+            $child->child_dob = $request->input('child_dob');
+            $child->save();
+
+            return response()->json($child, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getChildData()
+    {
+        try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            // Get emp_count from empid
+            $emp_count = $this->getEmpCountFromEmpId($user->empid);
+            if (!$emp_count) {
+                return response()->json(['error' => 'Employee count not found'], 404);
+            }
+
+            $childData = emp_child::where('emp_count', $emp_count)
+                ->select('child_fname', 'child_dob')
+                ->get();
+
+            if ($childData->isEmpty()) {
+                return response()->json(['error' => 'Data not found'], 404);
+            }
+
+            return response()->json($childData);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+}

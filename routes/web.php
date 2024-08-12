@@ -88,6 +88,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/emp_skills/AddSkillData', [BackgroundController::class, 'addSkillData']);
     Route::get('/emp_reference/ReferencesData', [BackgroundController::class, 'getReferencesData']);
     Route::post('/emp_reference/AddReferenceData', [BackgroundController::class, 'addReferenceData']);
+    Route::get('/family-data', [BackgroundController::class, 'getFamilyData']);
+    Route::post('/emp_family/UpdateFamilyData', [BackgroundController::class, 'updateFamilyData']);
+    Route::post('/emp_child/AddChildData', [BackgroundController::class, 'addChildData']);
+
 
     Route::get('/emp_eligibility/CSEligibilityData', [OtherInfoController::class, 'getCSEligibilityData']);
     Route::get('/emp_voluntary/VoluntaryWorkData', [OtherInfoController::class, 'getVoluntaryWorkData']);

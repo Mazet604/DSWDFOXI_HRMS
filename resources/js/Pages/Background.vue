@@ -80,8 +80,8 @@
                         <br/>
                         <h1 style="font-size: 25px; font-weight: bold;">Child</h1>
                         <DataTable :value="childData" class="mt-8" :paginator="true" :rows="5" editable>
-                            <Column field="childname" header="Name of Child" :editor="inputEditor"></Column>
-                            <Column field="childage" header="Age" :editor="inputEditor"></Column>
+                            <Column field="child_fname" header="Name of Child" :editor="inputEditor"></Column>
+                            <Column field="child_dob" header="Age" :editor="inputEditor"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="EDUCATION">
@@ -147,6 +147,47 @@
                         </button>
                         <button @click="updateProfile" class="py-2 px-4 rounded bg-red-600 text-white hover:bg-red-700">
                             Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Child Modal -->
+        <div v-if="showAddChildDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
+                <div class="p-4">
+                    <div class="text-center">
+                        <h2 class="text-xl font-semibold mb-4">Add Child</h2>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">Child First Name</label>
+                            <input class="input-field" type="text" v-model="newChild.child_fname" />
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Middle Name</label>
+                            <input class="input-field" type="text" v-model="newChild.child_mname" />
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Last Name</label>
+                            <input class="input-field" type="text" v-model="newChild.child_lname" />
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Extension Name</label>
+                            <input class="input-field" type="text" v-model="newChild.child_xname" />
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Birth Date</label>
+                            <input class="input-field" type="text" v-model="newChild.child_dob" />
+                        </div>
+                    </div>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <button @click="hideAddChildDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                            Cancel
+                        </button>
+                        <button @click="addChild" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            Add
                         </button>
                     </div>
                 </div>
@@ -370,7 +411,7 @@
 
 <script>
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, h } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
@@ -400,6 +441,15 @@ export default {
             motherSurname: { label: 'Mother Surname', type: 'text', value: '' },
             motherFirstName: { label: 'Mother First Name', type: 'text', value: '' },
             motherMiddleName: { label: 'Mother Middle Name', type: 'text', value: '' }
+        });
+
+        const childData = ref([]);
+        const newChild = ref({
+            child_fname: '',
+            child_mname: '',
+            child_lname: '',
+            child_xname: '',
+            child_dob: ''
         });
 
         const educationData = ref([]);
@@ -450,22 +500,26 @@ export default {
         const showAddWorkExperienceDialog = ref(false);
         const showAddSkillsDialog = ref(false);
         const showAddReferencesDialog = ref(false);
+        const showAddChildDialog = ref(false);
         const showSuccessDialog = ref(false);
         const showUpdateDialog = ref(false);
 
         const openAddDialog = () => {
-            if (activeTab.value === 1) {
-                showAddEducationDialog.value = true;
-            } else if (activeTab.value === 2) {
-                showAddOrganizationDialog.value = true;
-            } else if (activeTab.value === 3) {
-                showAddWorkExperienceDialog.value = true;
-            } else if (activeTab.value === 4) {
-                showAddSkillsDialog.value = true;
-            } else if (activeTab.value === 5) {
-                showAddReferencesDialog.value = true;
-            }
-        };
+        if (activeTab.value === 0) {
+            showAddChildDialog.value = true;
+        } else if (activeTab.value === 1) {
+            showAddEducationDialog.value = true;
+        } else if (activeTab.value === 2) {
+            showAddOrganizationDialog.value = true;
+        } else if (activeTab.value === 3) {
+            showAddWorkExperienceDialog.value = true;
+        } else if (activeTab.value === 4) {
+            showAddSkillsDialog.value = true;
+        } else if (activeTab.value === 5) {
+            showAddReferencesDialog.value = true;
+        }
+    };
+
 
         const fetchEducationData = async () => {
             try {
@@ -490,7 +544,7 @@ export default {
                 const response = await axios.get('http://127.0.0.1:8000/emp_work/WorkExperienceData');
                 workExperienceData.value = response.data;
             } catch (error) {
-                console.error('Error fetching organization data:', error);
+                console.error('Error fetching work experience data:', error);
             }
         };
 
@@ -499,7 +553,7 @@ export default {
                 const response = await axios.get('http://127.0.0.1:8000/emp_skills/SkillsData');
                 skillsData.value = response.data;
             } catch (error) {
-                console.error('Error fetching organization data:', error);
+                console.error('Error fetching skills data:', error);
             }
         };
 
@@ -508,7 +562,7 @@ export default {
                 const response = await axios.get('http://127.0.0.1:8000/emp_reference/ReferencesData');
                 referencesData.value = response.data;
             } catch (error) {
-                console.error('Error fetching organization data:', error);
+                console.error('Error fetching references data:', error);
             }
         };
 
@@ -570,6 +624,29 @@ export default {
             } catch (error) {
                 console.error('Error adding reference data:', error);
             }
+        };
+
+        
+        const addChild = async () => {
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/emp_child/AddChildData', newChild.value);
+                childData.value.push(response.data);
+                showAddChildDialog.value = false;
+                showSuccessDialog.value = true;
+                clearNewChildForm();
+            } catch (error) {
+                console.error('Error adding child data:', error);
+            }
+        };
+
+        const clearNewChildForm = () => {
+            newChild.value = {
+                child_fname: '',
+                child_mname: '',
+                child_lname: '',
+                child_xname: '',
+                child_dob: ''
+            };
         };
 
         const clearNewEducationForm = () => {
@@ -654,7 +731,9 @@ export default {
 
         const updateProfile = async () => {
             try {
-                if (activeTab.value === 1) {
+                if (activeTab.value === 0) {
+                    await updateFamilyData();
+                } else if (activeTab.value === 1) {
                     await axios.post('http://127.0.0.1:8000/education/UpdateEducationData', educationData.value);
                 } else if (activeTab.value === 2) {
                     await axios.post('http://127.0.0.1:8000/emp_org/UpdateOrganizationData', organizationData.value);
@@ -669,6 +748,54 @@ export default {
                 showSuccessDialog.value = true;
             } catch (error) {
                 console.error('Error updating profile:', error);
+                showUpdateDialog.value = false;
+            }
+        };
+
+        const fetchChildData = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/emp_child/ChildData');
+                childData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching child data:', error);
+            }
+        };
+
+        const hideAddChildDialog = () => {
+            showAddChildDialog.value = false;
+        };
+
+        const updateFamilyData = async () => {
+            try {
+                await axios.post('http://127.0.0.1:8000/emp_family/UpdateFamilyData', {
+                    spouse: {
+                        surname: fields.value.spouseSurname.value,
+                        firstName: fields.value.spouseFirstName.value,
+                        middleName: fields.value.spouseMiddleName.value,
+                        extName: fields.value.spouseExtName.value,
+                        occupation: fields.value.spouseOccupation.value,
+                        businessName: fields.value.spouseBusinessName.value,
+                        businessAddress: fields.value.spouseBusinessAddress.value,
+                        telNo: fields.value.spouseTelNo.value,
+                    },
+                    father: {
+                        surname: fields.value.fatherSurname.value,
+                        firstName: fields.value.fatherFirstName.value,
+                        middleName: fields.value.fatherMiddleName.value,
+                        extName: fields.value.fatherExtName.value,
+                    },
+                    mother: {
+                        maidenName: fields.value.motherMaidenName.value,
+                        surname: fields.value.motherSurname.value,
+                        firstName: fields.value.motherFirstName.value,
+                        middleName: fields.value.motherMiddleName.value,
+                    },
+                    children: childData.value
+                });
+                showUpdateDialog.value = false;
+                showSuccessDialog.value = true;
+            } catch (error) {
+                console.error('Error updating family data:', error);
                 showUpdateDialog.value = false;
             }
         };
@@ -709,6 +836,7 @@ export default {
             fetchWorkExperienceData();
             fetchSkillsData();
             fetchReferencesData();
+            fetchChildData();
         });
 
         return {
@@ -747,18 +875,27 @@ export default {
             hideAddWorkExperienceDialog,
             hideAddSkillsDialog,
             hideAddReferencesDialog,
-            hideSuccessDialog,
             fetchEducationData,
             fetchOrganizationData,
             fetchWorkExperienceData,
             fetchSkillsData,
             fetchReferencesData,
+            updateProfile,
+            searchQuery,
+            search,
+            childData,
+            newChild,
+            showAddChildDialog,
+            showSuccessDialog,
+            showUpdateDialog,
+            addChild,
+            clearNewChildForm,
+            hideAddChildDialog,
+            hideSuccessDialog,
             confirmUpdate,
             hideUpdateDialog,
-            updateProfile,
-            inputEditor,
-            searchQuery,
-            search
+            updateFamilyData,
+            inputEditor
         };
     }
 };
