@@ -80,8 +80,8 @@
                         <br/>
                         <h1 style="font-size: 25px; font-weight: bold;">Child</h1>
                         <DataTable :value="childData" class="mt-8" :paginator="true" :rows="5" editable>
-                            <Column field="child_fname" header="Name of Child" :editor="inputEditor"></Column>
-                            <Column field="child_dob" header="Age" :editor="inputEditor"></Column>
+                            <Column field="full_name" header="Name of Child" :editor="inputEditor"></Column>
+                            <Column field="age" header="Age" :editor="inputEditor"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="EDUCATION">
@@ -179,7 +179,7 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">Child Birth Date</label>
-                            <input class="input-field" type="text" v-model="newChild.child_dob" />
+                            <input class="input-field" type="date" v-model="newChild.child_dob" />
                         </div>
                     </div>
                     <div class="flex justify-center gap-4 mt-4">
@@ -566,6 +566,15 @@ export default {
             }
         };
 
+        const fetchChildData = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/emp_child/ChildData');
+                childData.value = response.data;
+            } catch (error) {
+                console.error('Error fetching child data:', error);
+            }
+        };
+
         const addEducation = async () => {
             try {
                 const response = await axios.post('http://127.0.0.1:8000/education/AddEducationData', newEducation.value);
@@ -752,14 +761,7 @@ export default {
             }
         };
 
-        const fetchChildData = async () => {
-            try {
-                const response = await axios.get('http://127.0.0.1:8000/emp_child/ChildData');
-                childData.value = response.data;
-            } catch (error) {
-                console.error('Error fetching child data:', error);
-            }
-        };
+
 
         const hideAddChildDialog = () => {
             showAddChildDialog.value = false;

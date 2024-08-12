@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/emp_reference/AddReferenceData', [BackgroundController::class, 'addReferenceData']);
     Route::get('/family-data', [BackgroundController::class, 'getFamilyData']);
     Route::post('/emp_family/UpdateFamilyData', [BackgroundController::class, 'updateFamilyData']);
+    Route::get('/emp_child/ChildData', [BackgroundController::class, 'getChildData']);
     Route::post('/emp_child/AddChildData', [BackgroundController::class, 'addChildData']);
 
 

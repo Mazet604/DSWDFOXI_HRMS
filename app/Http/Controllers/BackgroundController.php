@@ -311,13 +311,11 @@ class BackgroundController extends Controller
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
 
-            // Fetch the employee using empid to get the emp_count
             $employee = Employee::where('empid', $user->empid)->first();
             if (!$employee) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-            // Update family data using emp_count
             EmpFamily::updateFamilyData($employee->emp_count, $request->all());
 
             return response()->json(['success' => 'Family data updated successfully']);
@@ -327,63 +325,71 @@ class BackgroundController extends Controller
     }
 
     public function addChildData(Request $request)
-    {
-        try {
-            $user = Auth::user();
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
-            }
-
-
-            $employee = Employee::where('empid', $user->empid)->first();
-            if (!$employee) {
-                return response()->json(['error' => 'Employee not found'], 404);
-            }
-
-            // Get emp_count from empid
-            $child = emp_child::where('emp_count', $employee->emp_count)->first();
-            if (!$child) {
-                return response()->json(['error' => 'Employee count not found'], 404);
-            }
-
-            $child->child_fname = $request->input('child_fname');
-            $child->child_mname = $request->input('child_mname');
-            $child->child_lname = $request->input('child_lname');
-            $child->child_xname = $request->input('child_xname');
-            $child->child_dob = $request->input('child_dob');
-            $child->save();
-
-            return response()->json($child, 201);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
         }
-    }
 
-    public function getChildData()
-    {
-        try {
-            $user = Auth::user();
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
-            }
-
-            // Get emp_count from empid
-            $emp_count = $this->getEmpCountFromEmpId($user->empid);
-            if (!$emp_count) {
-                return response()->json(['error' => 'Employee count not found'], 404);
-            }
-
-            $childData = emp_child::where('emp_count', $emp_count)
-                ->select('child_fname', 'child_dob')
-                ->get();
-
-            if ($childData->isEmpty()) {
-                return response()->json(['error' => 'Data not found'], 404);
-            }
-
-            return response()->json($childData);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+        // Fetch the employee's record to get emp_count
+        $employee = Employee::where('empid', $user->empid)->first();
+        if (!$employee) {
+            return response()->json(['error' => 'Employee not found'], 404);
         }
+
+        $child = new emp_child();
+        $child->emp_count = $employee->emp_count; 
+        $child->child_fname = $request->input('child_fname');
+        $child->child_mname = $request->input('child_mname');
+        $child->child_lname = $request->input('child_lname');
+        $child->child_xname = $request->input('child_xname');
+        $child->child_dob = $request->input('child_dob');
+        $child->save();
+
+        return response()->json($child, 201);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
+
+public function getChildData()
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        // Fetch the employee's record to get emp_count
+        $employee = Employee::where('empid', $user->empid)->first();
+        if (!$employee) {
+            return response()->json(['error' => 'Employee not found'], 404);
+        }
+
+        // Fetch child data and transform it to include full name and age
+        $childData = emp_child::where('emp_count', $employee->emp_count)
+            ->select('child_fname', 'child_mname', 'child_lname', 'child_xname', 'child_dob')
+            ->get()
+            ->map(function($child) {
+                $fullName = trim("{$child->child_fname} {$child->child_mname} {$child->child_lname} {$child->child_xname}");
+                $age = \Carbon\Carbon::parse($child->child_dob)->age;
+                return [
+                    'full_name' => $fullName,
+                    'age' => $age,
+                ];
+            });
+
+        if ($childData->isEmpty()) {
+            return response()->json(['error' => 'No child data found'], 404);
+        }
+
+        return response()->json($childData);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
 }
