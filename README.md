@@ -5,6 +5,6 @@
 
 1. npm install
 2. npm run build
-3. import the included database (charlie_hrms.sql) (no more php artisan migrate)
+3. import the included database (charlie_hrms.sql) [no more php artisan migrate]
 4. php artisan serve
 5. you can check the sent OTP code in the laravel logs
