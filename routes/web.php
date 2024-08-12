@@ -72,11 +72,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/dropdown/bloodtype-options', [DropDownControllers::class, 'getBloodTypeOptions']);
     Route::get('/dropdown/ext-options', [DropDownControllers::class, 'getExtOptions']);
 
-    Route::get('/address/Address', [AddressController::class, 'getAddress']);
-    Route::get('/address/selectedregion-options', [AddressController::class, 'getSelectedRegionOptions']);
-    Route::get('/address/selectedprovince-options', [AddressController::class, 'getSelectedProvinceOptions']);
-    Route::get('/address/selectedcity-options', [AddressController::class, 'getSelectedCityOptions']);
-    Route::get('/address/selectedbarangay-options', [AddressController::class, 'getSelectedBarangayOptions']);
+    Route::get('/employee/Address', [AddressController::class, 'getAddress']);
+    Route::get('/employee/selectedregion-options', [AddressController::class, 'getSelectedRegionOptions']);
+    Route::get('/employee/selectedprovince-options', [AddressController::class, 'getSelectedProvinceOptions']);
+    /*Route::get('/emp_address/selectedcity-options', [AddressController::class, 'getSelectedCityOptions']);
+    Route::get('/emp_address/selectedbarangay-options', [AddressController::class, 'getSelectedBarangayOptions']);*/
 
     Route::get('/education/EducationData', [BackgroundController::class, 'getEducationData']);
     Route::post('/education/AddEducationData', [BackgroundController::class, 'addEducationData']);

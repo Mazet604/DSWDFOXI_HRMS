@@ -90,10 +90,6 @@
               <!-- Address Fields -->
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">COUNTRY</label>
-                  <input type="text" class="input-field" v-model="fields.country" :disabled="!isEditing" />
-                </div>
-                <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
                   <select class="input-field" v-model="fields.selectedRegion" :disabled="!isEditing">
                     <option v-for="option in selectedRegionOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
@@ -237,14 +233,16 @@ export default {
         telnum: '',
         emailadd: '',
         pass: '',
+        zipcode: '',
+        block: '',
+        villsub: '',
         selectedRegion:'',
         selectedProvince:'',
-        selectedCity:'',
-        selectedBarangay:'',
-        country:'',
+
       },
+
       isEditing: false,
-      originalFields: {}, // Added to store original data before editing
+      originalFields: {},
       errorMessage: '',
       showUpdateDialog: false,
       showSuccessDialog: false,
@@ -254,8 +252,6 @@ export default {
       extOptions:[],
       selectedRegionOptions:[],
       selectedProvinceOptions:[],
-      selectedCityOptions:[],
-      selectedBarangayOptions:[],
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
@@ -309,7 +305,7 @@ export default {
 
     async fetchSelectedRegionOptions() {
       try {
-        const response = await axios.get('address/selectedregion-options');
+        const response = await axios.get('/employee/selectedregion-options');
         this.selectedRegionOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load regions.';
@@ -318,31 +314,12 @@ export default {
 
     async fetchSelectedProvinceOptions() {
       try {
-        const response = await axios.get('address/selectedprovince-options');
+        const response = await axios.get('/employee/selectedprovince-options');
         this.selectedProvinceOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load provinces.';
       }
     },
-
-    /*async fetchSelectedCityOptions() {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/selectedcity-options');
-        this.selectedCityOptions = response.data;
-      } catch (error) {
-        this.errorMessage = 'Failed to load cities.';
-      }
-    },
-
-    /*async fetchSelectedBarangayOptions() {
-      try {
-        const response = await axios.get('address/selectedbarangay-options');
-        this.selectedBarangayOptions = response.data;
-      } catch (error) {
-        this.errorMessage = 'Failed to load barangays.';
-      }
-    },*/
-
 
     async fetchFullName() {
       try {
@@ -350,11 +327,7 @@ export default {
         this.fullName = response.data.fullName;
         this.empPosition = response.data.empPosition;
       } catch (error) {
-        if (error.response && error.response.status === 500) {
-          this.errorMessage = 'Internal Server Error. Please try again later.';
-        } else {
-          this.errorMessage = 'An error occurred. Please try again.';
-        }
+          this.errorMessage = 'Failed to load full name.';
       }
     },
     async fetchPersonalInfo() {
@@ -375,30 +348,22 @@ export default {
         this.fields.weight = response.data.weight;
         this.fields.bloodType = response.data.bloodType;
       } catch (error) {
-        if (error.response && error.response.status === 500) {
-          this.errorMessage = 'Internal Server Error. Please try again later.';
-        } else {
-          this.errorMessage = 'An error occurred. Please try again.';
-        }
+          this.errorMessage = 'Failed to load personal information.';
       }
     },
 
     async fetchAddress() {
       try {
-            const response = await axios.get('address/Address');
-            this.fields.selectedRegion = response.data.selectedRegion;
-            this.fields.selectedProvince = response.data.selectedProvince;
-            this.fields.selectedCity = response.data.selectedCity;
-            this.fields.selectedBarangay = response.data.selectedBarangay;
-            this.fields.country = response.data.country;
-          } catch (error) {
-            if (error.response && error.response.status === 500) {
-              this.errorMessage = 'Internal Server Error. Please try again later.';
-            } else {
-              this.errorMessage = 'An error occurred. Please try again.';
-            }
-          }
-        },
+        const response = await axios.get('http://127.0.0.1:8000/employee/Address');
+        this.fields.selectedRegion = response.data.selectedRegion;
+        this.fields.selectedProvince = response.data.selectedProvince;
+        this.fields.zipcode = response.data.zipcode;
+        this.fields.block = response.data.block;
+        this.fields.villsub = response.data.villsub;
+      } catch (error) {
+          this.errorMessage = 'Failed to load address.';
+      }
+    },
     async fetchSecurityandContact() {
       try {
         const response = await axios.get('http://127.0.0.1:8000/employee/SecurityandContact');
@@ -407,11 +372,7 @@ export default {
         this.fields.emailadd = response.data.emailadd;
         this.fields.pass = response.data.pass;
       } catch (error) {
-        if (error.response && error.response.status === 500) {
-          this.errorMessage = 'Internal Server Error. Please try again later.';
-        } else {
-          this.errorMessage = 'An error occurred. Please try again.';
-        }
+          this.errorMessage = 'Failed to load security and contact information.';
       }
     },
     toggleEditing() {
@@ -473,8 +434,6 @@ export default {
     this.fetchExtOptions();
     this.fetchSelectedRegionOptions();
     this.fetchSelectedProvinceOptions();
-    this.fetchSelectedCityOptions();
-    this.fetchSelectedBarangayOptions();
   }
 };
 </script>
@@ -486,6 +445,10 @@ export default {
 
 .text-color {
   color: #707A88;
+}
+
+.text-color:hover{
+  cursor: not-allowed;
 }
 
 .bg-center {

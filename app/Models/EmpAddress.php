@@ -9,14 +9,18 @@ class EmpAddress extends Model
 {
     use HasFactory;
 
+    protected $table = 'emp_address';
+    protected $primaryKey = 'emp_count';
+
     protected $fillable = [
-        'emp_count', 'emp_citizen', 'emp_country', 'emp_house', 'emp_street',
+        'emp_count', 'emp_citizen', 'emp_house', 'emp_street',
         'emp_subd', 'emp_brgy', 'emp_city', 'emp_prov', 'emp_region', 'emp_datereg',
         'emp_pob', 'emp_zip'
     ];
 
-    public function employee()
+    public function Address()
     {
-        return $this->belongsTo(employee::class, 'emp_count', 'emp_count');
+        return $this->belongsTo(EmpAddress::class, 'emp_count', 'emp_count');
     }
+
 }
