@@ -237,6 +237,9 @@ export default {
         telnum: '',
         emailadd: '',
         pass: '',
+        zipcode: '',
+        block: '',
+        villsub: '',
         selectedRegion:'',
         selectedProvince:'',
 
@@ -381,9 +384,9 @@ export default {
         const response = await axios.get('http://127.0.0.1:8000/employee/Address');
         this.fields.selectedRegion = response.data.selectedRegion;
         this.fields.selectedProvince = response.data.selectedProvince;
-        this.fields.selectedCity = response.data.selectedCity;
-        this.fields.selectedBarangay = response.data.selectedBarangay;
-        this.fields.country = response.data.country;
+        this.fields.zipcode = response.data.zipcode;
+        this.fields.block = response.data.block;
+        this.fields.villsub = response.data.villsub;
       } catch (error) {
           this.errorMessage = 'Failed to load address.';
       }
