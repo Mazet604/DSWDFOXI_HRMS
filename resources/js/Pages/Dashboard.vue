@@ -41,6 +41,10 @@
                   <input type="text" class="input-field" v-model="fields.lastName" :disabled="!isEditing" />
                 </div>
                 <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">Age</label>
+                  <input type="text" class="input-field text-color" :value="calculatedAge" disabled />
+                </div>
+                <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
                   <select class="input-field" v-model="fields.suffix" :disabled="!isEditing">
                     <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
@@ -130,13 +134,13 @@
             <TabPanel header="SECURITY & CONTACT DETAILS" :active="activeSubTab === 'security'">
               <!-- Security & Contact Fields -->
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
+                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">MOBILE NUMBER</label>
-                  <input type="text" class="input-field" v-model="fields.mobilenum" :disabled="!isEditing" />
+                  <input type="text" class="input-field" v-model="fields.mobilenum" maxlength="9" @input="validateMobileNumber" :disabled="!isEditing" />
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER</label>
-                  <input type="text" class="input-field" v-model="fields.telnum" :disabled="!isEditing" />
+                  <input type="text" class="input-field" v-model="fields.telnum" maxlength="7" @input="validateTelephoneNumber" :disabled="!isEditing" />
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">EMAIL ADDRESS</label>
@@ -233,9 +237,6 @@ export default {
         telnum: '',
         emailadd: '',
         pass: '',
-        zipcode: '',
-        block: '',
-        villsub: '',
         selectedRegion:'',
         selectedProvince:'',
 
@@ -257,7 +258,30 @@ export default {
       searchQuery: '',
     };
   },
-  methods: {
+
+  computed: {
+      calculatedAge() {
+        if (!this.fields.birthday) return '';
+        const today = new Date();
+        const birthDate = new Date(this.fields.birthday);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      }
+    },
+
+    methods: {
+
+    validateMobileNumber() {
+      this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
+    },
+    validateTelephoneNumber() {
+      this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
+    },
+
     async fetchSexOptions() {
       try {
         const response = await fetch('/dropdown/sex-options');
@@ -357,9 +381,9 @@ export default {
         const response = await axios.get('http://127.0.0.1:8000/employee/Address');
         this.fields.selectedRegion = response.data.selectedRegion;
         this.fields.selectedProvince = response.data.selectedProvince;
-        this.fields.zipcode = response.data.zipcode;
-        this.fields.block = response.data.block;
-        this.fields.villsub = response.data.villsub;
+        this.fields.selectedCity = response.data.selectedCity;
+        this.fields.selectedBarangay = response.data.selectedBarangay;
+        this.fields.country = response.data.country;
       } catch (error) {
           this.errorMessage = 'Failed to load address.';
       }
@@ -370,7 +394,6 @@ export default {
         this.fields.mobilenum = response.data.mobilenum;
         this.fields.telnum = response.data.telnum;
         this.fields.emailadd = response.data.emailadd;
-        this.fields.pass = response.data.pass;
       } catch (error) {
           this.errorMessage = 'Failed to load security and contact information.';
       }
