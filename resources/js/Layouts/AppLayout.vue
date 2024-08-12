@@ -20,15 +20,15 @@
                         </div>
                         <div v-show="isAccordionOpen" class="custom-accordion-content">
                             <ul class="custom-menu">
-                                <li @click="navigateTo('dashboard')">
+                                <li @click="navigateTo('dashboard', 0)">
                                     <i class="mr-2 fas fa-user"></i>
                                     Basic Info
                                 </li>
-                                <li @click="navigateTo('background')">
+                                <li @click="navigateTo('background', 0)">
                                     <i class="mr-2 fas fa-briefcase"></i>
                                     Background
                                 </li>
-                                <li @click="navigateTo('otherinfo')">
+                                <li @click="navigateTo('otherinfo', 0)">
                                     <i class="mr-2 fas fa-info-circle"></i>
                                     Other Info
                                 </li>
@@ -87,8 +87,14 @@ const toggleAccordion = () => {
     isAccordionOpen.value = !isAccordionOpen.value;
 };
 
-const navigateTo = (routeName) => {
-    router.visit(route(routeName), { preserveState: true }); // Use preserveState to keep the dropdown open
+const navigateTo = (routeName, tab = 0, subTab = 0) => {
+    router.visit(route(routeName), {
+        preserveState: true,
+        onSuccess: () => {
+            activeTab.value = tab;
+            activeSubTab.value = subTab;
+        },
+    });
 };
 
 const confirmLogout = () => {
@@ -110,57 +116,41 @@ const closeDropdown = () => {
 const search = () => {
     const searchLower = searchQuery.value.toLowerCase();
     if (searchLower.includes('personal info')) {
-        navigateTo('dashboard');
-        activeTab.value = 0;
+        navigateTo('dashboard', 0, 0);
     } else if (searchLower.includes('address')) {
-        navigateTo('dashboard');
-        activeTab.value = 1;
+        navigateTo('dashboard', 0, 1);
     } else if (searchLower.includes('security')) {
-        navigateTo('dashboard');
-        activeTab.value = 2;
+        navigateTo('dashboard', 0, 2);
     } else if (searchLower.includes('family')) {
-        navigateTo('background');
-        activeTab.value = 0;
+        navigateTo('background', 0, 0);
     } else if (searchLower.includes('education')) {
-        navigateTo('background');
-        activeTab.value = 1;
+        navigateTo('background', 1, 0);
     } else if (searchLower.includes('organization')) {
-        navigateTo('background');
-        activeTab.value = 2;
+        navigateTo('background', 2, 0);
     } else if (searchLower.includes('work experience')) {
-        navigateTo('background');
-        activeTab.value = 3;
+        navigateTo('background', 3, 0);
     } else if (searchLower.includes('skills')) {
-        navigateTo('background');
-        activeTab.value = 4;
+        navigateTo('background', 4, 0);
     } else if (searchLower.includes('references')) {
-        navigateTo('background');
-        activeTab.value = 5;
+        navigateTo('background', 5, 0);
     } else if (searchLower.includes('eligibility')) {
-        navigateTo('otherinfo');
-        activeTab.value = 0;
+        navigateTo('otherinfo', 0, 0);
     } else if (searchLower.includes('voluntary')) {
-        navigateTo('otherinfo');
-        activeTab.value = 1;
+        navigateTo('otherinfo', 1, 0);
     } else if (searchLower.includes('learning')) {
-        navigateTo('otherinfo');
-        activeTab.value = 2;
+        navigateTo('otherinfo', 2, 0);
     } else if (searchLower.includes('recognition')) {
-        navigateTo('otherinfo');
-        activeTab.value = 3;
+        navigateTo('otherinfo', 3, 0);
     } else if (searchLower.includes('government')) {
-        navigateTo('otherinfo');
-        activeTab.value = 4;
+        navigateTo('otherinfo', 4, 0);
     } else if (searchLower.includes('other')) {
-        navigateTo('otherinfo');
-        activeTab.value = 5;
+        navigateTo('otherinfo', 5, 0);
     } else {
         alert('No matching tab found.');
     }
 };
 
 watch(activeTab, (newValue) => {
-    // Additional logic if needed when the activeTab changes
     console.log('Active tab changed to:', newValue);
 });
 </script>

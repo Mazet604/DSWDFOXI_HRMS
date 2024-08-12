@@ -77,6 +77,12 @@
                                 <input class="input-field" type="text" v-model="fields.motherMiddleName.value"/>
                             </div>
                         </div>
+                        <br/>
+                        <h1 style="font-size: 25px; font-weight: bold;">Child</h1>
+                        <DataTable :value="childData" class="mt-8" :paginator="true" :rows="5" editable>
+                            <Column field="childname" header="Name of Child" :editor="inputEditor"></Column>
+                            <Column field="childage" header="Age" :editor="inputEditor"></Column>
+                        </DataTable>
                     </TabPanel>
                     <TabPanel header="EDUCATION">
                         <DataTable :value="educationData" class="mt-8" :paginator="true" :rows="5" editable>

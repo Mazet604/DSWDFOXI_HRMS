@@ -41,6 +41,10 @@
                   <input type="text" class="input-field" v-model="fields.lastName" :disabled="!isEditing" />
                 </div>
                 <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">Age</label>
+                  <input type="text" class="input-field" :value="calculatedAge" disabled />
+                </div>
+                <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
                   <select class="input-field" v-model="fields.suffix" :disabled="!isEditing">
                     <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
@@ -134,13 +138,13 @@
             <TabPanel header="SECURITY & CONTACT DETAILS" :active="activeSubTab === 'security'">
               <!-- Security & Contact Fields -->
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
+                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">MOBILE NUMBER</label>
-                  <input type="text" class="input-field" v-model="fields.mobilenum" :disabled="!isEditing" />
+                  <input type="text" class="input-field" v-model="fields.mobilenum" maxlength="9" @input="validateMobileNumber" :disabled="!isEditing" />
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER</label>
-                  <input type="text" class="input-field" v-model="fields.telnum" :disabled="!isEditing" />
+                  <input type="text" class="input-field" v-model="fields.telnum" maxlength="7" @input="validateTelephoneNumber" :disabled="!isEditing" />
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">EMAIL ADDRESS</label>
@@ -236,7 +240,6 @@ export default {
         mobilenum: '',
         telnum: '',
         emailadd: '',
-        pass: '',
         selectedRegion:'',
         selectedProvince:'',
         selectedCity:'',
@@ -261,7 +264,32 @@ export default {
       searchQuery: '',
     };
   },
-  methods: {
+
+  computed: {
+      calculatedAge() {
+        if (!this.fields.birthday) return '';
+        const today = new Date();
+        const birthDate = new Date(this.fields.birthday);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      }
+    },
+
+    methods: {
+
+    validateMobileNumber() {
+      // Remove any non-numeric characters and limit the length to 11
+      this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
+    },
+    validateTelephoneNumber() {
+      // Remove any non-numeric characters and limit the length to 10
+      this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
+    },
+
     async fetchSexOptions() {
       try {
         const response = await fetch('/dropdown/sex-options');
@@ -405,7 +433,6 @@ export default {
         this.fields.mobilenum = response.data.mobilenum;
         this.fields.telnum = response.data.telnum;
         this.fields.emailadd = response.data.emailadd;
-        this.fields.pass = response.data.pass;
       } catch (error) {
         if (error.response && error.response.status === 500) {
           this.errorMessage = 'Internal Server Error. Please try again later.';

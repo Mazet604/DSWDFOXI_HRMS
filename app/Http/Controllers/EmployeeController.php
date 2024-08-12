@@ -107,15 +107,14 @@ class EmployeeController extends Controller
             $mobilenum = $employee->emp_cnum;
             $telnum = $employee->emp_telnum;
             $emailadd = $emp_acc->empmail;
-            $pass = $emp_acc->emppass;
             return response()->json(['mobilenum' => $mobilenum, 'telnum' => $telnum, 'emailadd' => $emailadd
-            , 'pass' => $pass]);
+            ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function updateProfile(Request $request)
+        public function updateProfile(Request $request)
     {
         try {
             $user = Auth::user(); // Get the currently authenticated user
@@ -147,7 +146,6 @@ class EmployeeController extends Controller
 
             // Update the emp_acc details
             $emp_acc->empmail = $request->input('emailadd');
-            $emp_acc->emppass = $request->input('pass');
 
             // Save the updated information
             $employee->save();
@@ -158,6 +156,7 @@ class EmployeeController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
     public function getSexOptions()
     {
