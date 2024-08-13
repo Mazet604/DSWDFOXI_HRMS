@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lib_brgies', function (Blueprint $table) {
-            $table->string('psgc')->primary();  
+            $table->string('psgc', 10)->primary();  
             $table->string('col_brgy', 60);  
-            $table->timestamps();  // Add timestamps for created_at and updated_at
+            $table->string('citmun_code', 10);
         });
     }
 

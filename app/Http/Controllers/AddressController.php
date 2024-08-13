@@ -40,8 +40,8 @@ class AddressController extends Controller
                 'zipcode' => $address->emp_zip,
                 'block' => $address->emp_house,
                 'villsub' => $address->emp_subd,
-                'selectedRegion' => $address->emp_region,
-                'selectedProvince' => $address->emp_prov,
+                'Region' => $address->emp_region,
+                'Province' => $address->emp_prov,
             ], 200);
 
         } catch (\Exception $e) {
@@ -49,21 +49,21 @@ class AddressController extends Controller
         }
     }
 
-    public function getSelectedRegionOptions()
+    public function getRegionOptions()
     {
         try {
-            $selectedRegionOptions = lib_region::all(['psgc as value', 'col_region as label']);
-            return response()->json($selectedRegionOptions);
+            $RegionOptions = lib_region::all(['reg_psgc as value', 'col_region as label']);
+            return response()->json($RegionOptions);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }   
 
-    public function getSelectedProvinceOptions()
+    public function getProvinceOptions()
     {
         try {
-            $selectedProvinceOptions = lib_province::all(['psgc as value', 'col_province as label']);  
-            return response()->json($selectedProvinceOptions);
+            $ProvinceOptions = lib_province::all(['prv_psgc as value', 'col_province as label']);  
+            return response()->json($ProvinceOptions);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

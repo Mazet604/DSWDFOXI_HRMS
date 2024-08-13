@@ -10,7 +10,7 @@ class lib_brgy extends Model
     use HasFactory;
 
     protected $table = 'lib_brgies';
-    protected $primaryKey = 'psgc';
+    protected $primaryKey = 'brgy_psgc';
     public $incrementing = false;
-    protected $fillable = ['psgc', 'col_brgy'];
+    protected $fillable = ['brgy_psgc', 'col_brgy', 'citmun_psgc'];
 }

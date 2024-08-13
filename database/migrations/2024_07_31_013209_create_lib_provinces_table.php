@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lib_provinces', function (Blueprint $table) {
-            $table->string('psgc')->primary();   
+            $table->string('psgc', 10)->primary();   
             $table->string('col_provinces', 60);  
-            $table->timestamps();  // Add timestamps for created_at and updated_at
+            $table->string('reg_code', 10);
         });
     }
 

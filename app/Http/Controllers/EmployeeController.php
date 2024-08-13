@@ -34,9 +34,11 @@ class EmployeeController extends Controller
                 $emp_ext = $suffix ? $suffix->lib1_suffix : $employee->emp_ext;
             }
             
-    
-            $fullName = $employee->emp_lname . ', ' . $employee->emp_fname . ' ' . $employee->emp_mname . ' ' . $emp_ext;
-            $empPosition = $employee->emp_position;
+                // Only show the first character of emp_mname
+                $emp_mname_initial = $employee->emp_mname ? substr($employee->emp_mname, 0, 1) . '.' : '';
+
+        $fullName = $employee->emp_lname . ', ' . $employee->emp_fname . ' ' . $emp_mname_initial . ' ' . $emp_ext;
+        $empPosition = $employee->emp_position;
             return response()->json(['fullName' => $fullName, 'empPosition' => $empPosition]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

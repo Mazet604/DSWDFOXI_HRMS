@@ -10,7 +10,7 @@ class lib_city extends Model
     use HasFactory;
 
     protected $table = 'lib_cities';
-    protected $primaryKey = 'psgc';
+    protected $primaryKey = 'citmun_psgc';
     public $incrementing = false;
-    protected $fillable = ['psgc', 'col_citymuni'];
+    protected $fillable = ['citmun_psgc', 'col_citymuni', 'prv_psgc'];
 }

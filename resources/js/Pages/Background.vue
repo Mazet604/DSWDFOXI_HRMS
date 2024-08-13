@@ -523,7 +523,7 @@ export default {
 
         const fetchEducationData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/education/EducationData');
+                const response = await axios.get('/education/EducationData');
                 educationData.value = response.data;
             } catch (error) {
                 console.error('Error fetching education data:', error);
@@ -532,7 +532,7 @@ export default {
 
         const fetchOrganizationData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/emp_org/OrganizationData');
+                const response = await axios.get('/emp_org/OrganizationData');
                 organizationData.value = response.data;
             } catch (error) {
                 console.error('Error fetching organization data:', error);
@@ -541,7 +541,7 @@ export default {
 
         const fetchWorkExperienceData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/emp_work/WorkExperienceData');
+                const response = await axios.get('/emp_work/WorkExperienceData');
                 workExperienceData.value = response.data;
             } catch (error) {
                 console.error('Error fetching work experience data:', error);
@@ -550,7 +550,7 @@ export default {
 
         const fetchSkillsData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/emp_skills/SkillsData');
+                const response = await axios.get('/emp_skills/SkillsData');
                 skillsData.value = response.data;
             } catch (error) {
                 console.error('Error fetching skills data:', error);
@@ -559,7 +559,7 @@ export default {
 
         const fetchReferencesData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/emp_reference/ReferencesData');
+                const response = await axios.get('/emp_reference/ReferencesData');
                 referencesData.value = response.data;
             } catch (error) {
                 console.error('Error fetching references data:', error);
@@ -568,7 +568,7 @@ export default {
 
         const fetchChildData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/emp_child/ChildData');
+                const response = await axios.get('/emp_child/ChildData');
                 childData.value = response.data;
             } catch (error) {
                 console.error('Error fetching child data:', error);
@@ -577,7 +577,7 @@ export default {
 
         const addEducation = async () => {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/education/AddEducationData', newEducation.value);
+                const response = await axios.post('/education/AddEducationData', newEducation.value);
                 educationData.value.push(response.data);
                 showAddEducationDialog.value = false;
                 showSuccessDialog.value = true;
@@ -589,7 +589,7 @@ export default {
 
         const addOrganization = async () => {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/emp_org/AddOrganizationData', newOrganization.value);
+                const response = await axios.post('/emp_org/AddOrganizationData', newOrganization.value);
                 organizationData.value.push(response.data);
                 showAddOrganizationDialog.value = false;
                 showSuccessDialog.value = true;
@@ -601,7 +601,7 @@ export default {
 
         const addWorkExperience = async () => {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/emp_work/AddWorkExperienceData', newWorkExperience.value);
+                const response = await axios.post('/emp_work/AddWorkExperienceData', newWorkExperience.value);
                 workExperienceData.value.push(response.data);
                 showAddWorkExperienceDialog.value = false;
                 showSuccessDialog.value = true;
@@ -613,7 +613,7 @@ export default {
 
         const addSkill = async () => {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/emp_skills/AddSkillData', newSkill.value);
+                const response = await axios.post('/emp_skills/AddSkillData', newSkill.value);
                 skillsData.value.push(response.data);
                 showAddSkillsDialog.value = false;
                 showSuccessDialog.value = true;
@@ -625,7 +625,7 @@ export default {
 
         const addReference = async () => {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/emp_reference/AddReferenceData', newReference.value);
+                const response = await axios.post('/emp_reference/AddReferenceData', newReference.value);
                 referencesData.value.push(response.data);
                 showAddReferencesDialog.value = false;
                 showSuccessDialog.value = true;
@@ -638,7 +638,7 @@ export default {
         
         const addChild = async () => {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/emp_child/AddChildData', newChild.value);
+                const response = await axios.post('/emp_child/AddChildData', newChild.value);
                 childData.value.push(response.data);
                 showAddChildDialog.value = false;
                 showSuccessDialog.value = true;
@@ -743,15 +743,15 @@ export default {
                 if (activeTab.value === 0) {
                     await updateFamilyData();
                 } else if (activeTab.value === 1) {
-                    await axios.post('http://127.0.0.1:8000/education/UpdateEducationData', educationData.value);
+                    await axios.post('/education/UpdateEducationData', educationData.value);
                 } else if (activeTab.value === 2) {
-                    await axios.post('http://127.0.0.1:8000/emp_org/UpdateOrganizationData', organizationData.value);
+                    await axios.post('/emp_org/UpdateOrganizationData', organizationData.value);
                 } else if (activeTab.value === 3) {
-                    await axios.post('http://127.0.0.1:8000/emp_work/UpdateWorkExperienceData', workExperienceData.value);
+                    await axios.post('/emp_work/UpdateWorkExperienceData', workExperienceData.value);
                 } else if (activeTab.value === 4) {
-                    await axios.post('http://127.0.0.1:8000/emp_skills/UpdateSkillsData', skillsData.value);
+                    await axios.post('/emp_skills/UpdateSkillsData', skillsData.value);
                 } else if (activeTab.value === 5) {
-                    await axios.post('http://127.0.0.1:8000/emp_reference/UpdateReferencesData', referencesData.value);
+                    await axios.post('/emp_reference/UpdateReferencesData', referencesData.value);
                 }
                 showUpdateDialog.value = false;
                 showSuccessDialog.value = true;
@@ -769,7 +769,7 @@ export default {
 
         const updateFamilyData = async () => {
             try {
-                await axios.post('http://127.0.0.1:8000/emp_family/UpdateFamilyData', {
+                await axios.post('/emp_family/UpdateFamilyData', {
                     spouse: {
                         surname: fields.value.spouseSurname.value,
                         firstName: fields.value.spouseFirstName.value,

@@ -95,20 +95,20 @@
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
-                  <select class="input-field" v-model="fields.selectedRegion" :disabled="!isEditing">
-                    <option v-for="option in selectedRegionOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                  <select class="input-field" v-model="fields.Region" :disabled="!isEditing">
+                    <option v-for="option in RegionOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
-                  <select class="input-field" v-model="fields.selectedProvince" :disabled="!isEditing">
-                    <option v-for="option in selectedProvinceOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                  <select class="input-field" v-model="fields.Province" :disabled="!isEditing">
+                    <option v-for="option in ProvinceOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
-                  <select class="input-field" v-model="fields.selectedCity" :disabled="!isEditing">
-                    <option v-for="option in selectedCityOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                  <select class="input-field" v-model="fields.City" :disabled="!isEditing">
+                    <option v-for="option in CityOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                   </select>
                 </div>
                 <div>
@@ -125,8 +125,8 @@
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
-                  <select class="input-field" v-model="fields.selectedBarangay" :disabled="!isEditing">
-                    <option v-for="option in selectedBarangayOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                  <select class="input-field" v-model="fields.Barangay" :disabled="!isEditing">
+                    <option v-for="option in BarangayOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                   </select>
                 </div>
               </div>
@@ -240,8 +240,8 @@ export default {
         zipcode: '',
         block: '',
         villsub: '',
-        selectedRegion:'',
-        selectedProvince:'',
+        Region:'',
+        Province:'',
 
       },
 
@@ -254,8 +254,8 @@ export default {
       civilStatusOptions:[],
       bloodTypeOptions:[],
       extOptions:[],
-      selectedRegionOptions:[],
-      selectedProvinceOptions:[],
+      RegionOptions:[],
+      ProvinceOptions:[],
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
@@ -333,19 +333,19 @@ export default {
       }
     },
 
-    async fetchSelectedRegionOptions() {
+    async fetchRegionOptions() {
       try {
-        const response = await axios.get('/employee/selectedregion-options');
-        this.selectedRegionOptions = response.data;
+        const response = await axios.get('/employee/region-options');
+        this.RegionOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load regions.';
       }
     },
 
-    async fetchSelectedProvinceOptions() {
+    async fetchProvinceOptions() {
       try {
-        const response = await axios.get('/employee/selectedprovince-options');
-        this.selectedProvinceOptions = response.data;
+        const response = await axios.get('/employee/province-options');
+        this.ProvinceOptions = response.data;
       } catch (error) {
         this.errorMessage = 'Failed to load provinces.';
       }
@@ -353,7 +353,7 @@ export default {
 
     async fetchFullName() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/employee/fullname');
+        const response = await axios.get('/employee/fullname');
         this.fullName = response.data.fullName;
         this.empPosition = response.data.empPosition;
       } catch (error) {
@@ -362,7 +362,7 @@ export default {
     },
     async fetchPersonalInfo() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/employee/PersonalInfo');
+        const response = await axios.get('/employee/PersonalInfo');
         this.fields.empUser = response.data.empUser;
         this.fields.empID = response.data.empID;
         this.fields.firstName = response.data.firstName;
@@ -384,9 +384,9 @@ export default {
 
     async fetchAddress() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/employee/Address');
-        this.fields.selectedRegion = response.data.selectedRegion;
-        this.fields.selectedProvince = response.data.selectedProvince;
+        const response = await axios.get('/employee/Address');
+        this.fields.Region = response.data.Region;
+        this.fields.Province = response.data.Province;
         this.fields.zipcode = response.data.zipcode;
         this.fields.block = response.data.block;
         this.fields.villsub = response.data.villsub;
@@ -394,9 +394,10 @@ export default {
           this.errorMessage = 'Failed to load address.';
       }
     },
+
     async fetchSecurityandContact() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/employee/SecurityandContact');
+        const response = await axios.get('/employee/SecurityandContact');
         this.fields.mobilenum = response.data.mobilenum;
         this.fields.telnum = response.data.telnum;
         this.fields.emailadd = response.data.emailadd;
@@ -430,7 +431,7 @@ export default {
     },
     async saveProfile() {
       try {
-        await axios.patch('http://127.0.0.1:8000/employee/updateProfile', this.fields);
+        await axios.patch('/employee/updateProfile', this.fields);
         this.isEditing = false;
         this.showUpdateDialog = false;
         this.showSuccessDialog = true;
@@ -466,9 +467,9 @@ export default {
     this.fetchCivilStatusOptions();
     this.fetchBloodTypeOptions();
     this.fetchExtOptions();
-    this.fetchSelectedRegionOptions();
-    this.fetchSelectedProvinceOptions();
-  }
+    this.fetchRegionOptions();
+    this.fetchProvinceOptions();
+  },
 };
 </script>
 

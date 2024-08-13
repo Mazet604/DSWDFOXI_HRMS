@@ -11,7 +11,7 @@ class lib_region extends Model
     use HasFactory;
 
     protected $table = 'lib_regions';
-    protected $primaryKey = 'psgc';
+    protected $primaryKey = 'reg_psgc';
     public $incrementing = false;
-    protected $fillable = ['psgc', 'col_region'];
+    protected $fillable = ['reg_psgc', 'col_region'];
 }

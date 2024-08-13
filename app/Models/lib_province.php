@@ -10,8 +10,8 @@ class lib_province extends Model
     use HasFactory;
 
     protected $table = 'lib_provinces';
-    protected $primaryKey = 'psgc';
+    protected $primaryKey = 'prv_psgc';
     public $incrementing = false;
-    protected $fillable = ['psgc', 'col_province', 'reg_code'];
+    protected $fillable = ['prv_psgc', 'col_province', 'reg_psgc'];
     
 }

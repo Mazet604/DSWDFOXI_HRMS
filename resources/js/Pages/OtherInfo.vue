@@ -487,7 +487,7 @@ export default {
 
         const fetchSSSId = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/sssId/SSSId');
+                const response = await axios.get('/sssId/SSSId');
                 governmentIdFields.value.sssId = response.data.sssId;
             } catch (error) {
                 console.error('Error fetching SSS ID:', error);
@@ -496,7 +496,7 @@ export default {
 
         const fetchPagIbigId = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/pagIbigId/PagIbigId');
+                const response = await axios.get('/pagIbigId/PagIbigId');
                 governmentIdFields.value.pagIbigId = response.data.pagIbigId;
             } catch (error) {
                 console.error('Error fetching Pag-IBIG ID:', error);
@@ -505,7 +505,7 @@ export default {
 
         const fetchGSISId = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/gsisId/GSISId');
+                const response = await axios.get('/gsisId/GSISId');
                 governmentIdFields.value.gsisId = response.data.gsisId;
             } catch (error) {
                 console.error('Error fetching GSIS ID:', error);
@@ -514,7 +514,7 @@ export default {
 
         const fetchTINId = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/tinId/TINId');
+                const response = await axios.get('/tinId/TINId');
                 governmentIdFields.value.tinId = response.data.tinId;
             } catch (error) {
                 console.error('Error fetching TIN ID:', error);
@@ -523,7 +523,7 @@ export default {
 
         const fetchPhilHealthId = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/philHealthId/PhilHealthId');
+                const response = await axios.get('/philHealthId/PhilHealthId');
                 governmentIdFields.value.philHealthId = response.data.philHealthId;
             } catch (error) {
                 console.error('Error fetching PhilHealth ID:', error);
