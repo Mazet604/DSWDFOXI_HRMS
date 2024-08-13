@@ -738,7 +738,6 @@ CREATE TABLE `employee` (
   `emp_dob` date NOT NULL,
   `emp_pob` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_position` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_age` int NOT NULL,
   `emp_sex` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_blood` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_height` decimal(3,2) NOT NULL,
