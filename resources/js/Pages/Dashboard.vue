@@ -3,6 +3,7 @@
     <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="relative col-span-1">
         <div class="relative group">
+          <br><br>
           <img 
             alt="Profile Picture" 
             :src="profilePictureUrl" 
@@ -199,6 +200,23 @@
         </div>
       </div>
     </div>
+
+      <!-- Photo Upload Success Modal -->
+      <div v-if="showPhotoSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+      <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
+        <div class="p-4">
+          <div class="text-center">
+            <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
+            <h2 class="mb-4 text-xl font-semibold">Photo Uploaded Successfully!</h2>
+            <div class="flex justify-center">
+              <button @click="hidePhotoSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </AppLayout>
 </template>
 
@@ -269,6 +287,7 @@ export default {
       isUnblurred: false,
       selectedFile: null,
       empPic: '',
+      showPhotoSuccessDialog: false,
 
     };
   },
@@ -450,11 +469,16 @@ export default {
           });
           this.profilePictureUrl = response.data.url;
           console.log('File uploaded successfully:', response.data);
+          this.showPhotoSuccessDialog = true; // Show the success modal
         } catch (error) {
           console.error('Error uploading file:', error);
         }
       }
     },
+    hidePhotoSuccessDialog() {
+      this.showPhotoSuccessDialog = false; // Hide the success modal
+    },
+  
 
 
     toggleEditing() {

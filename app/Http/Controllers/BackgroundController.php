@@ -373,13 +373,15 @@ public function getChildData()
             ->select('child_fname', 'child_mname', 'child_lname', 'child_xname', 'child_dob')
             ->get()
             ->map(function($child) {
-                $fullName = trim("{$child->child_fname} {$child->child_mname} {$child->child_lname} {$child->child_xname}");
+                $child_mname_initial = $child->child_mname ? substr($child->child_mname, 0, 1) . '.' : '';
+                $fullName = trim("{$child->child_fname} {$child_mname_initial} {$child->child_lname} {$child->child_xname}");
                 $age = \Carbon\Carbon::parse($child->child_dob)->age;
                 return [
                     'full_name' => $fullName,
                     'age' => $age,
                 ];
             });
+
 
         if ($childData->isEmpty()) {
             return response()->json(['error' => 'No child data found'], 404);
