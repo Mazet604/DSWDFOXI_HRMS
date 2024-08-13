@@ -9,6 +9,7 @@ use App\Models\lib_blood_type;
 use App\Models\lib_suffix;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
@@ -203,4 +204,75 @@ class EmployeeController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function uploadProfilePicture(Request $request)
+{
+    $user = Auth::user();
+    if (!$user) {
+        return response()->json(['error' => 'User not authenticated'], 401);
+    }
+
+    try {
+        // Validate the request
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // only allow image files
+        ]);
+
+        // Store the file
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName =  $file->getClientOriginalName();
+            $filePath = $file->storeAs('public/uploads/profile-pictures', $fileName);
+
+            // Save the filename to the database
+            $employee = Employee::where('empid', $user->empid)->first();
+            if ($employee) {
+                $employee->emp_pic = $fileName;
+                $employee->save();
+            } else {
+                return response()->json(['error' => 'Employee not found'], 404);
+            }
+
+            // Return the file path or URL
+            return response()->json(['url' => Storage::url($filePath)]);
+        }
+
+        return response()->json(['error' => 'File upload failed.'], 400);
+    } catch (\Exception $e) {
+        // Log the error
+        \Log::error('File upload error: ' . $e->getMessage());
+        return response()->json(['error' => 'Internal server error'], 500);
+    }
+}
+
+        public function getProfilePicture()
+        {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            // Fetch the employee record
+            $employee = Employee::where('empid', $user->empid)->first();
+            if ($employee && $employee->emp_pic) {
+                // Path to the image
+                $filePath = 'public/uploads/profile-pictures/' . $employee->emp_pic;
+
+                // Check if the file exists
+                if (Storage::exists($filePath)) {
+                    // Generate the URL for the stored image
+                    $profilePictureUrl = Storage::url($filePath);
+                    return response()->json(['url' => $profilePictureUrl]);
+                } else {
+                    // File does not exist, return null
+                    return response()->json(['url' => null, 'error' => 'Profile picture not found']);
+                }
+            } else {
+                return response()->json(['url' => null, 'error' => 'No profile picture set']);
+            }
+        }
+
+
+
+
 }

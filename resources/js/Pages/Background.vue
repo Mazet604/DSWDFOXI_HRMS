@@ -8,75 +8,84 @@
                         <div class="grid grid-cols-2 gap-4 mt-8">
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">SPOUSE SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseSurname.value" />
+                                <input class="input-field" type="text" v-model="fields.spouseSurname.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseFirstName.value" />
+                                <input class="input-field" type="text" v-model="fields.spouseFirstName.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseMiddleName.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseMiddleName.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">EXT. NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseExtName.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseExtName.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
-                                <input class="input-field" type="text" v-model="fields.spouseOccupation.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseOccupation.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYERS/BUSINESS NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseBusinessName.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseBusinessName.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">BUSINESS ADDRESS</label>
-                                <input class="input-field" type="text" v-model="fields.spouseBusinessAddress.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseBusinessAddress.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
-                                <input class="input-field" type="text" v-model="fields.spouseTelNo.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseTelNo.value" :disabled="!isEditingFamily" />
                             </div>
                             <br><br>
                             <div></div>
-                            
+
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">FATHER'S SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherSurname.value"/>
+                                <input class="input-field" type="text" v-model="fields.fatherSurname.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">FATHER'S FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherFirstName.value"/>
+                                <input class="input-field" type="text" v-model="fields.fatherFirstName.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">FATHER'S MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherMiddleName.value"/>
+                                <input class="input-field" type="text" v-model="fields.fatherMiddleName.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">EXT. NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherExtName.value"/>
+                                <input class="input-field" type="text" v-model="fields.fatherExtName.value" :disabled="!isEditingFamily" />
                             </div>
-                            <br><br> 
+                            <br><br>
                             <div></div>
 
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">MOTHER'S MAIDEN NAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherMaidenName.value"/>
+                                <input class="input-field" type="text" v-model="fields.motherMaidenName.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">MOTHER'S SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherSurname.value"/>
+                                <input class="input-field" type="text" v-model="fields.motherSurname.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">MOTHER'S FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherFirstName.value"/>
+                                <input class="input-field" type="text" v-model="fields.motherFirstName.value" :disabled="!isEditingFamily" />
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-bold text-gray-700">MOTHER'S MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherMiddleName.value"/>
+                                <input class="input-field" type="text" v-model="fields.motherMiddleName.value" :disabled="!isEditingFamily" />
                             </div>
                         </div>
+
+                        <div class="flex justify-end gap-4 mt-6">
+                            <Button v-if="!isEditingFamily" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
+                            <div v-if="isEditingFamily" class="space-x-4">
+                                <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelFamilyEditing" />
+                                <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateFamilyData" />
+                            </div>
+                        </div>
+                        
                         <br/>
                         <h1 style="font-size: 25px; font-weight: bold;">Child</h1>
                         <DataTable :value="childData" class="mt-8" :paginator="true" :rows="5" editable>
@@ -126,11 +135,17 @@
                     </TabPanel>
                 </TabView>
             </div>
+
             <div class="flex justify-end gap-4 mt-6">
-                <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                <Button v-if="!isEditingProfile" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                <div v-if="isEditingProfile" class="space-x-4">
+                    <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateProfile" />
+                </div>
             </div>
         </div>
+
 
         <!-- Update Confirmation Modal -->
         <div v-if="showUpdateDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
@@ -145,7 +160,7 @@
                         <button @click="hideUpdateDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
                             Cancel
                         </button>
-                        <button @click="updateProfile" class="py-2 px-4 rounded bg-red-600 text-white hover:bg-red-700">
+                        <button @click="saveProfile" class="py-2 px-4 rounded bg-red-600 text-white hover:bg-red-700">
                             Confirm
                         </button>
                     </div>
@@ -401,7 +416,9 @@
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
                     <div class="flex justify-center">
-                        <button @click="showSuccessDialog = false" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">Back</button>
+                        <button @click="showSuccessDialog = false" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            Back
+                        </button>
                     </div>
                 </div>
             </div>
@@ -442,6 +459,36 @@ export default {
             motherFirstName: { label: 'Mother First Name', type: 'text', value: '' },
             motherMiddleName: { label: 'Mother Middle Name', type: 'text', value: '' }
         });
+
+        const isEditingFamily = ref(false);
+        const originalFamilyFields = ref({});
+
+        const toggleFamilyEditing = () => {
+            if (!isEditingFamily.value) {
+                originalFamilyFields.value = JSON.parse(JSON.stringify(fields.value));
+            }
+            isEditingFamily.value = !isEditingFamily.value;
+        };
+
+        const cancelFamilyEditing = () => {
+            fields.value = JSON.parse(JSON.stringify(originalFamilyFields.value));
+            isEditingFamily.value = false;
+        };
+
+        const isEditingProfile = ref(false);
+        const originalProfileFields = ref({});
+
+        const toggleProfileEditing = () => {
+            if (!isEditingProfile.value) {
+                originalProfileFields.value = JSON.parse(JSON.stringify(fields.value));
+            }
+            isEditingProfile.value = !isEditingProfile.value;
+        };
+
+        const cancelProfileEditing = () => {
+            fields.value = JSON.parse(JSON.stringify(originalProfileFields.value));
+            isEditingProfile.value = false;
+        };
 
         const childData = ref([]);
         const newChild = ref({
@@ -505,21 +552,20 @@ export default {
         const showUpdateDialog = ref(false);
 
         const openAddDialog = () => {
-        if (activeTab.value === 0) {
-            showAddChildDialog.value = true;
-        } else if (activeTab.value === 1) {
-            showAddEducationDialog.value = true;
-        } else if (activeTab.value === 2) {
-            showAddOrganizationDialog.value = true;
-        } else if (activeTab.value === 3) {
-            showAddWorkExperienceDialog.value = true;
-        } else if (activeTab.value === 4) {
-            showAddSkillsDialog.value = true;
-        } else if (activeTab.value === 5) {
-            showAddReferencesDialog.value = true;
-        }
-    };
-
+            if (activeTab.value === 0) {
+                showAddChildDialog.value = true;
+            } else if (activeTab.value === 1) {
+                showAddEducationDialog.value = true;
+            } else if (activeTab.value === 2) {
+                showAddOrganizationDialog.value = true;
+            } else if (activeTab.value === 3) {
+                showAddWorkExperienceDialog.value = true;
+            } else if (activeTab.value === 4) {
+                showAddSkillsDialog.value = true;
+            } else if (activeTab.value === 5) {
+                showAddReferencesDialog.value = true;
+            }
+        };
 
         const fetchEducationData = async () => {
             try {
@@ -635,7 +681,6 @@ export default {
             }
         };
 
-        
         const addChild = async () => {
             try {
                 const response = await axios.post('/emp_child/AddChildData', newChild.value);
@@ -760,8 +805,6 @@ export default {
                 showUpdateDialog.value = false;
             }
         };
-
-
 
         const hideAddChildDialog = () => {
             showAddChildDialog.value = false;
@@ -897,7 +940,13 @@ export default {
             confirmUpdate,
             hideUpdateDialog,
             updateFamilyData,
-            inputEditor
+            inputEditor,
+            isEditingFamily,
+            toggleFamilyEditing,
+            cancelFamilyEditing,
+            isEditingProfile,
+            toggleProfileEditing,
+            cancelProfileEditing
         };
     }
 };
@@ -931,5 +980,15 @@ export default {
     .fixed {
         position: static;
     }
+}
+
+.custom-cancel-button {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.custom-cancel-button:hover {
+    background-color: #e57373 !important;
+    border-color: #e57373 !important;
 }
 </style>

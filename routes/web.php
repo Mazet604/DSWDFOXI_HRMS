@@ -71,6 +71,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dropdown/civilstatus-options', [DropDownControllers::class, 'getCivilStatusOptions']);
     Route::get('/dropdown/bloodtype-options', [DropDownControllers::class, 'getBloodTypeOptions']);
     Route::get('/dropdown/ext-options', [DropDownControllers::class, 'getExtOptions']);
+    Route::post('/upload-profile-picture', [EmployeeController::class, 'uploadProfilePicture']);
+    Route::get('/get-profile-picture', [EmployeeController::class, 'getProfilePicture']);
 
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
     Route::get('/employee/region-options', [AddressController::class, 'getRegionOptions']);

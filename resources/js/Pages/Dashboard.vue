@@ -2,15 +2,24 @@
   <AppLayout>
     <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="relative col-span-1">
-        <div class="relative group" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
-          <img alt="Profile Picture" class="w-full rounded-lg" height="300" src="/images/profile-picture.webp" width="300" :class="{ 'blur-md': !isUnblurred }" />
+        <div class="relative group">
+          <img 
+            alt="Profile Picture" 
+            :src="profilePictureUrl" 
+            class="w-full rounded-lg" 
+            height="300" 
+            width="300" 
+            :class="{ 'blur-md': !isUnblurred }" 
+          />
           <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300" :class="{ 'opacity-0': !isHovered, 'opacity-100': isHovered }">
             <button @click="toggleBlur" class="p-2 bg-gray-800 bg-opacity-75 rounded-full">
               <i class="text-4xl text-white fas fa-eye"></i>
             </button>
           </div>
         </div>
-        <Button label="Upload Photo" class="w-full py-2 mt-4 text-white rounded-lg bg-gradient-to-r from-pink-500 to-purple-500" />
+        <!-- Hidden file input -->
+        <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
+        <Button label="Upload Photo" class="w-full py-2 mt-4 text-white rounded-lg bg-gradient-to-r from-pink-500 to-purple-500" @click="triggerFileUpload" />
       </div>
       <div class="col-span-1 md:col-span-2">
         <h1 class="mb-4 text-3xl font-bold lg:text-5xl">{{ fullName }}</h1>
@@ -211,10 +220,13 @@ export default {
   components: {
     AppLayout, Button, TabView, TabPanel
   },
+
   data() {
     return {
       fullName: '',
       empPosition: '',
+      profilePictureUrl: '',
+
       fields: {
         empUser: '',
         empID: '',
@@ -261,6 +273,8 @@ export default {
       searchQuery: '',
       isHovered: false,
       isUnblurred: false,
+      selectedFile: null,
+      empPic: '',
 
     };
   },
@@ -406,9 +420,48 @@ export default {
       }
     },
 
+    async fetchProfilePicture() {
+    try {
+        const response = await axios.get('/get-profile-picture');
+        this.profilePictureUrl = response.data.url ? response.data.url : '/storage/uploads/profile-pictures/default-profile.png';
+        console.log('Profile Picture URL:', this.profilePictureUrl); 
+    } catch (error) {
+        console.error('Error fetching profile picture:', error);
+    }
+  },
+
     toggleBlur() {
-        this.isUnblurred = !this.isUnblurred;
+      this.isUnblurred = !this.isUnblurred;
     },
+
+    triggerFileUpload() {
+      this.$refs.fileInput.click();
+    },
+
+    onFileSelected(event) {
+      this.selectedFile = event.target.files[0];
+      this.uploadFile();
+    },
+
+    async uploadFile() {
+      if (this.selectedFile) {
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+
+        try {
+          const response = await axios.post('/upload-profile-picture', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          this.profilePictureUrl = response.data.url;
+          console.log('File uploaded successfully:', response.data);
+        } catch (error) {
+          console.error('Error uploading file:', error);
+        }
+      }
+    },
+
 
     toggleEditing() {
       if (!this.isEditing) {
@@ -461,7 +514,9 @@ export default {
     this.fetchPersonalInfo();
     this.fetchSecurityandContact();
     this.fetchAddress();
+    this.fetchProfilePicture();
   },
+
   created() {
     this.fetchSexOptions();
     this.fetchCivilStatusOptions();
