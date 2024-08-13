@@ -340,6 +340,7 @@ export default {
         console.error(error);
       }
     },
+    
     async fetchCivilStatusOptions() {
       try {
         const response = await fetch('/dropdown/civilstatus-options');
@@ -351,6 +352,7 @@ export default {
         console.error(error);
       }
     },
+
     async fetchBloodTypeOptions() {
       try {
         const response = await fetch('/dropdown/bloodtype-options');
@@ -362,6 +364,7 @@ export default {
         console.error(error);
       }
     },
+
     async fetchExtOptions() {
       try {
         const response = await fetch('/dropdown/ext-options');
@@ -401,6 +404,7 @@ export default {
             this.errorMessage = 'Failed to load full name.';
         }
       },
+
       async fetchPersonalInfo() {
         try {
           const response = await axios.get('/employee/PersonalInfo');
@@ -489,11 +493,10 @@ export default {
         }
       }
     },
+
     hidePhotoSuccessDialog() {
       this.showPhotoSuccessDialog = false; // Hide the success modal
     },
-  
-
 
     toggleEditing() {
       if (!this.isEditing) {
@@ -514,6 +517,7 @@ export default {
     hideSuccessDialog() {
       this.showSuccessDialog = false;
     },
+
     async saveProfile() {
       try {
         await axios.patch('/employee/updateProfile', this.fields);
@@ -525,6 +529,7 @@ export default {
         this.showUpdateDialog = false;
       }
     },
+
     search() {
       const searchLower = this.searchQuery.toLowerCase();
       if (searchLower.includes('personal info')) {
@@ -541,6 +546,7 @@ export default {
       }
     },
   },
+
   mounted() {
     this.fetchFullName();
     this.fetchPersonalInfo();
