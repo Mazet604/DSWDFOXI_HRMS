@@ -3,6 +3,7 @@
     <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="relative col-span-1">
         <div class="relative group">
+          <br><br>
           <img 
             alt="Profile Picture" 
             :src="profilePictureUrl" 
@@ -199,6 +200,23 @@
         </div>
       </div>
     </div>
+
+      <!-- Photo Upload Success Modal -->
+      <div v-if="showPhotoSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+      <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
+        <div class="p-4">
+          <div class="text-center">
+            <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
+            <h2 class="mb-4 text-xl font-semibold">Photo Uploaded Successfully!</h2>
+            <div class="flex justify-center">
+              <button @click="hidePhotoSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </AppLayout>
 </template>
 
@@ -311,50 +329,50 @@ export default {
         this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
       },
 
-      async fetchSexOptions() {
-        try {
-          const response = await fetch('/dropdown/sex-options');
-          if (!response.ok) {
-            throw new Error('Failed to fetch sex options');
-          }
-          this.sexOptions = await response.json();
-        } catch (error) {
-          console.error(error);
+    async fetchSexOptions() {
+      try {
+        const response = await fetch('/dropdown/sex-options');
+        if (!response.ok) {
+          throw new Error('Failed to fetch sex options');
         }
-      },
-      async fetchCivilStatusOptions() {
-        try {
-          const response = await fetch('/dropdown/civilstatus-options');
-          if (!response.ok) {
-            throw new Error('Failed to fetch civil status options');
-          }
-          this.civilStatusOptions = await response.json();
-        } catch (error) {
-          console.error(error);
+        this.sexOptions = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async fetchCivilStatusOptions() {
+      try {
+        const response = await fetch('/dropdown/civilstatus-options');
+        if (!response.ok) {
+          throw new Error('Failed to fetch civil status options');
         }
-      },
-      async fetchBloodTypeOptions() {
-        try {
-          const response = await fetch('/dropdown/bloodtype-options');
-          if (!response.ok) {
-            throw new Error('Failed to fetch blood type options');
-          }
-          this.bloodTypeOptions = await response.json();
-        } catch (error) {
-          console.error(error);
+        this.civilStatusOptions = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async fetchBloodTypeOptions() {
+      try {
+        const response = await fetch('/dropdown/bloodtype-options');
+        if (!response.ok) {
+          throw new Error('Failed to fetch blood type options');
         }
-      },
-      async fetchExtOptions() {
-        try {
-          const response = await fetch('/dropdown/ext-options');
-          if (!response.ok) {
-            throw new Error('Failed to fetch suffix options');
-          }
-          this.extOptions = await response.json();
-        } catch (error) {
-          console.error(error);
+        this.bloodTypeOptions = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async fetchExtOptions() {
+      try {
+        const response = await fetch('/dropdown/ext-options');
+        if (!response.ok) {
+          throw new Error('Failed to fetch suffix options');
         }
-      },
+        this.extOptions = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
       async fetchRegionOptions() {
         try {
@@ -457,70 +475,72 @@ export default {
           const formData = new FormData();
           formData.append('file', this.selectedFile);
 
-          try {
-            const response = await axios.post('/upload-profile-picture', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            });
-            this.profilePictureUrl = response.data.url;
-            console.log('File uploaded successfully:', response.data);
-          } catch (error) {
-            console.error('Error uploading file:', error);
-          }
-        }
-      },
-
-
-      toggleEditing() {
-        if (!this.isEditing) {
-          this.originalFields = JSON.parse(JSON.stringify(this.fields)); // Store the current state of fields
-        }
-        this.isEditing = !this.isEditing;
-      },
-      cancelEditing() {
-        this.fields = JSON.parse(JSON.stringify(this.originalFields)); // Revert fields to the original state
-        this.isEditing = false;
-      },
-      confirmUpdate() {
-        this.showUpdateDialog = true;
-      },
-      hideUpdateDialog() {
-        this.showUpdateDialog = false;
-      },
-      hideSuccessDialog() {
-        this.showSuccessDialog = false;
-      },
-
-      async saveProfile() {
         try {
-          await axios.patch('/employee/updateProfile', this.fields);
-          this.isEditing = false;
-          this.showUpdateDialog = false;
-          this.showSuccessDialog = true;
+          const response = await axios.post('/upload-profile-picture', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          this.profilePictureUrl = response.data.url;
+          console.log('File uploaded successfully:', response.data);
+          this.showPhotoSuccessDialog = true; // Show the success modal
         } catch (error) {
-          this.errorMessage = 'Failed to update profile. Please try again.';
-          this.showUpdateDialog = false;
+          console.error('Error uploading file:', error);
         }
-      },
-
-      search() {
-        const searchLower = this.searchQuery.toLowerCase();
-        if (searchLower.includes('personal info')) {
-          this.activeSubTab = 'personal';
-          this.activeTab = 0;
-        } else if (searchLower.includes('address')) {
-          this.activeSubTab = 'address';
-          this.activeTab = 1;
-        } else if (searchLower.includes('security')) {
-          this.activeSubTab = 'security';
-          this.activeTab = 2;
-        } else {
-          alert('No matching tab found.');
-        }
-      },
+      }
     },
-    
+    hidePhotoSuccessDialog() {
+      this.showPhotoSuccessDialog = false; // Hide the success modal
+    },
+  
+
+
+    toggleEditing() {
+      if (!this.isEditing) {
+        this.originalFields = JSON.parse(JSON.stringify(this.fields)); // Store the current state of fields
+      }
+      this.isEditing = !this.isEditing;
+    },
+    cancelEditing() {
+      this.fields = JSON.parse(JSON.stringify(this.originalFields)); // Revert fields to the original state
+      this.isEditing = false;
+    },
+    confirmUpdate() {
+      this.showUpdateDialog = true;
+    },
+    hideUpdateDialog() {
+      this.showUpdateDialog = false;
+    },
+    hideSuccessDialog() {
+      this.showSuccessDialog = false;
+    },
+    async saveProfile() {
+      try {
+        await axios.patch('/employee/updateProfile', this.fields);
+        this.isEditing = false;
+        this.showUpdateDialog = false;
+        this.showSuccessDialog = true;
+      } catch (error) {
+        this.errorMessage = 'Failed to update profile. Please try again.';
+        this.showUpdateDialog = false;
+      }
+    },
+    search() {
+      const searchLower = this.searchQuery.toLowerCase();
+      if (searchLower.includes('personal info')) {
+        this.activeSubTab = 'personal';
+        this.activeTab = 0;
+      } else if (searchLower.includes('address')) {
+        this.activeSubTab = 'address';
+        this.activeTab = 1;
+      } else if (searchLower.includes('security')) {
+        this.activeSubTab = 'security';
+        this.activeTab = 2;
+      } else {
+        alert('No matching tab found.');
+      }
+    },
+  },
   mounted() {
     this.fetchFullName();
     this.fetchPersonalInfo();
