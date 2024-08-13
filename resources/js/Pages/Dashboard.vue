@@ -18,13 +18,6 @@
         <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
         <Button label="Upload Photo" class="w-full py-2 mt-4 text-white rounded-lg bg-gradient-to-r from-pink-500 to-purple-500" @click="triggerFileUpload" />
       </div>
-      <div v-if="cropping" class="col-span-1 md:col-span-2">
-        <div class="crop-container">
-          <img ref="cropperImage" :src="cropperSrc" alt="Cropper Image" />
-        </div>
-        <Button label="Crop" @click="cropImage" class="mt-4 bg-blue-500 text-white" />
-        <Button label="Cancel" @click="cancelCrop" class="mt-4 ml-4 bg-red-500 text-white" />
-      </div>
       <div class="col-span-1 md:col-span-2">
         <h1 class="mb-4 text-3xl font-bold lg:text-5xl">{{ fullName }}</h1>
         <p class="mb-4 text-gray-600">{{ empPosition }}</p>
@@ -220,6 +213,21 @@
         </div>
       </div>
     </div>
+
+    <!-- Crop Image Modal -->
+    <div v-if="cropping" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+      <div class="w-full max-w-lg p-4 overflow-hidden transition-all transform bg-white rounded-lg">
+        <h2 class="text-xl font-semibold text-center mb-4">Crop Your Image</h2>
+        <div class="crop-container">
+          <img ref="cropperImage" :src="cropperSrc" alt="Cropper Image" />
+        </div>
+        <div class="flex justify-center mt-4">
+          <Button label="Crop" @click="cropImage" class="bg-blue-500 text-white mr-4" />
+          <Button label="Cancel" @click="cancelCrop" class="bg-red-500 text-white" />
+        </div>
+      </div>
+    </div>
+
   </AppLayout>
 </template>
 
@@ -285,14 +293,11 @@ export default {
       isHovered: false,
       isUnblurred: false,
       selectedFile: null,
-<<<<<<< HEAD
+      empPic: '',
       cropping: false,
       cropper: null,
-      cropperSrc: ''
-=======
-      empPic: '',
+      cropperSrc: '',
 
->>>>>>> f788ffef2305e99746a3b5e2f76096e0bbdac301
     };
   },
 
@@ -325,15 +330,6 @@ export default {
     },
   },
 
-<<<<<<< HEAD
-  methods: {
-    validateMobileNumber() {
-      this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
-    },
-    validateTelephoneNumber() {
-      this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
-    },
-=======
     methods: {
 
       validateMobileNumber() {
@@ -342,7 +338,6 @@ export default {
       validateTelephoneNumber() {
         this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
       },
->>>>>>> f788ffef2305e99746a3b5e2f76096e0bbdac301
 
     async fetchSexOptions() {
       try {
@@ -410,129 +405,6 @@ export default {
         }
       },
 
-<<<<<<< HEAD
-    async fetchFullName() {
-      try {
-        const response = await axios.get('/employee/fullname');
-        this.fullName = response.data.fullName;
-        this.empPosition = response.data.empPosition;
-      } catch (error) {
-        this.errorMessage = 'Failed to load full name.';
-      }
-    },
-    async fetchPersonalInfo() {
-      try {
-        const response = await axios.get('/employee/PersonalInfo');
-        this.fields.empUser = response.data.empUser;
-        this.fields.empID = response.data.empID;
-        this.fields.firstName = response.data.firstName;
-        this.fields.middleName = response.data.middleName;
-        this.fields.lastName = response.data.lastName;
-        this.fields.suffix = response.data.suffix;
-        this.fields.citizenship = response.data.citizenship;
-        this.fields.birthday = response.data.birthday;
-        this.fields.placeOfBirth = response.data.placeOfBirth;
-        this.fields.sex = response.data.sex;
-        this.fields.civilStatus = response.data.civilStatus;
-        this.fields.height = response.data.height;
-        this.fields.weight = response.data.weight;
-        this.fields.bloodType = response.data.bloodType;
-      } catch (error) {
-        this.errorMessage = 'Failed to load personal information.';
-      }
-    },
-
-    async fetchAddress() {
-      try {
-        const response = await axios.get('/employee/Address');
-        this.fields.Region = response.data.Region;
-        this.fields.Province = response.data.Province;
-        this.fields.zipcode = response.data.zipcode;
-        this.fields.block = response.data.block;
-        this.fields.villsub = response.data.villsub;
-      } catch (error) {
-        this.errorMessage = 'Failed to load address.';
-      }
-    },
-
-    async fetchSecurityandContact() {
-      try {
-        const response = await axios.get('/employee/SecurityandContact');
-        this.fields.mobilenum = response.data.mobilenum;
-        this.fields.telnum = response.data.telnum;
-        this.fields.emailadd = response.data.emailadd;
-      } catch (error) {
-        this.errorMessage = 'Failed to load security and contact information.';
-      }
-    },
-
-    async fetchProfilePicture() {
-      try {
-        const response = await axios.get('/get-profile-picture');
-        this.profilePictureUrl = response.data.url ? response.data.url : '/storage/uploads/profile-pictures/default-profile.png';
-        console.log('Profile Picture URL:', this.profilePictureUrl);
-      } catch (error) {
-        console.error('Error fetching profile picture:', error);
-      }
-    },
-
-    toggleBlur() {
-      this.isUnblurred = !this.isUnblurred;
-    },
-    triggerFileUpload() {
-      this.$refs.fileInput.click();
-    },
-    onFileSelected(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.cropperSrc = e.target.result;
-          this.cropping = true;
-          this.$nextTick(() => {
-            this.initializeCropper();
-          });
-        };
-        reader.readAsDataURL(file);
-      }
-    },
-    initializeCropper() {
-      const image = this.$refs.cropperImage;
-      this.cropper = new Cropper(image, {
-        aspectRatio: 3.5 / 4.5, // Passport size aspect ratio
-        viewMode: 1
-      });
-    },
-    cropImage() {
-      const canvas = this.cropper.getCroppedCanvas({
-        width: 350, // Adjust as needed for passport size
-        height: 450
-      });
-      canvas.toBlob((blob) => {
-        this.uploadCroppedImage(blob);
-      });
-    },
-    uploadCroppedImage(blob) {
-      const formData = new FormData();
-      formData.append('file', blob, 'cropped-image.png');
-
-      axios.post('/upload-profile-picture', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }).then(response => {
-        this.profilePictureUrl = response.data.url;
-        this.cropping = false;
-        this.showPhotoSuccessDialog = true;
-      }).catch(error => {
-        console.error('Error uploading file:', error);
-      });
-    },
-    cancelCrop() {
-      this.cropping = false;
-    },
-    hidePhotoSuccessDialog() {
-      this.showPhotoSuccessDialog = false;
-    },
-=======
       async fetchFullName() {
         try {
           const response = await axios.get('/employee/fullname');
@@ -600,18 +472,62 @@ export default {
       },
 
       toggleBlur() {
-        this.isUnblurred = !this.isUnblurred;
-      },
+      this.isUnblurred = !this.isUnblurred;
+    },
+    triggerFileUpload() {
+      this.$refs.fileInput.click();
+    },
+    onFileSelected(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.cropperSrc = e.target.result;
+          this.cropping = true;
+          this.$nextTick(() => {
+            this.initializeCropper();
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    initializeCropper() {
+      const image = this.$refs.cropperImage;
+      this.cropper = new Cropper(image, {
+        aspectRatio: 3.5 / 4.5, // Passport size aspect ratio
+        viewMode: 1
+      });
+    },
+    cropImage() {
+      const canvas = this.cropper.getCroppedCanvas({
+        width: 350, // Adjust as needed for passport size
+        height: 450
+      });
+      canvas.toBlob((blob) => {
+        this.uploadCroppedImage(blob);
+      });
+    },
+    uploadCroppedImage(blob) {
+      const formData = new FormData();
+      formData.append('file', blob, 'cropped-image.png');
 
-      triggerFileUpload() {
-        this.$refs.fileInput.click();
-      },
->>>>>>> f788ffef2305e99746a3b5e2f76096e0bbdac301
+      axios.post('/upload-profile-picture', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }).then(response => {
+        this.profilePictureUrl = response.data.url;
+        this.cropping = false;
+        this.showPhotoSuccessDialog = true;
+      }).catch(error => {
+        console.error('Error uploading file:', error);
+      });
+    },
+    cancelCrop() {
+      this.cropping = false;
+    },
+    hidePhotoSuccessDialog() {
+      this.showPhotoSuccessDialog = false;
+    },
 
-      onFileSelected(event) {
-        this.selectedFile = event.target.files[0];
-        this.uploadFile();
-      },
 
       async uploadFile() {
         if (this.selectedFile) {
