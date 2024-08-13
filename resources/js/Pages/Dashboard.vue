@@ -58,7 +58,7 @@
                     <input type="date" class="text-center input-field" v-model="fields.birthday" :disabled="!isEditing" />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">Age</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
                   <input type="text" class="text-center input-field text-color" :value="calculatedAge" disabled />
                 </div>
                 <div>
@@ -273,6 +273,21 @@ export default {
     };
   },
 
+  watch: {
+    'fields.Region'(newValue) {
+      // Make an Axios request whenever fields.Region changes
+      axios.get(`/api/region/${newValue}`)
+        .then(response => {
+          // Handle the response
+          console.log(response.data);
+        })
+        .catch(error => {
+          // Handle the error
+          console.error(error);
+        });
+    }
+  },
+
   computed: {
       calculatedAge() {
         if (!this.fields.birthday) return '';
@@ -289,220 +304,223 @@ export default {
 
     methods: {
 
-    validateMobileNumber() {
-      this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
-    },
-    validateTelephoneNumber() {
-      this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
-    },
+      validateMobileNumber() {
+        this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
+      },
+      validateTelephoneNumber() {
+        this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
+      },
 
-    async fetchSexOptions() {
-      try {
-        const response = await fetch('/dropdown/sex-options');
-        if (!response.ok) {
-          throw new Error('Failed to fetch sex options');
-        }
-        this.sexOptions = await response.json();
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async fetchCivilStatusOptions() {
-      try {
-        const response = await fetch('/dropdown/civilstatus-options');
-        if (!response.ok) {
-          throw new Error('Failed to fetch civil status options');
-        }
-        this.civilStatusOptions = await response.json();
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async fetchBloodTypeOptions() {
-      try {
-        const response = await fetch('/dropdown/bloodtype-options');
-        if (!response.ok) {
-          throw new Error('Failed to fetch blood type options');
-        }
-        this.bloodTypeOptions = await response.json();
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async fetchExtOptions() {
-      try {
-        const response = await fetch('/dropdown/ext-options');
-        if (!response.ok) {
-          throw new Error('Failed to fetch suffix options');
-        }
-        this.extOptions = await response.json();
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    async fetchRegionOptions() {
-      try {
-        const response = await axios.get('/employee/region-options');
-        this.RegionOptions = response.data;
-      } catch (error) {
-        this.errorMessage = 'Failed to load regions.';
-      }
-    },
-
-    async fetchProvinceOptions() {
-      try {
-        const response = await axios.get('/employee/province-options');
-        this.ProvinceOptions = response.data;
-      } catch (error) {
-        this.errorMessage = 'Failed to load provinces.';
-      }
-    },
-
-    async fetchFullName() {
-      try {
-        const response = await axios.get('/employee/fullname');
-        this.fullName = response.data.fullName;
-        this.empPosition = response.data.empPosition;
-      } catch (error) {
-          this.errorMessage = 'Failed to load full name.';
-      }
-    },
-    async fetchPersonalInfo() {
-      try {
-        const response = await axios.get('/employee/PersonalInfo');
-        this.fields.empUser = response.data.empUser;
-        this.fields.empID = response.data.empID;
-        this.fields.firstName = response.data.firstName;
-        this.fields.middleName = response.data.middleName;
-        this.fields.lastName = response.data.lastName;
-        this.fields.suffix = response.data.suffix;
-        this.fields.citizenship = response.data.citizenship;
-        this.fields.birthday = response.data.birthday;
-        this.fields.placeOfBirth = response.data.placeOfBirth;
-        this.fields.sex = response.data.sex;
-        this.fields.civilStatus = response.data.civilStatus;
-        this.fields.height = response.data.height;
-        this.fields.weight = response.data.weight;
-        this.fields.bloodType = response.data.bloodType;
-      } catch (error) {
-          this.errorMessage = 'Failed to load personal information.';
-      }
-    },
-
-    async fetchAddress() {
-      try {
-        const response = await axios.get('/employee/Address');
-        this.fields.Region = response.data.Region;
-        this.fields.Province = response.data.Province;
-        this.fields.zipcode = response.data.zipcode;
-        this.fields.block = response.data.block;
-        this.fields.villsub = response.data.villsub;
-      } catch (error) {
-          this.errorMessage = 'Failed to load address.';
-      }
-    },
-
-    async fetchSecurityandContact() {
-      try {
-        const response = await axios.get('/employee/SecurityandContact');
-        this.fields.mobilenum = response.data.mobilenum;
-        this.fields.telnum = response.data.telnum;
-        this.fields.emailadd = response.data.emailadd;
-      } catch (error) {
-          this.errorMessage = 'Failed to load security and contact information.';
-      }
-    },
-
-    async fetchProfilePicture() {
-    try {
-        const response = await axios.get('/get-profile-picture');
-        this.profilePictureUrl = response.data.url ? response.data.url : '/storage/uploads/profile-pictures/default-profile.png';
-        console.log('Profile Picture URL:', this.profilePictureUrl); 
-    } catch (error) {
-        console.error('Error fetching profile picture:', error);
-    }
-  },
-
-    toggleBlur() {
-      this.isUnblurred = !this.isUnblurred;
-    },
-
-    triggerFileUpload() {
-      this.$refs.fileInput.click();
-    },
-
-    onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
-      this.uploadFile();
-    },
-
-    async uploadFile() {
-      if (this.selectedFile) {
-        const formData = new FormData();
-        formData.append('file', this.selectedFile);
-
+      async fetchSexOptions() {
         try {
-          const response = await axios.post('/upload-profile-picture', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          });
-          this.profilePictureUrl = response.data.url;
-          console.log('File uploaded successfully:', response.data);
+          const response = await fetch('/dropdown/sex-options');
+          if (!response.ok) {
+            throw new Error('Failed to fetch sex options');
+          }
+          this.sexOptions = await response.json();
         } catch (error) {
-          console.error('Error uploading file:', error);
+          console.error(error);
         }
-      }
-    },
+      },
+      async fetchCivilStatusOptions() {
+        try {
+          const response = await fetch('/dropdown/civilstatus-options');
+          if (!response.ok) {
+            throw new Error('Failed to fetch civil status options');
+          }
+          this.civilStatusOptions = await response.json();
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      async fetchBloodTypeOptions() {
+        try {
+          const response = await fetch('/dropdown/bloodtype-options');
+          if (!response.ok) {
+            throw new Error('Failed to fetch blood type options');
+          }
+          this.bloodTypeOptions = await response.json();
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      async fetchExtOptions() {
+        try {
+          const response = await fetch('/dropdown/ext-options');
+          if (!response.ok) {
+            throw new Error('Failed to fetch suffix options');
+          }
+          this.extOptions = await response.json();
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+      async fetchRegionOptions() {
+        try {
+          const response = await axios.get('/employee/region-options');
+          this.RegionOptions = response.data;
+        } catch (error) {
+          this.errorMessage = 'Failed to load regions.';
+        }
+      },
+
+      async fetchProvinceOptions() {
+        try {
+          const response = await axios.get('/employee/province-options');
+          this.ProvinceOptions = response.data;
+        } catch (error) {
+          this.errorMessage = 'Failed to load provinces.';
+        }
+      },
+
+      async fetchFullName() {
+        try {
+          const response = await axios.get('/employee/fullname');
+          this.fullName = response.data.fullName;
+          this.empPosition = response.data.empPosition;
+        } catch (error) {
+            this.errorMessage = 'Failed to load full name.';
+        }
+      },
+      async fetchPersonalInfo() {
+        try {
+          const response = await axios.get('/employee/PersonalInfo');
+          this.fields.empUser = response.data.empUser;
+          this.fields.empID = response.data.empID;
+          this.fields.firstName = response.data.firstName;
+          this.fields.middleName = response.data.middleName;
+          this.fields.lastName = response.data.lastName;
+          this.fields.suffix = response.data.suffix;
+          this.fields.citizenship = response.data.citizenship;
+          this.fields.birthday = response.data.birthday;
+          this.fields.placeOfBirth = response.data.placeOfBirth;
+          this.fields.sex = response.data.sex;
+          this.fields.civilStatus = response.data.civilStatus;
+          this.fields.height = response.data.height;
+          this.fields.weight = response.data.weight;
+          this.fields.bloodType = response.data.bloodType;
+        } catch (error) {
+            this.errorMessage = 'Failed to load personal information.';
+        }
+      },
+
+      async fetchAddress() {
+        try {
+          const response = await axios.get('/employee/Address');
+          this.fields.Region = response.data.Region;
+          this.fields.Province = response.data.Province;
+          this.fields.zipcode = response.data.zipcode;
+          this.fields.block = response.data.block;
+          this.fields.villsub = response.data.villsub;
+        } catch (error) {
+            this.errorMessage = 'Failed to load address.';
+        }
+      },
+
+      async fetchSecurityandContact() {
+        try {
+          const response = await axios.get('/employee/SecurityandContact');
+          this.fields.mobilenum = response.data.mobilenum;
+          this.fields.telnum = response.data.telnum;
+          this.fields.emailadd = response.data.emailadd;
+        } catch (error) {
+            this.errorMessage = 'Failed to load security and contact information.';
+        }
+      },
+
+      async fetchProfilePicture() {
+        try {
+            const response = await axios.get('/get-profile-picture');
+            this.profilePictureUrl = response.data.url ? response.data.url : '/storage/uploads/profile-pictures/default-profile.png';
+            console.log('Profile Picture URL:', this.profilePictureUrl); 
+        } catch (error) {
+            console.error('Error fetching profile picture:', error);
+        }
+      },
+
+      toggleBlur() {
+        this.isUnblurred = !this.isUnblurred;
+      },
+
+      triggerFileUpload() {
+        this.$refs.fileInput.click();
+      },
+
+      onFileSelected(event) {
+        this.selectedFile = event.target.files[0];
+        this.uploadFile();
+      },
+
+      async uploadFile() {
+        if (this.selectedFile) {
+          const formData = new FormData();
+          formData.append('file', this.selectedFile);
+
+          try {
+            const response = await axios.post('/upload-profile-picture', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+            this.profilePictureUrl = response.data.url;
+            console.log('File uploaded successfully:', response.data);
+          } catch (error) {
+            console.error('Error uploading file:', error);
+          }
+        }
+      },
 
 
-    toggleEditing() {
-      if (!this.isEditing) {
-        this.originalFields = JSON.parse(JSON.stringify(this.fields)); // Store the current state of fields
-      }
-      this.isEditing = !this.isEditing;
-    },
-    cancelEditing() {
-      this.fields = JSON.parse(JSON.stringify(this.originalFields)); // Revert fields to the original state
-      this.isEditing = false;
-    },
-    confirmUpdate() {
-      this.showUpdateDialog = true;
-    },
-    hideUpdateDialog() {
-      this.showUpdateDialog = false;
-    },
-    hideSuccessDialog() {
-      this.showSuccessDialog = false;
-    },
-    async saveProfile() {
-      try {
-        await axios.patch('/employee/updateProfile', this.fields);
+      toggleEditing() {
+        if (!this.isEditing) {
+          this.originalFields = JSON.parse(JSON.stringify(this.fields)); // Store the current state of fields
+        }
+        this.isEditing = !this.isEditing;
+      },
+      cancelEditing() {
+        this.fields = JSON.parse(JSON.stringify(this.originalFields)); // Revert fields to the original state
         this.isEditing = false;
+      },
+      confirmUpdate() {
+        this.showUpdateDialog = true;
+      },
+      hideUpdateDialog() {
         this.showUpdateDialog = false;
-        this.showSuccessDialog = true;
-      } catch (error) {
-        this.errorMessage = 'Failed to update profile. Please try again.';
-        this.showUpdateDialog = false;
-      }
+      },
+      hideSuccessDialog() {
+        this.showSuccessDialog = false;
+      },
+
+      async saveProfile() {
+        try {
+          await axios.patch('/employee/updateProfile', this.fields);
+          this.isEditing = false;
+          this.showUpdateDialog = false;
+          this.showSuccessDialog = true;
+        } catch (error) {
+          this.errorMessage = 'Failed to update profile. Please try again.';
+          this.showUpdateDialog = false;
+        }
+      },
+
+      search() {
+        const searchLower = this.searchQuery.toLowerCase();
+        if (searchLower.includes('personal info')) {
+          this.activeSubTab = 'personal';
+          this.activeTab = 0;
+        } else if (searchLower.includes('address')) {
+          this.activeSubTab = 'address';
+          this.activeTab = 1;
+        } else if (searchLower.includes('security')) {
+          this.activeSubTab = 'security';
+          this.activeTab = 2;
+        } else {
+          alert('No matching tab found.');
+        }
+      },
     },
-    search() {
-      const searchLower = this.searchQuery.toLowerCase();
-      if (searchLower.includes('personal info')) {
-        this.activeSubTab = 'personal';
-        this.activeTab = 0;
-      } else if (searchLower.includes('address')) {
-        this.activeSubTab = 'address';
-        this.activeTab = 1;
-      } else if (searchLower.includes('security')) {
-        this.activeSubTab = 'security';
-        this.activeTab = 2;
-      } else {
-        alert('No matching tab found.');
-      }
-    },
-  },
+    
   mounted() {
     this.fetchFullName();
     this.fetchPersonalInfo();

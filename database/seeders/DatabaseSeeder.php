@@ -14,24 +14,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Seed emp_acc table with first entry
-        DB::table('emp_acc')->insert([
-            'empid' => '11-0070',
-            'empuser' => 'jgmatugas',
-            'emppass' => Hash::make('matugas@2023'),
-            'empmail' => 'jgmatugas117@gmail.com',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        // Seed emp_acc table with second entry
-        DB::table('emp_acc')->insert([
-            'empid' => '11-0071',
-            'empuser' => 'tdadlawan',
-            'emppass' => Hash::make('adlawan@2023'),
-            'empmail' => 'adlawan117@gmail.com',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
 
         DB::table('emp_acc')->insert([
             'empid' => '11-0072',
