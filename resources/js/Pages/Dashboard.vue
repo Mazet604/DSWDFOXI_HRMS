@@ -3,20 +3,16 @@
     <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="relative col-span-1">
         <div class="relative group">
-          <br><br>
+          <br><br><br>
           <img 
             alt="Profile Picture" 
             :src="profilePictureUrl" 
-            class="w-full rounded-lg" 
+            class="w-full rounded-lg cursor-pointer" 
             height="300" 
             width="300" 
             :class="{ 'blur-md': !isUnblurred }" 
+            @click="toggleBlur" 
           />
-          <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300" :class="{ 'opacity-0': !isHovered, 'opacity-100': isHovered }">
-            <button @click="toggleBlur" class="p-2 bg-gray-800 bg-opacity-75 rounded-full">
-              <i class="text-4xl text-white fas fa-eye"></i>
-            </button>
-          </div>
         </div>
         <!-- Hidden file input -->
         <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
@@ -201,8 +197,8 @@
       </div>
     </div>
 
-      <!-- Photo Upload Success Modal -->
-      <div v-if="showPhotoSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+    <!-- Photo Upload Success Modal -->
+    <div v-if="showPhotoSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
       <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
         <div class="p-4">
           <div class="text-center">
@@ -217,11 +213,28 @@
         </div>
       </div>
     </div>
+
+    <!-- Crop Image Modal -->
+    <div v-if="cropping" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+      <div class="w-full max-w-lg p-4 overflow-hidden transition-all transform bg-white rounded-lg">
+        <h2 class="text-xl font-semibold text-center mb-4">Crop Your Image</h2>
+        <div class="crop-container">
+          <img ref="cropperImage" :src="cropperSrc" alt="Cropper Image" />
+        </div>
+        <div class="flex justify-center mt-4">
+          <Button label="Crop" @click="cropImage" class="bg-blue-500 text-white mr-4" />
+          <Button label="Cancel" @click="cancelCrop" class="bg-red-500 text-white" />
+        </div>
+      </div>
+    </div>
+
   </AppLayout>
 </template>
 
 <script>
 import axios from 'axios';
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
 import { ref, watch } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
@@ -238,7 +251,6 @@ export default {
       fullName: '',
       empPosition: '',
       profilePictureUrl: '',
-
       fields: {
         empUser: '',
         empID: '',
@@ -254,34 +266,30 @@ export default {
         height: '',
         weight: '',
         bloodType: '',
+        Region: '',
+        Province: '',
         zipcode: '',
         block: '',
         villsub: '',
         mobilenum: '',
         telnum: '',
         emailadd: '',
-        pass: '',
-        zipcode: '',
-        block: '',
-        villsub: '',
-        Region:'',
-        Province:'',
         City:'',
         /*Barangay:'',*/
 
       },
-
       isEditing: false,
       originalFields: {},
       errorMessage: '',
       showUpdateDialog: false,
       showSuccessDialog: false,
+      showPhotoSuccessDialog: false,
       sexOptions: [],
-      civilStatusOptions:[],
-      bloodTypeOptions:[],
-      extOptions:[],
-      RegionOptions:[],
-      ProvinceOptions:[],
+      civilStatusOptions: [],
+      bloodTypeOptions: [],
+      extOptions: [],
+      RegionOptions: [],
+      ProvinceOptions: [],
       CityOptions:[],
       /*BarangayOptions:[],*/
       activeTab: 0,
@@ -291,23 +299,26 @@ export default {
       isUnblurred: false,
       selectedFile: null,
       empPic: '',
+      cropping: false,
+      cropper: null,
+      cropperSrc: '',
 
     };
   },
 
   computed: {
-      calculatedAge() {
-        if (!this.fields.birthday) return '';
-        const today = new Date();
-        const birthDate = new Date(this.fields.birthday);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-          age--;
-        }
-        return age;
+    calculatedAge() {
+      if (!this.fields.birthday) return '';
+      const today = new Date();
+      const birthDate = new Date(this.fields.birthday);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
       }
+      return age;
     },
+  },
 
     methods: {
 
@@ -471,17 +482,62 @@ export default {
       },
 
       toggleBlur() {
-        this.isUnblurred = !this.isUnblurred;
-      },
+      this.isUnblurred = !this.isUnblurred;
+    },
+    triggerFileUpload() {
+      this.$refs.fileInput.click();
+    },
+    onFileSelected(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.cropperSrc = e.target.result;
+          this.cropping = true;
+          this.$nextTick(() => {
+            this.initializeCropper();
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    initializeCropper() {
+      const image = this.$refs.cropperImage;
+      this.cropper = new Cropper(image, {
+        aspectRatio: 3.5 / 4.5, // Passport size aspect ratio
+        viewMode: 1
+      });
+    },
+    cropImage() {
+      const canvas = this.cropper.getCroppedCanvas({
+        width: 350, // Adjust as needed for passport size
+        height: 450
+      });
+      canvas.toBlob((blob) => {
+        this.uploadCroppedImage(blob);
+      });
+    },
+    uploadCroppedImage(blob) {
+      const formData = new FormData();
+      formData.append('file', blob, 'cropped-image.png');
 
-      triggerFileUpload() {
-        this.$refs.fileInput.click();
-      },
+      axios.post('/upload-profile-picture', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }).then(response => {
+        this.profilePictureUrl = response.data.url;
+        this.cropping = false;
+        this.showPhotoSuccessDialog = true;
+      }).catch(error => {
+        console.error('Error uploading file:', error);
+      });
+    },
+    cancelCrop() {
+      this.cropping = false;
+    },
+    hidePhotoSuccessDialog() {
+      this.showPhotoSuccessDialog = false;
+    },
 
-      onFileSelected(event) {
-        this.selectedFile = event.target.files[0];
-        this.uploadFile();
-      },
 
       async uploadFile() {
         if (this.selectedFile) {
@@ -625,5 +681,10 @@ export default {
 .custom-cancel-button:hover {
   background-color: #e57373 !important; /* Lighter red for hover state */
   border-color: #e57373 !important; /* Lighter red border for hover state */
+}
+
+.crop-container {
+  max-width: 100%;
+  height: auto;
 }
 </style>
