@@ -321,7 +321,6 @@ watch(activeTab, (newValue) => {
     transition: background-color 0.3s ease;
     color: black; /* Ensures text is visible */
 }
-
 .suggestions-dropdown li:hover,
 .suggestions-dropdown li.highlighted {
     background-color: #f5f5f5;
