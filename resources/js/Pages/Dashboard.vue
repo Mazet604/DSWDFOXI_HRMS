@@ -60,35 +60,35 @@
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
-                  <input type="text" class="text-center input-field text-color" :value="calculatedAge" disabled />
+                  <input type="text" class="input-field text-color" :value="calculatedAge" disabled />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
-                    <input type="text" class="text-center input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
+                    <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">SEX</label>
-                    <select class="text-center input-field" v-model="fields.sex" :disabled="!isEditing">
+                    <select class="input-field" v-model="fields.sex" :disabled="!isEditing">
                         <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS</label>
-                    <select class="text-center input-field" v-model="fields.civilStatus" :disabled="!isEditing">
+                    <select class="input-field" v-model="fields.civilStatus" :disabled="!isEditing">
                         <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M)</label>
-                    <input type="number" step="0.01" class="text-center input-field" v-model="fields.height" :disabled="!isEditing" />
+                    <input type="number" step="0.01" class="input-field" v-model="fields.height" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG)</label>
-                    <input type="number" class="text-center input-field" v-model="fields.weight" :disabled="!isEditing" />
+                    <input type="number" class="input-field" v-model="fields.weight" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
-                    <select class="text-center input-field" v-model="fields.bloodType" :disabled="!isEditing">
+                    <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
                     <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                     </div>
@@ -266,6 +266,8 @@ export default {
         villsub: '',
         Region:'',
         Province:'',
+        City:'',
+        /*Barangay:'',*/
 
       },
 
@@ -280,6 +282,8 @@ export default {
       extOptions:[],
       RegionOptions:[],
       ProvinceOptions:[],
+      CityOptions:[],
+      /*BarangayOptions:[],*/
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
@@ -289,21 +293,6 @@ export default {
       empPic: '',
 
     };
-  },
-
-  watch: {
-    'fields.Region'(newValue) {
-      // Make an Axios request whenever fields.Region changes
-      axios.get(`/api/region/${newValue}`)
-        .then(response => {
-          // Handle the response
-          console.log(response.data);
-        })
-        .catch(error => {
-          // Handle the error
-          console.error(error);
-        });
-    }
   },
 
   computed: {
@@ -340,7 +329,7 @@ export default {
         console.error(error);
       }
     },
-    
+
     async fetchCivilStatusOptions() {
       try {
         const response = await fetch('/dropdown/civilstatus-options');
@@ -395,6 +384,24 @@ export default {
         }
       },
 
+      async fetchCityOptions() {
+        try {
+          const response = await axios.get('/employee/city-options');
+          this.CityOptions = response.data;
+        } catch (error) {
+          this.errorMessage = 'Failed to load provinces.';
+        }
+      },
+
+      /*async fetchBarangayOptions() {
+        try {
+          const response = await axios.get('/employee/barangay-options');
+          this.BarangayOptions = response.data;
+        } catch (error) {
+          this.errorMessage = 'Failed to load provinces.';
+        }
+      },*/
+
       async fetchFullName() {
         try {
           const response = await axios.get('/employee/fullname');
@@ -432,6 +439,8 @@ export default {
           const response = await axios.get('/employee/Address');
           this.fields.Region = response.data.Region;
           this.fields.Province = response.data.Province;
+          this.fields.City = response.data.City;
+          /*this.fields.Barangay =  response.data.Barangay;*/
           this.fields.zipcode = response.data.zipcode;
           this.fields.block = response.data.block;
           this.fields.villsub = response.data.villsub;
@@ -562,6 +571,8 @@ export default {
     this.fetchExtOptions();
     this.fetchRegionOptions();
     this.fetchProvinceOptions();
+    this.fetchCityOptions();
+    /*this.fetchBarangayOptions();*/
   },
 };
 </script>

@@ -42,6 +42,7 @@ class AddressController extends Controller
                 'villsub' => $address->emp_subd,
                 'Region' => $address->emp_region,
                 'Province' => $address->emp_prov,
+                'City'=> $address->emp_city,
             ], 200);
 
         } catch (\Exception $e) {
@@ -68,4 +69,24 @@ class AddressController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getCityOptions()
+    {
+        try {
+            $CityOptions = lib_city::all(['citmun_psgc as value', 'col_citymuni as label']);  
+            return response()->json($CityOptions);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /*public function getBarangayOptions()
+    {
+        try {
+            $BarangayOptions = lib_brgy::all(['brgy_psgc as value', 'col_brgy as label']);  
+            return response()->json($BarangayOptions);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }*/
 }
