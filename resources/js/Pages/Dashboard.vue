@@ -27,77 +27,71 @@
         <div class="border-box">
           <TabView v-model:activeIndex="activeTab" class="no-background">
             <TabPanel header="PERSONAL INFO" :active="activeSubTab === 'personal'">
-              <!-- Personal Info Fields -->
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">USER NAME</label>
-                  <input type="text" class="input-field text-color" v-model="fields.empUser" disabled />
+            <!-- Personal Info Fields -->
+            <div class="grid grid-cols-4 gap-4">
+                <div class="col-span-2">
+                    <label class="block mb-2 text-sm font-bold text-gray-700">USER NAME</label>
+                    <input type="text" class="text-center input-field text-color" v-model="fields.empUser" disabled />
+                </div>
+                <div class="col-span-2">
+                    <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYEE ID</label>
+                    <input type="text" class="text-center input-field text-color" v-model="fields.empID" disabled />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYEE ID</label>
-                  <input type="text" class="input-field text-color" v-model="fields.empID" disabled />
+                    <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                    <input type="text" class="text-center input-field" v-model="fields.firstName" :disabled="!isEditing" />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                  <input type="text" class="input-field" v-model="fields.firstName" :disabled="!isEditing" />
+                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                    <input type="text" class="text-center input-field" v-model="fields.middleName" :disabled="!isEditing" />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                  <input type="text" class="input-field" v-model="fields.middleName" :disabled="!isEditing" />
+                    <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME</label>
+                    <input type="text" class="text-center input-field" v-model="fields.lastName" :disabled="!isEditing" />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME</label>
-                  <input type="text" class="input-field" v-model="fields.lastName" :disabled="!isEditing" />
+                    <label class="block mb-2 text-sm font-bold text-gray-700">CITIZENSHIP</label>
+                    <input type="text" class="text-center input-field" v-model="fields.citizenship" :disabled="!isEditing" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY</label>
+                    <input type="date" class="text-center input-field" v-model="fields.birthday" :disabled="!isEditing" />
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">Age</label>
-                  <input type="text" class="input-field text-color" :value="calculatedAge" disabled />
+                  <input type="text" class="text-center input-field text-color" :value="calculatedAge" disabled />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                  <select class="input-field" v-model="fields.suffix" :disabled="!isEditing">
-                    <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                  </select>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
+                    <input type="text" class="text-center input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">CITIZENSHIP</label>
-                  <input type="text" class="input-field" v-model="fields.citizenship" :disabled="!isEditing" />
+                    <label class="block mb-2 text-sm font-bold text-gray-700">SEX</label>
+                    <select class="text-center input-field" v-model="fields.sex" :disabled="!isEditing">
+                        <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                    </select>
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY</label>
-                  <input type="date" class="input-field" v-model="fields.birthday" :disabled="!isEditing" />
+                    <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS</label>
+                    <select class="text-center input-field" v-model="fields.civilStatus" :disabled="!isEditing">
+                        <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                    </select>
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
-                  <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
+                    <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M)</label>
+                    <input type="number" step="0.01" class="text-center input-field" v-model="fields.height" :disabled="!isEditing" />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">SEX</label>
-                  <select class="input-field" v-model="fields.sex" :disabled="!isEditing">
-                    <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                  </select>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG)</label>
+                    <input type="number" class="text-center input-field" v-model="fields.weight" :disabled="!isEditing" />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS</label>
-                  <select class="input-field" v-model="fields.civilStatus" :disabled="!isEditing">
-                    <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M)</label>
-                  <input type="number" step="0.01" class="input-field" v-model="fields.height" :disabled="!isEditing" />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG)</label>
-                  <input type="number" class="input-field" v-model="fields.weight" :disabled="!isEditing" />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
-                  <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
+                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
+                    <select class="text-center input-field" v-model="fields.bloodType" :disabled="!isEditing">
                     <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                  </select>
+                    </select>
+                    </div>
                 </div>
-              </div>
             </TabPanel>
             <TabPanel header="ADDRESS" :active="activeSubTab === 'address'">
               <!-- Address Fields -->

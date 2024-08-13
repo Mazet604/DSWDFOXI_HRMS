@@ -5,79 +5,88 @@
             <div class="border-box">
                 <TabView v-model:activeIndex="activeTab" class="no-background">
                     <TabPanel header="FAMILY">
-                        <div class="grid grid-cols-2 gap-4 mt-8">
-                            <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">SPOUSE SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseSurname.value" :disabled="!isEditingFamily" />
+                        <div class="grid grid-cols-5 gap-4 mt-8">
+                            <div class="col-span-5">
+                                <h1 style="font-size: 25px; font-weight: bold;">Spouse</h1>
                             </div>
-                            <div>
+                        <!-- Spouse Information -->
+                            <div class="col-span-1">
+                                <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                                <input class="input-field" type="text" v-model="fields.spouseSurname.value" />
+                            </div>
+                            <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseFirstName.value" :disabled="!isEditingFamily" />
+                                <input class="input-field" type="text" v-model="fields.spouseFirstName.value" />
                             </div>
-                            <div>
+                            <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseMiddleName.value" :disabled="!isEditingFamily" />
+                                <input class="input-field" type="text" v-model="fields.spouseMiddleName.value"/>
                             </div>
-                            <div>
+                            <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">EXT. NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseExtName.value" :disabled="!isEditingFamily" />
+                                <input class="input-field" type="text" v-model="fields.spouseExtName.value"/>
                             </div>
-                            <div>
+                            <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
-                                <input class="input-field" type="text" v-model="fields.spouseOccupation.value" :disabled="!isEditingFamily" />
+                                <input class="input-field" type="text" v-model="fields.spouseOccupation.value"/>
                             </div>
-                            <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYERS/BUSINESS NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseBusinessName.value" :disabled="!isEditingFamily" />
+                        <!-- Employer/Business Information -->
+                            <div class="col-span-2">
+                                <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYER'S/BUSINESS NAME</label>
+                                <input class="input-field" type="text" v-model="fields.spouseBusinessName.value"/>
                             </div>
-                            <div>
+                            <div class="col-span-2">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">BUSINESS ADDRESS</label>
-                                <input class="input-field" type="text" v-model="fields.spouseBusinessAddress.value" :disabled="!isEditingFamily" />
+                                <input class="input-field" type="text" v-model="fields.spouseBusinessAddress.value"/>
                             </div>
-                            <div>
+                            <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
-                                <input class="input-field" type="text" v-model="fields.spouseTelNo.value" :disabled="!isEditingFamily" />
+                                <input class="input-field" type="text" v-model="fields.spouseTelNo.value"/>
                             </div>
-                            <br><br>
-                            <div></div>
-
-                            <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">FATHER'S SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherSurname.value" :disabled="!isEditingFamily" />
+                        <!-- Separator for Father's Information -->
+                            <div class="col-span-5">
+                                <h1 style="font-size: 25px; font-weight: bold;">Father</h1>
                             </div>
-                            <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">FATHER'S FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherFirstName.value" :disabled="!isEditingFamily" />
+                        <!-- Father's Information -->
+                            <div class="col-span-1">
+                                <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                                <input class="input-field" type="text" v-model="fields.fatherSurname.value"/>
                             </div>
-                            <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">FATHER'S MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherMiddleName.value" :disabled="!isEditingFamily" />
+                            <div class="col-span-1">
+                                <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                                <input class="input-field" type="text" v-model="fields.fatherFirstName.value"/>
                             </div>
-                            <div>
+                            <div class="col-span-1">
+                                <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                                <input class="input-field" type="text" v-model="fields.fatherMiddleName.value"/>
+                            </div>
+                            <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">EXT. NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherExtName.value" :disabled="!isEditingFamily" />
+                                <input class="input-field" type="text" v-model="fields.fatherExtName.value"/>
                             </div>
-                            <br><br>
-                            <div></div>
-
-                            <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">MOTHER'S MAIDEN NAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherMaidenName.value" :disabled="!isEditingFamily" />
+                            <div class="col-span-1"></div> <!-- Empty space for alignment -->
+                        <!-- Separator for Mother's Information -->
+                            <div class="col-span-5">
+                                <h1 style="font-size: 25px; font-weight: bold;">Mother</h1>
                             </div>
-                            <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">MOTHER'S SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherSurname.value" :disabled="!isEditingFamily" />
-                            </div>
-                            <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">MOTHER'S FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherFirstName.value" :disabled="!isEditingFamily" />
-                            </div>
-                            <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">MOTHER'S MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherMiddleName.value" :disabled="!isEditingFamily" />
-                            </div>
+                     <!-- Mother's Information -->
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">MAIDEN NAME</label>
+                            <input class="input-field" type="text" v-model="fields.motherMaidenName.value"/>
                         </div>
-
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                            <input class="input-field" type="text" v-model="fields.motherSurname.value"/>
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                            <input class="input-field" type="text" v-model="fields.motherFirstName.value"/>
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                            <input class="input-field" type="text" v-model="fields.motherMiddleName.value"/>
+                        </div>
+                    </div>
                         <div class="flex justify-end gap-4 mt-6">
                             <Button v-if="!isEditingFamily" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
                             <div v-if="isEditingFamily" class="space-x-4">
@@ -953,22 +962,6 @@ export default {
 </script>
 
 <style scoped>
-.bg-cover {
-    background-size: cover;
-}
-
-.bg-center {
-    background-position: center;
-}
-
-.border-box {
-    padding: 16px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    background-color: white;
-}
-
 .input-field {
     width: 100%;
     padding: 8px;
@@ -976,19 +969,37 @@ export default {
     border-radius: 4px;
 }
 
-@media (max-width: 640px) {
-    .fixed {
-        position: static;
-    }
+.grid-cols-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
 }
 
-.custom-cancel-button {
-    background-color: #dc3545 !important;
-    border-color: #dc3545 !important;
+.col-span-1 {
+    grid-column: span 1 / span 1;
 }
 
-.custom-cancel-button:hover {
-    background-color: #e57373 !important;
-    border-color: #e57373 !important;
+.col-span-2 {
+    grid-column: span 2 / span 2;
+}
+
+.mt-8 {
+    margin-top: 2rem;
+}
+
+.border-t-2 {
+    border-top-width: 2px;
+}
+
+.my-4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+.font-semibold {
+    font-weight: 600;
 }
 </style>

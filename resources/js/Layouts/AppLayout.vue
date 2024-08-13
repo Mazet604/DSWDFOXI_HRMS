@@ -8,9 +8,29 @@
                 <div class="text-center">
                     <img src="/images/dswd-logo.png" alt="DSWD Logo" class="mx-auto mb-4 h-22" />
                 </div>
-                <div class="mb-4 search-bar">
-                    <input type="text" placeholder="Search..." v-model="searchQuery" @keyup.enter="search" />
+                <div class="mb-4 search-bar relative">
+                    <input 
+                        type="text" 
+                        placeholder="Search..." 
+                        v-model="searchQuery" 
+                        @input="filterSuggestions"
+                        @keydown.down="highlightNext"
+                        @keydown.up="highlightPrevious"
+                        @keydown.enter="selectSuggestion"
+                        @focus="showSuggestions = true"
+                    />
                     <i class="fas fa-search"></i>
+                    <ul v-if="showSuggestions && filteredSuggestions.length" class="suggestions-dropdown">
+                        <li 
+                            v-for="(suggestion, index) in filteredSuggestions" 
+                            :key="index" 
+                            :class="{ 'highlighted': index === highlightedIndex }"
+                            @click="search(suggestion)"
+                            @mouseover="highlightedIndex = index"
+                        >
+                            {{ suggestion }}
+                        </li>
+                    </ul>
                 </div>
                 <nav class="flex-1">
                     <div class="custom-accordion">
@@ -74,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { router } from '@inertiajs/vue3';
 
 const isAccordionOpen = ref(true); // Ensure the accordion is open by default for demonstration
@@ -82,6 +102,60 @@ const showLogoutDialog = ref(false);
 const searchQuery = ref('');
 const activeTab = ref(0);
 const activeSubTab = ref(0);
+
+const suggestions = [
+    'Personal Info',
+    'Address',
+    'Security',
+    'Family',
+    'Education',
+    'Organization',
+    'Work Experience',
+    'Skills',
+    'References',
+    'Eligibility',
+    'Voluntary',
+    'Learning',
+    'Recognition',
+    'Government',
+    'Other',
+];
+
+const filteredSuggestions = ref([]);
+const showSuggestions = ref(false);
+const highlightedIndex = ref(-1);
+
+const filterSuggestions = () => {
+    const query = searchQuery.value.toLowerCase();
+    if (query) {
+        filteredSuggestions.value = suggestions.filter(suggestion =>
+            suggestion.toLowerCase().includes(query)
+        );
+    } else {
+        filteredSuggestions.value = [];
+    }
+    highlightedIndex.value = -1;
+};
+
+const highlightNext = () => {
+    if (highlightedIndex.value < filteredSuggestions.value.length - 1) {
+        highlightedIndex.value += 1;
+    }
+};
+
+const highlightPrevious = () => {
+    if (highlightedIndex.value > 0) {
+        highlightedIndex.value -= 1;
+    }
+};
+
+const selectSuggestion = () => {
+    if (highlightedIndex.value >= 0) {
+        search(filteredSuggestions.value[highlightedIndex.value]);
+    } else {
+        search(searchQuery.value);
+    }
+};
 
 const toggleAccordion = () => {
     isAccordionOpen.value = !isAccordionOpen.value;
@@ -110,11 +184,12 @@ const logout = () => {
 };
 
 const closeDropdown = () => {
-    // Prevent the dropdown from closing when clicking on the sidebar or dropdown content
+    showSuggestions.value = false;
 };
 
-const search = () => {
-    const searchLower = searchQuery.value.toLowerCase();
+const search = (query) => {
+    searchQuery.value = query;
+    const searchLower = query.toLowerCase();
     if (searchLower.includes('personal info')) {
         navigateTo('dashboard', 0, 0);
     } else if (searchLower.includes('address')) {
@@ -148,6 +223,7 @@ const search = () => {
     } else {
         alert('No matching tab found.');
     }
+    showSuggestions.value = false;
 };
 
 watch(activeTab, (newValue) => {
@@ -223,6 +299,35 @@ watch(activeTab, (newValue) => {
     margin-left: 0.5rem;
     color: white;
 }
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 0.375rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 0.25rem;
+    padding: 0;
+    list-style: none;
+}
+
+.suggestions-dropdown li {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: black; /* Ensures text is visible */
+}
+
+.suggestions-dropdown li:hover,
+.suggestions-dropdown li.highlighted {
+    background-color: #f5f5f5;
+    color: black; /* Ensures highlighted text is also visible */
+}
+
 /* Ensure the logout button stays at the bottom */
 button {
     margin-top: auto;
