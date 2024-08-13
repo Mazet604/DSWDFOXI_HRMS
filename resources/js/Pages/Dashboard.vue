@@ -3,24 +3,27 @@
     <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="relative col-span-1">
         <div class="relative group">
-          <br><br>
+          <br><br><br>
           <img 
             alt="Profile Picture" 
             :src="profilePictureUrl" 
-            class="w-full rounded-lg" 
+            class="w-full rounded-lg cursor-pointer" 
             height="300" 
             width="300" 
             :class="{ 'blur-md': !isUnblurred }" 
+            @click="toggleBlur" 
           />
-          <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300" :class="{ 'opacity-0': !isHovered, 'opacity-100': isHovered }">
-            <button @click="toggleBlur" class="p-2 bg-gray-800 bg-opacity-75 rounded-full">
-              <i class="text-4xl text-white fas fa-eye"></i>
-            </button>
-          </div>
         </div>
         <!-- Hidden file input -->
         <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
         <Button label="Upload Photo" class="w-full py-2 mt-4 text-white rounded-lg bg-gradient-to-r from-pink-500 to-purple-500" @click="triggerFileUpload" />
+      </div>
+      <div v-if="cropping" class="col-span-1 md:col-span-2">
+        <div class="crop-container">
+          <img ref="cropperImage" :src="cropperSrc" alt="Cropper Image" />
+        </div>
+        <Button label="Crop" @click="cropImage" class="mt-4 bg-blue-500 text-white" />
+        <Button label="Cancel" @click="cancelCrop" class="mt-4 ml-4 bg-red-500 text-white" />
       </div>
       <div class="col-span-1 md:col-span-2">
         <h1 class="mb-4 text-3xl font-bold lg:text-5xl">{{ fullName }}</h1>
@@ -201,8 +204,8 @@
       </div>
     </div>
 
-      <!-- Photo Upload Success Modal -->
-      <div v-if="showPhotoSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+    <!-- Photo Upload Success Modal -->
+    <div v-if="showPhotoSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
       <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
         <div class="p-4">
           <div class="text-center">
@@ -222,6 +225,8 @@
 
 <script>
 import axios from 'axios';
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
 import { ref, watch } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
@@ -238,7 +243,6 @@ export default {
       fullName: '',
       empPosition: '',
       profilePictureUrl: '',
-
       fields: {
         empUser: '',
         empID: '',
@@ -254,60 +258,54 @@ export default {
         height: '',
         weight: '',
         bloodType: '',
+        Region: '',
+        Province: '',
         zipcode: '',
         block: '',
         villsub: '',
         mobilenum: '',
         telnum: '',
-        emailadd: '',
-        pass: '',
-        zipcode: '',
-        block: '',
-        villsub: '',
-        Region:'',
-        Province:'',
-
+        emailadd: ''
       },
-
       isEditing: false,
       originalFields: {},
       errorMessage: '',
       showUpdateDialog: false,
       showSuccessDialog: false,
+      showPhotoSuccessDialog: false,
       sexOptions: [],
-      civilStatusOptions:[],
-      bloodTypeOptions:[],
-      extOptions:[],
-      RegionOptions:[],
-      ProvinceOptions:[],
+      civilStatusOptions: [],
+      bloodTypeOptions: [],
+      extOptions: [],
+      RegionOptions: [],
+      ProvinceOptions: [],
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
       isHovered: false,
       isUnblurred: false,
       selectedFile: null,
-      empPic: '',
-      showPhotoSuccessDialog: false,
-
+      cropping: false,
+      cropper: null,
+      cropperSrc: ''
     };
   },
 
   computed: {
-      calculatedAge() {
-        if (!this.fields.birthday) return '';
-        const today = new Date();
-        const birthDate = new Date(this.fields.birthday);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-          age--;
-        }
-        return age;
+    calculatedAge() {
+      if (!this.fields.birthday) return '';
+      const today = new Date();
+      const birthDate = new Date(this.fields.birthday);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
       }
+      return age;
     },
+  },
 
-    methods: {
-
+  methods: {
     validateMobileNumber() {
       this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
     },
@@ -384,7 +382,7 @@ export default {
         this.fullName = response.data.fullName;
         this.empPosition = response.data.empPosition;
       } catch (error) {
-          this.errorMessage = 'Failed to load full name.';
+        this.errorMessage = 'Failed to load full name.';
       }
     },
     async fetchPersonalInfo() {
@@ -405,7 +403,7 @@ export default {
         this.fields.weight = response.data.weight;
         this.fields.bloodType = response.data.bloodType;
       } catch (error) {
-          this.errorMessage = 'Failed to load personal information.';
+        this.errorMessage = 'Failed to load personal information.';
       }
     },
 
@@ -418,7 +416,7 @@ export default {
         this.fields.block = response.data.block;
         this.fields.villsub = response.data.villsub;
       } catch (error) {
-          this.errorMessage = 'Failed to load address.';
+        this.errorMessage = 'Failed to load address.';
       }
     },
 
@@ -429,31 +427,75 @@ export default {
         this.fields.telnum = response.data.telnum;
         this.fields.emailadd = response.data.emailadd;
       } catch (error) {
-          this.errorMessage = 'Failed to load security and contact information.';
+        this.errorMessage = 'Failed to load security and contact information.';
       }
     },
 
     async fetchProfilePicture() {
-    try {
+      try {
         const response = await axios.get('/get-profile-picture');
         this.profilePictureUrl = response.data.url ? response.data.url : '/storage/uploads/profile-pictures/default-profile.png';
-        console.log('Profile Picture URL:', this.profilePictureUrl); 
-    } catch (error) {
+        console.log('Profile Picture URL:', this.profilePictureUrl);
+      } catch (error) {
         console.error('Error fetching profile picture:', error);
-    }
-  },
+      }
+    },
 
     toggleBlur() {
       this.isUnblurred = !this.isUnblurred;
     },
-
     triggerFileUpload() {
       this.$refs.fileInput.click();
     },
-
     onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
-      this.uploadFile();
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.cropperSrc = e.target.result;
+          this.cropping = true;
+          this.$nextTick(() => {
+            this.initializeCropper();
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    initializeCropper() {
+      const image = this.$refs.cropperImage;
+      this.cropper = new Cropper(image, {
+        aspectRatio: 3.5 / 4.5, // Passport size aspect ratio
+        viewMode: 1
+      });
+    },
+    cropImage() {
+      const canvas = this.cropper.getCroppedCanvas({
+        width: 350, // Adjust as needed for passport size
+        height: 450
+      });
+      canvas.toBlob((blob) => {
+        this.uploadCroppedImage(blob);
+      });
+    },
+    uploadCroppedImage(blob) {
+      const formData = new FormData();
+      formData.append('file', blob, 'cropped-image.png');
+
+      axios.post('/upload-profile-picture', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }).then(response => {
+        this.profilePictureUrl = response.data.url;
+        this.cropping = false;
+        this.showPhotoSuccessDialog = true;
+      }).catch(error => {
+        console.error('Error uploading file:', error);
+      });
+    },
+    cancelCrop() {
+      this.cropping = false;
+    },
+    hidePhotoSuccessDialog() {
+      this.showPhotoSuccessDialog = false;
     },
 
     async uploadFile() {
@@ -475,11 +517,10 @@ export default {
         }
       }
     },
+
     hidePhotoSuccessDialog() {
       this.showPhotoSuccessDialog = false; // Hide the success modal
     },
-  
-
 
     toggleEditing() {
       if (!this.isEditing) {
@@ -594,5 +635,10 @@ export default {
 .custom-cancel-button:hover {
   background-color: #e57373 !important; /* Lighter red for hover state */
   border-color: #e57373 !important; /* Lighter red border for hover state */
+}
+
+.crop-container {
+  max-width: 100%;
+  height: auto;
 }
 </style>
