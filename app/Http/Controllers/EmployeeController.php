@@ -156,7 +156,11 @@ class EmployeeController extends Controller
             $emp_address->emp_region=$request->input('Region');
             $emp_address->emp_prov=$request->input('Province');
             $emp_address->emp_city=$request->input('City');
-            $emp_address->emp_brgy=$request->input('Brgy');
+            $emp_address->emp_brgy=$request->input('Barangay');
+            $emp_address->emp_house=$request->input('block');
+            $emp_address->emp_subd=$request->input('villsub');
+            $emp_address->emp_zip=$request->input('zipcode');
+
 
             // Update the emp_acc details
             $emp_acc->empmail = $request->input('emailadd');

@@ -3,16 +3,18 @@
     <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="relative col-span-1">
         <div class="relative group">
-          <br><br><br>
           <img 
             alt="Profile Picture" 
             :src="profilePictureUrl" 
-            class="w-full rounded-lg cursor-pointer" 
+            class="w-full rounded-lg cursor-pointer"
             height="300" 
             width="300" 
-            :class="{ 'blur-md': !isUnblurred }" 
+            :class="{ 'blur-md': !isUnblurred }"
             @click="toggleBlur" 
           />
+          <button @click="toggleBlur" class="absolute top-0 right-0 m-2 p-2 bg-gray-800 bg-opacity-75 rounded-full">
+      <i class="fas fa-eye text-white text-4xl"></i>
+    </button>
         </div>
         <!-- Hidden file input -->
         <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
@@ -26,15 +28,14 @@
             <TabPanel header="PERSONAL INFO" :active="activeSubTab === 'personal'">
             <!-- Personal Info Fields -->
             <div class="grid grid-cols-4 gap-4">
-                <div class="col-span-2">
+                <div class="col-span-1">
                     <label class="block mb-2 text-sm font-bold text-gray-700">USER NAME</label>
                     <input type="text" class="text-center input-field text-color" v-model="fields.empUser" disabled />
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-1">
                     <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYEE ID</label>
                     <input type="text" class="text-center input-field text-color" v-model="fields.empID" disabled />
-                </div>
-                <div>
+                </div><div class="col-span-1"></div><div class="col-span-1"></div><div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
                     <input type="text" class="text-center input-field" v-model="fields.firstName" :disabled="!isEditing" />
                 </div>
@@ -47,17 +48,19 @@
                     <input type="text" class="text-center input-field" v-model="fields.lastName" :disabled="!isEditing" />
                 </div>
                 <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
+                  <select class="input-field" v-model="fields.suffix" :disabled="!isEditing">
+                    <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                  </select>
+                </div>
+                <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">CITIZENSHIP</label>
                     <input type="text" class="text-center input-field" v-model="fields.citizenship" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY</label>
                     <input type="date" class="text-center input-field" v-model="fields.birthday" :disabled="!isEditing" />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
-                  <input type="text" class="input-field text-color" :value="calculatedAge" disabled />
-                </div>
+                </div>  
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
                     <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
@@ -74,20 +77,26 @@
                         <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                 </div>
+                <div class="tight">
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
+                  <input type="text" class="input-field2 text-color" :value="calculatedAge" disabled />
+                </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M)</label>
-                    <input type="number" step="0.01" class="input-field" v-model="fields.height" :disabled="!isEditing" />
+                    <input type="number" step="0.01" class="input-field2" v-model="fields.height" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG)</label>
-                    <input type="number" class="input-field" v-model="fields.weight" :disabled="!isEditing" />
+                    <input type="number" class="input-field2" v-model="fields.weight" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
-                    <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
+                    <select class="input-field2" v-model="fields.bloodType" :disabled="!isEditing">
                     <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                     </div>
+                </div>
                 </div>
             </TabPanel>
             <TabPanel header="ADDRESS" :active="activeSubTab === 'address'">
@@ -95,7 +104,7 @@
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
-                  <select class="input-field" v-model="fields.Region" :disabled="!isEditing">
+                  <select class="input-field" v-model="fields.Region" :disabled="!isEditing" @change="fetchProvinceOptions">
                     <option v-for="option in RegionOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                   </select>
                 </div>
@@ -116,18 +125,18 @@
                   <input type="text" class="input-field" v-model="fields.zipcode" :disabled="!isEditing" />
                 </div>
                 <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
+                  <select class="input-field" v-model="fields.Barangay" :disabled="!isEditing">
+                    <option v-for="option in BarangayOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                  </select>
+                </div>
+                <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
                   <input type="text" class="input-field" v-model="fields.block" :disabled="!isEditing" />
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
                   <input type="text" class="input-field" v-model="fields.villsub" :disabled="!isEditing" />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
-                  <select class="input-field" v-model="fields.Barangay" :disabled="!isEditing">
-                    <option v-for="option in BarangayOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                  </select>
                 </div>
               </div>
             </TabPanel>
@@ -387,12 +396,14 @@ export default {
       },
 
       async fetchProvinceOptions() {
-        try {
-          const response = await axios.get('/employee/province-options');
-          this.ProvinceOptions = response.data;
-        } catch (error) {
-          this.errorMessage = 'Failed to load provinces.';
-        }
+        const reg_psgc = this.fields.Region;
+        axios.get(`/employee/province-options`, { params: { reg_psgc } })
+          .then(response => {
+            this.ProvinceOptions = response.data;
+          })
+          .catch(error => {
+            console.error('Error fetching province options:', error);
+          });
       },
 
       async fetchCityOptions() {
@@ -635,56 +646,82 @@ export default {
 
 <style scoped>
 .bg-cover {
-  background-size: cover;
+    background-size: cover;
 }
 
 .text-color {
-  color: #707A88;
+    color: #707A88;
 }
 
-.text-color:hover{
-  cursor: not-allowed;
+.text-color:hover {
+    cursor: not-allowed;
 }
 
 .bg-center {
-  background-position: center;
+    background-position: center;
 }
 
 .border-box {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: none;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: none;
 }
 
 .input-field {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.input-field2 {
+    width: 45%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.tight {
+  
+}
+
+.col-span-1 {
+    width: 100%;
+}
+
+.col-span-2 {
+    width: 100%;
+}
+
+.username-field,
+.employee-id-field {
+    max-width: 150px; /* Adjust this width as necessary to match the image */
 }
 
 .update-button {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .blur-md {
-  filter: blur(8px);
+    filter: blur(8px);
 }
 
 .custom-cancel-button {
-  background-color: #dc3545 !important; /* Red background for cancel button */
-  border-color: #dc3545 !important; /* Red border for cancel button */
+    background-color: #dc3545 !important; /* Red background for cancel button */
+    border-color: #dc3545 !important; /* Red border for cancel button */
 }
 
 .custom-cancel-button:hover {
-  background-color: #e57373 !important; /* Lighter red for hover state */
-  border-color: #e57373 !important; /* Lighter red border for hover state */
+    background-color: #e57373 !important; /* Lighter red for hover state */
+    border-color: #e57373 !important; /* Lighter red border for hover state */
 }
 
 .crop-container {
   max-width: 100%;
   height: auto;
 }
+
 </style>

@@ -60,7 +60,7 @@ class AddressController extends Controller
         }
     }   
 
-    public function getProvinceOptions()
+    public function getProvinceOptions(Request $request)
     {
         try {
             $ProvinceOptions = lib_province::all(['prv_psgc as value', 'col_province as label']);  

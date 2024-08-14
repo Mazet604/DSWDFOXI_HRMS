@@ -66,7 +66,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/employee/SecurityandContact', [EmployeeController::class, 'getSecurityandContact']);
     Route::patch('/employee/updateProfile', [EmployeeController::class, 'updateProfile']);
     Route::get('/emp_acc/empuser', [EmpAccController::class, 'getCreds']);
-    Route::get('/emp_acc/empuser', [EmpAccController::class, 'getCreds']);
     Route::get('/dropdown/sex-options', [DropDownControllers::class, 'getSexOptions']);
     Route::get('/dropdown/civilstatus-options', [DropDownControllers::class, 'getCivilStatusOptions']);
     Route::get('/dropdown/bloodtype-options', [DropDownControllers::class, 'getBloodTypeOptions']);
