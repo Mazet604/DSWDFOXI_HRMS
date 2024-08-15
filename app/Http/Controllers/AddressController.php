@@ -40,53 +40,10 @@ class AddressController extends Controller
                 'zipcode' => $address->emp_zip,
                 'block' => $address->emp_house,
                 'villsub' => $address->emp_subd,
-                'Region' => $address->emp_region,
-                'Province' => $address->emp_prov,
-                'City'=> $address->emp_city,
             ], 200);
 
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while fetching the address'], 500);
         }
     }
-
-    public function getRegionOptions()
-    {
-        try {
-            $RegionOptions = lib_region::all(['reg_psgc as value', 'col_region as label']);
-            return response()->json($RegionOptions);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }   
-
-    public function getProvinceOptions(Request $request)
-    {
-        try {
-            $ProvinceOptions = lib_province::all(['prv_psgc as value', 'col_province as label']);  
-            return response()->json($ProvinceOptions);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
-    public function getCityOptions()
-    {
-        try {
-            $CityOptions = lib_city::all(['citmun_psgc as value', 'col_citymuni as label']);  
-            return response()->json($CityOptions);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
-    /*public function getBarangayOptions()
-    {
-        try {
-            $BarangayOptions = lib_brgy::all(['brgy_psgc as value', 'col_brgy as label']);  
-            return response()->json($BarangayOptions);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }*/
 }
