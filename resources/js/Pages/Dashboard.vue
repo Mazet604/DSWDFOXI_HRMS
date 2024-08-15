@@ -64,7 +64,7 @@
                 </div>  
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
-                    <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" @input="validateName('placeofBirth')"/>
+                    <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS</label>
@@ -73,32 +73,36 @@
                     </select>
                 </div>
               </div>
-                <div class="grid grid-cols-5 gap-4">
-                <div>
+                <div class="tight">
+                  
+                  <div class="grid grid-cols-5 gap-4">
+                    <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">SEX</label>
                     <select class="input-field" v-model="fields.sex" :disabled="!isEditing">
                         <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
-                </div>  
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
-                  <input type="text" class="input-field2 text-color" :value="calculatedAge" disabled />
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(CM)</label>
-                    <input type="number" step="0.01" class="input-field2" v-model="fields.height" :disabled="!isEditing" />
+                    <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
+                    <input type="text" class="input-field" :value="calculatedAge" disabled />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M)</label>
+                    <input type="number" step="0.01" class="input-field" v-model="fields.height" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG)</label>
-                    <input type="number" class="input-field2" v-model="fields.weight" :disabled="!isEditing" />
+                    <input type="number" class="input-field" v-model="fields.weight" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
                     <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
-                    <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                        <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
-                    </div>
                 </div>
+            </div>
+                </div>
+
             </TabPanel>
             <TabPanel header="ADDRESS" :active="activeSubTab === 'address'">
               <!-- Address Fields -->
@@ -626,12 +630,14 @@ export default {
 }
 
 .input-field {
-    width: 100%;
+    width: 100%; /* Full width of the container */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    text-align: left; /* Ensure text is left-aligned */
 }
+
 
 .input-field2 {
     width: 45%;
