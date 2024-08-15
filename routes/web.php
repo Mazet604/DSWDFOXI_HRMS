@@ -79,6 +79,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/employee/city-options', [AddressController::class, 'getCityOptions']);
     /*Route::get('/employee/barangay-options', [AddressController::class, 'getBarangayOptions']);*/
 
+    Route::get('/emp_father/Father', [BackgroundController::class, 'getFather']);
+    Route::get('/emp_mother/Mother', [BackgroundController::class, 'getMother']);
+    Route::get('/emp_spouse/Spouse', [BackgroundController::class, 'getSpouse']);
+    Route::patch('/EmpFamily/updateFamilyData', [BackgroundController::class, 'updateFamilyData']);
     Route::get('/education/EducationData', [BackgroundController::class, 'getEducationData']);
     Route::post('/education/AddEducationData', [BackgroundController::class, 'addEducationData']);
     Route::get('/emp_org/OrganizationData', [BackgroundController::class, 'getOrganizationData']);
@@ -89,8 +93,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/emp_skills/AddSkillData', [BackgroundController::class, 'addSkillData']);
     Route::get('/emp_reference/ReferencesData', [BackgroundController::class, 'getReferencesData']);
     Route::post('/emp_reference/AddReferenceData', [BackgroundController::class, 'addReferenceData']);
-    Route::get('/family-data', [BackgroundController::class, 'getFamilyData']);
-    Route::post('/emp_family/UpdateFamilyData', [BackgroundController::class, 'updateFamilyData']);
     Route::get('/emp_child/ChildData', [BackgroundController::class, 'getChildData']);
     Route::post('/emp_child/AddChildData', [BackgroundController::class, 'addChildData']);
 

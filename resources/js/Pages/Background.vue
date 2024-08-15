@@ -9,84 +9,84 @@
                             <div class="col-span-5">
                                 <h1 style="font-size: 25px; font-weight: bold;">Spouse</h1>
                             </div>
-                        <!-- Spouse Information -->
+                            <!-- Spouse Information -->
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseSurname.value" />
+                                <input class="input-field" type="text" v-model="fields.spouseSurname" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseFirstName.value" />
+                                <input class="input-field" type="text" v-model="fields.spouseFirstName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseMiddleName.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">EXT. NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseExtName.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseExtName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
-                                <input class="input-field" type="text" v-model="fields.spouseOccupation.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseOccupation" :disabled="!isEditingFamily" />
                             </div>
-                        <!-- Employer/Business Information -->
+                            <!-- Employer/Business Information -->
                             <div class="col-span-2">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYER'S/BUSINESS NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseBusinessName.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseBusinessName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-2">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">BUSINESS ADDRESS</label>
-                                <input class="input-field" type="text" v-model="fields.spouseBusinessAddress.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseBusinessAddress" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
-                                <input class="input-field" type="text" v-model="fields.spouseTelNo.value"/>
+                                <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" />
                             </div>
-                        <!-- Separator for Father's Information -->
+                            <!-- Separator for Father's Information -->
                             <div class="col-span-5">
                                 <h1 style="font-size: 25px; font-weight: bold;">Father</h1>
                             </div>
-                        <!-- Father's Information -->
+                            <!-- Father's Information -->
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherSurname.value"/>
+                                <input class="input-field" type="text" v-model="fields.fatherSurname" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherFirstName.value"/>
+                                <input class="input-field" type="text" v-model="fields.fatherFirstName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherMiddleName.value"/>
+                                <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">EXT. NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherExtName.value"/>
+                                <input class="input-field" type="text" v-model="fields.fatherExtName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1"></div> <!-- Empty space for alignment -->
-                        <!-- Separator for Mother's Information -->
+                            <!-- Separator for Mother's Information -->
                             <div class="col-span-5">
                                 <h1 style="font-size: 25px; font-weight: bold;">Mother</h1>
                             </div>
-                     <!-- Mother's Information -->
-                        <div class="col-span-1">
-                            <label class="block mb-2 text-sm font-bold text-gray-700">MAIDEN NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherMaidenName.value"/>
+                            <!-- Mother's Information -->
+                            <div class="col-span-1">
+                                <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                                <input class="input-field" type="text" v-model="fields.motherSurname" :disabled="!isEditingFamily" />
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                                <input class="input-field" type="text" v-model="fields.motherFirstName" :disabled="!isEditingFamily" />
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                                <input class="input-field" type="text" v-model="fields.motherMiddleName" :disabled="!isEditingFamily" />
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block mb-2 text-sm font-bold text-gray-700">MAIDEN NAME</label>
+                                <input class="input-field" type="text" v-model="fields.motherMaidenName" :disabled="!isEditingFamily" />
+                            </div>
                         </div>
-                        <div class="col-span-1">
-                            <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherSurname.value"/>
-                        </div>
-                        <div class="col-span-1">
-                            <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherFirstName.value"/>
-                        </div>
-                        <div class="col-span-1">
-                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherMiddleName.value"/>
-                        </div>
-                    </div>
                         <div class="flex justify-end gap-4 mt-6">
                             <Button v-if="!isEditingFamily" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
                             <div v-if="isEditingFamily" class="space-x-4">
@@ -425,8 +425,8 @@
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
                     <div class="flex justify-center">
-                        <button @click="showSuccessDialog = false" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
-                            Back
+                        <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            OK
                         </button>
                     </div>
                 </div>
@@ -448,54 +448,211 @@ export default {
     components: {
         AppLayout, Button, DataTable, Column
     },
+
+    data() {
+        return {
+            fullName: '',
+            empPosition: '',
+            profilePictureUrl: '',
+            fields: {
+                spouseSurname: '',
+                spouseFirstName: '',
+                spouseMiddleName: '',
+                spouseExtName: '',
+                spouseOccupation: '',
+                spouseBusinessName: '',
+                spouseBusinessAddress: '',
+                spouseTelNo: '',
+                fatherSurname: '',
+                fatherFirstName: '',
+                fatherMiddleName: '',
+                fatherExtName: '',
+                motherMaidenName: '',
+                motherSurname: '',
+                motherFirstName: '',
+                motherMiddleName: ''
+            },
+            isEditingFamily: false,
+            originalFamilyFields: {},
+            isEditingProfile: false,
+            originalProfileFields: {},
+            childData: [],
+            newChild: {
+                child_fname: '',
+                child_mname: '',
+                child_lname: '',
+                child_xname: '',
+                child_dob: ''
+            },
+            educationData: [],
+            organizationData: [],
+            workExperienceData: [],
+            skillsData: [],
+            referencesData: [],
+            newEducation: {
+                educ_level: '',
+                educ_school: '',
+                educ_degree: '',
+                educ_from: '',
+                educ_hl_earned: '',
+                educ_year_grad: '',
+                educ_academic_honor: ''
+            },
+            newOrganization: {
+                org_name: ''
+            },
+            newWorkExperience: {
+                workfr: '',
+                workto: '',
+                work_pos: '',
+                work_dept: '',
+                work_salary: '',
+                work_salarygrade: '',
+                work_stat: '',
+                work_gov: ''
+            },
+            newSkill: {
+                skill: ''
+            },
+            newReference: {
+                ref_fname: '',
+                ref_mname: '',
+                ref_lname: '',
+                ref_xname: '',
+                ref_add: '',
+                ref_cnum: ''
+            },
+            showAddEducationDialog: false,
+            showAddOrganizationDialog: false,
+            showAddWorkExperienceDialog: false,
+            showAddSkillsDialog: false,
+            showAddReferencesDialog: false,
+            showAddChildDialog: false,
+            showSuccessDialog: false,
+            showUpdateDialog: false
+        };
+    },
+
+    methods: {
+        toggleFamilyEditing() {
+            if (!this.isEditingFamily) {
+                // Save the current state of fields to allow canceling
+                this.originalFamilyFields = JSON.parse(JSON.stringify(this.fields));
+            }
+            this.isEditingFamily = !this.isEditingFamily;
+        },
+
+        cancelFamilyEditing() {
+            // Revert changes by restoring original fields
+            this.fields = JSON.parse(JSON.stringify(this.originalFamilyFields));
+            this.isEditingFamily = false;
+        },
+
+        async fetchFather() {
+            try {
+                const response = await axios.get('/emp_father/Father');
+                this.fields.fatherSurname = response.data.fatherSurname;
+                this.fields.fatherFirstName = response.data.fatherFirstName;
+                this.fields.fatherMiddleName = response.data.fatherMiddleName;
+                this.fields.fatherExtName = response.data.fatherExtName;
+            } catch (error) {
+                this.errorMessage = 'Failed to load father.';
+            }
+        },
+
+        async fetchMother() {
+            try {
+                const response = await axios.get('/emp_mother/Mother');
+                this.fields.motherMaidenName = response.data.motherMaidenName;
+                this.fields.motherSurname = response.data.motherSurname;
+                this.fields.motherFirstName = response.data.motherFirstName;
+                this.fields.motherMiddleName = response.data.motherMiddleName;
+            } catch (error) {
+                this.errorMessage = 'Failed to load mother.';
+            }
+        },
+
+        async fetchSpouse() {
+            try {
+                const response = await axios.get('/emp_spouse/Spouse');
+                this.fields.spouseSurname = response.data.spouseSurname;
+                this.fields.spouseFirstName = response.data.spouseFirstName;
+                this.fields.MiddleName = response.data.MiddleName;
+                this.fields.ExtName = response.data.ExtName;
+                this.fields.Occupation = response.data.Occupation;
+                this.fields.spouseBusinessName = response.data.spouseBusinessName;
+                this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
+                this.fields.spouseTelNo = response.data.spouseTelNo;
+            } catch (error) {
+                this.errorMessage = 'Failed to load spouse.';
+            }
+        },
+
+        toggleProfileEditing() {
+            if (!this.isEditingProfile) {
+                // Save the current state of fields to allow canceling
+                this.originalProfileFields = JSON.parse(JSON.stringify(this.fields));
+            }
+            this.isEditingProfile = !this.isEditingProfile;
+        },
+
+        cancelProfileEditing() {
+            // Revert changes by restoring original fields
+            this.fields = JSON.parse(JSON.stringify(this.originalProfileFields));
+            this.isEditingProfile = false;
+        },
+
+
+        async updateFamilyData() {
+            try {
+                await axios.patch('/EmpFamily/updateFamilyData', this.fields);
+                this.isEditing = false;
+                this.showUpdateDialog = false;
+                this.showSuccessDialog = true;
+                } catch (error) {
+                this.errorMessage = 'Failed to update Family. Please try again.';
+                this.showUpdateDialog = false;
+            }
+                },
+
+        openAddDialog() {
+            if (this.activeTab === 0) {
+                this.showAddChildDialog = true;
+            } else if (this.activeTab === 1) {
+                this.showAddEducationDialog = true;
+            } else if (this.activeTab === 2) {
+                this.showAddOrganizationDialog = true;
+            } else if (this.activeTab === 3) {
+                this.showAddWorkExperienceDialog = true;
+            } else if (this.activeTab === 4) {
+                this.showAddSkillsDialog = true;
+            } else if (this.activeTab === 5) {
+                this.showAddReferencesDialog = true;
+            }
+        }
+    },
+
+    mounted() {
+        this.fetchFather();
+        this.fetchMother();
+        this.fetchSpouse();
+    },
+
     setup() {
         const activeTab = ref(0);
-        const fields = ref({
-            spouseSurname: { label: 'Spouse Surname', type: 'text', value: '' },
-            spouseFirstName: { label: 'Spouse First Name', type: 'text', value: '' },
-            spouseMiddleName: { label: 'Spouse Middle Name', type: 'text', value: '' },
-            spouseExtName: { label: 'Spouse Ext. Name', type: 'text', value: '' },
-            spouseOccupation: { label: 'Spouse Occupation', type: 'text', value: '' },
-            spouseBusinessName: { label: 'Spouse Business Name', type: 'text', value: '' },
-            spouseBusinessAddress: { label: 'Spouse Business Address', type: 'text', value: '' },
-            spouseTelNo: { label: 'Spouse Tel. No.', type: 'text', value: '' },
-            fatherSurname: { label: 'Father Surname', type: 'text', value: '' },
-            fatherFirstName: { label: 'Father First Name', type: 'text', value: '' },
-            fatherMiddleName: { label: 'Father Middle Name', type: 'text', value: '' },
-            fatherExtName: { label: 'Father Ext. Name', type: 'text', value: '' },
-            motherMaidenName: { label: 'Mother Maiden Name', type: 'text', value: '' },
-            motherSurname: { label: 'Mother Surname', type: 'text', value: '' },
-            motherFirstName: { label: 'Mother First Name', type: 'text', value: '' },
-            motherMiddleName: { label: 'Mother Middle Name', type: 'text', value: '' }
-        });
-
-        const isEditingFamily = ref(false);
-        const originalFamilyFields = ref({});
-
-        const toggleFamilyEditing = () => {
-            if (!isEditingFamily.value) {
-                originalFamilyFields.value = JSON.parse(JSON.stringify(fields.value));
-            }
-            isEditingFamily.value = !isEditingFamily.value;
-        };
-
-        const cancelFamilyEditing = () => {
-            fields.value = JSON.parse(JSON.stringify(originalFamilyFields.value));
-            isEditingFamily.value = false;
-        };
 
         const isEditingProfile = ref(false);
         const originalProfileFields = ref({});
 
         const toggleProfileEditing = () => {
             if (!isEditingProfile.value) {
-                originalProfileFields.value = JSON.parse(JSON.stringify(fields.value));
+                originalProfileFields.value = JSON.parse(JSON.stringify(this.fields));
             }
             isEditingProfile.value = !isEditingProfile.value;
         };
 
         const cancelProfileEditing = () => {
-            fields.value = JSON.parse(JSON.stringify(originalProfileFields.value));
+            this.fields = JSON.parse(JSON.stringify(originalProfileFields.value));
             isEditingProfile.value = false;
         };
 
@@ -782,6 +939,7 @@ export default {
 
         const hideSuccessDialog = () => {
             showSuccessDialog.value = false;
+            location.reload(); 
         };
 
         const confirmUpdate = () => {
@@ -795,7 +953,7 @@ export default {
         const updateProfile = async () => {
             try {
                 if (activeTab.value === 0) {
-                    await updateFamilyData();
+                    await axios.post('/emp_child/UpdateChildData', educationData.value);
                 } else if (activeTab.value === 1) {
                     await axios.post('/education/UpdateEducationData', educationData.value);
                 } else if (activeTab.value === 2) {
@@ -817,41 +975,6 @@ export default {
 
         const hideAddChildDialog = () => {
             showAddChildDialog.value = false;
-        };
-
-        const updateFamilyData = async () => {
-            try {
-                await axios.post('/emp_family/UpdateFamilyData', {
-                    spouse: {
-                        surname: fields.value.spouseSurname.value,
-                        firstName: fields.value.spouseFirstName.value,
-                        middleName: fields.value.spouseMiddleName.value,
-                        extName: fields.value.spouseExtName.value,
-                        occupation: fields.value.spouseOccupation.value,
-                        businessName: fields.value.spouseBusinessName.value,
-                        businessAddress: fields.value.spouseBusinessAddress.value,
-                        telNo: fields.value.spouseTelNo.value,
-                    },
-                    father: {
-                        surname: fields.value.fatherSurname.value,
-                        firstName: fields.value.fatherFirstName.value,
-                        middleName: fields.value.fatherMiddleName.value,
-                        extName: fields.value.fatherExtName.value,
-                    },
-                    mother: {
-                        maidenName: fields.value.motherMaidenName.value,
-                        surname: fields.value.motherSurname.value,
-                        firstName: fields.value.motherFirstName.value,
-                        middleName: fields.value.motherMiddleName.value,
-                    },
-                    children: childData.value
-                });
-                showUpdateDialog.value = false;
-                showSuccessDialog.value = true;
-            } catch (error) {
-                console.error('Error updating family data:', error);
-                showUpdateDialog.value = false;
-            }
         };
 
         const inputEditor = (slotProps) => {
@@ -894,8 +1017,7 @@ export default {
         });
 
         return {
-            activeTab,
-            fields,
+            activeTab,  
             educationData,
             organizationData,
             workExperienceData,
@@ -948,11 +1070,7 @@ export default {
             hideSuccessDialog,
             confirmUpdate,
             hideUpdateDialog,
-            updateFamilyData,
             inputEditor,
-            isEditingFamily,
-            toggleFamilyEditing,
-            cancelFamilyEditing,
             isEditingProfile,
             toggleProfileEditing,
             cancelProfileEditing
@@ -1001,5 +1119,15 @@ export default {
 
 .font-semibold {
     font-weight: 600;
+}
+
+.custom-cancel-button {
+  background-color: #dc3545 !important; /* Red background for cancel button */
+  border-color: #dc3545 !important; /* Red border for cancel button */
+}
+
+.custom-cancel-button:hover {
+  background-color: #e57373 !important; /* Lighter red for hover state */
+  border-color: #e57373 !important; /* Lighter red border for hover state */
 }
 </style>

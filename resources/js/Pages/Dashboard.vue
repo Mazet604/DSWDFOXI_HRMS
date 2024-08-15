@@ -512,6 +512,7 @@ export default {
         reader.readAsDataURL(file);
       }
     },
+
     initializeCropper() {
       const image = this.$refs.cropperImage;
       this.cropper = new Cropper(image, {
@@ -519,6 +520,7 @@ export default {
         viewMode: 1
       });
     },
+
     cropImage() {
       const canvas = this.cropper.getCroppedCanvas({
         width: 350, // Adjust as needed for passport size
@@ -527,7 +529,9 @@ export default {
       canvas.toBlob((blob) => {
         this.uploadCroppedImage(blob);
       });
+      
     },
+
     uploadCroppedImage(blob) {
       const formData = new FormData();
       formData.append('file', blob, 'cropped-image.png');
@@ -547,6 +551,7 @@ export default {
     },
     hidePhotoSuccessDialog() {
       this.showPhotoSuccessDialog = false;
+      location.reload(); 
     },
 
 
@@ -572,6 +577,7 @@ export default {
 
     hidePhotoSuccessDialog() {
       this.showPhotoSuccessDialog = false; // Hide the success modal
+      location.reload(); 
     },
 
     toggleEditing() {
@@ -599,10 +605,12 @@ export default {
         await axios.patch('/employee/updateProfile', this.fields);
         this.isEditing = false;
         this.showUpdateDialog = false;
-        this.showSuccessDialog = true;
+        this.showSuccessDialog = false;
+        location.reload(); 
       } catch (error) {
         this.errorMessage = 'Failed to update profile. Please try again.';
         this.showUpdateDialog = false;
+        location.reload(); 
       }
     },
 
@@ -684,9 +692,6 @@ export default {
     box-sizing: border-box;
 }
 
-.tight {
-  
-}
 
 .col-span-1 {
     width: 100%;
