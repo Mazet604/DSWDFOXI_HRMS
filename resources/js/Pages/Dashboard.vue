@@ -200,7 +200,7 @@
           </div>
           <div class="flex justify-center">
             <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
-              Back
+              OK
             </button>
           </div>
         </div>
@@ -467,6 +467,7 @@ export default {
         reader.readAsDataURL(file);
       }
     },
+
     initializeCropper() {
       const image = this.$refs.cropperImage;
       this.cropper = new Cropper(image, {
@@ -474,6 +475,7 @@ export default {
         viewMode: 1
       });
     },
+
     cropImage() {
       const canvas = this.cropper.getCroppedCanvas({
         width: 350, // Adjust as needed for passport size
@@ -482,7 +484,9 @@ export default {
       canvas.toBlob((blob) => {
         this.uploadCroppedImage(blob);
       });
+      
     },
+
     uploadCroppedImage(blob) {
       const formData = new FormData();
       formData.append('file', blob, 'cropped-image.png');
@@ -502,6 +506,7 @@ export default {
     },
     hidePhotoSuccessDialog() {
       this.showPhotoSuccessDialog = false;
+      location.reload(); 
     },
 
 
@@ -525,30 +530,31 @@ export default {
       }
     },
 
-      hidePhotoSuccessDialog() {
-        this.showPhotoSuccessDialog = false; // Hide the success modal
-      },
+    hidePhotoSuccessDialog() {
+      this.showPhotoSuccessDialog = false; // Hide the success modal
+      location.reload(); 
+    },
 
-      toggleEditing() {
-        if (!this.isEditing) {
-          this.originalFields = JSON.parse(JSON.stringify(this.fields)); // Store the current state of fields
-        }
-        this.isEditing = !this.isEditing;
-      },
-      cancelEditing() {
-        this.fields = JSON.parse(JSON.stringify(this.originalFields)); // Revert fields to the original state
-        this.isEditing = false;
-      },
-      confirmUpdate() {
-        this.showUpdateDialog = true;
-      },
-      hideUpdateDialog() {
-        this.showUpdateDialog = false;
-      },
-      hideSuccessDialog() {
-        this.showSuccessDialog = false;
-        location.reload();
-      },
+    toggleEditing() {
+      if (!this.isEditing) {
+        this.originalFields = JSON.parse(JSON.stringify(this.fields)); // Store the current state of fields
+      }
+      this.isEditing = !this.isEditing;
+    },
+    cancelEditing() {
+      this.fields = JSON.parse(JSON.stringify(this.originalFields)); // Revert fields to the original state
+      this.isEditing = false;
+    },
+    confirmUpdate() {
+      this.showUpdateDialog = true;
+    },
+    hideUpdateDialog() {
+      this.showUpdateDialog = false;
+    },
+    hideSuccessDialog() {
+      this.showSuccessDialog = false;
+      location.reload(); 
+    },
 
       async saveProfile() {
       try {
@@ -635,9 +641,6 @@ export default {
     box-sizing: border-box;
 }
 
-.tight {
-  
-}
 
 .col-span-1 {
     width: 100%;

@@ -10,6 +10,9 @@ use App\Models\emp_reference;
 use App\Models\emp_work;
 use App\Models\emp_child;
 use App\Models\emp_skills;
+use App\Models\emp_father;
+use App\Models\emp_mother;
+use App\Models\emp_spouse;
 use App\Models\employee;
 use App\Models\EmpFamily;
 
@@ -274,55 +277,165 @@ class BackgroundController extends Controller
         }
     }
 
-    private function getEmpCountFromEmpId($empid)
-    {
-        $employee = Employee::where('empid', $empid)->first();
-        return $employee ? $employee->emp_count : null;
-    }
-
-    public function getFamilyData()
+    public function getFather()
     {
         try {
-            $user = Auth::user();
+            $user = Auth::user(); // Get the currently authenticated user
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
 
-            // Fetch the employee using empid to get the emp_count
             $employee = Employee::where('empid', $user->empid)->first();
             if (!$employee) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-            // Fetch family data using emp_count
-            $familyData = EmpFamily::getFamilyData($employee->emp_count);
+            $emp_father = emp_father::where('emp_count', $employee->emp_count)->first(); 
+            if (!$emp_father) {
+                return response()->json(['error' => 'Father not found'], 404);
+            }
 
-            return response()->json($familyData);
+            $fatherSurname = $emp_father->father_lname;
+            $fatherFirstName = $emp_father->father_fname;
+            $fatherMiddleName = $emp_father->father_mname;
+            $fatherExtName = $emp_father->father_xname;
+            return response()->json([
+                'fatherSurname' => $fatherSurname, 
+                'fatherFirstName' => $fatherFirstName, 
+                'fatherMiddleName' => $fatherMiddleName,
+                'fatherExtName' => $fatherExtName
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getMother()
+    {
+        try {
+            $user = Auth::user(); // Get the currently authenticated user
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            $employee = Employee::where('empid', $user->empid)->first();
+            if (!$employee) {
+                return response()->json(['error' => 'Employee not found'], 404);
+            }
+
+            $emp_mother = emp_mother::where('emp_count', $employee->emp_count)->first(); 
+            if (!$emp_mother) {
+                return response()->json(['error' => 'Mother not found'], 404);
+            }
+
+            $motherSurname = $emp_mother->mother_lname;
+            $motherFirstName = $emp_mother->mother_fname;
+            $motherMiddleName = $emp_mother->mother_mname;
+            $motherMaidenName = $emp_mother->maidenname;
+            return response()->json([
+                'motherSurname' => $motherSurname, 
+                'motherFirstName' => $motherFirstName, 
+                'motherMiddleName' => $motherMiddleName,
+                'motherMaidenName' => $motherMaidenName
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getSpouse()
+    {
+        try {
+            $user = Auth::user(); // Get the currently authenticated user
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            $employee = Employee::where('empid', $user->empid)->first();
+            if (!$employee) {
+                return response()->json(['error' => 'Employee not found'], 404);
+            }
+
+            $emp_spouse = emp_spouse::where('emp_count', $employee->emp_count)->first(); 
+            if (!$emp_spouse) {
+                return response()->json(['error' => 'Mother not found'], 404);
+            }
+
+            $spouseSurname = $emp_spouse->spouse_lname;
+            $spouseFirstName = $emp_spouse->spouse_fname;
+            $MiddleName = $emp_spouse->spouse_mname;
+            $ExtName = $emp_spouse->spouse_xname;
+            $Occupation = $emp_spouse->spouse_occup;
+            $spouseBusinessName = $emp_spouse->spouse_office;
+            $spouseBusinessAddress = $emp_spouse->spouse_busadd;
+            $spouseTelNo = $emp_spouse->spouse_tel;
+            return response()->json([
+                'spouseSurname' => $spouseSurname, 
+                'spouseFirstName' => $spouseFirstName, 
+                'MiddleName' => $MiddleName,
+                'ExtName' => $ExtName,
+                'Occupation' => $Occupation, 
+                'spouseBusinessName' => $spouseBusinessName, 
+                'spouseBusinessAddress' => $spouseBusinessAddress,
+                'spouseTelNo' => $spouseTelNo
+            ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
     public function updateFamilyData(Request $request)
-    {
-        try {
-            $user = Auth::user();
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
-            }
+{
+    try {
+        $user = Auth::user(); // Get the currently authenticated user
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
 
-            $employee = Employee::where('empid', $user->empid)->first();
+        $employee = Employee::where('empid', $user->empid)->first();
             if (!$employee) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-            EmpFamily::updateFamilyData($employee->emp_count, $request->all());
-
-            return response()->json(['success' => 'Family data updated successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+        // Update Father details
+        $father = emp_father::where('emp_count', $employee->emp_count)->first();
+        if ($father) {
+            $father->father_lname = $request->input('fatherSurname');
+            $father->father_fname = $request->input('fatherFirstName');
+            $father->father_mname = $request->input('fatherMiddleName');
+            $father->father_xname = $request->input('fatherExtName');
+            $father->save();
         }
+
+        // Update Mother details
+        $mother = emp_mother::where('emp_count', $employee->emp_count)->first();
+        if ($mother) {
+            $mother->maidenname = $request->input('motherMaidenName');
+            $mother->mother_lname = $request->input('motherSurname');
+            $mother->mother_fname = $request->input('motherFirstName');
+            $mother->mother_mname = $request->input('motherMiddleName');
+            $mother->save();
+        }
+
+        // Update Spouse details
+        $spouse = emp_spouse::where('emp_count', $employee->emp_count)->first();
+        if ($spouse) {
+            $spouse->spouse_lname = $request->input('spouseSurname');
+            $spouse->spouse_fname = $request->input('spouseFirstName');
+            $spouse->spouse_mname = $request->input('spouseMiddleName');
+            $spouse->spouse_xname = $request->input('spouseExtName');
+            $spouse->spouse_occup = $request->input('spouseOccupation');
+            $spouse->spouse_office = $request->input('spouseBusinessName');
+            $spouse->spouse_busadd = $request->input('spouseBusinessAddress');
+            $spouse->spouse_tel = $request->input('spouseTelNo');
+            $spouse->save();
+        }
+
+        return response()->json(['success' => 'Family data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
 
     public function addChildData(Request $request)
 {
