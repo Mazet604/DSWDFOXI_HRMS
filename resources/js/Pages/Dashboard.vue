@@ -199,7 +199,7 @@
           </div>
           <div class="flex justify-center">
             <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
-              Back
+              OK
             </button>
           </div>
         </div>
@@ -598,6 +598,7 @@ export default {
     },
     hideSuccessDialog() {
       this.showSuccessDialog = false;
+      location.reload(); 
     },
 
     async saveProfile() {
@@ -605,12 +606,10 @@ export default {
         await axios.patch('/employee/updateProfile', this.fields);
         this.isEditing = false;
         this.showUpdateDialog = false;
-        this.showSuccessDialog = false;
-        location.reload(); 
+        this.showSuccessDialog = true;
       } catch (error) {
         this.errorMessage = 'Failed to update profile. Please try again.';
         this.showUpdateDialog = false;
-        location.reload(); 
       }
     },
 
