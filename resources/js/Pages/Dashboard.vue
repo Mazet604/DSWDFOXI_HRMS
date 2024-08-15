@@ -67,18 +67,19 @@
                     <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" @input="validateName('placeofBirth')"/>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">SEX</label>
-                    <select class="input-field" v-model="fields.sex" :disabled="!isEditing">
-                        <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                    </select>
-                </div>
-                <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS</label>
                     <select class="input-field" v-model="fields.civilStatus" :disabled="!isEditing">
                         <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                 </div>
-                <div class="tight">
+              </div>
+                <div class="grid grid-cols-5 gap-4">
+                <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">SEX</label>
+                    <select class="input-field" v-model="fields.sex" :disabled="!isEditing">
+                        <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                    </select>
+                </div>  
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
                   <input type="text" class="input-field2 text-color" :value="calculatedAge" disabled />
@@ -93,11 +94,10 @@
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
-                    <select class="input-field2" v-model="fields.bloodType" :disabled="!isEditing">
+                    <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
                     <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
                     </div>
-                </div>
                 </div>
             </TabPanel>
             <TabPanel header="ADDRESS" :active="activeSubTab === 'address'">
