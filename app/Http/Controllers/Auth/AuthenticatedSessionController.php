@@ -20,7 +20,7 @@ class AuthenticatedSessionController extends Controller
     }
 
     public function store(Request $request)
-{
+    {
     $credentials = $request->validate([
         'empuser' => ['required', 'string'],
         'emppass' => ['required', 'string'],
