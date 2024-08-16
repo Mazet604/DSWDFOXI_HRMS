@@ -43,7 +43,7 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/background-image.png');">
+    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/bgwhiteredblue.png');">
         <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg bg-opacity-90">
             <Head title="Forgot Password" />
             <div class="text-xl font-bold text-center text-black">
