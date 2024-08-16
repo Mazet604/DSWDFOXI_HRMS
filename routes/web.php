@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/employee/fullname', [EmployeeController::class, 'getEmployee']);
     Route::get('/employee/PersonalInfo', [EmployeeController::class, 'getPersonalInfo']);
     Route::get('/employee/SecurityandContact', [EmployeeController::class, 'getSecurityandContact']);
-    Route::patch('/employee/updateProfile', [EmployeeController::class, 'updateProfile']);
+    Route::patch('/updateProfile', [EmployeeController::class, 'updateProfile']);
     Route::get('/emp_acc/empuser', [EmpAccController::class, 'getCreds']);
     Route::get('/dropdown/sex-options', [DropDownControllers::class, 'getSexOptions']);
     Route::get('/dropdown/civilstatus-options', [DropDownControllers::class, 'getCivilStatusOptions']);
@@ -74,6 +74,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-profile-picture', [EmployeeController::class, 'getProfilePicture']);
 
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
+    Route::patch('/updateAddress', [AddressController::class, 'updateAddress']);
+
+    Route::get('/regions', [AddressController::class, 'getRegions']);
+    Route::get('/provinces/{regionId}', [AddressController::class, 'getProvincesByRegion']);
 
     Route::get('/emp_father/Father', [BackgroundController::class, 'getFather']);
     Route::get('/emp_mother/Mother', [BackgroundController::class, 'getMother']);

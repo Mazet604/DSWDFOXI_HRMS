@@ -1,7 +1,7 @@
 <template>
     <Head title="OTP Verification" />
 
-    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/background-image.png');">
+    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/bgwhiteredblue.png');">
         <div class="w-full max-w-lg p-6 bg-white rounded-lg shadow-md sm:p-8 lg:p-10 sm:max-w-xl lg:max-w-2xl">
             <div class="mb-6 text-2xl font-semibold text-center lg:text-3xl">OTP Verification</div>
             <p class="text-center text-gray-500 mb-8">Please enter the OTP sent to your email.</p>

@@ -74,7 +74,6 @@
                 </div>
               </div>
                 <div class="tight">
-                  
                   <div class="grid grid-cols-5 gap-4">
                     <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">SEX</label>
@@ -84,7 +83,7 @@
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
-                    <input type="text" class="input-field" :value="calculatedAge" disabled />
+                    <input type="text" class="input-field text-color" :value="calculatedAge" disabled />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M)</label>
@@ -110,13 +109,13 @@
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
                   <select class="input-field" v-model="fields.Region" :disabled="!isEditing" @change="fetchProvinceOptions">
-                    <option v-for="option in RegionOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                    <option v-for="option in RegionOptions" :key="option.reg_psgc" :value="option.reg_psgc">{{ option.col_region }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
                   <select class="input-field" v-model="fields.Province" :disabled="!isEditing">
-                    <option v-for="option in ProvinceOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                    <option v-for="option in ProvinceOptions" :key="option.prv_psgc" :value="option.prv_psgc">{{ option.col_province }}</option>
                   </select>
                 </div>
                 <div>
@@ -286,6 +285,8 @@ export default {
         mobilenum: '',
         telnum: '',
         emailadd: '',
+        Region:'',
+        Provinces:'',
 
       },
       isEditing: false,
@@ -308,6 +309,8 @@ export default {
       cropping: false,
       cropper: null,
       cropperSrc: '',
+      RegionOptions:[],
+      ProvinceOptions:[],
 
     };
   },
@@ -326,7 +329,45 @@ export default {
     },
   },
 
-    methods: {
+  methods: {
+
+
+    async updateAddress(){
+      try {
+        await axios.patch('/updateAddress', this.fields);
+        this.isEditing = false;
+        this.showUpdateDialog = false;
+        this.showSuccessDialog = true;
+      } catch (error) {
+        console.error('Error updating profile:', error);
+      }
+    },
+
+      fetchRegions() {
+        fetch('/regions')
+          .then(response => response.json())
+          .then(data => {
+            this.RegionOptions = data;
+          })
+          .catch(error => {
+            console.error('Error fetching regions:', error);
+          });
+      },
+
+      fetchProvinceOptions() {
+        if (this.fields.Region) {
+          fetch(`/provinces/${this.fields.Region}`)
+            .then(response => response.json())
+            .then(data => {
+              this.ProvinceOptions = data;
+            })
+            .catch(error => {
+              console.error('Error fetching provinces:', error);
+            });
+        } else {
+          this.ProvinceOptions = [];
+        }
+      },
 
       validateName(field) {
         this.fields[field] = this.fields[field].replace(/[0-9]/g, '');
@@ -594,6 +635,7 @@ export default {
     this.fetchSecurityandContact();
     this.fetchAddress();
     this.fetchProfilePicture();
+    this.fetchRegions();
   },
 
   created() {
@@ -677,6 +719,11 @@ export default {
 .custom-cancel-button:hover {
     background-color: #e57373 !important; /* Lighter red for hover state */
     border-color: #e57373 !important; /* Lighter red border for hover state */
+}
+
+.tight {
+  margin-top: 2%;
+  width: 80%;
 }
 
 .crop-container {

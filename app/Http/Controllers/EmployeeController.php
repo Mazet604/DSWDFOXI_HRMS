@@ -132,7 +132,7 @@ class EmployeeController extends Controller
 
             $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
             $emp_acc = EmpAcc::where('empid', $user->empid)->first();
-            $emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first();
+            //$emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first();
             if (!$employee || !$emp_acc) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
@@ -168,7 +168,7 @@ class EmployeeController extends Controller
             // Save the updated information
             $employee->save();
             $emp_acc->save();
-            $emp_address->save();
+            //$emp_address->save();
 
             return response()->json(['success' => 'Profile updated successfully']);
         } catch (\Exception $e) {
