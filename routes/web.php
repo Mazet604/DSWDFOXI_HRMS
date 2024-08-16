@@ -15,7 +15,6 @@ use App\Http\Controllers\EmpAccController;
 use App\Http\Controllers\DropDownControllers;
 use App\Http\Controllers\AddressController;
 
-
 Route::get('/', function () {
     return Inertia::render('Login', [
         'canLogin' => Route::has('login'),
@@ -28,7 +27,10 @@ Route::get('/', function () {
 Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
 Route::get('otp', function () {
-    return Inertia::render('Auth/OTP');
+    return Inertia::render('Auth/OTP', [
+        'context' => request()->get('context', 'login'),  // Default context is 'login'
+        'otpSent' => request()->get('otpSent', false)    // Pass otpSent flag
+    ]);
 })->name('otp.form');
 
 Route::post('send-otp', [AuthenticatedSessionController::class, 'sendOtp'])->name('otp.send');
@@ -110,9 +112,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/emp_voluntary/AddVoluntaryWork', [OtherInfoController::class, 'addVoluntaryWork']);
     Route::post('/emp_learning/AddLearndev', [OtherInfoController::class, 'addLearndev']);
     Route::post('/emp_recog/AddRecogdist', [OtherInfoController::class, 'addRecogdist']);
-
-
-
 });
 
 require __DIR__.'/auth.php';
