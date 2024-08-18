@@ -7,10 +7,9 @@ use App\Models\lib_sex;
 use App\Models\lib_civil_stat;
 use App\Models\lib_blood_type;
 use App\Models\lib_suffix;
-use App\Models\employee;
+use App\Models\Employee;
 use App\Models\EmpAddress;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +23,7 @@ class EmployeeController extends Controller
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
     
-            $employee = employee::where('empid', $user->empid)->first(); // Fetch employee using empid
+            $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
             if (!$employee) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
@@ -56,7 +55,7 @@ class EmployeeController extends Controller
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
 
-            $employee = employee::where('empid', $user->empid)->first(); // Fetch employee using empid
+            $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
             $emp_acc = EmpAcc::where('empid', $user->empid)->first();
             if (!$employee) {
                 return response()->json(['error' => 'Employee not found'], 404);
@@ -107,7 +106,7 @@ class EmployeeController extends Controller
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
 
-            $employee = employee::where('empid', $user->empid)->first(); // Fetch employee using empid
+            $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
             $emp_acc= EmpAcc::where('empid', $user->empid)->first();
             if (!$employee) {
                 return response()->json(['error' => 'Employee not found'], 404);
@@ -124,59 +123,58 @@ class EmployeeController extends Controller
     }
 
     public function updateProfile(Request $request)
-{
-    try {
-        $user = Auth::user(); // Get the currently authenticated user
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated'], 401);
-        }
+    {
+        try {
+            $user = Auth::user(); // Get the currently authenticated user
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
 
-            $employee = employee::where('empid', $user->empid)->first(); // Fetch employee using empid
+            $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
             $emp_acc = EmpAcc::where('empid', $user->empid)->first();
-            $emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first();
+            //$emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first();
             if (!$employee || !$emp_acc) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-        // Update the employee details
-        $employee->emp_fname = $request->input('firstName');
-        $employee->emp_mname = $request->input('middleName');
-        $employee->emp_lname = $request->input('lastName');
-        $employee->emp_ext = $request->input('suffix');
-        $employee->emp_citizen = $request->input('citizenship');
-        $employee->emp_dob = $request->input('birthday');
-        $employee->emp_pob = $request->input('placeOfBirth');
-        $employee->emp_sex = $request->input('sex');
-        $employee->emp_civ_stat = $request->input('civilStatus');
-        $employee->emp_height = $request->input('height');
-        $employee->emp_weight = $request->input('weight');
-        $employee->emp_blood = $request->input('bloodType');
-        $employee->emp_cnum = $request->input('mobilenum');
-        $employee->emp_telnum = $request->input('telnum');
+            // Update the employee details
+            $employee->emp_fname = $request->input('firstName');
+            $employee->emp_mname = $request->input('middleName');
+            $employee->emp_lname = $request->input('lastName');
+            $employee->emp_ext = $request->input('suffix');
+            $employee->emp_citizen = $request->input('citizenship');
+            $employee->emp_dob = $request->input('birthday');
+            $employee->emp_pob = $request->input('placeOfBirth');
+            $employee->emp_sex = $request->input('sex');
+            $employee->emp_civ_stat = $request->input('civilStatus');
+            $employee->emp_height = $request->input('height');
+            $employee->emp_weight = $request->input('weight');
+            $employee->emp_blood = $request->input('bloodType');
+            $employee->emp_cnum = $request->input('mobilenum');
+            $employee->emp_telnum = $request->input('telnum');
 
-        // Update or create the emp_address details
-        /*$emp_address->emp_region = $request->input('Region');
-        $emp_address->emp_prov = $request->input('Province');
-        $emp_address->emp_city = $request->input('City');
-        $emp_address->emp_brgy = $request->input('Barangay');
-        $emp_address->emp_house = $request->input('block');
-        $emp_address->emp_subd = $request->input('villsub');
-        $emp_address->emp_zip = $request->input('zipcode');*/
+            /*$emp_address->emp_region=$request->input('Region');
+            $emp_address->emp_prov=$request->input('Province');
+            $emp_address->emp_city=$request->input('City');
+            $emp_address->emp_brgy=$request->input('Barangay');
+            $emp_address->emp_house=$request->input('block');
+            $emp_address->emp_subd=$request->input('villsub');
+            $emp_address->emp_zip=$request->input('zipcode');*/
 
-        // Update the emp_acc details
-        $emp_acc->empmail = $request->input('emailadd');
 
-        // Save the updated information
-        $employee->save();
-        $emp_acc->save();
-        //$emp_address->save();
+            // Update the emp_acc details
+            $emp_acc->empmail = $request->input('emailadd');
 
-        return response()->json(['success' => 'Profile updated successfully']);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
+            // Save the updated information
+            $employee->save();
+            $emp_acc->save();
+            //$emp_address->save();
+
+            return response()->json(['success' => 'Profile updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-}
-
 
 
     public function getSexOptions()
@@ -239,7 +237,7 @@ class EmployeeController extends Controller
                 $filePath = $file->storeAs('public/uploads/profile-pictures', $fileName);
 
                 // Save the filename to the database
-                $employee = employee::where('empid', $user->empid)->first();
+                $employee = Employee::where('empid', $user->empid)->first();
                 if ($employee) {
                     $employee->emp_pic = $fileName;
                     $employee->save();
@@ -254,7 +252,7 @@ class EmployeeController extends Controller
             return response()->json(['error' => 'File upload failed.'], 400);
         } catch (\Exception $e) {
             // Log the error
-            Log::error('File upload error: ' . $e->getMessage());
+            \Log::error('File upload error: ' . $e->getMessage());
             return response()->json(['error' => 'Internal server error'], 500);
         }
     }
@@ -267,7 +265,7 @@ class EmployeeController extends Controller
         }
 
         // Fetch the employee record
-        $employee = employee::where('empid', $user->empid)->first();
+        $employee = Employee::where('empid', $user->empid)->first();
         if ($employee && $employee->emp_pic) {
             // Path to the image
             $filePath = 'public/uploads/profile-pictures/' . $employee->emp_pic;

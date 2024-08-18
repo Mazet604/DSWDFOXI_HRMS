@@ -15,7 +15,6 @@ use App\Http\Controllers\EmpAccController;
 use App\Http\Controllers\DropDownControllers;
 use App\Http\Controllers\AddressController;
 
-
 Route::get('/', function () {
     return Inertia::render('Login', [
         'canLogin' => Route::has('login'),
@@ -28,7 +27,10 @@ Route::get('/', function () {
 Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
 Route::get('otp', function () {
-    return Inertia::render('Auth/OTP');
+    return Inertia::render('Auth/OTP', [
+        'context' => request()->get('context', 'login'),  // Default context is 'login'
+        'otpSent' => request()->get('otpSent', false)    // Pass otpSent flag
+    ]);
 })->name('otp.form');
 
 Route::post('send-otp', [AuthenticatedSessionController::class, 'sendOtp'])->name('otp.send');
@@ -64,7 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/employee/fullname', [EmployeeController::class, 'getEmployee']);
     Route::get('/employee/PersonalInfo', [EmployeeController::class, 'getPersonalInfo']);
     Route::get('/employee/SecurityandContact', [EmployeeController::class, 'getSecurityandContact']);
-    Route::patch('/employee/updateProfile', [EmployeeController::class, 'updateProfile']);
+    Route::patch('/updateProfile', [EmployeeController::class, 'updateProfile']);
     Route::get('/emp_acc/empuser', [EmpAccController::class, 'getCreds']);
     Route::get('/dropdown/sex-options', [DropDownControllers::class, 'getSexOptions']);
     Route::get('/dropdown/civilstatus-options', [DropDownControllers::class, 'getCivilStatusOptions']);
@@ -74,10 +76,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-profile-picture', [EmployeeController::class, 'getProfilePicture']);
 
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
-    Route::get('/employee/region-options', [AddressController::class, 'getRegionOptions']);
-    Route::get('/employee/province-options', [AddressController::class, 'getProvinceOptions']);
-    Route::get('/employee/city-options', [AddressController::class, 'getCityOptions']);
-    /*Route::get('/employee/barangay-options', [AddressController::class, 'getBarangayOptions']);*/
+    Route::patch('/updateAddress', [AddressController::class, 'updateAddress']);
+
+    Route::get('/regions', [AddressController::class, 'getRegions']);
+    Route::get('/provinces/{regionId}', [AddressController::class, 'getProvincesByRegion']);
 
     Route::get('/emp_father/Father', [BackgroundController::class, 'getFather']);
     Route::get('/emp_mother/Mother', [BackgroundController::class, 'getMother']);
@@ -110,9 +112,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/emp_voluntary/AddVoluntaryWork', [OtherInfoController::class, 'addVoluntaryWork']);
     Route::post('/emp_learning/AddLearndev', [OtherInfoController::class, 'addLearndev']);
     Route::post('/emp_recog/AddRecogdist', [OtherInfoController::class, 'addRecogdist']);
-
-
-
 });
 
 require __DIR__.'/auth.php';

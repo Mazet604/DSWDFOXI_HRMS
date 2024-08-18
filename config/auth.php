@@ -11,12 +11,12 @@ return [
 'guards' => [
     'web' => [
         'driver' => 'session',
-        'provider' => 'users',
+        'provider' => 'emp_acc',
     ],
 ],
 
 'providers' => [
-    'users' => [
+    'emp_acc' => [
         'driver' => 'eloquent',
         'model' => App\Models\EmpAcc::class,
     ],
