@@ -15,6 +15,7 @@ use App\Models\emp_mother;
 use App\Models\emp_spouse;
 use App\Models\employee;
 use App\Models\EmpFamily;
+use Illuminate\Support\Facades\Log;
 
 class BackgroundController extends Controller
 {
@@ -29,6 +30,7 @@ class BackgroundController extends Controller
             // Select only the required columns
             $educationData = Education::where('empid', $user->empid)
                 ->select(
+                    'educ_count',
                     'educ_level', 
                     'educ_school', 
                     'educ_degree', 
@@ -58,7 +60,7 @@ class BackgroundController extends Controller
 
             // Select only the required columns
             $organizationData = emp_org::where('empid', $user->empid)
-                ->select('org_name')
+                ->select('org_count', 'org_name')
                 ->get();
 
             if ($organizationData->isEmpty()) {
@@ -82,6 +84,7 @@ class BackgroundController extends Controller
             // Select only the required columns
             $workExperienceData = emp_work::where('empid', $user->empid)
                 ->select(
+                    'work_count',
                     'workfr',
                     'workto',
                     'work_pos',
@@ -112,7 +115,7 @@ class BackgroundController extends Controller
 
             // Select only the required columns
             $skillsData = emp_skills::where('empid', $user->empid)
-                ->select('skill')
+                ->select('skill_count','skill')
                 ->get();
 
             if ($skillsData->isEmpty()) {
@@ -136,6 +139,7 @@ class BackgroundController extends Controller
             // Select the required columns
             $referencesData = emp_reference::where('empid', $user->empid)
                 ->select(
+                    'ref_count',
                     'ref_fname',
                     'ref_mname',
                     'ref_lname',
@@ -483,24 +487,199 @@ public function getChildData()
 
         // Fetch child data and transform it to include full name and age
         $childData = emp_child::where('emp_count', $employee->emp_count)
-            ->select('child_fname', 'child_mname', 'child_lname', 'child_xname', 'child_dob')
-            ->get()
-            ->map(function($child) {
-                $child_mname_initial = $child->child_mname ? substr($child->child_mname, 0, 1) . '.' : '';
-                $fullName = trim("{$child->child_fname} {$child_mname_initial} {$child->child_lname} {$child->child_xname}");
-                $age = \Carbon\Carbon::parse($child->child_dob)->age;
-                return [
-                    'full_name' => $fullName,
-                    'age' => $age,
-                ];
-            });
-
+            ->select('child_count', 'child_fname', 'child_mname', 'child_lname', 'child_xname', 'child_dob')
+            ->get();
 
         if ($childData->isEmpty()) {
             return response()->json(['error' => 'No child data found'], 404);
         }
 
-        return response()->json($childData);
+        // Map and format the data to include full name, child count, and date of birth
+        $formattedChild = $childData->map(function($child) {
+            $child_mname_initial = $child->child_mname ? substr($child->child_mname, 0, 1) . '.' : '';
+            $fullName = trim($child->child_fname . ' ' . 
+                             $child_mname_initial . ' ' . 
+                             $child->child_lname . ' ' . 
+                             $child->child_xname);
+            $age = \Carbon\Carbon::parse($child->child_dob)->age;
+
+            return [
+                'child_count' => $child->child_count,
+                'child_fname' => $child->child_fname,
+                'child_mname' => $child->child_mname,
+                'child_lname' => $child->child_lname,
+                'child_xname' => $child->child_xname,
+                'full_name' => $fullName,
+                'age' => $age,
+                'child_dob' => $child->child_dob,
+            ];
+        });
+
+        return response()->json($formattedChild);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
+// Update existing controller functions to include the new update routes
+
+public function updateChildData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $child = emp_child::where('child_count', $request->input('child_count'))->first();
+        if (!$child) {
+            return response()->json(['error' => 'Child data not found'], 404);
+        }
+
+        $child->child_fname = $request->input('child_fname');
+        $child->child_mname = $request->input('child_mname');
+        $child->child_lname = $request->input('child_lname');
+        $child->child_xname = $request->input('child_xname');
+        $child->child_dob = $request->input('child_dob');
+        $child->save();
+
+        return response()->json(['success' => 'Child data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+public function updateEducationData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $education = Education::where('educ_count', $request->input('educ_count'))->first();
+        if (!$education) {
+            return response()->json(['error' => 'Education data not found'], 404);
+        }
+
+        $education->educ_level = $request->input('educ_level');
+        $education->educ_school = $request->input('educ_school');
+        $education->educ_degree = $request->input('educ_degree');
+        $education->educ_from = $request->input('educ_from');
+        $education->educ_hl_earned = $request->input('educ_hl_earned');
+        $education->educ_year_grad = $request->input('educ_year_grad');
+        $education->educ_academic_honor = $request->input('educ_academic_honor');
+        $education->save();
+
+        return response()->json(['success' => 'Education data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+public function updateOrganizationData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        // Find the specific organization record using only org_count
+        $organization = emp_org::where('org_count', $request->input('org_count'))->first();
+
+        if (!$organization) {
+            return response()->json(['error' => 'Organization data not found'], 404);
+        }
+
+        // Update the organization name
+        $organization->org_name = $request->input('org_name');
+        $organization->save();
+
+        return response()->json(['success' => 'Organization data updated successfully']);
+    } catch (\Exception $e) {
+        Log::error('Error updating organization data', ['error' => $e->getMessage()]);
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
+
+
+public function updateWorkExperienceData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $workExperience = emp_work::where('work_count', $request->input('work_count'))->first();
+        if (!$workExperience) {
+            return response()->json(['error' => 'Work experience data not found'], 404);
+        }
+
+        $workExperience->workfr = $request->input('workfr');
+        $workExperience->workto = $request->input('workto');
+        $workExperience->work_pos = $request->input('work_pos');
+        $workExperience->work_dept = $request->input('work_dept');
+        $workExperience->work_salary = $request->input('work_salary');
+        $workExperience->work_salarygrade = $request->input('work_salarygrade');
+        $workExperience->work_stat = $request->input('work_stat');
+        $workExperience->work_gov = $request->input('work_gov');
+        $workExperience->save();
+
+        return response()->json(['success' => 'Work experience data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+public function updateSkillsData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $skill = emp_skills::where('skill_count', $request->input('skill_count'))->first();
+        if (!$skill) {
+            return response()->json(['error' => 'Skill data not found'], 404);
+        }
+
+        $skill->skill = $request->input('skill');
+        $skill->save();
+
+        return response()->json(['success' => 'Skill data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+public function updateReferencesData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $reference = emp_reference::where('ref_count', $request->input('ref_count'))->first();
+        if (!$reference) {
+            return response()->json(['error' => 'Reference data not found'], 404);
+        }
+
+        $reference->ref_fname = $request->input('ref_fname');
+        $reference->ref_mname = $request->input('ref_mname');
+        $reference->ref_lname = $request->input('ref_lname');
+        $reference->ref_xname = $request->input('ref_xname');
+        $reference->ref_add = $request->input('ref_add');
+        $reference->ref_cnum = $request->input('ref_cnum');
+        $reference->save();
+
+        return response()->json(['success' => 'Reference data updated successfully']);
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()], 500);
     }

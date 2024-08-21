@@ -10,8 +10,7 @@ class education extends Model
     use HasFactory;
 
     protected $table = 'education';
-    protected $primaryKey = 'empid'; // Set the primary key to empid
-    public $incrementing = false; // Since empid is not auto-incrementing
+    protected $primaryKey = 'educ_count'; 
     public function Education()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');

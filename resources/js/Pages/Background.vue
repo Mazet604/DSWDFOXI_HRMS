@@ -94,52 +94,70 @@
                                 <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateFamilyData" />
                             </div>
                         </div>
-                        
-                        <br/>
                         <h1 style="font-size: 25px; font-weight: bold;">Child</h1>
-                        <DataTable :value="childData" class="mt-8" :paginator="true" :rows="5" editable>
-                            <Column field="full_name" header="Name of Child" :editor="inputEditor"></Column>
-                            <Column field="age" header="Age" :editor="inputEditor"></Column>
-                        </DataTable>
+                        <DataTable v-model:selection="selectedRow" :value="childData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                        <Column field="full_name" header="Name of Child"></Column>
+                        <Column field="age" header="Age"></Column>
+                        <Column field="child_dob" header="Date of Birth"></Column>
+                    </DataTable>
                     </TabPanel>
                     <TabPanel header="EDUCATION">
-                        <DataTable :value="educationData" class="mt-8" :paginator="true" :rows="5" editable>
-                            <Column field="educ_level" header="LEVEL OF EDUCATION" :editor="inputEditor"></Column>
-                            <Column field="educ_school" header="NAME OF SCHOOL" :editor="inputEditor"></Column>
-                            <Column field="educ_degree" header="BASIC EDUCATION|DEGREE|COURSE" :editor="inputEditor"></Column>
-                            <Column field="educ_from" header="INCLUSIVE DATES (FROM - TO)" :editor="inputEditor"></Column>
-                            <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED" :editor="inputEditor"></Column>
-                            <Column field="educ_year_grad" header="YEAR GRADUATED" :editor="inputEditor"></Column>
-                            <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE" :editor="inputEditor"></Column>
+                        <h1 style="font-size: 25px; font-weight: bold;">Education</h1>
+                        <DataTable v-model:selection="selectedRow" :value="educationData" class="mt-8" :paginator="true" :rows="5">
+                            <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                            <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
+                            <Column field="educ_school" header="NAME OF SCHOOL"></Column>
+                            <Column field="educ_degree" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
+                            <Column field="educ_from" header="INCLUSIVE DATES (FROM - TO)"></Column>
+                            <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED"></Column>
+                            <Column field="educ_year_grad" header="YEAR GRADUATED"></Column>
+                            <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="ORGANIZATION">
-                        <DataTable :value="organizationData" class="mt-8" :paginator="true" :rows="5" editable>
-                            <Column field="org_name" header="Organizations" :editor="inputEditor"></Column>
-                        </DataTable>
-                    </TabPanel>
+                    <h1 style="font-size: 25px; font-weight: bold;">Organization</h1>
+                    <DataTable 
+                        v-model:selection="selectedRow" 
+                        :value="organizationData" 
+                        class="mt-8" 
+                        :paginator="true" 
+                        :rows="5" 
+                        @selection-change="onRowSelect"
+                    >
+                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                        <Column field="org_name" header="Organizations"></Column>
+                    </DataTable>
+                </TabPanel>
+
                     <TabPanel header="WORK EXPERIENCE">
-                        <DataTable :value="workExperienceData" class="mt-8" :paginator="true" :rows="5" editable>
-                            <Column field="workfr" header="INCLUSIVE DATES (FROM)" :editor="inputEditor"></Column>
-                            <Column field="workto" header="INCLUSIVE DATES (TO)" :editor="inputEditor"></Column>
-                            <Column field="work_pos" header="POSITION" :editor="inputEditor"></Column>
-                            <Column field="work_dept" header="DEPARTMENT|AGENCY|OFFICE|COMPANY" :editor="inputEditor"></Column>
-                            <Column field="work_salary" header="MONTHLY SALARY" :editor="inputEditor"></Column>
-                            <Column field="work_salarygrade" header="SALARY GRADE" :editor="inputEditor"></Column>
-                            <Column field="work_stat" header="STATUS OF APPOINTMENT" :editor="inputEditor"></Column>
-                            <Column field="work_gov" header="GOV'T SERVICE" :editor="inputEditor"></Column>
+                        <h1 style="font-size: 25px; font-weight: bold;">Work Experience</h1>
+                        <DataTable v-model:selection="selectedRow" :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
+                            <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                            <Column field="workfr" header="INCLUSIVE DATES (FROM)"></Column>
+                            <Column field="workto" header="INCLUSIVE DATES (TO)"></Column>
+                            <Column field="work_pos" header="POSITION"></Column>
+                            <Column field="work_dept" header="DEPARTMENT|AGENCY|OFFICE|COMPANY"></Column>
+                            <Column field="work_salary" header="MONTHLY SALARY"></Column>
+                            <Column field="work_salarygrade" header="SALARY GRADE"></Column>
+                            <Column field="work_stat" header="STATUS OF APPOINTMENT"></Column>
+                            <Column field="work_gov" header="GOV'T SERVICE"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="SKILLS">
-                        <DataTable :value="skillsData" class="mt-8" :paginator="true" :rows="5" editable>
-                            <Column field="skill" header="SKILLS" :editor="inputEditor"></Column>
+                        <h1 style="font-size: 25px; font-weight: bold;">Skills</h1>
+                        <DataTable v-model:selection="selectedRow" :value="skillsData" class="mt-8" :paginator="true" :rows="5">
+                            <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                            <Column field="skill" header="SKILLS"></Column>
                         </DataTable>
                     </TabPanel>
                     <TabPanel header="REFERENCES">
-                        <DataTable :value="referencesData" class="mt-8" :paginator="true" :rows="5" editable>
-                            <Column field="full_name" header="FULL NAME" :editor="inputEditor"></Column>
-                            <Column field="ref_add" header="ADDRESS" :editor="inputEditor"></Column>
-                            <Column field="ref_cnum" header="TELEPHONE NUMBER" :editor="inputEditor"></Column>
+                        <h1 style="font-size: 25px; font-weight: bold;">References</h1>
+                        <DataTable v-model:selection="selectedRow" :value="referencesData" class="mt-8" :paginator="true" :rows="5">
+                            <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                            <Column field="full_name" header="FULL NAME"></Column>
+                            <Column field="ref_add" header="ADDRESS"></Column>
+                            <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
                         </DataTable>
                     </TabPanel>
                 </TabView>
@@ -148,13 +166,61 @@
             <div class="flex justify-end gap-4 mt-6">
                 <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
                 <Button v-if="!isEditingProfile" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                <div v-if="isEditingProfile" class="space-x-4">
-                    <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateProfile" />
+                <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
+        </div>
+
+      <!-- Edit Modal -->
+    <div v-if="showEditDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+        <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
+            <div class="p-4">
+                <div class="text-center">
+                    <h2 class="text-xl font-semibold mb-4">Edit {{ currentTabLabel }}</h2>
+                </div>
+                <div class="grid grid-cols-1 gap-4">
+                    <!-- Fields will be dynamically rendered here based on the selected row -->
+                    <div v-for="(value, key) in filteredEditFields" :key="key">
+                        <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
+                        <input
+                            class="input-field"
+                            :type="getInputType(key, value)"
+                            v-model="editFields[key]"
+                        />
+                    </div>
+                </div>
+                <div class="flex justify-center gap-4 mt-4">
+                    <button @click="hideEditDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                        Cancel
+                    </button>
+                    <button @click="saveEdit" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                        Save
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
 
+
+
+
+        <!-- Success Modal -->
+        <div v-if="showSuccessDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
+                <div class="p-4">
+                    <div class="text-center">
+                        <i class="fas fa-check-circle text-4xl mb-4" style="color: green;"></i>
+                        <h2 class="text-xl font-semibold mb-4">Updated Successfully!</h2>
+                        <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
+                    </div>
+                    <div class="flex justify-center">
+                        <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Update Confirmation Modal -->
         <div v-if="showUpdateDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
@@ -240,7 +306,7 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM)</label>
-                            <input class="input-field" type="text" v-model="newEducation.educ_from" />
+                            <input class="input-field" type="date" v-model="newEducation.educ_from" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">HIGHEST LEVEL EARNED</label>
@@ -302,11 +368,11 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM)</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.workfr" />
+                            <input class="input-field" type="date" v-model="newWorkExperience.workfr" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (TO)</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.workto" />
+                            <input class="input-field" type="date" v-model="newWorkExperience.workto" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">POSITION</label>
@@ -455,85 +521,253 @@ export default {
             empPosition: '',
             profilePictureUrl: '',
             fields: {
-                spouseSurname: '',
-                spouseFirstName: '',
-                spouseMiddleName: '',
-                spouseExtName: '',
-                spouseOccupation: '',
-                spouseBusinessName: '',
-                spouseBusinessAddress: '',
-                spouseTelNo: '',
-                fatherSurname: '',
-                fatherFirstName: '',
-                fatherMiddleName: '',
-                fatherExtName: '',
-                motherMaidenName: '',
-                motherSurname: '',
-                motherFirstName: '',
-                motherMiddleName: ''
-            },
-            isEditingFamily: false,
-            originalFamilyFields: {},
-            isEditingProfile: false,
-            originalProfileFields: {},
-            childData: [],
-            newChild: {
-                child_fname: '',
-                child_mname: '',
-                child_lname: '',
-                child_xname: '',
-                child_dob: ''
-            },
-            educationData: [],
-            organizationData: [],
-            workExperienceData: [],
-            skillsData: [],
-            referencesData: [],
-            newEducation: {
-                educ_level: '',
-                educ_school: '',
-                educ_degree: '',
-                educ_from: '',
-                educ_hl_earned: '',
-                educ_year_grad: '',
-                educ_academic_honor: ''
-            },
-            newOrganization: {
-                org_name: ''
-            },
-            newWorkExperience: {
-                workfr: '',
-                workto: '',
-                work_pos: '',
-                work_dept: '',
-                work_salary: '',
-                work_salarygrade: '',
-                work_stat: '',
-                work_gov: ''
-            },
-            newSkill: {
-                skill: ''
-            },
-            newReference: {
-                ref_fname: '',
-                ref_mname: '',
-                ref_lname: '',
-                ref_xname: '',
-                ref_add: '',
-                ref_cnum: ''
-            },
-            showAddEducationDialog: false,
-            showAddOrganizationDialog: false,
-            showAddWorkExperienceDialog: false,
-            showAddSkillsDialog: false,
-            showAddReferencesDialog: false,
-            showAddChildDialog: false,
-            showSuccessDialog: false,
-            showUpdateDialog: false
-        };
+            spouseSurname: '',
+            spouseFirstName: '',
+            spouseMiddleName: '',
+            spouseExtName: '',
+            spouseOccupation: '',
+            spouseBusinessName: '',
+            spouseBusinessAddress: '',
+            spouseTelNo: '',
+            fatherSurname: '',
+            fatherFirstName: '',
+            fatherMiddleName: '',
+            fatherExtName: '',
+            motherMaidenName: '',
+            motherSurname: '',
+            motherFirstName: '',
+            motherMiddleName: ''
+        },
+        isEditingFamily: false,
+        originalFamilyFields: {},
+        isEditingProfile: false,
+        originalProfileFields: {},
+        childData: [],
+        newChild: {
+            child_fname: '',
+            child_mname: '',
+            child_lname: '',
+            child_xname: '',
+            child_dob: ''
+        },
+        educationData: [],
+        organizationData: [],
+        workExperienceData: [],
+        skillsData: [],
+        referencesData: [],
+        newEducation: {
+            educ_level: '',
+            educ_school: '',
+            educ_degree: '',
+            educ_from: '',
+            educ_hl_earned: '',
+            educ_year_grad: '',
+            educ_academic_honor: ''
+        },
+        newOrganization: {
+            org_name: ''
+        },
+        newWorkExperience: {
+            workfr: '',
+            workto: '',
+            work_pos: '',
+            work_dept: '',
+            work_salary: '',
+            work_salarygrade: '',
+            work_stat: '',
+            work_gov: ''
+        },
+        newSkill: {
+            skill: ''
+        },
+        newReference: {
+            ref_fname: '',
+            ref_mname: '',
+            ref_lname: '',
+            ref_xname: '',
+            ref_add: '',
+            ref_cnum: ''
+        },
+        showAddEducationDialog: false,
+        showAddOrganizationDialog: false,
+        showAddWorkExperienceDialog: false,
+        showAddSkillsDialog: false,
+        showAddReferencesDialog: false,
+        showAddChildDialog: false,
+        showSuccessDialog: false,
+        showUpdateDialog: false,
+        showEditDialog: false,
+        selectedRow: null,
+        editFields: {}, // Ensure this is defined as well
+        currentTabLabel: '',
+    };
     },
 
+    computed: {
+        filteredEditFields() {
+            return Object.fromEntries(
+                Object.entries(this.editFields).filter(([key]) => 
+                    !key.endsWith('_count') && !key.startsWith('full') && !key.startsWith('age')
+                )
+            );
+        }
+    },
+
+
     methods: {
+    toggleProfileEditing() {
+        console.log('Toggling profile editing:', this.isEditingProfile);
+        console.log('Selected row:', this.selectedRow);
+        this.isEditingProfile = !this.isEditingProfile;
+    },
+
+    onRowSelect(event) {
+    console.log('Row selected:', event.data);
+    this.selectedRow = event.data;
+    this.openEditDialog(this.selectedRow); // Directly call the edit dialog 
+    },
+
+
+    cancelProfileEditing() {
+        this.isEditingProfile = false;
+        this.selectedRow = null;
+    },
+
+    openEditDialog(row) {
+        if (row) {
+            console.log('Opening Edit Dialog for row:', row);
+            this.editFields = { ...row }; // Deep copy of the selected row
+            this.currentTabLabel = this.getCurrentTabLabel();
+            this.showEditDialog = true;
+        } else {
+            console.log('No row selected.');
+        }
+    },
+
+
+    hideEditDialog() {
+        console.log('Hiding Edit Dialog');
+        this.showEditDialog = false;
+        this.selectedRow = null;  // Optionally clear the selectedRow if you want to reset the selection
+    },
+
+    saveEdit() {
+    let url = '';
+    let dataArray = null;
+    let countField = '';
+
+    switch (this.activeTab) {
+        case 0:
+            url = '/emp_child/UpdateChildData';
+            dataArray = this.childData;
+            countField = 'child_count';
+            break;
+        case 1:
+            url = '/education/UpdateEducationData';
+            dataArray = this.educationData;
+            countField = 'educ_count';
+            break;
+        case 2:
+            url = '/emp_org/UpdateOrganizationData';
+            dataArray = this.organizationData;
+            countField = 'org_count';
+            break;
+        case 3:
+            url = '/emp_work/UpdateWorkExperienceData';
+            dataArray = this.workExperienceData;
+            countField = 'work_count';
+            break;
+        case 4:
+            url = '/emp_skills/UpdateSkillsData';
+            dataArray = this.skillsData;
+            countField = 'skill_count';
+            break;
+        case 5:
+            url = '/emp_reference/UpdateReferencesData';
+            dataArray = this.referencesData;
+            countField = 'ref_count';
+            break;
+        default:
+            console.error('Unknown tab selected');
+            return;
+    }
+
+    axios.post(url, this.editFields)
+        .then(() => {
+            const index = dataArray.findIndex(item =>
+                item.empid === this.editFields.empid && 
+                item[countField] === this.editFields[countField]
+            );
+
+            if (index !== -1) {
+                dataArray[index] = { ...this.editFields };
+            } else {
+                console.error('Item not found');
+            }
+
+            this.showSuccessDialog = true;
+            this.hideEditDialog();
+            this.isEditingProfile = false;
+        })
+        .catch(error => {
+            console.error('Error updating data:', error);
+        });
+},
+
+    isDate(value) {
+        const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+        return typeof value === 'string' && datePattern.test(value) && !isNaN(Date.parse(value));
+    },
+    isNumeric(value) {
+        return typeof value === 'number' || (typeof value === 'string' && !isNaN(Number(value)));
+    },
+    getInputType(key, value) {
+        if (this.isDate(value)) {
+            return 'date';
+        } else if (this.isNumeric(value)) {
+            return 'number';
+        } else {
+            return 'text';
+        }
+    },
+
+        formatFieldLabel(key) {
+            return key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' ');
+        },
+
+        getCurrentTabLabel() {
+            switch (this.activeTab) {
+                case 0: return 'Child';
+                case 1: return 'Education';
+                case 2: return 'Organization';
+                case 3: return 'Work Experience';
+                case 4: return 'Skills';
+                case 5: return 'References';
+                default: return '';
+            }
+        },
+
+        updateData() {
+            const urlMap = {
+                0: '/emp_child/UpdateChildData',
+                1: '/education/UpdateEducationData',
+                2: '/emp_org/UpdateOrganizationData',
+                3: '/emp_work/UpdateWorkExperienceData',
+                4: '/emp_skills/UpdateSkillsData',
+                5: '/emp_reference/UpdateReferencesData'
+            };
+
+            axios.post(urlMap[this.activeTab], this.editFields)
+                .then(() => {
+                    this.showSuccessDialog = true;
+                    this.hideEditDialog();
+                    this.isEditingProfile = false;
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                });
+        },
+
         toggleFamilyEditing() {
             if (!this.isEditingFamily) {
                 // Save the current state of fields to allow canceling
@@ -588,20 +822,6 @@ export default {
             }
         },
 
-        toggleProfileEditing() {
-            if (!this.isEditingProfile) {
-                // Save the current state of fields to allow canceling
-                this.originalProfileFields = JSON.parse(JSON.stringify(this.fields));
-            }
-            this.isEditingProfile = !this.isEditingProfile;
-        },
-
-        cancelProfileEditing() {
-            // Revert changes by restoring original fields
-            this.fields = JSON.parse(JSON.stringify(this.originalProfileFields));
-            this.isEditingProfile = false;
-        },
-
 
         async updateFamilyData() {
             try {
@@ -613,24 +833,9 @@ export default {
                 this.errorMessage = 'Failed to update Family. Please try again.';
                 this.showUpdateDialog = false;
             }
-                },
-
-        openAddDialog() {
-            if (this.activeTab === 0) {
-                this.showAddChildDialog = true;
-            } else if (this.activeTab === 1) {
-                this.showAddEducationDialog = true;
-            } else if (this.activeTab === 2) {
-                this.showAddOrganizationDialog = true;
-            } else if (this.activeTab === 3) {
-                this.showAddWorkExperienceDialog = true;
-            } else if (this.activeTab === 4) {
-                this.showAddSkillsDialog = true;
-            } else if (this.activeTab === 5) {
-                this.showAddReferencesDialog = true;
-            }
         }
     },
+
 
     mounted() {
         this.fetchFather();
@@ -640,21 +845,6 @@ export default {
 
     setup() {
         const activeTab = ref(0);
-
-        const isEditingProfile = ref(false);
-        const originalProfileFields = ref({});
-
-        const toggleProfileEditing = () => {
-            if (!isEditingProfile.value) {
-                originalProfileFields.value = JSON.parse(JSON.stringify(this.fields));
-            }
-            isEditingProfile.value = !isEditingProfile.value;
-        };
-
-        const cancelProfileEditing = () => {
-            this.fields = JSON.parse(JSON.stringify(originalProfileFields.value));
-            isEditingProfile.value = false;
-        };
 
         const childData = ref([]);
         const newChild = ref({
@@ -937,9 +1127,8 @@ export default {
             showAddReferencesDialog.value = false;
         };
 
-        const hideSuccessDialog = () => {
+        const hideSuccessDialog = () => {   
             showSuccessDialog.value = false;
-            location.reload(); 
         };
 
         const confirmUpdate = () => {
@@ -950,40 +1139,9 @@ export default {
             showUpdateDialog.value = false;
         };
 
-        const updateProfile = async () => {
-            try {
-                if (activeTab.value === 0) {
-                    await axios.post('/emp_child/UpdateChildData', educationData.value);
-                } else if (activeTab.value === 1) {
-                    await axios.post('/education/UpdateEducationData', educationData.value);
-                } else if (activeTab.value === 2) {
-                    await axios.post('/emp_org/UpdateOrganizationData', organizationData.value);
-                } else if (activeTab.value === 3) {
-                    await axios.post('/emp_work/UpdateWorkExperienceData', workExperienceData.value);
-                } else if (activeTab.value === 4) {
-                    await axios.post('/emp_skills/UpdateSkillsData', skillsData.value);
-                } else if (activeTab.value === 5) {
-                    await axios.post('/emp_reference/UpdateReferencesData', referencesData.value);
-                }
-                showUpdateDialog.value = false;
-                showSuccessDialog.value = true;
-            } catch (error) {
-                console.error('Error updating profile:', error);
-                showUpdateDialog.value = false;
-            }
-        };
 
         const hideAddChildDialog = () => {
             showAddChildDialog.value = false;
-        };
-
-        const inputEditor = (slotProps) => {
-            return h('input', {
-                type: 'text',
-                class: 'input-field',
-                value: slotProps.data[slotProps.field],
-                onInput: (event) => slotProps.data[slotProps.field] = event.target.value
-            });
         };
 
         const searchQuery = ref('');
@@ -1056,7 +1214,6 @@ export default {
             fetchWorkExperienceData,
             fetchSkillsData,
             fetchReferencesData,
-            updateProfile,
             searchQuery,
             search,
             childData,
@@ -1069,11 +1226,7 @@ export default {
             hideAddChildDialog,
             hideSuccessDialog,
             confirmUpdate,
-            hideUpdateDialog,
-            inputEditor,
-            isEditingProfile,
-            toggleProfileEditing,
-            cancelProfileEditing
+            hideUpdateDialog
         };
     }
 };

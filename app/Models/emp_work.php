@@ -9,8 +9,7 @@ class emp_work extends Model
 {
     use HasFactory;
     protected $table = 'emp_work';
-    protected $primaryKey = 'empid'; // Set the primary key to empid
-    public $incrementing = false; // Since empid is not auto-incrementing
+    protected $primaryKey = 'work_count'; 
     public function emp_work()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');
