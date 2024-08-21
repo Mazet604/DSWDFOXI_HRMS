@@ -29,12 +29,20 @@ Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('lo
 Route::get('otp', function () {
     return Inertia::render('Auth/OTP', [
         'context' => request()->get('context', 'login'),  // Default context is 'login'
-        'otpSent' => request()->get('otpSent', false)    // Pass otpSent flag
+        'otpSent' => request()->get('otpSent', false)
     ]);
 })->name('otp.form');
 
 Route::post('send-otp', [AuthenticatedSessionController::class, 'sendOtp'])->name('otp.send');
 Route::post('otp', [OTPController::class, 'verifyOTP'])->name('otp.verify');
+
+// Route for resending OTP
+Route::post('/otp/resend', [OTPController::class, 'resendOtp'])->name('otp.resend');
+
+Route::get('/password-success', function () {
+    return Inertia::render('PasswordSuccess', [
+    ]);
+})->name('password.success');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
@@ -62,11 +70,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //new
+    // New employee routes
     Route::get('/employee/fullname', [EmployeeController::class, 'getEmployee']);
     Route::get('/employee/PersonalInfo', [EmployeeController::class, 'getPersonalInfo']);
     Route::get('/employee/SecurityandContact', [EmployeeController::class, 'getSecurityandContact']);
-    Route::patch('/updateProfile', [EmployeeController::class, 'updateProfile']);
+    Route::patch('/employee/updateProfile', [EmployeeController::class, 'updateProfile']);
     Route::get('/emp_acc/empuser', [EmpAccController::class, 'getCreds']);
     Route::get('/dropdown/sex-options', [DropDownControllers::class, 'getSexOptions']);
     Route::get('/dropdown/civilstatus-options', [DropDownControllers::class, 'getCivilStatusOptions']);
@@ -76,15 +84,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-profile-picture', [EmployeeController::class, 'getProfilePicture']);
 
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
-    Route::patch('/updateAddress', [AddressController::class, 'updateAddress']);
+    Route::get('/employee/region-options', [AddressController::class, 'getRegionOptions']);
+    Route::get('/employee/province-options', [AddressController::class, 'getProvinceOptions']);
+    Route::get('/employee/city-options', [AddressController::class, 'getCityOptions']);
+    // Route::get('/employee/barangay-options', [AddressController::class, 'getBarangayOptions']);
 
-    Route::get('/regions', [AddressController::class, 'getRegions']);
-    Route::get('/provinces/{regionId}', [AddressController::class, 'getProvincesByRegion']);
-
-    Route::get('/emp_father/Father', [BackgroundController::class, 'getFather']);
-    Route::get('/emp_mother/Mother', [BackgroundController::class, 'getMother']);
-    Route::get('/emp_spouse/Spouse', [BackgroundController::class, 'getSpouse']);
-    Route::patch('/EmpFamily/updateFamilyData', [BackgroundController::class, 'updateFamilyData']);
     Route::get('/education/EducationData', [BackgroundController::class, 'getEducationData']);
     Route::post('/education/AddEducationData', [BackgroundController::class, 'addEducationData']);
     Route::get('/emp_org/OrganizationData', [BackgroundController::class, 'getOrganizationData']);
@@ -95,9 +99,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/emp_skills/AddSkillData', [BackgroundController::class, 'addSkillData']);
     Route::get('/emp_reference/ReferencesData', [BackgroundController::class, 'getReferencesData']);
     Route::post('/emp_reference/AddReferenceData', [BackgroundController::class, 'addReferenceData']);
+    Route::get('/family-data', [BackgroundController::class, 'getFamilyData']);
+    Route::post('/emp_family/UpdateFamilyData', [BackgroundController::class, 'updateFamilyData']);
     Route::get('/emp_child/ChildData', [BackgroundController::class, 'getChildData']);
     Route::post('/emp_child/AddChildData', [BackgroundController::class, 'addChildData']);
-
 
     Route::get('/emp_eligibility/CSEligibilityData', [OtherInfoController::class, 'getCSEligibilityData']);
     Route::get('/emp_voluntary/VoluntaryWorkData', [OtherInfoController::class, 'getVoluntaryWorkData']);

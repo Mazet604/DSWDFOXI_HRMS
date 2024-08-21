@@ -28,7 +28,7 @@ class EmailHelper
 
         $mail = new PHPMailer(true);
         try {
-            //Server settings
+            // Server settings
             $mail->isSMTP();
             $mail->Host = env('MAIL_HOST'); // Calling .env config
             $mail->SMTPAuth = true;
@@ -40,7 +40,7 @@ class EmailHelper
             // Set the default timezone to the Philippines
             date_default_timezone_set('Asia/Manila');
 
-            //Recipients
+            // Recipients
             $mail->setFrom(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
             $mail->addAddress($to);
 
@@ -50,7 +50,7 @@ class EmailHelper
             // Content
             $mail->isHTML(true);
             $mail->Subject = 'Login Confirmation';
-            $mail->Body    = "
+            $mail->Body = "
                 <div style='background-color: #f9f9f9; padding: 20px; font-family: Arial, sans-serif; text-align: center;'>
                     <div style='background-color: white; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);'>
                         <img src='https://i.imgur.com/YVsL4gX.jpeg' alt='Logo' style='max-width: 300px; margin-bottom: 20px;' />
@@ -71,10 +71,13 @@ class EmailHelper
                 Log::debug("PHPMailer debug level $level; message: $str");
             };
 
+            // Send email
             $mail->send();
             Log::info('OTP sent successfully to ' . $to);
+
         } catch (Exception $e) {
             Log::error("Failed to send OTP to $to. Mailer Error: {$mail->ErrorInfo}");
+            throw new \Exception("Failed to send OTP email."); // Optional: rethrow exception for further handling
         }
     }
 

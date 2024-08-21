@@ -26,12 +26,11 @@ const submit = () => {
     form.post(route('otp.send'), {
         onSuccess: () => {
             console.log('OTP sent successfully'); // Log to confirm OTP was sent
-            Inertia.visit(route('otp.form'), {
-                method: 'get',
-                data: {
-                    context: 'forgot-password',
-                    otpSent: true // Pass a flag to indicate that OTP was sent
-                }
+
+            // Redirect directly without causing a conflict
+            window.location.href = route('otp.form', {
+                context: 'forgot-password',
+                otpSent: true // Pass a flag to indicate that OTP was sent
             });
         },
         onError: (errors) => {
