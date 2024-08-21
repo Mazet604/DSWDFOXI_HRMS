@@ -43,6 +43,7 @@ class AddressController extends Controller
                 'villsub' => $address->emp_subd,
                 'Region' => $address->emp_region,
                 'Province' => $address->emp_prov,
+                'City' => $address->emp_city,
             ], 200);
 
         } catch (\Exception $e) {
@@ -60,5 +61,11 @@ class AddressController extends Controller
     {
         $provinces = lib_province::where('reg_psgc', $request->reg_psgc)->get();
         return response()->json($provinces);
+    }
+
+    public function getCities(Request $request)
+    {
+        $cities = lib_city::where('prv_psgc', $request->prv_psgc)->get();
+        return response()->json($cities);
     }
 }
