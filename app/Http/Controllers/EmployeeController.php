@@ -129,14 +129,18 @@ class EmployeeController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-
+    
             $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
             $emp_acc = EmpAcc::where('empid', $user->empid)->first();
-            //$emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first();
             if (!$employee || !$emp_acc) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
-
+    
+            $emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first(); // Fetch employee address using emp_count
+            if (!$emp_address) {
+                return response()->json(['error' => 'Employee address not found'], 404);
+            }
+    
             // Update the employee details
             $employee->emp_fname = $request->input('firstName');
             $employee->emp_mname = $request->input('middleName');
@@ -152,24 +156,25 @@ class EmployeeController extends Controller
             $employee->emp_blood = $request->input('bloodType');
             $employee->emp_cnum = $request->input('mobilenum');
             $employee->emp_telnum = $request->input('telnum');
+            
 
-            /*$emp_address->emp_region=$request->input('Region');
-            $emp_address->emp_prov=$request->input('Province');
-            $emp_address->emp_city=$request->input('City');
-            $emp_address->emp_brgy=$request->input('Barangay');
-            $emp_address->emp_house=$request->input('block');
-            $emp_address->emp_subd=$request->input('villsub');
-            $emp_address->emp_zip=$request->input('zipcode');*/
-
-
+            //Update the address
+            $emp_address->emp_region = $request->input('Region');
+            $emp_address->emp_prov = $request->input('Province');
+            $emp_address->emp_city = $request->input('City');
+            $emp_address->emp_brgy = $request->input('Barangay');
+            $emp_address->emp_house = $request->input('block');
+            $emp_address->emp_subd = $request->input('villsub');
+            $emp_address->emp_zip = $request->input('zipcode');
+    
             // Update the emp_acc details
             $emp_acc->empmail = $request->input('emailadd');
-
+    
             // Save the updated information
             $employee->save();
             $emp_acc->save();
-            //$emp_address->save();
-
+            $emp_address->save();
+    
             return response()->json(['success' => 'Profile updated successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

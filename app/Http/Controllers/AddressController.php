@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EmpAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 use App\Models\lib_region;
 use App\Models\lib_province;
 use App\Models\lib_city;
@@ -13,38 +14,6 @@ use App\Models\Employee;
 
 class AddressController extends Controller
 {   
-    public function updateAddress(Request $request)
-    {
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated'], 401);
-        }
-
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated'], 401);
-        }
-
-        // Fetch employee using empid
-        $employee = Employee::where('empid', $user->empid)->first();
-        if (!$employee) {
-            return response()->json(['error' => 'Employee not found'], 404);
-        }
-
-        // Fetch the address using emp_count
-        $address = EmpAddress::where('emp_count', $employee->emp_count)->first();
-        if (!$address) {
-            return response()->json(['error' => 'Address not found'], 404);
-        }
-
-            $emp_address->emp_house=$request->input('block');
-            $emp_address->emp_subd=$request->input('villsub');
-            $emp_address->emp_zip=$request->input('zipcode');
-
-            $emp_address->save();
-
-            return response()->json(['success'=> 'Address updated successfully']);
-    }
 
     public function getAddress()
     {
@@ -72,6 +41,8 @@ class AddressController extends Controller
                 'zipcode' => $address->emp_zip,
                 'block' => $address->emp_house,
                 'villsub' => $address->emp_subd,
+                'Region' => $address->emp_region,
+                'Province' => $address->emp_prov,
             ], 200);
 
         } catch (\Exception $e) {
@@ -81,21 +52,13 @@ class AddressController extends Controller
 
     public function getRegions()
     {
-        try {
-            $regions = lib_region::all();
-            return response()->json($regions, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred while fetching regions'], 500);
-        }
+        $regions = lib_region::get();
+        return response()->json($regions);
     }
 
-    public function getProvincesByRegion($regionId)
+    public function getProvinces(Request $request)
     {
-        try {
-            $provinces = lib_province::where('reg_psgc', $regionId)->get();
-            return response()->json($provinces, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred while fetching provinces'], 500);
-        }
+        $provinces = lib_province::where('reg_psgc', $request->reg_psgc)->get();
+        return response()->json($provinces);
     }
 }

@@ -10,7 +10,7 @@
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-vue": "^5.0.0",
         "autoprefixer": "^10.4.12",
-        "axios": "^1.7.2",
+        "axios": "^1.7.4",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.31",
         "tailwindcss": "^3.2.1",
@@ -18,7 +18,6 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "@dctsph/psgc": "^1.1.0",
         "@fortawesome/fontawesome-free": "^6.6.0",
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-vue3": "^0.6.0",

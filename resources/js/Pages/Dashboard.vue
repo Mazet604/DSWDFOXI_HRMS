@@ -75,7 +75,7 @@
               </div>
                 <div class="tight">
                   <div class="grid grid-cols-5 gap-4">
-                    <div>
+                  <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">SEX</label>
                     <select class="input-field" v-model="fields.sex" :disabled="!isEditing">
                         <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
@@ -86,18 +86,18 @@
                     <input type="text" class="input-field text-color" :value="calculatedAge" disabled />
                 </div>
                 <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
+                    <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
+                        <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                    </select>
+                </div>
+                <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M)</label>
                     <input type="number" step="0.01" class="input-field" v-model="fields.height" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG)</label>
                     <input type="number" class="input-field" v-model="fields.weight" :disabled="!isEditing" />
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
-                    <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
-                        <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                    </select>
                 </div>
             </div>
                 </div>
@@ -108,20 +108,20 @@
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
-                  <select class="input-field" v-model="fields.Region" :disabled="!isEditing" @change="fetchProvinceOptions">
-                    <option v-for="option in RegionOptions" :key="option.reg_psgc" :value="option.reg_psgc">{{ option.col_region }}</option>
+                  <select class="input-field" v-model="fields.Region" :disabled="!isEditing" @change="fetchProvinces()">
+                    <option v-for="(region, index) in regions" :key="index" :value="region.reg_psgc">{{ region.col_region }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
                   <select class="input-field" v-model="fields.Province" :disabled="!isEditing">
-                    <option v-for="option in ProvinceOptions" :key="option.prv_psgc" :value="option.prv_psgc">{{ option.col_province }}</option>
+                    <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
                   <select class="input-field" v-model="fields.City" :disabled="!isEditing">
-                    <option v-for="option in CityOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                    
                   </select>
                 </div>
                 <div>
@@ -131,7 +131,7 @@
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
                   <select class="input-field" v-model="fields.Barangay" :disabled="!isEditing">
-                    <option v-for="option in BarangayOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+
                   </select>
                 </div>
                 <div>
@@ -259,6 +259,10 @@ export default {
     AppLayout, Button, TabView, TabPanel
   },
 
+  mounted() {
+    console.log('Component mounted.')
+  },
+
   data() {
     return {
       fullName: '',
@@ -286,8 +290,7 @@ export default {
         telnum: '',
         emailadd: '',
         Region:'',
-        Provinces:'',
-
+        Province:'',
       },
       isEditing: false,
       originalFields: {},
@@ -299,6 +302,8 @@ export default {
       civilStatusOptions: [],
       bloodTypeOptions: [],
       extOptions: [],
+      regions:[],
+      provinces:[],
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
@@ -309,9 +314,6 @@ export default {
       cropping: false,
       cropper: null,
       cropperSrc: '',
-      RegionOptions:[],
-      ProvinceOptions:[],
-
     };
   },
 
@@ -330,172 +332,177 @@ export default {
   },
 
   methods: {
-
-
-    async updateAddress(){
-      try {
-        await axios.patch('/updateAddress', this.fields);
-        this.isEditing = false;
-        this.showUpdateDialog = false;
-        this.showSuccessDialog = true;
-      } catch (error) {
-        console.error('Error updating profile:', error);
-      }
+    validateName(field) {
+      this.fields[field] = this.fields[field].replace(/[0-9]/g, '');
     },
 
-      fetchRegions() {
-        fetch('/regions')
-          .then(response => response.json())
-          .then(data => {
-            this.RegionOptions = data;
-          })
-          .catch(error => {
-            console.error('Error fetching regions:', error);
-          });
-      },
+    validateMobileNumber() {
+      this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
+    },
+    validateTelephoneNumber() {
+      this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
+    },
 
-      fetchProvinceOptions() {
-        if (this.fields.Region) {
-          fetch(`/provinces/${this.fields.Region}`)
-            .then(response => response.json())
-            .then(data => {
-              this.ProvinceOptions = data;
-            })
-            .catch(error => {
-              console.error('Error fetching provinces:', error);
-            });
-        } else {
-          this.ProvinceOptions = [];
-        }
-      },
-
-      validateName(field) {
-        this.fields[field] = this.fields[field].replace(/[0-9]/g, '');
-      },
-
-      validateMobileNumber() {
-        this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
-      },
-      validateTelephoneNumber() {
-        this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
-      },
-
-      async fetchSexOptions() {
-        try {
-          const response = await fetch('/dropdown/sex-options');
+    fetchSexOptions() {
+      fetch('/dropdown/sex-options')
+        .then(response => {
           if (!response.ok) {
             throw new Error('Failed to fetch sex options');
           }
-          this.sexOptions = await response.json();
-        } catch (error) {
+          return response.json();
+        })
+        .then(data => {
+          this.sexOptions = data;
+        })
+        .catch(error => {
           console.error(error);
-        }
-      },
+        });
+    },
 
-      async fetchCivilStatusOptions() {
-        try {
-          const response = await fetch('/dropdown/civilstatus-options');
+    fetchCivilStatusOptions() {
+      fetch('/dropdown/civilstatus-options')
+        .then(response => {
           if (!response.ok) {
             throw new Error('Failed to fetch civil status options');
           }
-          this.civilStatusOptions = await response.json();
-        } catch (error) {
+          return response.json();
+        })
+        .then(data => {
+          this.civilStatusOptions = data;
+        })
+        .catch(error => {
           console.error(error);
-        }
-      },
+        });
+    },
 
-      async fetchBloodTypeOptions() {
-        try {
-          const response = await fetch('/dropdown/bloodtype-options');
+    fetchBloodTypeOptions() {
+      fetch('/dropdown/bloodtype-options')
+        .then(response => {
           if (!response.ok) {
             throw new Error('Failed to fetch blood type options');
           }
-          this.bloodTypeOptions = await response.json();
-        } catch (error) {
+          return response.json();
+        })
+        .then(data => {
+          this.bloodTypeOptions = data;
+        })
+        .catch(error => {
           console.error(error);
-        }
-      },
+        });
+    },
 
-      async fetchExtOptions() {
-        try {
-          const response = await fetch('/dropdown/ext-options');
+    fetchExtOptions() {
+      fetch('/dropdown/ext-options')
+        .then(response => {
           if (!response.ok) {
             throw new Error('Failed to fetch suffix options');
           }
-          this.extOptions = await response.json();
-        } catch (error) {
+          return response.json();
+        })
+        .then(data => {
+          this.extOptions = data;
+        })
+        .catch(error => {
           console.error(error);
+        });
+    },
+
+    fetchFullName() {
+      axios.get('/employee/fullname')
+        .then(response => {
+          this.fullName = response.data.fullName;
+          this.empPosition = response.data.empPosition;
+        })
+        .catch(error => {
+          this.errorMessage = 'Failed to load full name.';
+        });
+    },
+
+    fetchPersonalInfo() {
+      axios.get('/employee/PersonalInfo')
+        .then(response => {
+          this.fields.empUser = response.data.empUser;
+          this.fields.empID = response.data.empID;
+          this.fields.firstName = response.data.firstName;
+          this.fields.middleName = response.data.middleName;
+          this.fields.lastName = response.data.lastName;
+          this.fields.suffix = response.data.suffix;
+          this.fields.citizenship = response.data.citizenship;
+          this.fields.birthday = response.data.birthday;
+          this.fields.placeOfBirth = response.data.placeOfBirth;
+          this.fields.sex = response.data.sex;
+          this.fields.civilStatus = response.data.civilStatus;
+          this.fields.height = response.data.height;
+          this.fields.weight = response.data.weight;
+          this.fields.bloodType = response.data.bloodType;
+        })
+        .catch(error => {
+          this.errorMessage = 'Failed to load personal information.';
+        });
+    },
+
+    fetchAddress() {
+      axios.get('/employee/Address')
+        .then(response => {
+          this.fields.zipcode = response.data.zipcode;
+          this.fields.block = response.data.block;
+          this.fields.villsub = response.data.villsub;
+          this.fields.Region = response.data.Region;
+          this.fields.Province = response.data.Province;
+        })
+        .catch(error => {
+          this.errorMessage = 'Failed to load address.';
+        });
+    },
+
+    fetchRegions() {
+      axios.get('/api/regions')
+        .then(response => {
+          this.regions = response.data;
+        })
+        .catch(error => {
+          console.error('Error fetching regions:', error);
+        });
+    },
+
+    fetchProvinces() {
+      axios.get('/api/provinces', {
+        params:{
+          reg_psgc:this.fields.Region
         }
-      },
+      })
+        .then(function(response) {
+          this.provinces = response.data;
+        }.bind(this));
+    },
 
-        async fetchFullName() {
-          try {
-            const response = await axios.get('/employee/fullname');
-            this.fullName = response.data.fullName;
-            this.empPosition = response.data.empPosition;
-          } catch (error) {
-              this.errorMessage = 'Failed to load full name.';
-          }
-        },
+    fetchSecurityandContact() {
+      axios.get('/employee/SecurityandContact')
+        .then(response => {
+          this.fields.mobilenum = response.data.mobilenum;
+          this.fields.telnum = response.data.telnum;
+          this.fields.emailadd = response.data.emailadd;
+        })
+        .catch(error => {
+          this.errorMessage = 'Failed to load security and contact information.';
+        });
+    },
 
-        async fetchPersonalInfo() {
-          try {
-            const response = await axios.get('/employee/PersonalInfo');
-            this.fields.empUser = response.data.empUser;
-            this.fields.empID = response.data.empID;
-            this.fields.firstName = response.data.firstName;
-            this.fields.middleName = response.data.middleName;
-            this.fields.lastName = response.data.lastName;
-            this.fields.suffix = response.data.suffix;
-            this.fields.citizenship = response.data.citizenship;
-            this.fields.birthday = response.data.birthday;
-            this.fields.placeOfBirth = response.data.placeOfBirth;
-            this.fields.sex = response.data.sex;
-            this.fields.civilStatus = response.data.civilStatus;
-            this.fields.height = response.data.height;
-            this.fields.weight = response.data.weight;
-            this.fields.bloodType = response.data.bloodType;
-          } catch (error) {
-              this.errorMessage = 'Failed to load personal information.';
-          }
-        },
+    fetchProfilePicture() {
+      axios.get('/get-profile-picture')
+        .then(response => {
+          this.profilePictureUrl = response.data.url ? response.data.url : '/storage/uploads/profile-pictures/default-profile.png';
+          console.log('Profile Picture URL:', this.profilePictureUrl); 
+        })
+        .catch(error => {
+          console.error('Error fetching profile picture:', error);
+        });
+    },
 
-        async fetchAddress() {
-          try {
-            const response = await axios.get('/employee/Address');
-            this.fields.zipcode = response.data.zipcode;
-            this.fields.block = response.data.block;
-            this.fields.villsub = response.data.villsub;
-          } catch (error) {
-              this.errorMessage = 'Failed to load address.';
-          }
-        },
-
-        async fetchSecurityandContact() {
-          try {
-            const response = await axios.get('/employee/SecurityandContact');
-            this.fields.mobilenum = response.data.mobilenum;
-            this.fields.telnum = response.data.telnum;
-            this.fields.emailadd = response.data.emailadd;
-          } catch (error) {
-              this.errorMessage = 'Failed to load security and contact information.';
-          }
-        },
-
-        async fetchProfilePicture() {
-          try {
-              const response = await axios.get('/get-profile-picture');
-              this.profilePictureUrl = response.data.url ? response.data.url : '/storage/uploads/profile-pictures/default-profile.png';
-              console.log('Profile Picture URL:', this.profilePictureUrl); 
-          } catch (error) {
-              console.error('Error fetching profile picture:', error);
-          }
-        },
-
-        toggleBlur() {
-        this.isUnblurred = !this.isUnblurred;
-      },
-      triggerFileUpload() {
+    toggleBlur() {
+      this.isUnblurred = !this.isUnblurred;
+    },
+    triggerFileUpload() {
       this.$refs.fileInput.click();
     },
     onFileSelected(event) {
@@ -529,7 +536,6 @@ export default {
       canvas.toBlob((blob) => {
         this.uploadCroppedImage(blob);
       });
-      
     },
 
     uploadCroppedImage(blob) {
@@ -554,24 +560,19 @@ export default {
       location.reload(); 
     },
 
+    uploadFile() {
+      if (this.selectedFile) {
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
 
-      async uploadFile() {
-        if (this.selectedFile) {
-          const formData = new FormData();
-          formData.append('file', this.selectedFile);
-
-        try {
-          const response = await axios.post('/upload-profile-picture', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          });
+        axios.post('/upload-profile-picture', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        }).then(response => {
           this.profilePictureUrl = response.data.url;
-          console.log('File uploaded successfully:', response.data);
           this.showPhotoSuccessDialog = true; // Show the success modal
-        } catch (error) {
+        }).catch(error => {
           console.error('Error uploading file:', error);
-        }
+        });
       }
     },
 
@@ -601,33 +602,29 @@ export default {
       location.reload(); 
     },
 
-      async saveProfile() {
-      try {
-        await axios.patch('/updateProfile', this.fields);
-        this.isEditing = false;
-        this.showUpdateDialog = false;
-        this.showSuccessDialog = true;
-      } catch (error) {
-        console.error('Error updating profile:', error);
-      }
+    saveProfile() {
+      axios.patch('/updateProfile', this.fields)
+        .then(() => {
+          this.isEditing = false;
+          this.showUpdateDialog = false;
+          this.showSuccessDialog = true;
+        })
+        .catch(error => {
+          console.error('Error updating profile:', error);
+        });
     },
 
-      search() {
-        const searchLower = this.searchQuery.toLowerCase();
-        if (searchLower.includes('personal info')) {
-          this.activeSubTab = 'personal';
-          this.activeTab = 0;
-        } else if (searchLower.includes('address')) {
-          this.activeSubTab = 'address';
-          this.activeTab = 1;
-        } else if (searchLower.includes('security')) {
-          this.activeSubTab = 'security';
-          this.activeTab = 2;
-        } else {
-          alert('No matching tab found.');
-        }
-      },
+    search() {
+      const searchLower = this.searchQuery.toLowerCase();
+      if (searchLower.includes('personal info')) {
+        this.activeTab = 0;
+      } else if (searchLower.includes('address')) {
+        this.activeTab = 1;
+      } else if (searchLower.includes('security')) {
+        this.activeTab = 2;
+      }
     },
+  },
 
   mounted() {
     this.fetchFullName();
@@ -635,7 +632,6 @@ export default {
     this.fetchSecurityandContact();
     this.fetchAddress();
     this.fetchProfilePicture();
-    this.fetchRegions();
   },
 
   created() {
@@ -643,6 +639,7 @@ export default {
     this.fetchCivilStatusOptions();
     this.fetchBloodTypeOptions();
     this.fetchExtOptions();
+    this.fetchRegions();
   },
 };
 </script>
@@ -681,15 +678,6 @@ export default {
 }
 
 
-.input-field2 {
-    width: 45%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-
 .col-span-1 {
     width: 100%;
 }
@@ -723,7 +711,7 @@ export default {
 
 .tight {
   margin-top: 2%;
-  width: 80%;
+  width: 79%;
 }
 
 .crop-container {
