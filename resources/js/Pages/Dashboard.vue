@@ -115,14 +115,14 @@
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
-                  <select class="input-field" v-model="fields.Province" :disabled="!isEditing">
+                  <select class="input-field" v-model="fields.Province" :disabled="!isEditing" @change="fetchCities()">
                     <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
                   <select class="input-field" v-model="fields.City" :disabled="!isEditing">
-                    
+                    <option v-for="(city, index) in cities" :key="index" :value="city.prv_psgc">{{ city.col_citmuni }}</option>
                   </select>
                 </div>
                 <div>
@@ -292,6 +292,7 @@ export default {
         emailadd: '',
         Region:'',
         Province:'',
+        City:'',
       },
       isEditing: false,
       originalFields: {},
@@ -305,6 +306,7 @@ export default {
       extOptions: [],
       regions:[],
       provinces:[],
+      cities:[],
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
@@ -450,8 +452,11 @@ export default {
           this.fields.villsub = response.data.villsub;
           this.fields.Region = response.data.Region;
           this.fields.Province = response.data.Province;
+          this.fields.City = response.data.City;
 
           this.fetchProvinces();
+          this.fetchCities();
+
         })
         .catch(error => {
           this.errorMessage = 'Failed to load address.';
@@ -476,6 +481,17 @@ export default {
       })
         .then(function(response) {
           this.provinces = response.data;
+        }.bind(this));
+    },
+
+    fetchCities() {
+      axios.get('/api/cities', {
+        params:{
+          prv_psgc:this.fields.Province
+        }
+      })
+        .then(function(response) {
+          this.cities = response.data;
         }.bind(this));
     },
 
@@ -606,7 +622,7 @@ export default {
     },
 
     saveProfile() {
-      axios.patch('/updateProfile', this.fields)
+      axios.patch('/employee/updateProfile', this.fields)
         .then(() => {
           this.isEditing = false;
           this.showUpdateDialog = false;

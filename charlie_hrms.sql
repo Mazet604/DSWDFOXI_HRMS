@@ -176,7 +176,7 @@ CREATE TABLE `emp_acc` (
 
 LOCK TABLES `emp_acc` WRITE;
 /*!40000 ALTER TABLE `emp_acc` DISABLE KEYS */;
-INSERT INTO `emp_acc` VALUES ('11-0070','jgmatugas117@gmail.com','jgmatugas','$2y$12$rqbZG0YZ6acEBomkJyCUfuaUpCvcLYWEAcMpuyCHSCQ3FWRtxZREq',NULL,'2024-07-31 21:44:22','2024-07-31 21:44:22'),('11-0071','loidandre30@gmail.com','tdadlawan','$2y$12$9WL35defMGo9IuURU6RLD.F35V7gJMHw7nF3syzwrUT4f.zK6Mv8q',NULL,'2024-07-31 21:44:22','2024-07-31 21:44:22');
+INSERT INTO `emp_acc` VALUES ('11-0070','jgmatugas117@gmail.com','jgmatugas','$2y$12$mZsw5uzUC68xnR.4xHlhP.LhkUNtI7mWhG7L2MyMVxA5fHaJF2giK',NULL,'2024-07-31 21:44:22','2024-08-16 05:12:39'),('11-0071','loidandre30@gmail.com','tdadlawan','$2y$12$9WL35defMGo9IuURU6RLD.F35V7gJMHw7nF3syzwrUT4f.zK6Mv8q',NULL,'2024-07-31 21:44:22','2024-07-31 21:44:22'),('11-0072','mnpartiaga03450@usep.edu.ph','mnartiaga','$2y$12$j6G0MUCqCwCWWsxDFvi44.bOBA0ttN.kak0VxyNeW.tIS/cBcyUiW',NULL,'2024-08-12 22:51:41','2024-08-12 22:51:41');
 /*!40000 ALTER TABLE `emp_acc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,11 +192,11 @@ CREATE TABLE `emp_address` (
   `emp_count` int unsigned NOT NULL,
   `emp_house` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `emp_subd` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_brgy` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_city` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_prov` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_region` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_zip` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_brgy` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_city` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_prov` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_region` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_zip` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`add_count`),
@@ -211,7 +211,7 @@ CREATE TABLE `emp_address` (
 
 LOCK TABLES `emp_address` WRITE;
 /*!40000 ALTER TABLE `emp_address` DISABLE KEYS */;
-INSERT INTO `emp_address` VALUES (1,1,'#45, Sunset Blvd','Golden Village','112319001','112319000','112300000','110000000','8000','2024-07-31 21:44:22','2024-07-31 21:44:22'),(2,2,'#23, Sta. Rita St.','Pagasa Village','112402074','112402000','112400000','110000000','8000','2024-07-31 21:44:22','2024-07-31 21:44:22');
+INSERT INTO `emp_address` VALUES (1,1,'#45, Sunset Blvd','Golden Village',NULL,'112402000','133900000','130000000','8000','2024-07-31 21:44:22','2024-08-21 08:16:34'),(2,2,'#23, Sta. Rita St.','Pagasa Village',NULL,NULL,'112400000','020000000','8000','2024-07-31 21:44:22','2024-08-20 23:48:43');
 /*!40000 ALTER TABLE `emp_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +272,7 @@ CREATE TABLE `emp_child` (
   PRIMARY KEY (`child_count`),
   KEY `emp_child_emp_count_foreign` (`emp_count`),
   CONSTRAINT `emp_child_emp_count_foreign` FOREIGN KEY (`emp_count`) REFERENCES `employee` (`emp_count`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -281,7 +281,7 @@ CREATE TABLE `emp_child` (
 
 LOCK TABLES `emp_child` WRITE;
 /*!40000 ALTER TABLE `emp_child` DISABLE KEYS */;
-INSERT INTO `emp_child` VALUES (1,1,'Aerox','Cutie','Aringoy','II','2024-08-13','2024-08-11 22:41:22','2024-08-11 22:41:22');
+INSERT INTO `emp_child` VALUES (1,1,'Aerox','Cutie','Aringoy','II','2024-08-13','2024-08-11 22:41:22','2024-08-11 22:41:22'),(2,3,'Martha','Achilles','Artiaga',NULL,'2021-02-13','2024-08-12 22:57:27','2024-08-12 22:57:27'),(3,2,'Marc','Neo','Artiaga',NULL,'2024-08-16','2024-08-13 16:23:03','2024-08-13 16:23:03'),(4,2,'yhena mae','eljay','adlawan',NULL,'2024-08-01','2024-08-13 17:32:17','2024-08-13 17:32:17');
 /*!40000 ALTER TABLE `emp_child` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -604,7 +604,7 @@ CREATE TABLE `emp_skills` (
   PRIMARY KEY (`skill_count`),
   KEY `emp_skills_empid_foreign` (`empid`),
   CONSTRAINT `emp_skills_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -613,7 +613,7 @@ CREATE TABLE `emp_skills` (
 
 LOCK TABLES `emp_skills` WRITE;
 /*!40000 ALTER TABLE `emp_skills` DISABLE KEYS */;
-INSERT INTO `emp_skills` VALUES (1,'11-0070','Cooking','2024-08-01 22:29:11','2024-08-01 22:29:11'),(2,'11-0070','Image Editing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(3,'11-0070','Dancing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(4,'11-0070','Basic Swordsmanship','2024-08-01 22:29:11','2024-08-01 22:29:11'),(5,'11-0071','Python','2024-08-01 22:29:11','2024-08-01 22:29:11'),(6,'11-0071','JAVA','2024-08-01 22:29:11','2024-08-01 22:29:11'),(7,'11-0071','C++','2024-08-01 22:29:11','2024-08-01 22:29:11'),(8,'11-0071','HTML','2024-08-01 22:29:11','2024-08-01 22:29:11'),(9,'11-0071','Video Editing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(10,'11-0071','Django','2024-08-01 22:29:11','2024-08-01 22:29:11'),(11,'11-0071','Flask','2024-08-01 22:29:11','2024-08-01 22:29:11'),(12,'11-0071','JavaScript','2024-08-01 22:29:11','2024-08-01 22:29:11'),(13,'11-0071','SQL','2024-08-01 22:29:11','2024-08-01 22:29:11'),(14,'11-0071','Laravel','2024-08-01 22:29:11','2024-08-01 22:29:11'),(15,'11-0071','Docker','2024-08-01 22:29:11','2024-08-01 22:29:11'),(16,'11-0071','Juggling','2024-08-01 22:29:11','2024-08-01 22:29:11'),(17,'11-0071','Kubernetes','2024-08-01 22:29:11','2024-08-01 22:29:11'),(18,'11-0071','Baking','2024-08-03 16:21:54','2024-08-03 16:21:54');
+INSERT INTO `emp_skills` VALUES (1,'11-0070','Cooking','2024-08-01 22:29:11','2024-08-01 22:29:11'),(2,'11-0070','Image Editing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(3,'11-0070','Dancing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(4,'11-0070','Basic Swordsmanship','2024-08-01 22:29:11','2024-08-01 22:29:11'),(5,'11-0071','Python','2024-08-01 22:29:11','2024-08-01 22:29:11'),(6,'11-0071','JAVA','2024-08-01 22:29:11','2024-08-01 22:29:11'),(7,'11-0071','C++','2024-08-01 22:29:11','2024-08-01 22:29:11'),(8,'11-0071','HTML','2024-08-01 22:29:11','2024-08-01 22:29:11'),(9,'11-0071','Video Editing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(10,'11-0071','Django','2024-08-01 22:29:11','2024-08-01 22:29:11'),(11,'11-0071','Flask','2024-08-01 22:29:11','2024-08-01 22:29:11'),(12,'11-0071','JavaScript','2024-08-01 22:29:11','2024-08-01 22:29:11'),(13,'11-0071','SQL','2024-08-01 22:29:11','2024-08-01 22:29:11'),(14,'11-0071','Laravel','2024-08-01 22:29:11','2024-08-01 22:29:11'),(15,'11-0071','Docker','2024-08-01 22:29:11','2024-08-01 22:29:11'),(16,'11-0071','Juggling','2024-08-01 22:29:11','2024-08-01 22:29:11'),(17,'11-0071','Kubernetes','2024-08-01 22:29:11','2024-08-01 22:29:11'),(18,'11-0071','Baking','2024-08-03 16:21:54','2024-08-03 16:21:54'),(26,'11-0071','coding char','2024-08-13 17:33:06','2024-08-13 17:33:06'),(27,'11-0071','gwapo si kobe','2024-08-13 17:33:21','2024-08-13 17:33:21');
 /*!40000 ALTER TABLE `emp_skills` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -736,12 +736,13 @@ CREATE TABLE `employee` (
   `emp_lname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_ext` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `emp_dob` date NOT NULL,
+  `emp_age` int DEFAULT NULL,
   `emp_pob` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_position` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_sex` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_blood` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_height` decimal(3,2) NOT NULL,
-  `emp_weight` int NOT NULL,
+  `emp_height` int DEFAULT NULL,
+  `emp_weight` int DEFAULT NULL,
   `emp_civ_stat` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_citizen` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_cnum` int DEFAULT NULL,
@@ -759,10 +760,11 @@ CREATE TABLE `employee` (
   `emp_ip_group` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `emp_pic` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`emp_count`),
   KEY `employee_empid_foreign` (`empid`),
   CONSTRAINT `employee_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -771,7 +773,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'11-0070','Janelle','G.','Matugas','0','1985-05-15','Davao City','HRMDD Head','2','2',5.80,75,'1','Filipino',1234567891,'ID654321','City','Personal','2005-01-01',98765432,'Roman Catholic',1,'signature1.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-08 18:30:11'),(2,'11-0071','Teddygardo Jr.','B.','Adlawan','0','1989-12-20','Davao City','Administrative Assistant II','1','3',5.90,70,'4','Filipino',1234567890,'ID123456','City','Personal','2010-01-01',98765432,'Roman Catholic',1,'signature.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-08 23:12:47');
+INSERT INTO `employee` VALUES (1,'11-0070','Janelle','Gallamozo','Matugas','0','1985-05-15',NULL,'Davao City','HRMDD Head','2','2',175,75,'1','Filipino',1234567891,'ID654321','City','Personal','2005-01-01',98765432,'Roman Catholic',1,'signature1.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-19 19:35:58','cropped-image.png'),(2,'11-0071','Teddygardo Jr.','Baugbog','Adlawan','0','1989-12-20',NULL,'Davao City','Administrative Assistant II','1','3',160,70,'1','Filipino',1234567890,'ID123456','City','Personal','2010-01-01',98765432,'Roman Catholic',1,'signature.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-14 18:29:07','cropped-image.png'),(3,'11-0072','Marc Neo','Perez','Artiaga',NULL,'2002-12-28',NULL,'New York','Manager','1','3',169,70,'6','American',1234567890,'A1234567','New York','Driver’s License','2024-01-01',1234567890,'Christian',1,'signature_here','None','No','password_hash','Group1','2024-08-13 06:55:37','2024-08-12 22:56:51',NULL);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -931,10 +933,8 @@ DROP TABLE IF EXISTS `lib_blood_types`;
 CREATE TABLE `lib_blood_types` (
   `lib2_count` int unsigned NOT NULL AUTO_INCREMENT,
   `lib2_blood_type` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`lib2_count`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -943,7 +943,7 @@ CREATE TABLE `lib_blood_types` (
 
 LOCK TABLES `lib_blood_types` WRITE;
 /*!40000 ALTER TABLE `lib_blood_types` DISABLE KEYS */;
-INSERT INTO `lib_blood_types` VALUES (1,'A-','2024-08-02 05:58:28','2024-08-02 05:58:28'),(2,'B+','2024-08-02 05:58:28','2024-08-02 05:58:28'),(3,'B-','2024-08-02 05:58:28','2024-08-02 05:58:28'),(4,'AB+','2024-08-02 05:58:28','2024-08-02 05:58:28'),(5,'AB-','2024-08-02 05:58:28','2024-08-02 05:58:28'),(6,'O+','2024-08-02 05:58:28','2024-08-02 05:58:28'),(7,'O-','2024-08-02 05:58:28','2024-08-02 05:58:28'),(9,'A+','2024-08-02 05:58:28','2024-08-02 05:58:28');
+INSERT INTO `lib_blood_types` VALUES (1,'A-'),(2,'B+'),(3,'B-'),(4,'AB+'),(5,'AB-'),(6,'O+'),(7,'O-'),(9,'A+'),(10,'N/A');
 /*!40000 ALTER TABLE `lib_blood_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1008,8 +1008,6 @@ DROP TABLE IF EXISTS `lib_civil_stats`;
 CREATE TABLE `lib_civil_stats` (
   `lib3_count` int unsigned NOT NULL AUTO_INCREMENT,
   `lib3_civil_stat` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`lib3_count`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1020,7 +1018,7 @@ CREATE TABLE `lib_civil_stats` (
 
 LOCK TABLES `lib_civil_stats` WRITE;
 /*!40000 ALTER TABLE `lib_civil_stats` DISABLE KEYS */;
-INSERT INTO `lib_civil_stats` VALUES (1,'Married','2024-08-02 06:02:02','2024-08-02 06:02:02'),(2,'Widowed','2024-08-02 06:02:02','2024-08-02 06:02:02'),(3,'Separated','2024-08-02 06:02:02','2024-08-02 06:02:02'),(4,'Divorced','2024-08-02 06:02:02','2024-08-02 06:02:02'),(6,'Single','2024-08-02 06:02:02','2024-08-02 06:02:02');
+INSERT INTO `lib_civil_stats` VALUES (1,'Married'),(2,'Widowed'),(3,'Separated'),(4,'Divorced'),(6,'Single');
 /*!40000 ALTER TABLE `lib_civil_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1037,8 +1035,6 @@ CREATE TABLE `lib_divisions` (
   `lib5_divdesc` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lib5_rec_approval` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lib5_approval` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`lib5_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1065,8 +1061,6 @@ CREATE TABLE `lib_positions` (
   `lib6_parenthetical_title` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lib6_pos_level` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lib6_salary_grade` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`lib6_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1101,7 +1095,7 @@ CREATE TABLE `lib_provinces` (
 
 LOCK TABLES `lib_provinces` WRITE;
 /*!40000 ALTER TABLE `lib_provinces` DISABLE KEYS */;
-INSERT INTO `lib_provinces` VALUES ('101300000','Bukidnon','100000000'),('101800000','Camiguin','100000000'),('103500000','Lanao del Norte','100000000'),('104200000','Misamis Occidental','100000000'),('104300000','Misamis Oriental','100000000'),('112300000','Davao del Norte','110000000'),('112400000','Davao del Sur','110000000'),('112500000','Davao Oriental','110000000'),('118200000','Davao de Oro','110000000'),('118600000','Davao Occidental','110000000'),('124700000','Cotabato','120000000'),('126300000','South Cotabato','120000000'),('126500000','Sultan Kudarat','120000000'),('12800000','Ilocos Norte','10000000'),('128000000','Sarangani','120000000'),('12900000','Ilocos Sur','10000000'),('13300000','La Union','10000000'),('133900000','NCR, City of Manila, First District','130000000'),('137400000','NCR, Second District','130000000'),('137500000','NCR, Third District','130000000'),('137600000','NCR, Fourth District','130000000'),('140100000','Abra','140000000'),('141100000','Benguet','140000000'),('142700000','Ifugao','140000000'),('143200000','Kalinga','140000000'),('144400000','Mountain Province','140000000'),('148100000','Apayao','140000000'),('150700000','Basilan','150000000'),('153600000','Lanao del Sur','150000000'),('153800000','Maguindanao','150000000'),('15500000','Pangasinan','10000000'),('156600000','Sulu','150000000'),('157000000','Tawi-Tawi','150000000'),('160200000','Agusan del Norte','160000000'),('160300000','Agusan del Sur','160000000'),('166700000','Surigao del Norte','160000000'),('166800000','Surigao del Sur','160000000'),('168500000','Dinagat Islands','160000000'),('174000000','Marinduque','170000000'),('175100000','Occidental Mindoro','170000000'),('175200000','Oriental Mindoro','170000000'),('175300000','Palawan','170000000'),('175900000','Romblon','170000000'),('20900000','Batanes','20000000'),('21500000','Cagayan','20000000'),('23100000','Isabela','20000000'),('25000000','Nueva Vizcaya','20000000'),('25700000','Quirino','20000000'),('30800000','Bataan','30000000'),('31400000','Bulacan','30000000'),('34900000','Nueva Ecija','30000000'),('35400000','Pampanga','30000000'),('36900000','Tarlac','30000000'),('37100000','Zambales','30000000'),('37700000','Aurora','30000000'),('41000000','Batangas','40000000'),('42100000','Cavite','40000000'),('43400000','Laguna','40000000'),('45600000','Quezon','40000000'),('45800000','Rizal','40000000'),('50500000','Albay','50000000'),('51600000','Camarines Norte','50000000'),('51700000','Camarines Sur','50000000'),('52000000','Catanduanes','50000000'),('54100000','Masbate','50000000'),('56200000','Sorsogon','50000000'),('60400000','Aklan','60000000'),('60600000','Antique','60000000'),('61900000','Capiz','60000000'),('63000000','Iloilo','60000000'),('64500000','Negros Occidental','60000000'),('67900000','Guimaras','60000000'),('71200000','Bohol','70000000'),('72200000','Cebu','70000000'),('74600000','Negros Oriental','70000000'),('76100000','Siquijor','70000000'),('82600000','Eastern Samar','80000000'),('83700000','Leyte','80000000'),('84800000','Northern Samar','80000000'),('86000000','Samar','80000000'),('86400000','Southern Leyte','80000000'),('87800000','Biliran','80000000'),('97200000','Zamboanga del Norte','90000000'),('97300000','Zamboanga del Sur','90000000'),('98300000','Zamboanga Sibugay','90000000');
+INSERT INTO `lib_provinces` VALUES ('012800000','Ilocos Norte','010000000'),('012900000','Ilocos Sur','010000000'),('013300000','La Union','010000000'),('015500000','Pangasinan','010000000'),('020900000','Batanes','020000000'),('021500000','Cagayan','020000000'),('023100000','Isabela','020000000'),('025000000','Nueva Vizcaya','020000000'),('025700000','Quirino','020000000'),('030800000','Bataan','030000000'),('031400000','Bulacan','030000000'),('034900000','Nueva Ecija','030000000'),('035400000','Pampanga','030000000'),('036900000','Tarlac','030000000'),('037100000','Zambales','030000000'),('037700000','Aurora','030000000'),('041000000','Batangas','040000000'),('042100000','Cavite','040000000'),('043400000','Laguna','040000000'),('045600000','Quezon','040000000'),('045800000','Rizal','040000000'),('050500000','Albay','050000000'),('051600000','Camarines Norte','050000000'),('051700000','Camarines Sur','050000000'),('052000000','Catanduanes','050000000'),('054100000','Masbate','050000000'),('056200000','Sorsogon','050000000'),('060400000','Aklan','060000000'),('060600000','Antique','060000000'),('061900000','Capiz','060000000'),('063000000','Iloilo','060000000'),('064500000','Negros Occidental','060000000'),('067900000','Guimaras','060000000'),('071200000','Bohol','070000000'),('072200000','Cebu','070000000'),('074600000','Negros Oriental','070000000'),('076100000','Siquijor','070000000'),('082600000','Eastern Samar','080000000'),('083700000','Leyte','080000000'),('084800000','Northern Samar','080000000'),('086000000','Samar','080000000'),('086400000','Southern Leyte','080000000'),('087800000','Biliran','080000000'),('097200000','Zamboanga del Norte','090000000'),('097300000','Zamboanga del Sur','090000000'),('098300000','Zamboanga Sibugay','090000000'),('101300000','Bukidnon','100000000'),('101800000','Camiguin','100000000'),('103500000','Lanao del Norte','100000000'),('104200000','Misamis Occidental','100000000'),('104300000','Misamis Oriental','100000000'),('112300000','Davao del Norte','110000000'),('112400000','Davao del Sur','110000000'),('112500000','Davao Oriental','110000000'),('118200000','Davao de Oro','110000000'),('118600000','Davao Occidental','110000000'),('124700000','Cotabato','120000000'),('126300000','South Cotabato','120000000'),('126500000','Sultan Kudarat','120000000'),('128000000','Sarangani','120000000'),('133900000','NCR, City of Manila, First District','130000000'),('137400000','NCR, Second District','130000000'),('137500000','NCR, Third District','130000000'),('137600000','NCR, Fourth District','130000000'),('140100000','Abra','140000000'),('141100000','Benguet','140000000'),('142700000','Ifugao','140000000'),('143200000','Kalinga','140000000'),('144400000','Mountain Province','140000000'),('148100000','Apayao','140000000'),('150700000','Basilan','150000000'),('153600000','Lanao del Sur','150000000'),('153800000','Maguindanao','150000000'),('156600000','Sulu','150000000'),('157000000','Tawi-Tawi','150000000'),('160200000','Agusan del Norte','160000000'),('160300000','Agusan del Sur','160000000'),('166700000','Surigao del Norte','160000000'),('166800000','Surigao del Sur','160000000'),('168500000','Dinagat Islands','160000000'),('174000000','Marinduque','170000000'),('175100000','Occidental Mindoro','170000000'),('175200000','Oriental Mindoro','170000000'),('175300000','Palawan','170000000'),('175900000','Romblon','170000000');
 /*!40000 ALTER TABLE `lib_provinces` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1125,7 +1119,7 @@ CREATE TABLE `lib_regions` (
 
 LOCK TABLES `lib_regions` WRITE;
 /*!40000 ALTER TABLE `lib_regions` DISABLE KEYS */;
-INSERT INTO `lib_regions` VALUES ('010000000','Region I (Ilocos Region)'),('020000000','Region II (Cagayan Valley)'),('030000000','Region III (Central Luzon)'),('040000000','Region IV-A (CALABARZON)'),('050000000','Region V (Bicol Region)'),('060000000','Region VI (Western Visayas)'),('070000000','Region VII (Central Visayas)'),('080000000','Region VIII (Eastern Visayas)'),('090000000','Region IX (Zamboanga Peninsula)'),('100000000','Region X (Northern Mindanao)'),('110000000','Region XI (Davao Region)'),('120000000','Region XII (SOCCSKSARGEN)'),('130000000','National Capitan Region (NCR)'),('140000000','Cordillera Administrative Region (CAR)'),('150000000','Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)'),('160000000','Region XIII (Caraga)'),('170000000','MIMAROPA Region');
+INSERT INTO `lib_regions` VALUES ('010000000','Region I (Ilocos Region)'),('020000000','Region II (Cagayan Valley)'),('030000000','Region III (Central Luzon)'),('040000000','Region IV-A (CALABARZON)'),('050000000','Region V (Bicol Region)'),('060000000','Region VI (Western Visayas)'),('070000000','Region VII (Central Visayas)'),('080000000','Region VIII (Eastern Visayas)'),('090000000','Region IX (Zamboanga Peninsula)'),('100000000','Region X (Northern Mindanao)'),('110000000','Region XI (Davao Region)'),('120000000','Region XII (SOCCSKSARGEN)'),('130000000','Region XIII (NCR)'),('140000000','Region XIV (CAR)'),('150000000','Region XV (BARMM)'),('160000000','Region XIII (Caraga)'),('170000000','MIMAROPA Region');
 /*!40000 ALTER TABLE `lib_regions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1139,8 +1133,6 @@ DROP TABLE IF EXISTS `lib_sexes`;
 CREATE TABLE `lib_sexes` (
   `lib4_count` int unsigned NOT NULL AUTO_INCREMENT,
   `lib4_sex` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`lib4_count`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1151,7 +1143,7 @@ CREATE TABLE `lib_sexes` (
 
 LOCK TABLES `lib_sexes` WRITE;
 /*!40000 ALTER TABLE `lib_sexes` DISABLE KEYS */;
-INSERT INTO `lib_sexes` VALUES (1,'MALE','2024-08-01 21:37:48','2024-08-01 21:37:48'),(2,'FEMALE','2024-08-01 21:37:48','2024-08-01 21:37:48');
+INSERT INTO `lib_sexes` VALUES (1,'MALE'),(2,'FEMALE');
 /*!40000 ALTER TABLE `lib_sexes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1165,8 +1157,6 @@ DROP TABLE IF EXISTS `lib_suffixes`;
 CREATE TABLE `lib_suffixes` (
   `lib1_count` int unsigned NOT NULL AUTO_INCREMENT,
   `lib1_suffix` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`lib1_count`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1177,7 +1167,7 @@ CREATE TABLE `lib_suffixes` (
 
 LOCK TABLES `lib_suffixes` WRITE;
 /*!40000 ALTER TABLE `lib_suffixes` DISABLE KEYS */;
-INSERT INTO `lib_suffixes` VALUES (0,'None','2024-08-09 02:24:12','2024-08-09 02:24:12'),(1,'Sr.','2024-08-01 21:37:48','2024-08-01 21:37:48'),(2,'Jr.','2024-08-01 21:37:48','2024-08-01 21:37:48'),(3,'III','2024-08-01 21:37:48','2024-08-01 21:37:48'),(4,'IV','2024-08-01 21:37:48','2024-08-01 21:37:48'),(5,'V','2024-08-01 21:37:48','2024-08-01 21:37:48'),(6,'VI','2024-08-01 21:37:48','2024-08-01 21:37:48'),(7,'VII','2024-08-01 21:37:48','2024-08-01 21:37:48'),(8,'VIII','2024-08-01 21:37:48','2024-08-01 21:37:48'),(9,'IX','2024-08-01 21:37:48','2024-08-01 21:37:48'),(10,'X','2024-08-01 21:37:48','2024-08-01 21:37:48');
+INSERT INTO `lib_suffixes` VALUES (0,'None'),(1,'Sr.'),(2,'Jr.'),(3,'III'),(4,'IV'),(5,'V'),(6,'VI'),(7,'VII'),(8,'VIII'),(9,'IX'),(10,'X');
 /*!40000 ALTER TABLE `lib_suffixes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1319,7 +1309,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('dwlQyo3WYBH1zbTol7b7GWDwRNjomZxiLjisAVP7',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiRkVPbzJ6YW5Cb0FPV2x0bU5NN1Z3REdPSEhtWktEZEdmVEJWbTBuaCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1723511161),('fzewrD0yffNqQW07q8VktaZh98K1p6qSiCuRGzK7',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoia3M2NmNERExLMU1PenFoRnU1c0V2cHNkcFBna1o4b1BLdWJ3eTNlMSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1723511162),('gm6uKuTDvcv59uwZfXleikbOEYT685rKlprgm6Uu','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo4OntzOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoic3E4V2JMM243cUdXM2ZBTzhhY0Q5dzNpQjZQQnRMOWZ4bVdISUJmSyI7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO3M6NzoiMTEtMDA3MCI7czoxMDoidXNlcl9lbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6Mzoib3RwIjtzOjY6IjI0OTczOCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1723453421),('HWNQPOArpAypLZ97pOYTr0ohd14Sgns0dIGlGXjh',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMU9MbFFEanBkaENWRkRqV1g5aTZGM2x4UUZQQ1Jpb0FZQVhKZlZReCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0ODoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL2Jsb29kdHlwZS1vcHRpb25zIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1723511163),('mOld5pabU1DxMNo5IPLogeQAEnrrOVU9NXzi5QS9','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo5OntzOjY6Il90b2tlbiI7czo0MDoiVklTYnRTclFRTDVVUmFIdHlQYTZFMnR3TGZTN2w5cFpPc09hZHVsZSI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozMToiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Rhc2hib2FyZCI7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQyOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvZHJvcGRvd24vZXh0LW9wdGlvbnMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7czo3OiIxMS0wMDcwIjtzOjEwOiJ1c2VyX2VtYWlsIjtzOjIyOiJqZ21hdHVnYXMxMTdAZ21haWwuY29tIjtzOjc6InVzZXJfaWQiO3M6NzoiMTEtMDA3MCI7czozOiJvdHAiO3M6NjoiMjIxNTIxIjtzOjEyOiJvdHBfdmVyaWZpZWQiO2I6MTt9',1723511197),('OtnMWgSks84yTtaFhMDNzlH5ws6NpiLGL8Yq1t4h',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiNUtSTUw2RnozdFpiUk9Vb1lvZXloWVhlakx3M1J0NXFJNVNyYnZLSCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1723511161),('PKt6YghKYUShKNdyx5iiXlVKHHYdCTeCUpqUVe1R',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiYm5LbzBwRU5pZ2xuSlFBQWNlZVdHUU9sY2dROTZuTlhyN0UxWHhMdyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1723511162),('RWOfn7LAFRLlxnAiQb1yHb480ZTT7IJ5dPphq5Oh',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoidFF3eXFWUlNabVFOM3dOOVRpUFQ3ZDE0ZXBWT1p2ZFp1VUtlWU5HUiI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0MjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL3NleC1vcHRpb25zIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1723511162),('S386yagt7hdA4NUdOEsrGEuoC1MO5o0HTkATX3jn',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiNjV2M3pzS0hjS3FwQ0ZBQzlMdU0zSDdPTmVuSXROc3AwQkh2MFJDQyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1723511162),('TtM01x71tyfXSMw6ZfyZ9f2I718PLe9Rqce3Xi37',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiTDY3UEdXUE5UZ3k3elRueDFXODRETXRjMk05WDNwTXJjQWRqYzFMdyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1723511162),('WvM80aVdzMjMzU6c00pqMWMtriu1KsHZyRWMmYgl',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTGFGTzltQmw2ZTNEdzhhdlpyS1VGRk05ejNWczBYc2xwSkt6SjhQNCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MDoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL2Npdmlsc3RhdHVzLW9wdGlvbnMiO31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyNzoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1723511162);
+INSERT INTO `sessions` VALUES ('08UDYm0ZjsfMmf4b3rvQOElAncTsZlR9Gfw7POf6','11-0070','127.0.0.1','Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Mobile Safari/537.36','YTo4OntzOjY6Il90b2tlbiI7czo0MDoiVkp6VEhKWWNoVW1Ga2pZcThlTXgxd0xwbHpqTlNYdmU1Vk82eU1PSyI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0ODoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL2Jsb29kdHlwZS1vcHRpb25zIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1724256997),('30n5hzlxUVTbyS2m4YkSLovJEr9LHrkZ38f9xezw',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVHRUOExPN2ZYcHdyWUYyS2k1UVUwTnlXa0tCZjVpZjhvRVhYVlNESiI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MDoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL2Npdmlsc3RhdHVzLW9wdGlvbnMiO31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyNzoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255280),('6rzGWksqIz7N4kaZckvJgLcG38GeaN2pdFLDJM5j',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMFgxaWRzNHpTeHBTREs5ZjAwTUV0UU1ONW9MNDRTSFJGZkdYUGswRSI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0MjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL2V4dC1vcHRpb25zIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1724255280),('hoTIh7NtYMp2K0lDke8TC4rt32zpkxRawGGzyMBQ',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiaUJ6N1Jwak5RYjBPd3RBTDhQZTFwQWdBOHZ0NDFCVlFYbFdQamxWdiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255279),('JD2ZzcowVimI4sZG4oMYtmqScRGOeoHXbpbRiLgU',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiSUJ1ZjlKM2FGaVlmNkRua0JqOEtiTW5ja3ZnblZLekRoajZoR1RqcCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255279),('KlBsGRTE47EcdBf5ltDlcmuI4KbYewZ0V9whCyCs',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoieUs4bzFpaWkyYXVxSTdRWFRvVGRvbXlnWGZVQnNRc0ZoSmtIRzMzWSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255280),('kRZm2lETB5JuhwVXCOPmdTlDDqjLXiLDh76B4eTE',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiUHo2czU0TnFJR1NkQlpUTmhkNVlzT0hjZmp0V0xLWDcxS0ZRalF0MiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255280),('MqO1F2zti7kBJC9FEgAD0qz0rEKVFegKoV6cxs4F',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiejF1VTZWVUNnOUViOTZKUEtCZXJBU2pPempBbUdhdXFvTDlpV0lDMiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255279),('o0hKsFRWssGYXDd55wTNCOFL1uRmu7z6bsZDAxta',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiUUhqVzVJOGVUdkhIcUVmc2dhTFo5cmxrT2dtdmRFNTNGazNXMFVmbCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255280),('Ol0TEGlALapgil3fLLb83PXHe9g3j8ygR36dJPbH',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaFZ2cVZjRml4N1RlRXNIREQxTzVZRVV6Q1BSNHdsTzNieUFwTXZrciI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0MjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL3NleC1vcHRpb25zIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1724255280);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1392,4 +1382,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-13  9:29:02
+-- Dump completed on 2024-08-22  0:17:35
