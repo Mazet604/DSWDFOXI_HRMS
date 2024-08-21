@@ -449,6 +449,8 @@ export default {
           this.fields.villsub = response.data.villsub;
           this.fields.Region = response.data.Region;
           this.fields.Province = response.data.Province;
+
+          this.fetchProvinces();
         })
         .catch(error => {
           this.errorMessage = 'Failed to load address.';
