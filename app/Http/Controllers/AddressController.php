@@ -44,6 +44,7 @@ class AddressController extends Controller
                 'Region' => $address->emp_region,
                 'Province' => $address->emp_prov,
                 'City' => $address->emp_city,
+                'Barangay' => $address->emp_brgy,
             ], 200);
 
         } catch (\Exception $e) {
@@ -59,13 +60,25 @@ class AddressController extends Controller
 
     public function getProvinces(Request $request)
     {
-        $provinces = lib_province::where('reg_psgc', $request->reg_psgc)->get();
+        $provinces = lib_province::where('reg_psgc', $request->reg_psgc)
+                                ->orderBy('col_province', 'asc')
+                                ->get();
         return response()->json($provinces);
     }
-
+    
     public function getCities(Request $request)
     {
-        $cities = lib_city::where('prv_psgc', $request->prv_psgc)->get();
+        $cities = lib_city::where('prv_psgc', $request->prv_psgc)
+                          ->orderBy('col_citymuni', 'asc')
+                          ->get();
         return response()->json($cities);
+    }
+    
+    public function getBarangays(Request $request)
+    {
+        $barangays = lib_brgy::where('citmun_psgc', $request->citmun_psgc)
+                             ->orderBy('col_brgy', 'asc')
+                             ->get();
+        return response()->json($barangays);
     }
 }

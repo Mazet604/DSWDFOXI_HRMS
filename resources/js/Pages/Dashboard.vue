@@ -120,19 +120,19 @@
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
-                  <select class="input-field" v-model="fields.City" :disabled="!isEditing">
-                    <option v-for="(city, index) in cities" :key="index" :value="city.prv_psgc">{{ city.col_citmuni }}</option>
+                  <select class="input-field" v-model="fields.City" :disabled="!isEditing"@change="fetchBarangays()">
+                    <option v-for="(city, index) in cities" :key="index" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
+                  <select class="input-field" v-model="fields.Barangay" :disabled="!isEditing">
+                    <option v-for="(barangay, index) in barangays" :key="index" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE</label>
                   <input type="text" class="input-field" v-model="fields.zipcode" :disabled="!isEditing" />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
-                  <select class="input-field" v-model="fields.Barangay" :disabled="!isEditing">
-
-                  </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
@@ -292,6 +292,7 @@ export default {
         Region:'',
         Province:'',
         City:'',
+        Barangay:'',
       },
       isEditing: false,
       originalFields: {},
@@ -306,6 +307,7 @@ export default {
       regions:[],
       provinces:[],
       cities:[],
+      barangays:[],
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
@@ -452,9 +454,11 @@ export default {
           this.fields.Region = response.data.Region;
           this.fields.Province = response.data.Province;
           this.fields.City = response.data.City;
+          this.fields.Barangay = response.data.Barangay;
 
           this.fetchProvinces();
           this.fetchCities();
+          this.fetchBarangays();
 
         })
         .catch(error => {
@@ -491,6 +495,17 @@ export default {
       })
         .then(function(response) {
           this.cities = response.data;
+        }.bind(this));
+    },
+
+    fetchBarangays() {
+      axios.get('/api/barangays', {
+        params:{
+          citmun_psgc:this.fields.City
+        }
+      })
+        .then(function(response) {
+          this.barangays = response.data;
         }.bind(this));
     },
 

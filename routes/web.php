@@ -88,6 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/regions', [AddressController::class, 'getRegions']);
     Route::get('/api/provinces', [AddressController::class, 'getProvinces']);
     Route::get('/api/cities', [AddressController::class, 'getCities']);
+    Route::get('/api/barangays', [AddressController::class, 'getBarangays']);
+
 
 
 
