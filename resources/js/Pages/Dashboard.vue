@@ -105,7 +105,8 @@
             </TabPanel>
             <TabPanel header="ADDRESS" :active="activeSubTab === 'address'">
               <!-- Address Fields -->
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <h1 style="font-size: 25px; font-weight: bold; margin-bottom: 3%; margin-top: 1%;">PERMANENT ADDRESS</h1>
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
                   <select class="input-field" v-model="fields.Region" :disabled="!isEditing" @change="fetchProvinces()">
@@ -141,6 +142,48 @@
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
                   <input type="text" class="input-field" v-model="fields.villsub" :disabled="!isEditing" />
+                </div>
+              </div>
+              <span class="broken-line"></span>
+              <!--CHECK BOX HERE TO COPY PASTE PERMANENT ADD to CURRENT ADD-->
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+              <h1 style="font-size: 25px; font-weight: bold; margin-bottom: 3%; margin-top: 1%;">CURRENT ADDRESS</h1>
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
+                  <select class="input-field" v-model="fields.Region2" :disabled="!isEditing" @change="fetchProvinces2()">
+                    <option v-for="(region2, index) in regions2" :key="index" :value="region2.reg_psgc">{{ region2.col_region }}</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
+                  <select class="input-field" v-model="fields.Province2" :disabled="!isEditing" @change="fetchCities2()">
+                    <option v-for="(province2, index) in provinces2" :key="index" :value="province2.prv_psgc">{{ province2.col_province }}</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
+                  <select class="input-field" v-model="fields.City2" :disabled="!isEditing"@change="fetchBarangays2()">
+                    <option v-for="(city2, index) in cities2" :key="index" :value="city2.citmun_psgc">{{ city2.col_citymuni }}</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
+                  <select class="input-field" v-model="fields.Barangay2" :disabled="!isEditing">
+                    <option v-for="(barangay2, index) in barangays2" :key="index" :value="barangay2.brgy_psgc">{{ barangay2.col_brgy }}</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE</label>
+                  <input type="text" class="input-field" v-model="fields.zipcode2" :disabled="!isEditing" />
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
+                  <input type="text" class="input-field" v-model="fields.block2" :disabled="!isEditing" />
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
+                  <input type="text" class="input-field" v-model="fields.villsub2" :disabled="!isEditing" />
                 </div>
               </div>
             </TabPanel>
@@ -293,6 +336,13 @@ export default {
         Province:'',
         City:'',
         Barangay:'',
+        Region2:'',
+        Province2:'',
+        City2:'',
+        Barangay2:'',
+        zipcode2: '',
+        block2: '',
+        villsub2: '',
       },
       isEditing: false,
       originalFields: {},
@@ -308,6 +358,10 @@ export default {
       provinces:[],
       cities:[],
       barangays:[],
+      regions2:[],
+      provinces2:[],
+      cities2:[],
+      barangays2:[],
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
@@ -466,6 +520,27 @@ export default {
         });
     },
 
+    fetchAddress2() {
+      axios.get('/employee/Address2')
+        .then(response => {
+          this.fields.zipcode2 = response.data.zipcode2;
+          this.fields.block2 = response.data.block2;
+          this.fields.villsub2 = response.data.villsub2;
+          this.fields.Region2 = response.data.Region2;
+          this.fields.Province2 = response.data.Province2;
+          this.fields.City2 = response.data.City2;
+          this.fields.Barangay2 = response.data.Barangay2;
+
+          this.fetchProvinces2();
+          this.fetchCities2();
+          this.fetchBarangays2();
+
+        })
+        .catch(error => {
+          this.errorMessage = 'Failed to load address.';
+        });
+    },
+
     fetchRegions() {
       axios.get('/api/regions')
         .then(response => {
@@ -476,6 +551,17 @@ export default {
         });
     },
 
+    fetchRegions2() {
+      axios.get('/api/regions2')
+        .then(response => {
+          this.regions2 = response.data;
+        })
+        .catch(error => {
+          console.error('Error fetching regions:', error);
+        });
+    },
+
+
     fetchProvinces() {
       axios.get('/api/provinces', {
         params:{
@@ -484,6 +570,17 @@ export default {
       })
         .then(function(response) {
           this.provinces = response.data;
+        }.bind(this));
+    },
+
+    fetchProvinces2() {
+      axios.get('/api/provinces2', {
+        params:{
+          reg_psgc:this.fields.Region2
+        }
+      })
+        .then(function(response) {
+          this.provinces2 = response.data;
         }.bind(this));
     },
 
@@ -498,6 +595,17 @@ export default {
         }.bind(this));
     },
 
+    fetchCities2() {
+      axios.get('/api/cities2', {
+        params:{
+          prv_psgc:this.fields.Province2
+        }
+      })
+        .then(function(response) {
+          this.cities2 = response.data;
+        }.bind(this));
+    },
+
     fetchBarangays() {
       axios.get('/api/barangays', {
         params:{
@@ -506,6 +614,17 @@ export default {
       })
         .then(function(response) {
           this.barangays = response.data;
+        }.bind(this));
+    },
+
+    fetchBarangays2() {
+      axios.get('/api/barangays2', {
+        params:{
+          citmun_psgc:this.fields.City2
+        }
+      })
+        .then(function(response) {
+          this.barangays2 = response.data;
         }.bind(this));
     },
 
@@ -664,6 +783,7 @@ export default {
     this.fetchPersonalInfo();
     this.fetchSecurityandContact();
     this.fetchAddress();
+    this.fetchAddress2();
     this.fetchProfilePicture();
   },
 
@@ -673,6 +793,7 @@ export default {
     this.fetchBloodTypeOptions();
     this.fetchExtOptions();
     this.fetchRegions();
+    this.fetchRegions2();
   },
 };
 </script>
@@ -680,6 +801,13 @@ export default {
 <style scoped>
 .bg-cover {
     background-size: cover;
+}
+
+.broken-line {
+  display: block;
+  width: 100%;
+  border-bottom: 1px dashed #000;
+  margin: 20px 0;
 }
 
 .text-color {
