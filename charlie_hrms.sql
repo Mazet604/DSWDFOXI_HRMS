@@ -188,21 +188,19 @@ DROP TABLE IF EXISTS `emp_address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_address` (
-  `add_count` int unsigned NOT NULL AUTO_INCREMENT,
   `emp_count` int unsigned NOT NULL,
   `emp_house` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `emp_subd` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_brgy` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_city` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_prov` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_region` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_zip` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_brgy` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_city` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_prov` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_region` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_zip` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`add_count`),
-  KEY `emp_address_emp_count_foreign` (`emp_count`),
+  PRIMARY KEY (`emp_count`),
   CONSTRAINT `emp_address_emp_count_foreign` FOREIGN KEY (`emp_count`) REFERENCES `employee` (`emp_count`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +209,7 @@ CREATE TABLE `emp_address` (
 
 LOCK TABLES `emp_address` WRITE;
 /*!40000 ALTER TABLE `emp_address` DISABLE KEYS */;
-INSERT INTO `emp_address` VALUES (1,1,'#45, Sunset Blvd','Golden Village',NULL,'112402000','133900000','130000000','8000','2024-07-31 21:44:22','2024-08-21 08:16:34'),(2,2,'#23, Sta. Rita St.','Pagasa Village',NULL,NULL,'112400000','020000000','8000','2024-07-31 21:44:22','2024-08-20 23:48:43');
+INSERT INTO `emp_address` VALUES (1,'#45, Sunset Blvd','Golden Village','112402074','112402000','112400000','110000000','9000','2024-07-31 21:44:22','2024-08-25 02:13:35'),(2,'#23, Sta. Rita St.','Pagasa Village','112319001','112319000','112300000','110000000','8000','2024-07-31 21:44:22','2024-08-20 23:48:43');
 /*!40000 ALTER TABLE `emp_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,23 +221,17 @@ DROP TABLE IF EXISTS `emp_address2`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_address2` (
-  `add2_count` int unsigned NOT NULL AUTO_INCREMENT,
   `emp_count` int unsigned NOT NULL,
   `emp_house2` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_street2` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `emp_subd2` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_brgy2` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_city2` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_prov2` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_region2` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_country2` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_datereg2` date NOT NULL,
-  `emp_zip2s` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_brgy2` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_city2` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_prov2` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_region2` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_zip2` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`add2_count`),
-  KEY `emp_address2_emp_count_foreign` (`emp_count`),
-  CONSTRAINT `emp_address2_emp_count_foreign` FOREIGN KEY (`emp_count`) REFERENCES `employee` (`emp_count`) ON UPDATE CASCADE
+  PRIMARY KEY (`emp_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -249,6 +241,7 @@ CREATE TABLE `emp_address2` (
 
 LOCK TABLES `emp_address2` WRITE;
 /*!40000 ALTER TABLE `emp_address2` DISABLE KEYS */;
+INSERT INTO `emp_address2` VALUES (1,'#31, Sta. Rita St.','Proper','112319001','112319000','112300000','110000000','8000',NULL,'2024-08-25 03:05:59'),(2,'asdas','asdasd','118202006','118202000','118200000','110000000','8000',NULL,'2024-08-25 03:08:18');
 /*!40000 ALTER TABLE `emp_address2` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -773,7 +766,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'11-0070','Janelle','Gallamozo','Matugas','0','1985-05-15',NULL,'Davao City','HRMDD Head','2','2',175,75,'1','Filipino',1234567891,'ID654321','City','Personal','2005-01-01',98765432,'Roman Catholic',1,'signature1.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-19 19:35:58','cropped-image.png'),(2,'11-0071','Teddygardo Jr.','Baugbog','Adlawan','0','1989-12-20',NULL,'Davao City','Administrative Assistant II','1','3',160,70,'1','Filipino',1234567890,'ID123456','City','Personal','2010-01-01',98765432,'Roman Catholic',1,'signature.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-14 18:29:07','cropped-image.png'),(3,'11-0072','Marc Neo','Perez','Artiaga',NULL,'2002-12-28',NULL,'New York','Manager','1','3',169,70,'6','American',1234567890,'A1234567','New York','Driver’s License','2024-01-01',1234567890,'Christian',1,'signature_here','None','No','password_hash','Group1','2024-08-13 06:55:37','2024-08-12 22:56:51',NULL);
+INSERT INTO `employee` VALUES (1,'11-0070','Janelle','Gallamozo','Matugas','0','1985-05-15',NULL,'Davao City','HRMDD Head','2','2',175,75,'1','Filipino',1234567891,'ID654321','City','Personal','2005-01-01',98765432,'Roman Catholic',1,'signature1.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-25 10:43:29','cropped-image.png'),(2,'11-0071','Teddygardo Jr.','Baugbog','Adlawan','0','1989-12-20',NULL,'Davao City','Administrative Assistant II','1','3',160,70,'1','Filipino',1234567890,'ID123456','City','Personal','2010-01-01',98765432,'Roman Catholic',1,'signature.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-14 18:29:07','cropped-image.png'),(3,'11-0072','Marc Neo','Perez','Artiaga',NULL,'2002-12-28',NULL,'New York','Manager','1','3',169,70,'6','American',1234567890,'A1234567','New York','Driver’s License','2024-01-01',1234567890,'Christian',1,'signature_here','None','No','password_hash','Group1','2024-08-13 06:55:37','2024-08-12 22:56:51',NULL);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1309,7 +1302,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('08UDYm0ZjsfMmf4b3rvQOElAncTsZlR9Gfw7POf6','11-0070','127.0.0.1','Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Mobile Safari/537.36','YTo4OntzOjY6Il90b2tlbiI7czo0MDoiVkp6VEhKWWNoVW1Ga2pZcThlTXgxd0xwbHpqTlNYdmU1Vk82eU1PSyI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0ODoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL2Jsb29kdHlwZS1vcHRpb25zIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1724256997),('30n5hzlxUVTbyS2m4YkSLovJEr9LHrkZ38f9xezw',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVHRUOExPN2ZYcHdyWUYyS2k1UVUwTnlXa0tCZjVpZjhvRVhYVlNESiI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MDoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL2Npdmlsc3RhdHVzLW9wdGlvbnMiO31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyNzoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255280),('6rzGWksqIz7N4kaZckvJgLcG38GeaN2pdFLDJM5j',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMFgxaWRzNHpTeHBTREs5ZjAwTUV0UU1ONW9MNDRTSFJGZkdYUGswRSI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0MjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL2V4dC1vcHRpb25zIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1724255280),('hoTIh7NtYMp2K0lDke8TC4rt32zpkxRawGGzyMBQ',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiaUJ6N1Jwak5RYjBPd3RBTDhQZTFwQWdBOHZ0NDFCVlFYbFdQamxWdiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255279),('JD2ZzcowVimI4sZG4oMYtmqScRGOeoHXbpbRiLgU',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiSUJ1ZjlKM2FGaVlmNkRua0JqOEtiTW5ja3ZnblZLekRoajZoR1RqcCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255279),('KlBsGRTE47EcdBf5ltDlcmuI4KbYewZ0V9whCyCs',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoieUs4bzFpaWkyYXVxSTdRWFRvVGRvbXlnWGZVQnNRc0ZoSmtIRzMzWSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255280),('kRZm2lETB5JuhwVXCOPmdTlDDqjLXiLDh76B4eTE',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiUHo2czU0TnFJR1NkQlpUTmhkNVlzT0hjZmp0V0xLWDcxS0ZRalF0MiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255280),('MqO1F2zti7kBJC9FEgAD0qz0rEKVFegKoV6cxs4F',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiejF1VTZWVUNnOUViOTZKUEtCZXJBU2pPempBbUdhdXFvTDlpV0lDMiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255279),('o0hKsFRWssGYXDd55wTNCOFL1uRmu7z6bsZDAxta',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiUUhqVzVJOGVUdkhIcUVmc2dhTFo5cmxrT2dtdmRFNTNGazNXMFVmbCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724255280),('Ol0TEGlALapgil3fLLb83PXHe9g3j8ygR36dJPbH',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaFZ2cVZjRml4N1RlRXNIREQxTzVZRVV6Q1BSNHdsTzNieUFwTXZrciI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0MjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL3NleC1vcHRpb25zIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1724255280);
+INSERT INTO `sessions` VALUES ('AyfJv4cOISn49WUFWhrwTLBVaOihCitKKabepzPB','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36','YTo3OntzOjY6Il90b2tlbiI7czo0MDoiTFE4SUZvSGt2d2p0bWY3YVMwRVVZT0QxMWpYbTBNd1A1WE5wYnRsRSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1724724101),('bTdHIUnykKopYN9KDy8to6XS5J6K0hUgFEaFMm86','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36','YTo3OntzOjY6Il90b2tlbiI7czo0MDoiTGhKTkxHNklEMmQ5OEVKd2dhaVpkcnRhZ1hKZDZPb0FjVmNnSlQ5SiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1724611810),('cvfOgUkVVOZLPXXglr8UJfgpVSnjNTa54L6FA075',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiZlFycXNNMmJtWUFKVEdsdmVrSVhEYjkyVlpKNXJkUlR5cGZYMVRsTCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1724609123),('RFzYOmEvhMThptnuSiPAqHvwKAVcED5WXNHOunKe','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0','YTo3OntzOjY6Il90b2tlbiI7czo0MDoiZ25ERTRrNmRrY1ZDOUdHbndNaEtYbnMxcVZSa1Z0bk9qSjFrT09vSyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1724609908);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1382,4 +1375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-22  0:17:35
+-- Dump completed on 2024-08-27 10:32:01
