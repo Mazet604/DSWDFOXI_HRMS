@@ -9,6 +9,7 @@ use App\Models\lib_blood_type;
 use App\Models\lib_suffix;
 use App\Models\Employee;
 use App\Models\EmpAddress;
+use App\Models\EmpAddress2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -140,6 +141,11 @@ class EmployeeController extends Controller
             if (!$emp_address) {
                 return response()->json(['error' => 'Employee address not found'], 404);
             }
+
+            $emp_address2 = EmpAddress2::where('emp_count', $employee->emp_count)->first(); // Fetch employee address2 using emp_count
+            if (!$emp_address2) {
+                return response()->json(['error' => 'Employee address 2 not found'], 404);
+            }
     
             // Update the employee details
             $employee->emp_fname = $request->input('firstName');
@@ -166,6 +172,15 @@ class EmployeeController extends Controller
             $emp_address->emp_house = $request->input('block');
             $emp_address->emp_subd = $request->input('villsub');
             $emp_address->emp_zip = $request->input('zipcode');
+
+            //Update the address2
+            $emp_address2->emp_region2 = $request->input('Region2');
+            $emp_address2->emp_prov2 = $request->input('Province2');
+            $emp_address2->emp_city2 = $request->input('City2');
+            $emp_address2->emp_brgy2 = $request->input('Barangay2');
+            $emp_address2->emp_house2 = $request->input('block2');
+            $emp_address2->emp_subd2 = $request->input('villsub2');
+            $emp_address2->emp_zip2 = $request->input('zipcode2');
     
             // Update the emp_acc details
             $emp_acc->empmail = $request->input('emailadd');
@@ -174,6 +189,7 @@ class EmployeeController extends Controller
             $employee->save();
             $emp_acc->save();
             $emp_address->save();
+            $emp_address2->save();
     
             return response()->json(['success' => 'Profile updated successfully']);
         } catch (\Exception $e) {

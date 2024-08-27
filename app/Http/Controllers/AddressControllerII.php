@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
-use App\Models\EmpAddress;
+use App\Models\EmpAddress2;
 use App\Models\lib_region;
 use App\Models\lib_province;
 use App\Models\lib_city;
 use App\Models\lib_brgy;
 use App\Models\Employee;
 
-class AddressController extends Controller
-{   
-
-    public function getAddress()
+class AddressControllerII extends Controller
+{
+    public function getAddress2()
     {
         try {
             // Get the currently authenticated user
@@ -32,20 +30,20 @@ class AddressController extends Controller
             }
 
             // Fetch the address using emp_count
-            $address = EmpAddress::where('emp_count', $employee->emp_count)->first();
-            if (!$address) {
+            $address2 = EmpAddress2::where('emp_count', $employee->emp_count)->first();
+            if (!$address2) {
                 return response()->json(['error' => 'Address not found'], 404);
             }
 
             // Return the region and province
             return response()->json([
-                'zipcode' => $address->emp_zip,
-                'block' => $address->emp_house,
-                'villsub' => $address->emp_subd,
-                'Region' => $address->emp_region,
-                'Province' => $address->emp_prov,
-                'City' => $address->emp_city,
-                'Barangay' => $address->emp_brgy,
+                'zipcode2' => $address2->emp_zip2,
+                'block2' => $address2->emp_house2,
+                'villsub2' => $address2->emp_subd2,
+                'Region2' => $address2->emp_region2,
+                'Province2' => $address2->emp_prov2,
+                'City2' => $address2->emp_city2,
+                'Barangay2' => $address2->emp_brgy2,
             ], 200);
 
         } catch (\Exception $e) {
@@ -53,13 +51,13 @@ class AddressController extends Controller
         }
     }
 
-    public function getRegions()
+    public function getRegions2()
     {
         $regions = lib_region::get();
         return response()->json($regions);
     }
 
-    public function getProvinces(Request $request)
+    public function getProvinces2(Request $request)
     {
         $provinces = lib_province::where('reg_psgc', $request->reg_psgc)
                                 ->orderBy('col_province', 'asc')
@@ -67,7 +65,7 @@ class AddressController extends Controller
         return response()->json($provinces);
     }
     
-    public function getCities(Request $request)
+    public function getCities2(Request $request)
     {
         $cities = lib_city::where('prv_psgc', $request->prv_psgc)
                           ->orderBy('col_citymuni', 'asc')
@@ -75,7 +73,7 @@ class AddressController extends Controller
         return response()->json($cities);
     }
     
-    public function getBarangays(Request $request)
+    public function getBarangays2(Request $request)
     {
         $barangays = lib_brgy::where('citmun_psgc', $request->citmun_psgc)
                              ->orderBy('col_brgy', 'asc')

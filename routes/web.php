@@ -14,6 +14,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmpAccController;
 use App\Http\Controllers\DropDownControllers;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\AddressControllerII;
 
 Route::get('/', function () {
     return Inertia::render('Login', [
@@ -88,6 +89,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/regions', [AddressController::class, 'getRegions']);
     Route::get('/api/provinces', [AddressController::class, 'getProvinces']);
     Route::get('/api/cities', [AddressController::class, 'getCities']);
+    Route::get('/api/barangays', [AddressController::class, 'getBarangays']);
+
+
+    Route::get('/employee/Address2', [AddressControllerII::class, 'getAddress2']);
+
+    Route::get('/api/regions2', [AddressControllerII::class, 'getRegions2']);
+    Route::get('/api/provinces2', [AddressControllerII::class, 'getProvinces2']);
+    Route::get('/api/cities2', [AddressControllerII::class, 'getCities2']);
+    Route::get('/api/barangays2', [AddressControllerII::class, 'getBarangays2']);
+
 
 
 
