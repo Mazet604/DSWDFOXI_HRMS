@@ -9,8 +9,7 @@ class tininfo extends Model
 {
     use HasFactory;
     protected $table = 'tininfo';
-    protected $primaryKey = 'empid'; // Set the primary key to empid
-    public $incrementing = false; // Since empid is not auto-incrementing
+    protected $primaryKey = 'tin_count';
     public function tininfo()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');

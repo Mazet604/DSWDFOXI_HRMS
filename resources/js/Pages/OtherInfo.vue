@@ -1,92 +1,86 @@
 <template>
     <AppLayout>
-                    <div class="w-full">
-                        <h1 class="mb-4 text-3xl font-bold">OTHER INFO</h1>
-                        <TabView v-model:activeIndex="activeTab" class="no-background">
-                            <TabPanel header="CS ELIGIBILITY" :active="activeSubTab === 'eligibility'">
-                                <DataTable :value="cseligibilityData" class="mt-8" :paginator="true" :rows="5">
-                                    <Column field="eli_service" header="CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE"></Column>
-                                    <Column field="eli_rating" header="RATING (IF APPLICABLE)"></Column>
-                                    <Column field="eli_doe" header="DATE OF EXAMINATION/CONFERMENT"></Column>
-                                    <Column field="eli_poe" header="PLACE OF EXAMINATION/CONFERMENT"></Column>
-                                    <Column field="eli_license_no" header="LICENSE (IF APPLICABLE)"></Column>
-                                    <Column field="eli_licen_valid" header="VALIDITY"></Column>
-                                </DataTable>
-                                <div class="flex justify-end gap-4 mt-6">
-                                    <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="showAddCSEligibilityDialog = true" />
-                                    <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
-                                </div>
-                            </TabPanel>
-                            <TabPanel header="VOLUNTARY WORK" :active="activeSubTab === 'voluntary'">
-                                <DataTable :value="voluntaryworkData" class="mt-8" :paginator="true" :rows="5">
-                                    <Column field="vol_name" header="NAME & ADDRESS OF ORGANIZATION (WRITE IN FULL)"></Column>
-                                    <Column field="vol_fr" header="INCLUSIVE DATES (MM/DD/YYYY) FROM"></Column>
-                                    <Column field="vol_to" header="INCLUSIVE DATES (MM/DD/YYYY) TO"></Column>
-                                    <Column field="vol_hrs" header="NUMBER OF HOURS"></Column>
-                                    <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
-                                </DataTable>
-                                <div class="flex justify-end gap-4 mt-6">
-                                    <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="showAddVoluntaryWorkDialog = true" />
-                                    <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
-                                </div>
-                            </TabPanel>
-                            <TabPanel header="LEARNING & DEVELOPMENT" :active="activeSubTab === 'learning'">
-                                <DataTable :value="learndevData" class="mt-8" :paginator="true" :rows="5">
-                                    <Column field="learn_title" header="TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)"></Column>
-                                    <Column field="learn_fr" header="INCLUSIVE DATES (MM/DD/YYYY) FROM"></Column>
-                                    <Column field="learn_to" header="INCLUSIVE DATES (MM/DD/YYYY) TO"></Column>
-                                    <Column field="learn_hrs" header="NUMBER OF HOURS"></Column>
-                                    <Column field="learn_type" header="TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)"></Column>
-                                    <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
-                                </DataTable>
-                                <div class="flex justify-end gap-4 mt-6">
-                                    <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="showAddLearndevDialog = true" />
-                                    <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
-                                </div>
-                            </TabPanel>
-                            
-                            <TabPanel header="RECOGNITION AND DISTINCTIONS" :active="activeSubTab === 'recognition'">
-                                <DataTable :value="recogdistData" class="mt-8" :paginator="true" :rows="5">
-                                    <Column field="recog_name" header="NON-ACADEMIC DISTINCTIONS/RESTRICTIONS"></Column>
-                                </DataTable>
-                                <div class="flex justify-end gap-4 mt-6">
-                                    <Button label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="showAddRecogdistDialog = true" />
-                                    <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
-                                </div>
-                            </TabPanel>
-                            
-                            <TabPanel header="GOVERNMENT ID" :active="activeSubTab === 'government'">
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="border-box">
-                                        <div>
-                                            <label class="label-field">SSS ID:</label>
-                                            <input class="input-field" type="text" v-model="governmentIdFields.sssId" />
-                                        </div>
-                                        <div>
-                                            <label class="label-field">PAG-IBIG ID:</label>
-                                            <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" />
-                                        </div>
-                                        <div>
-                                            <label class="label-field">TIN ID:</label>
-                                            <input class="input-field" type="text" v-model="governmentIdFields.tinId" />
-                                        </div>
-                                    </div>
-                                    <div class="border-box">
-                                        <div>
-                                            <label class="label-field">GSIS ID:</label>
-                                            <input class="input-field" type="text" v-model="governmentIdFields.gsisId" />
-                                        </div>
-                                        <div>
-                                            <label class="label-field">PHILHEALTH ID:</label>
-                                            <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-end gap-4 mt-6">
-                                    <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
-                                </div>
-                            </TabPanel>
-                            <TabPanel header="OTHER INFORMATION" :active="activeSubTab === 'other'">
+        <div class="w-full">
+            <h1 class="mb-4 text-3xl font-bold">OTHER INFO</h1>
+            <TabView v-model:activeIndex="activeTab" class="no-background">
+                <TabPanel header="CS ELIGIBILITY" :active="activeSubTab === 'eligibility'">
+                    <DataTable v-model:selection="selectedRow" :value="cseligibilityData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                        <Column field="eli_service" header="CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE"></Column>
+                        <Column field="eli_rating" header="RATING (IF APPLICABLE)"></Column>
+                        <Column field="eli_doe" header="DATE OF EXAMINATION/CONFERMENT"></Column>
+                        <Column field="eli_poe" header="PLACE OF EXAMINATION/CONFERMENT"></Column>
+                        <Column field="eli_license_no" header="LICENSE (IF APPLICABLE)"></Column>
+                        <Column field="eli_licen_valid" header="VALIDITY"></Column>
+                    </DataTable>
+                </TabPanel>
+                <TabPanel header="VOLUNTARY WORK" :active="activeSubTab === 'voluntary'">
+                    <DataTable v-model:selection="selectedRow" :value="voluntaryworkData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                        <Column field="vol_name" header="NAME OF ORGANIZATION"></Column>
+                        <Column field="vol_add" header="ADDRESS OF ORGANIZATION"></Column>
+                        <Column field="vol_fr" header="INCLUSIVE DATES FROM"></Column>
+                        <Column field="vol_to" header="INCLUSIVE DATES TO"></Column>
+                        <Column field="vol_hrs" header="NUMBER OF HOURS"></Column>
+                        <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
+                    </DataTable>
+                </TabPanel>
+                <TabPanel header="LEARNING & DEVELOPMENT" :active="activeSubTab === 'learning'">
+                    <DataTable v-model:selection="selectedRow" :value="learndevData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                        <Column field="learn_title" header="TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)"></Column>
+                        <Column field="learn_fr" header="INCLUSIVE DATES (MM/DD/YYYY) FROM"></Column>
+                        <Column field="learn_to" header="INCLUSIVE DATES (MM/DD/YYYY) TO"></Column>
+                        <Column field="learn_hrs" header="NUMBER OF HOURS"></Column>
+                        <Column field="learn_type" header="TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)"></Column>
+                        <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
+                    </DataTable>
+                </TabPanel>
+                <TabPanel header="RECOGNITION AND DISTINCTIONS" :active="activeSubTab === 'recognition'">
+                    <DataTable v-model:selection="selectedRow" :value="recogdistData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                        <Column field="recog_name" header="NON-ACADEMIC DISTINCTIONS/RESTRICTIONS"></Column>
+                    </DataTable>
+                </TabPanel>
+
+        
+
+                <TabPanel header="GOVERNMENT ID" :active="activeSubTab === 'government'">
+                     <div class="grid grid-cols-2 gap-4">
+                        <div class="border-box">
+                            <div>
+                                <label class="label-field">SSS ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId"/>
+                            </div>
+                            <div>
+                                <label class="label-field">PAG-IBIG ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId"/>
+                            </div>
+                            <div>
+                                <label class="label-field">TIN ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId"/>
+                            </div>
+                            </div>
+                            <div class="border-box">
+                            <div>
+                                <label class="label-field">GSIS ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId"/>
+                            </div>
+                            <div>
+                                <label class="label-field">PHILHEALTH ID:</label>
+                                <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId"/>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="flex justify-end gap-4 mt-6">
+                            <Button v-if="!isEditingGovId" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
+                            <div v-if="isEditingGovId" class="space-x-4">
+                                <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelGovIdEditing" />
+                                <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateGovIdData" />
+                            </div>
+                            </div>
+                </TabPanel>
+                <TabPanel header="OTHER INFORMATION" :active="activeSubTab === 'other'">
                                 <div class="other-info">
                                     <div class="pagination">
                                         <button @click="previousPage" :disabled="currentPage === 1">&laquo; Previous</button>
@@ -181,8 +175,49 @@
                                 <div class="flex justify-end gap-4 mt-6">
                                     <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
                                 </div>
-                            </TabPanel>
+                </TabPanel>
+                        
                         </TabView>
+                        
+                
+                <div class="flex justify-end gap-4 mt-6">
+                        <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                        <Button v-if="!isEditingProfile" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                        <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                        <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                        </div>
+                
+                    </div>
+
+                    <!-- Edit Modal -->
+                    <div v-if="showEditDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                        <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <h2 class="text-xl font-semibold mb-4">Edit {{ currentTabLabel }}</h2>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4">
+                                    <!-- Fields will be dynamically rendered here based on the selected row -->
+                                    <div v-for="(value, key) in filteredEditFields" :key="key">
+                                        <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
+                                        <input
+                                            class="input-field"
+                                            :type="getInputType(key, value)"
+                                            v-model="editFields[key]"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="flex justify-center gap-4 mt-4">
+                                    <button @click="hideEditDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                        Cancel
+                                    </button>
+                                    <button @click="saveEdit" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                         <!-- Add CS Eligibility Modal -->
                         <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
@@ -202,7 +237,7 @@
                                         </div>
                                         <div>
                                             <label class="label-field">DATE OF EXAMINATION/CONFERMENT</label>
-                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_doe" />
+                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_doe" />
                                         </div>
                                         <div>
                                             <label class="label-field">PLACE OF EXAMINATION/CONFERMENT</label>
@@ -214,7 +249,7 @@
                                         </div>
                                         <div>
                                             <label class="label-field">VALIDITY</label>
-                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_licen_valid" />
+                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_licen_valid" />
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
@@ -238,16 +273,20 @@
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
                                         <div>
-                                            <label class="label-field">NAME & ADDRESS OF ORGANIZATION (WRITE IN FULL)</label>
+                                            <label class="label-field">NAME OF ORGANIZATION (WRITE IN FULL)</label>
                                             <input class="input-field" type="text" v-model="newVoluntaryWork.vol_name" />
                                         </div>
                                         <div>
+                                            <label class="label-field">ADDRESS OF ORGANIZATION</label>
+                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_add" />
+                                        </div>
+                                        <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
-                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_fr" />
+                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_fr" />
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_to" />
+                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_to" />
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
@@ -284,11 +323,11 @@
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
-                                            <input class="input-field" type="text" v-model="newLearndev.learn_fr" />
+                                            <input class="input-field" type="date" v-model="newLearndev.learn_fr" />
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="text" v-model="newLearndev.learn_to" />
+                                            <input class="input-field" type="date" v-model="newLearndev.learn_to" />
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
@@ -347,10 +386,10 @@
                                 <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
                                 <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                                 <div class="flex justify-center gap-4">
-                                    <button @click="hideUpdateDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                    <button @click="hideUpdateDialog" class="py-2 px-4 rounded bg-red-300 text-#dc3545-700 hover:bg-#dc3545-400">
                                         Cancel
                                     </button>
-                                    <button @click="updateProfile" class="py-2 px-4 rounded bg-red-600 text-white hover:bg-red-700">
+                                    <button @click="saveUpdate" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
                                         Confirm
                                     </button>
                                 </div>
@@ -374,7 +413,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
     </AppLayout>
 </template>
 
@@ -391,6 +430,383 @@ export default {
     components: {
         AppLayout, Button, DataTable, Column
     },
+
+    data() {
+        return {
+            governmentIdFields: {
+            sssId: '',
+            pagIbigId: '',
+            tinId: '',
+            gsisId: '',
+            philHealthId: ''
+        },
+        otherInfo: {
+            degree: '',
+            degreeFourth: '',
+            degreeFourthDetails: '',
+            adminOffense: '',
+            adminOffenseDetails: '',
+            criminalCharge: '',
+            criminalChargeDetails: '',
+            dateFiled: '',
+            statusOfCase: '',
+            convictedCrime: '',
+            convictedCrimeDetails: '',
+            separatedService: '',
+            separatedServiceDetails: '',
+            candidateElection: '',
+            candidateElectionDetails: '',
+            resignedGovtService: '',
+            resignedGovtServiceDetails: '',
+            immigrantStatus: '',
+            immigrantStatusDetails: '',
+            indigenousGroup: '',
+            indigenousGroupDetails: '',
+            disability: '',
+            disabilityDetails: '',
+            soloParent: '',
+            soloParentDetails: '',
+        },
+        currentPage: 1,
+        totalPages: 5,
+        activeSubTab: 'other',
+        isEditingProfile: false,
+        originalProfileFields: {},
+        cseligibilityData: [],
+        voluntaryworkData: [], 
+        learndevData: [], 
+        recogdistData: [],
+        originalGovIdFields: {},
+        newCSEligibility: {
+            eli_service: '',
+            eli_rating: '',
+            eli_doe: '',
+            eli_poe: '',
+            eli_license_no: '',
+            eli_licen_valid: ''
+        },
+
+        newVoluntaryWork: {
+            vol_name: '',
+            vol_add: '',
+            vol_fr: '',
+            vol_to: '',
+            vol_hrs: '',
+            vol_pos: ''
+        },
+
+        newLearndev: {
+            learn_title: '',
+            learn_fr: '',
+            learn_to: '',
+            learn_hrs: '',
+            learn_type: '',
+            learn_con: ''
+        },
+
+        newRecogdist: {
+            recog_name: ''
+        },
+        isEditingGovId: false,
+        showAddCSEligibilityDialog: false,
+        showAddVoluntaryWorkDialog: false,
+        showAddLearndevDialog: false,
+        showAddRecogdistDialog: false,
+        showSuccessDialog: false,
+        showUpdateDialog: false,
+        showEditDialog: false,
+        selectedRow: null,
+        editFields: {},
+        currentTabLabel: '',
+    };
+    },
+
+    computed: {
+        filteredEditFields() {
+            return Object.fromEntries(
+                Object.entries(this.editFields).filter(([key]) => 
+                    !key.endsWith('_count') && !key.startsWith('Emp') && !key.endsWith('at')
+                )
+            );
+        }
+    },
+
+
+    methods: {
+    toggleProfileEditing() {
+        console.log('Toggling profile editing:', this.isEditingProfile);
+        console.log('Selected row:', this.selectedRow);
+        this.isEditingProfile = !this.isEditingProfile;
+    },
+
+    onRowSelect(event) {
+    console.log('Row selected:', event.data);
+    this.selectedRow = event.data;
+    this.openEditDialog(this.selectedRow); // Directly call the edit dialog 
+    },
+
+
+    cancelProfileEditing() {
+        this.isEditingProfile = false;
+        this.selectedRow = null;
+    },
+
+    openEditDialog(row) {
+        if (row) {
+            console.log('Opening Edit Dialog for row:', row);
+            this.editFields = { ...row }; // Deep copy of the selected row
+            this.currentTabLabel = this.getCurrentTabLabel();
+            this.showEditDialog = true;
+        } else {
+            console.log('No row selected.');
+        }
+    },
+
+
+    hideEditDialog() {
+        console.log('Hiding Edit Dialog');
+        this.showEditDialog = false;
+        this.selectedRow = null;  // Optionally clear the selectedRow if you want to reset the selection
+    },
+
+    saveEdit() {
+    let url = '';
+    let dataArray = null;
+    let countField = '';
+
+    switch (this.activeTab) {
+        case 0:
+            url = '/emp_eligibility/UpdateCSEligibilityData';
+            dataArray = this.cseligibilityData;
+            countField = 'eli_count';
+            break;
+        case 1:
+            url = '/emp_voluntary/UpdateVoluntaryWorkData';
+            dataArray = this.voluntaryworkData;
+            countField = 'vol_count';
+            break;
+        case 2:
+            url = '/emp_learning/UpdateLearnDevData';
+            dataArray = this.learndevData;
+            countField = 'learn_count';
+            break;
+        case 3:
+            url = '/emp_recog/UpdateRecogDistData';
+            dataArray = this.recogdistData;
+            countField = 'recog_count';
+            break;
+        default:
+            console.error('Unknown tab selected');
+            return;
+    }
+
+    // Store the necessary information for updating
+    this.updateUrl = url;
+    this.updateDataArray = dataArray;
+    this.updateCountField = countField;
+
+    // Show the confirmation dialog
+    this.showUpdateDialog = true;
+},
+
+// Function to proceed with the update after confirmation
+saveUpdate() {
+    axios.post(this.updateUrl, this.editFields)
+        .then(() => {
+            const index = this.updateDataArray.findIndex(item =>
+                item.empid === this.editFields.empid &&
+                item[this.updateCountField] === this.editFields[this.updateCountField]
+            );
+
+            if (index !== -1) {
+                this.updateDataArray[index] = { ...this.editFields };
+            } else {
+                console.error('Item not found');
+            }
+
+            this.showSuccessDialog = true;
+            this.hideEditDialog();
+            this.isEditingProfile = false;
+        })
+        .catch(error => {
+            console.error('Error updating data:', error);
+        });
+    
+    // Hide the confirmation dialog
+    this.hideUpdateDialog();
+},
+
+    isDate(value) {
+        const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+        return typeof value === 'string' && datePattern.test(value) && !isNaN(Date.parse(value));
+    },
+    isNumeric(value) {
+        return typeof value === 'number' || (typeof value === 'string' && !isNaN(Number(value)));
+    },
+    getInputType(key, value) {
+        if (this.isDate(value)) {
+            return 'date';
+        } else if (this.isNumeric(value)) {
+            return 'number';
+        } else {
+            return 'text';
+        }
+    },
+
+        formatFieldLabel(key) {
+            return key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' ');
+        },
+
+        getCurrentTabLabel() {
+            switch (this.activeTab) {
+                case 0: return 'CS ELigibility';
+                case 1: return 'Voluntary Work';
+                case 2: return 'Learning & Development';
+                case 3: return 'Recognition and Distinctions';
+                default: return '';
+            }
+        },
+
+        updateData() {
+            const urlMap = {
+                0: '/emp_eligibility/UpdateCSEligibilityData',
+                1: '/emp_voluntary/UpdateVoluntaryWorkData',
+                2: '/emp_learning/UpdateLearnDevData',
+                3: '/emp_recog/UpdateRecogDistData'
+            };
+
+            axios.post(urlMap[this.activeTab], this.editFields)
+                .then(() => {
+                    this.showSuccessDialog = true;
+                    this.hideEditDialog();
+                    this.isEditingProfile = false;
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                });
+        },
+
+        toggleFamilyEditing() {
+            if (!this.isEditingGovId) {
+                // Save the current state of fields to allow canceling
+                this.originalGovIdFields = JSON.parse(JSON.stringify(this.governmentIdFields));
+            }
+            this.isEditingGovId = !this.isEditingGovId;
+        },
+
+        cancelGovIdEditing() {
+            // Revert changes by restoring original fields
+            this.governmentIdFields = JSON.parse(JSON.stringify(this.originalGovIdFields));
+            this.isEditingGovId = false;
+        },
+
+        async fetchSSSid() {
+            try {
+                const response = await axios.get('/sssinfo/SSSId');
+                this.governmentIdFields.sssId = response.data.sssId;
+            } catch (error) {
+                this.errorMessage = 'Failed to load SSS Id.';
+            }
+        },
+
+        async fetchGSISid() {
+            try {
+                const response = await axios.get('/gsisinfo/GSISId');
+                this.governmentIdFields.gsisId = response.data.gsisId;
+            } catch (error) {
+                this.errorMessage = 'Failed to load GSIS Id.';
+            }
+        },
+
+        async fetchPagIbigId() {
+            try {
+                const response = await axios.get('/pagibiginfo/PagIbigId');
+                this.governmentIdFields.pagIbigId = response.data.pagIbigId;
+            } catch (error) {
+                this.errorMessage = 'Failed to load PagIbig Id.';
+            }
+        },
+
+        async fetchPhilHealthId() {
+            try {
+                const response = await axios.get('/philhealthinfo/PhilHealthId');
+                this.governmentIdFields.philHealthId = response.data.philHealthId;
+            } catch (error) {
+                this.errorMessage = 'Failed to load PhilHealth Id.';
+            }
+        },
+
+        async fetchTINId() {
+            try {
+                const response = await axios.get('/tininfo/TINId');
+                this.governmentIdFields.tinId = response.data.tinId;
+            } catch (error) {
+                this.errorMessage = 'Failed to load TIN Id.';
+            }
+        },
+
+
+        async updateGovIdData() {
+            try {
+                await axios.patch('/governmentId/updateGovIdData', this.governmentIdFields);
+                this.isEditing = false;
+                this.showUpdateDialog = false;
+                this.showSuccessDialog = true;
+                // location.reload();
+                } catch (error) {
+                this.errorMessage = 'Failed to update ID. Please try again.';
+                this.showUpdateDialog = false;
+            }
+        },
+
+        fetchData() {
+        // Replace with your API endpoint or data source
+        axios.get('/emp_otherinfo/other-info')
+            .then(response => {
+                this.otherInfo = response.data;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    },
+        updateData() {
+            // Replace with your API endpoint or data source
+            axios.put('/emp_otherinfo/other-info', this.otherInfo)
+                .then(response => {
+                    console.log('Data updated successfully:', response.data);
+                    // Show a success message or perform any other action
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                });
+        },
+    confirmUpdate() {
+        if (confirm('Are you sure you want to update the information?')) {
+            this.updateData();
+        }
+    },
+    nextPage() {
+        if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+        }
+    },
+    previousPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+        }
+    }
+
+    },
+
+    mounted() {
+        this.fetchSSSid();
+        this.fetchGSISid();
+        this.fetchPagIbigId();
+        this.fetchPhilHealthId();
+        this.fetchTINId();
+        this.fetchData();
+    },
+
     setup() {
         const activeTab = ref(0);
         const currentPage = ref(1);
@@ -407,14 +823,6 @@ export default {
                 currentPage.value += 1;
             }
         };
-
-        const governmentIdFields = ref({
-            sssId: '',
-            pagIbigId: '',
-            tinId: '',
-            gsisId: '',
-            philHealthId: ''
-        });
 
         const otherInfo = ref({
             degree: '',
@@ -485,55 +893,25 @@ export default {
             }
         };
 
-        const fetchSSSId = async () => {
-            try {
-                const response = await axios.get('/sssId/SSSId');
-                governmentIdFields.value.sssId = response.data.sssId;
-            } catch (error) {
-                console.error('Error fetching SSS ID:', error);
-            }
-        };
-
-        const fetchPagIbigId = async () => {
-            try {
-                const response = await axios.get('/pagIbigId/PagIbigId');
-                governmentIdFields.value.pagIbigId = response.data.pagIbigId;
-            } catch (error) {
-                console.error('Error fetching Pag-IBIG ID:', error);
-            }
-        };
-
-        const fetchGSISId = async () => {
-            try {
-                const response = await axios.get('/gsisId/GSISId');
-                governmentIdFields.value.gsisId = response.data.gsisId;
-            } catch (error) {
-                console.error('Error fetching GSIS ID:', error);
-            }
-        };
-
-        const fetchTINId = async () => {
-            try {
-                const response = await axios.get('/tinId/TINId');
-                governmentIdFields.value.tinId = response.data.tinId;
-            } catch (error) {
-                console.error('Error fetching TIN ID:', error);
-            }
-        };
-
-        const fetchPhilHealthId = async () => {
-            try {
-                const response = await axios.get('/philHealthId/PhilHealthId');
-                governmentIdFields.value.philHealthId = response.data.philHealthId;
-            } catch (error) {
-                console.error('Error fetching PhilHealth ID:', error);
-            }
-        };
-
         const showAddCSEligibilityDialog = ref(false);
         const showAddVoluntaryWorkDialog = ref(false);
         const showAddLearndevDialog = ref(false);
         const showAddRecogdistDialog = ref(false);
+        const showSuccessDialog = ref(false);        
+        const showUpdateDialog = ref(false);
+
+
+        const openAddDialog = () => {
+            if (activeTab.value === 0) {
+                showAddCSEligibilityDialog.value = true;
+            } else if (activeTab.value === 1) {
+                showAddVoluntaryWorkDialog.value = true;
+            } else if (activeTab.value === 2) {
+                showAddLearndevDialog.value = true;
+            } else if (activeTab.value === 3) {
+                showAddRecogdistDialog.value = true;
+            }
+        };
 
         const newCSEligibility = ref({
             eli_service: '',
@@ -546,6 +924,7 @@ export default {
 
         const newVoluntaryWork = ref({
             vol_name: '',
+            vol_add: '',
             vol_fr: '',
             vol_to: '',
             vol_hrs: '',
@@ -605,41 +984,16 @@ export default {
             }
         };
 
-        const confirmUpdate = () => {
-            showUpdateDialog.value = true;
-        };
+        const searchQuery = ref('');
 
+        
         const hideUpdateDialog = () => {
             showUpdateDialog.value = false;
         };
 
-        const updateProfile = async () => {
-            try {
-                if (activeTab.value === 0) {
-                    await axios.post('/emp_eligibility/UpdateCSEligibilityData', cseligibilityData.value);
-                } else if (activeTab.value === 1) {
-                    await axios.post('/emp_voluntary/UpdateVoluntaryWorkData', voluntaryworkData.value);
-                } else if (activeTab.value === 2) {
-                    await axios.post('/emp_learning/UpdateLearndevData', learndevData.value);
-                } else if (activeTab.value === 3) {
-                    await axios.post('/emp_recog/UpdateRecogdistData', recogdistData.value);
-                } else if (activeTab.value === 4) {
-                    await axios.post('/emp_govt_id/UpdateGovernmentIdData', governmentIdFields.value);
-                } else if (activeTab.value === 5) {
-                    await axios.post('/emp_other_info/UpdateOtherInfoData', otherInfo.value);
-                }
-                showUpdateDialog.value = false;
-                showSuccessDialog.value = true;
-            } catch (error) {
-                console.error('Error updating profile:', error);
-                showUpdateDialog.value = false;
-            }
+        const hideSuccessDialog = () => {   
+            showSuccessDialog.value = false;
         };
-
-        const showSuccessDialog = ref(false);
-        const showUpdateDialog = ref(false);
-
-        const searchQuery = ref('');
 
         const search = () => {
             const searchLower = searchQuery.value.toLowerCase();
@@ -665,11 +1019,6 @@ export default {
             fetchVoluntaryWorkData();
             fetchLearndevData();
             fetchRecogdistData();
-            fetchSSSId();
-            fetchPagIbigId();
-            fetchGSISId();
-            fetchTINId();
-            fetchPhilHealthId();
         });
 
         return {
@@ -678,11 +1027,11 @@ export default {
             totalPages,
             previousPage,
             nextPage,
-            governmentIdFields,
             cseligibilityData,
             voluntaryworkData,
             learndevData,
             recogdistData,
+            openAddDialog,
             showAddCSEligibilityDialog,
             showAddVoluntaryWorkDialog,
             showAddLearndevDialog,
@@ -699,19 +1048,13 @@ export default {
             fetchVoluntaryWorkData,
             fetchLearndevData,
             fetchRecogdistData,
-            fetchSSSId,
-            fetchPagIbigId,
-            fetchGSISId,
-            fetchTINId,
-            fetchPhilHealthId,
             otherInfo,
-            confirmUpdate,
-            hideUpdateDialog,
-            updateProfile,
             showSuccessDialog,
-            showUpdateDialog,
             searchQuery,
-            search
+            search,
+            showUpdateDialog,
+            hideSuccessDialog,
+            hideUpdateDialog
         };
     }
 };
@@ -765,5 +1108,15 @@ export default {
     .fixed {
         position: static;
     }
+}
+
+.custom-cancel-button {
+  background-color: #dc3545 !important; /* Red background for cancel button */
+  border-color: #dc3545 !important; /* Red border for cancel button */
+}
+
+.custom-cancel-button:hover {
+  background-color: #e57373 !important; /* Lighter red for hover state */
+  border-color: #e57373 !important; /* Lighter red border for hover state */
 }
 </style>

@@ -9,8 +9,7 @@ class emp_eligibility extends Model
 {
     use HasFactory;
     protected $table = 'emp_eligibility';
-    protected $primaryKey = 'empid'; // Set the primary key to empid
-    public $incrementing = false; // Since empid is not auto-incrementing
+    protected $primaryKey = 'eli_count'; 
     public function emp_eligibility()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');

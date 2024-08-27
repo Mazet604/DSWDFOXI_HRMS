@@ -9,8 +9,7 @@ class pagibiginfo extends Model
 {
     use HasFactory;
     protected $table = 'pagibiginfo';
-    protected $primaryKey = 'empid'; // Set the primary key to empid
-    public $incrementing = false; // Since empid is not auto-incrementing
+    protected $primaryKey = 'pgbg_count';
     public function pagibiginfo()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');

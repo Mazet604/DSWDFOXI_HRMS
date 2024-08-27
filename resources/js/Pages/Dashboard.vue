@@ -293,6 +293,7 @@ export default {
         Region:'',
         Province:'',
         City:'',
+        croppedBlob: null,
       },
       isEditing: false,
       originalFields: {},
@@ -318,6 +319,11 @@ export default {
       cropper: null,
       cropperSrc: '',
     };
+  },
+
+  created() {
+    // Retrieve the empid from session or local storage when the component is created
+    this.empid = sessionStorage.getItem('empid') || localStorage.getItem('empid') || '';
   },
 
   computed: {
@@ -524,6 +530,40 @@ export default {
     triggerFileUpload() {
       this.$refs.fileInput.click();
     },
+    handleFileChange(event) {
+    const originalFile = event.target.files[0]; // Get the original file
+    if (originalFile) {
+        // Store the original file name
+        this.originalFileName = originalFile.name;
+
+        // Read the file as a data URL for image cropping
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            // Create an image element
+            const img = new Image();
+            img.src = e.target.result;
+
+            // Set up an image load event handler
+            img.onload = () => {
+                // Initialize your cropping library or logic here
+                this.initCropping(img);
+            };
+        };
+
+        reader.readAsDataURL(originalFile);
+    }
+},
+
+onCroppingComplete(croppedBlob) {
+      if (this.empid && croppedBlob) {
+        this.uploadCroppedImage(croppedBlob, this.empid);
+      } else {
+        console.error('Missing employee ID or cropped image.');
+      }
+    },
+
+
     onFileSelected(event) {
       const file = event.target.files[0];
       if (file) {
@@ -538,7 +578,6 @@ export default {
         reader.readAsDataURL(file);
       }
     },
-
     initializeCropper() {
       const image = this.$refs.cropperImage;
       this.cropper = new Cropper(image, {
@@ -546,7 +585,6 @@ export default {
         viewMode: 1
       });
     },
-
     cropImage() {
       const canvas = this.cropper.getCroppedCanvas({
         width: 350, // Adjust as needed for passport size
@@ -557,9 +595,41 @@ export default {
       });
     },
 
-    uploadCroppedImage(blob) {
+    initCropping(image) {
+        // Example: Use a cropping library like Cropper.js
+        // Assuming you have a <div id="cropper-container"></div> in your template
+        const cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            ready() {
+                console.log('Cropper is ready.');
+            },
+            crop(event) {
+                // Handle cropping events
+            }
+        });
+
+        // Store the cropper instance if needed
+        this.cropper = cropper;
+    },
+
+    // Method to be called when cropping is complete
+    onCroppingComplete() {
+        if (this.cropper) {
+            this.cropper.getCroppedCanvas().toBlob((blob) => {
+                // Call upload method with cropped blob and user ID
+                this.uploadCroppedImage(blob, this.empid);
+            });
+        } else {
+            console.error('Cropper instance not found.');
+        }
+    },
+
+    uploadCroppedImage(blob, empid) {
       const formData = new FormData();
-      formData.append('file', blob, 'cropped-image.png');
+      const customFileName = `${empid}_image.png`; // Create the filename using the employee ID
+
+      formData.append('file', blob, customFileName); // Use the custom filename
 
       axios.post('/upload-profile-picture', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -570,7 +640,8 @@ export default {
       }).catch(error => {
         console.error('Error uploading file:', error);
       });
-    },
+  },
+
     cancelCrop() {
       this.cropping = false;
     },

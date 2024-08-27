@@ -9,8 +9,7 @@ class sssinfo extends Model
 {
     use HasFactory;
     protected $table = 'sssinfo';
-    protected $primaryKey = 'empid'; // Set the primary key to empid
-    public $incrementing = false; // Since empid is not auto-incrementing
+    protected $primaryKey = 'sss_count';
     public function sssinfo()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');

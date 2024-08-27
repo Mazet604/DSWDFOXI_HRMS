@@ -605,8 +605,6 @@ public function updateOrganizationData(Request $request)
 }
 
 
-
-
 public function updateWorkExperienceData(Request $request)
 {
     try {

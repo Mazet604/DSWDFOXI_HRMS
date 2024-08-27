@@ -122,15 +122,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/emp_voluntary/VoluntaryWorkData', [OtherInfoController::class, 'getVoluntaryWorkData']);
     Route::get('/emp_learning/LearndevData', [OtherInfoController::class, 'getLearndevData']);
     Route::get('/emp_recog/RecogdistData', [OtherInfoController::class, 'getRecogdistData']);
-    Route::get('/sssId/SSSId', [OtherInfoController::class, 'getSSSId']);
-    Route::get('/pagIbigId/PagIbigId', [OtherInfoController::class, 'getPagIbigId']);
-    Route::get('/gsisId/GSISId', [OtherInfoController::class, 'getGSISId']);
-    Route::get('/philHealthId/PhilHealthId', [OtherInfoController::class, 'getPhilHealthId']);
-    Route::get('/tinId/TINId', [OtherInfoController::class, 'getTINId']);
+    Route::get('/sssinfo/SSSId', [OtherInfoController::class, 'getSSSId']);
+    Route::get('/pagibiginfo/PagIbigId', [OtherInfoController::class, 'getPagIbigId']);
+    Route::get('/gsisinfo/GSISId', [OtherInfoController::class, 'getGSISId']);
+    Route::get('/philhealthinfo/PhilHealthId', [OtherInfoController::class, 'getPhilHealthId']);
+    Route::get('/tininfo/TINId', [OtherInfoController::class, 'getTINId']);
+    Route::patch('/governmentId/updateGovIdData', [OtherInfoController::class, 'updateGovIdData']);
     Route::post('/emp_eligibility/AddCSEligibility', [OtherInfoController::class, 'addCSEligibility']);
     Route::post('/emp_voluntary/AddVoluntaryWork', [OtherInfoController::class, 'addVoluntaryWork']);
     Route::post('/emp_learning/AddLearndev', [OtherInfoController::class, 'addLearndev']);
     Route::post('/emp_recog/AddRecogdist', [OtherInfoController::class, 'addRecogdist']);
+
+    Route::post('/emp_eligibility/UpdateCSEligibilityData', [OtherInfoController::class, 'updateCSEligibilityData']);
+    Route::post('/emp_voluntary/UpdateVoluntaryWorkData', [OtherInfoController::class, 'updateVoluntaryWorkData']);
+    Route::post('/emp_learning/UpdateLearnDevData', [OtherInfoController::class, 'updateLearnDevData']);
+    Route::post('/emp_recog/UpdateRecogDistData', [OtherInfoController::class, 'updateRecogDistData']);
 });
 
 require __DIR__.'/auth.php';

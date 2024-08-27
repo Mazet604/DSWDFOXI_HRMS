@@ -9,8 +9,7 @@ class gsisinfo extends Model
 {
     use HasFactory;
     protected $table = 'gsisinfo';
-    protected $primaryKey = 'empid'; // Set the primary key to empid
-    public $incrementing = false; // Since empid is not auto-incrementing
+    protected $primaryKey = 'gsis_count';
     public function gsis()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');

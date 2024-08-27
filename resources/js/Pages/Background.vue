@@ -128,8 +128,7 @@
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                         <Column field="org_name" header="Organizations"></Column>
                     </DataTable>
-                </TabPanel>
-
+                    </TabPanel>
                     <TabPanel header="WORK EXPERIENCE">
                         <h1 style="font-size: 25px; font-weight: bold;">Work Experience</h1>
                         <DataTable v-model:selection="selectedRow" :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
@@ -171,38 +170,35 @@
                 </div>
         </div>
 
-      <!-- Edit Modal -->
-    <div v-if="showEditDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-        <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
-            <div class="p-4">
-                <div class="text-center">
-                    <h2 class="text-xl font-semibold mb-4">Edit {{ currentTabLabel }}</h2>
-                </div>
-                <div class="grid grid-cols-1 gap-4">
-                    <!-- Fields will be dynamically rendered here based on the selected row -->
-                    <div v-for="(value, key) in filteredEditFields" :key="key">
-                        <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
-                        <input
-                            class="input-field"
-                            :type="getInputType(key, value)"
-                            v-model="editFields[key]"
-                        />
+        <!-- Edit Modal -->
+        <div v-if="showEditDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
+                <div class="p-4">
+                    <div class="text-center">
+                        <h2 class="text-xl font-semibold mb-4">Edit {{ currentTabLabel }}</h2>
                     </div>
-                </div>
-                <div class="flex justify-center gap-4 mt-4">
-                    <button @click="hideEditDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
-                        Cancel
-                    </button>
-                    <button @click="saveEdit" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
-                        Save
-                    </button>
+                    <div class="grid grid-cols-1 gap-4">
+                        <!-- Fields will be dynamically rendered here based on the selected row -->
+                        <div v-for="(value, key) in filteredEditFields" :key="key">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
+                            <input
+                                class="input-field"
+                                :type="getInputType(key, value)"
+                                v-model="editFields[key]"
+                            />
+                        </div>
+                    </div>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <button @click="hideEditDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                            Cancel
+                        </button>
+                        <button @click="saveEdit" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            Save
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
 
         <!-- Success Modal -->
         <div v-if="showSuccessDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
@@ -235,7 +231,7 @@
                         <button @click="hideUpdateDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
                             Cancel
                         </button>
-                        <button @click="saveProfile" class="py-2 px-4 rounded bg-red-600 text-white hover:bg-red-700">
+                        <button @click="saveUpdate" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
                             Confirm
                         </button>
                     </div>
@@ -639,6 +635,7 @@ export default {
             this.editFields = { ...row }; // Deep copy of the selected row
             this.currentTabLabel = this.getCurrentTabLabel();
             this.showEditDialog = true;
+            
         } else {
             console.log('No row selected.');
         }
@@ -692,15 +689,26 @@ export default {
             return;
     }
 
-    axios.post(url, this.editFields)
+    // Store the necessary information for updating
+    this.updateUrl = url;
+    this.updateDataArray = dataArray;
+    this.updateCountField = countField;
+
+    // Show the confirmation dialog
+    this.showUpdateDialog = true;
+},
+
+// Function to proceed with the update after confirmation
+saveUpdate() {
+    axios.post(this.updateUrl, this.editFields)
         .then(() => {
-            const index = dataArray.findIndex(item =>
-                item.empid === this.editFields.empid && 
-                item[countField] === this.editFields[countField]
+            const index = this.updateDataArray.findIndex(item =>
+                item.empid === this.editFields.empid &&
+                item[this.updateCountField] === this.editFields[this.updateCountField]
             );
 
             if (index !== -1) {
-                dataArray[index] = { ...this.editFields };
+                this.updateDataArray[index] = { ...this.editFields };
             } else {
                 console.error('Item not found');
             }
@@ -712,7 +720,11 @@ export default {
         .catch(error => {
             console.error('Error updating data:', error);
         });
+    
+    // Hide the confirmation dialog
+    this.hideUpdateDialog();
 },
+
 
     isDate(value) {
         const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -829,6 +841,7 @@ export default {
                 this.isEditing = false;
                 this.showUpdateDialog = false;
                 this.showSuccessDialog = true;
+                location.reload();
                 } catch (error) {
                 this.errorMessage = 'Failed to update Family. Please try again.';
                 this.showUpdateDialog = false;
@@ -847,6 +860,11 @@ export default {
         const activeTab = ref(0);
 
         const childData = ref([]);
+        const educationData = ref([]);
+        const organizationData = ref([]);
+        const workExperienceData = ref([]);
+        const skillsData = ref([]);
+        const referencesData = ref([]);
         const newChild = ref({
             child_fname: '',
             child_mname: '',
@@ -854,12 +872,6 @@ export default {
             child_xname: '',
             child_dob: ''
         });
-
-        const educationData = ref([]);
-        const organizationData = ref([]);
-        const workExperienceData = ref([]);
-        const skillsData = ref([]);
-        const referencesData = ref([]);
         const newEducation = ref({
             educ_level: '',
             educ_school: '',

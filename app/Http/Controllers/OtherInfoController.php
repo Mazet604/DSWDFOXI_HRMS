@@ -13,6 +13,7 @@ use App\Models\pagibiginfo;
 use App\Models\gsisinfo;
 use App\Models\tininfo;
 use App\Models\philhealthinfo;
+use App\Models\employee;
 
 class OtherInfoController extends Controller
 {
@@ -27,6 +28,7 @@ class OtherInfoController extends Controller
             // Select only the required columns
             $cseligibilityData = emp_eligibility::where('empid', $user->empid)
                 ->select(
+                    'eli_count', 
                     'eli_service', 
                     'eli_rating', 
                     'eli_doe', 
@@ -57,6 +59,7 @@ class OtherInfoController extends Controller
             // Select only the required columns
             $voluntaryworkData = emp_voluntary::where('empid', $user->empid)
                 ->select(
+                    'vol_count',
                     'vol_name', 
                     'vol_add', 
                     'vol_fr', 
@@ -87,6 +90,7 @@ class OtherInfoController extends Controller
             // Select only the required columns
             $learndevData = emp_learning::where('empid', $user->empid)
                 ->select(
+                    'learn_count',
                     'learn_title', 
                     'learn_fr', 
                     'learn_to', 
@@ -116,7 +120,7 @@ class OtherInfoController extends Controller
     
             // Select only the required columns
             $recogdistData = emp_recog::where('empid', $user->empid)
-                ->select('recog_name')
+                ->select('recog_count','recog_name')
                 ->get();
     
             if ($recogdistData->isEmpty()) {
@@ -136,10 +140,10 @@ class OtherInfoController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-    
-            $sssinfo = sssinfo::where('empid', $user->empid)->first(); // Fetch employee using empid
+
+            $sssinfo = sssinfo::where('empid', $user->empid)->first();
             if (!$sssinfo) {
-                return response()->json(['error' => 'Employee not found'], 404);
+                return response()->json(['error' => 'Mother not found'], 404);
             }
     
             $sssId = $sssinfo->sss_num;
@@ -156,8 +160,8 @@ class OtherInfoController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-    
-            $pagibiginfo= pagibiginfo::where('empid', $user->empid)->first(); 
+
+            $pagibiginfo= pagibiginfo::where('empid', $user->empid)->first();
             if (!$pagibiginfo) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
@@ -176,9 +180,9 @@ class OtherInfoController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-    
+
             $gsisinfo = gsisinfo::where('empid', $user->empid)->first();
-            if ( !$gsisinfo) {
+            if (!$gsisinfo) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
     
@@ -196,7 +200,6 @@ class OtherInfoController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-    
 
             $philhealthinfo = philhealthinfo::where('empid', $user->empid)->first();
             if ( !$philhealthinfo) {
@@ -229,6 +232,61 @@ class OtherInfoController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function updateGovIdData(Request $request)
+{
+    try {
+        $user = Auth::user(); // Get the currently authenticated user
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $employee = Employee::where('empid', $user->empid)->first();
+            if (!$employee) {
+                return response()->json(['error' => 'Employee not found'], 404);
+            }
+
+        // Update Father details
+        $SSS = sssinfo::where('empid', $user->empid)->first();
+        if ($SSS) {
+            $SSS->sss_num = $request->input('sssId');
+            $SSS->save();
+        }
+
+        // Update Mother details
+        $pagibig = pagibiginfo::where('empid', $user->empid)->first();
+        if ($pagibig) {
+            $pagibig->pgbg_id = $request->input('pagIbigId');
+            $pagibig->save();
+        }
+
+        // Update Spouse details
+        $tin = tininfo::where('empid', $user->empid)->first();
+        if ($tin) {
+            $tin->tin_id = $request->input('tinId');
+            $tin->save();
+        }
+
+        $gsis = gsisinfo::where('empid', $user->empid)->first();
+        if ($gsis) {
+            $gsis->pb_no = $request->input('gsisId');
+            $gsis->save();
+        }
+
+        $philhealth = philhealthinfo::where('empid', $user->empid)->first();
+        
+        if ($philhealth) {
+            $philhealth->empid = $user->empid;
+            $philhealth->ph_lid = $request->input('philHealthId');
+            $philhealth->save();
+            return response()->json($philhealth);
+        }
+
+        return response()->json(['success' => 'Data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
 
     public function addCSEligibility(Request $request)
     {
@@ -265,6 +323,7 @@ class OtherInfoController extends Controller
             $voluntary = new emp_voluntary();
             $voluntary->empid = $user->empid;
             $voluntary->vol_name = $request->vol_name;
+            $voluntary->vol_add = $request->vol_add;
             $voluntary->vol_fr = $request->vol_fr;
             $voluntary->vol_to = $request->vol_to;
             $voluntary->vol_hrs = $request->vol_hrs;
@@ -319,4 +378,110 @@ class OtherInfoController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function updateCSEligibilityData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $eligibility = emp_eligibility::where('eli_count', $request->input('eli_count'))->first();
+        if (!$eligibility) {
+            return response()->json(['error' => 'CS ELigibility data not found'], 404);
+        }
+
+        $eligibility->eli_service = $request->input('eli_service');
+        $eligibility->eli_rating = $request->input('eli_rating');
+        $eligibility->eli_doe = $request->input('eli_doe');
+        $eligibility->eli_poe = $request->input('eli_poe');
+        $eligibility->eli_license_no = $request->input('eli_license_no');
+        $eligibility->eli_licen_valid = $request->input('eli_licen_valid');
+        $eligibility->save();
+
+        return response()->json(['success' => 'CS ELigibility data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
 }
+
+    public function updateVoluntaryWorkData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $voluntary = emp_voluntary::where('vol_count', $request->input('vol_count'))->first();
+        if (!$voluntary) {
+            return response()->json(['error' => 'Voluntary Work data not found'], 404);
+        }
+
+        $voluntary->vol_name = $request->input('vol_name');
+        $voluntary->vol_add = $request->input('vol_add');
+        $voluntary->vol_fr = $request->input('vol_fr');
+        $voluntary->vol_to = $request->input('vol_to');
+        $voluntary->vol_hrs = $request->input('vol_hrs');
+        $voluntary->vol_pos = $request->input('vol_pos');
+        $voluntary->save();
+
+        return response()->json(['success' => 'Voluntary Work data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+    public function updateLearnDevData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $learning = emp_learning::where('learn_count', $request->input('learn_count'))->first();
+        if (!$learning) {
+            return response()->json(['error' => 'Learning And Development data not found'], 404);
+        }
+
+        $learning->learn_title = $request->input('learn_title');
+        $learning->learn_fr = $request->input('learn_fr');
+        $learning->learn_to = $request->input('learn_to');
+        $learning->learn_hrs = $request->input('learn_hrs');
+        $learning->learn_type = $request->input('learn_type');
+        $learning->learn_con = $request->input('learn_con');
+        $learning->save();
+
+        return response()->json(['success' => 'Learning And Development data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+    public function updateRecogDistData(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $recognition = emp_recog::where('recog_count', $request->input('recog_count'))->first();
+        if (!$recognition) {
+            return response()->json(['error' => 'Recognition & Distinction data not found'], 404);
+        }
+
+        $recognition->recog_name = $request->input('recog_name');
+        $recognition->save();
+
+        return response()->json(['success' => 'Recognition & Distinction data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+}
+
+
