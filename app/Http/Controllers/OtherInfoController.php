@@ -8,6 +8,7 @@ use App\Models\emp_eligibility;
 use App\Models\emp_voluntary;
 use App\Models\emp_learning;
 use App\Models\emp_recog;
+use App\Models\emp_otherinfo;
 use App\Models\sssinfo;
 use App\Models\pagibiginfo;
 use App\Models\gsisinfo;
@@ -481,6 +482,84 @@ class OtherInfoController extends Controller
         return response()->json(['error' => $e->getMessage()], 500);
     }
 }
+
+
+public function getOtherInfoData()
+    {
+        try {
+            $user = Auth::user(); // Get the currently authenticated user
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            // Fetch the "Other Information" data for the authenticated user
+            $otherInfoData = emp_otherinfo::where('empid', $user->empid)
+                ->select(
+                    'other_34a', 'other_34b', 'other_34bif', 'other_35a', 'other_35aif', 
+                    'other_35b', 'other_35bif', 'other_35bfiled', 'other_35stat', 'other_36', 
+                    'other_36if', 'other_37', 'other_37if', 'other_38a', 'other_38aif', 
+                    'other_38b', 'other_39', 'other_39if', 'other_40a', 'other_40aif', 
+                    'other_40b', 'other_40bif', 'other_40c', 'other_40cif'
+                )
+                ->first();
+
+            if (!$otherInfoData) {
+                return response()->json(['error' => 'Other Information data not found'], 404);
+            }
+
+            return response()->json($otherInfoData);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    // Update the "Other Information" data
+    public function updateOtherInfoData(Request $request)
+    {
+        try {
+            $user = Auth::user(); // Get the currently authenticated user
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            $otherInfo = emp_otherinfo::where('empid', $user->empid)->first();
+            if (!$otherInfo) {
+                return response()->json(['error' => 'Other Information data not found'], 404);
+            }
+
+            // Update the columns with the new data from the request
+            $otherInfo->other_34a = $request->input('other_34a');
+            $otherInfo->other_34b = $request->input('other_34b');
+            $otherInfo->other_34bif = $request->input('other_34bif');
+            $otherInfo->other_35a = $request->input('other_35a');
+            $otherInfo->other_35aif = $request->input('other_35aif');
+            $otherInfo->other_35b = $request->input('other_35b');
+            $otherInfo->other_35bif = $request->input('other_35bif');
+            $otherInfo->other_35bfiled = $request->input('other_35bfiled');
+            $otherInfo->other_35stat = $request->input('other_35stat');
+            $otherInfo->other_36 = $request->input('other_36');
+            $otherInfo->other_36if = $request->input('other_36if');
+            $otherInfo->other_37 = $request->input('other_37');
+            $otherInfo->other_37if = $request->input('other_37if');
+            $otherInfo->other_38a = $request->input('other_38a');
+            $otherInfo->other_38aif = $request->input('other_38aif');
+            $otherInfo->other_38b = $request->input('other_38b');
+            $otherInfo->other_39 = $request->input('other_39');
+            $otherInfo->other_39if = $request->input('other_39if');
+            $otherInfo->other_40a = $request->input('other_40a');
+            $otherInfo->other_40aif = $request->input('other_40aif');
+            $otherInfo->other_40b = $request->input('other_40b');
+            $otherInfo->other_40bif = $request->input('other_40bif');
+            $otherInfo->other_40c = $request->input('other_40c');
+            $otherInfo->other_40cif = $request->input('other_40cif');
+
+            $otherInfo->save();
+
+            return response()->json(['success' => 'Other Information data updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
 }
 

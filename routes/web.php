@@ -148,6 +148,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/emp_voluntary/UpdateVoluntaryWorkData', [OtherInfoController::class, 'updateVoluntaryWorkData']);
     Route::post('/emp_learning/UpdateLearnDevData', [OtherInfoController::class, 'updateLearnDevData']);
     Route::post('/emp_recog/UpdateRecogDistData', [OtherInfoController::class, 'updateRecogDistData']);
+    Route::get('/emp_otherinfo/other-info', [OtherInfoController::class, 'getOtherInfoData']);
+    Route::put('/emp_otherinfo/other-info', [OtherInfoController::class, 'updateOtherInfoData']);
 });
 
 require __DIR__.'/auth.php';

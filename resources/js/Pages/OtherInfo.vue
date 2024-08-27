@@ -90,85 +90,85 @@
                                         <h2>34. Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</h2>
                                         <div class="form-group">
                                             <label>a. within the third degree?</label>
-                                            <input type="radio" v-model="otherInfo.degree" value="Yes" /> Yes
-                                            <input type="radio" v-model="otherInfo.degree" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
+                                            <input type="radio" v-model="otherInfo.other_34a" value="No" /> No
                                         </div>
                                         <div class="form-group">
                                             <label>b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
-                                            <input type="radio" v-model="otherInfo.degreeFourth" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.degreeFourthDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.degreeFourth" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" />
+                                            <input type="radio" v-model="otherInfo.other_34b" value="No" /> No
                                         </div>
                                     </div>
                                     <div v-if="currentPage === 2">
                                         <h2>35. a. Have you ever been found guilty of any administrative offense?</h2>
                                         <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.adminOffense" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.adminOffenseDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.adminOffense" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_35a" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" />
+                                            <input type="radio" v-model="otherInfo.other_35a" value="No" /> No
                                         </div>
                                         <h2>b. Have you been criminally charged before any court?</h2>
                                         <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.criminalCharge" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.criminalChargeDetails" placeholder="If YES, give details" />
-                                            <input type="date" v-model="otherInfo.dateFiled" placeholder="Date Filed" />
-                                            <input type="text" v-model="otherInfo.statusOfCase" placeholder="Status of Case/s" />
-                                            <input type="radio" v-model="otherInfo.criminalCharge" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
+                                            <input type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" />
+                                            <input type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" />
+                                            <input type="radio" v-model="otherInfo.other_35b" value="No" /> No
                                         </div>
                                     </div>
                                     <div v-if="currentPage === 3">
                                         <h2>36. Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</h2>
                                         <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.convictedCrime" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.convictedCrimeDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.convictedCrime" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_36" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" />
+                                            <input type="radio" v-model="otherInfo.other_36" value="No" /> No
                                         </div>
                                         <h2>37. Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</h2>
                                         <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.separatedService" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.separatedServiceDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.separatedService" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_37" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" />
+                                            <input type="radio" v-model="otherInfo.other_37" value="No" /> No
                                         </div>
                                     </div>
                                     <div v-if="currentPage === 4">
                                         <h2>38. a. Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</h2>
                                         <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.candidateElection" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.candidateElectionDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.candidateElection" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_38a" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" />
+                                            <input type="radio" v-model="otherInfo.other_38a" value="No" /> No
                                         </div>
                                         <h2>b. Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</h2>
                                         <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.resignedGovtService" value="Yes" /> Yes
+                                            <input type="radio" v-model="otherInfo.other_38b" value="Yes" /> Yes
                                             <input type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.resignedGovtService" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_38b" value="No" /> No
                                         </div>
                                     </div>
                                     <div v-if="currentPage === 5">
                                         <h2>39. Have you acquired the status of an immigrant or permanent resident of another country?</h2>
                                         <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.immigrantStatus" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.immigrantStatusDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.immigrantStatus" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_39" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" />
+                                            <input type="radio" v-model="otherInfo.other_39" value="No" /> No
                                         </div>
                                         <h2>40. Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</h2>
                                         <div class="form-group">
                                             <label>a. Are you a member of any indigenous group?</label>
-                                            <input type="radio" v-model="otherInfo.indigenousGroup" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.indigenousGroupDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.indigenousGroup" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" />
+                                            <input type="radio" v-model="otherInfo.other_40a" value="No" /> No
                                         </div>
                                         <div class="form-group">
                                             <label>b. Are you a person with disability?</label>
-                                            <input type="radio" v-model="otherInfo.disability" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.disabilityDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.disability" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_40b" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" />
+                                            <input type="radio" v-model="otherInfo.other_40b" value="No" /> No
                                         </div>
                                         <div class="form-group">
                                             <label>c. Are you a solo parent?</label>
-                                            <input type="radio" v-model="otherInfo.soloParent" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.soloParentDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.soloParent" value="No" /> No
+                                            <input type="radio" v-model="otherInfo.other_40c" value="Yes" /> Yes
+                                            <input type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" />
+                                            <input type="radio" v-model="otherInfo.other_40c" value="No" /> No
                                         </div>
                                     </div>
                                 </div>
@@ -760,7 +760,6 @@ saveUpdate() {
         },
 
         fetchData() {
-        // Replace with your API endpoint or data source
         axios.get('/emp_otherinfo/other-info')
             .then(response => {
                 this.otherInfo = response.data;
@@ -769,27 +768,36 @@ saveUpdate() {
                 console.error('Error fetching data:', error);
             });
     },
-        updateData() {
-            // Replace with your API endpoint or data source
-            axios.put('/emp_otherinfo/other-info', this.otherInfo)
-                .then(response => {
-                    console.log('Data updated successfully:', response.data);
-                    // Show a success message or perform any other action
-                })
-                .catch(error => {
-                    console.error('Error updating data:', error);
-                });
-        },
+
     confirmUpdate() {
-        if (confirm('Are you sure you want to update the information?')) {
-            this.updateData();
-        }
+        this.showUpdateDialog = true; // Show the update confirmation modal
     },
+    updateData() {
+        axios.put('/emp_otherinfo/other-info', this.otherInfo)
+            .then(response => {
+                this.showUpdateDialog = false; // Hide the update confirmation dialog
+                this.showSuccessDialog = true; // Show success dialog
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
+    },
+    saveUpdate() {
+        this.updateData(); // Call the updateData method to proceed with the update
+    },
+    hideUpdateDialog() {
+        this.showUpdateDialog = false; // Hide the update confirmation dialog
+    },
+    hideSuccessDialog() {
+        this.showSuccessDialog = false; // Hide the success dialog
+    },
+
     nextPage() {
         if (this.currentPage < this.totalPages) {
             this.currentPage++;
         }
     },
+
     previousPage() {
         if (this.currentPage > 1) {
             this.currentPage--;
