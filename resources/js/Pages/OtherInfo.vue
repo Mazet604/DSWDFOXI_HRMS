@@ -43,7 +43,7 @@
                     </DataTable>
                 </TabPanel>
 
-        
+
 
                 <TabPanel header="GOVERNMENT ID" :active="activeSubTab === 'government'">
                      <div class="grid grid-cols-2 gap-4">
@@ -176,17 +176,17 @@
                                     <Button label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
                                 </div>
                 </TabPanel>
-                        
+
                         </TabView>
-                        
-                
+
+
                 <div class="flex justify-end gap-4 mt-6">
                         <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
                         <Button v-if="!isEditingProfile" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
                         <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
                         <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
                         </div>
-                
+
                     </div>
 
                     <!-- Edit Modal -->
@@ -382,7 +382,7 @@
                         <!-- Update Confirmation Modal -->
                         <div v-if="showUpdateDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
                             <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-md w-full p-6 text-center">
-                                <i class="fas fa-exclamation-triangle text-4xl mb-4" style="color: red;"></i>
+                                <i class="mb-4 mt-4 text-4xl fas fa-circle-question" style="color: red;"></i>
                                 <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
                                 <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                                 <div class="flex justify-center gap-4">
@@ -473,8 +473,8 @@ export default {
         isEditingProfile: false,
         originalProfileFields: {},
         cseligibilityData: [],
-        voluntaryworkData: [], 
-        learndevData: [], 
+        voluntaryworkData: [],
+        learndevData: [],
         recogdistData: [],
         originalGovIdFields: {},
         newCSEligibility: {
@@ -524,7 +524,7 @@ export default {
     computed: {
         filteredEditFields() {
             return Object.fromEntries(
-                Object.entries(this.editFields).filter(([key]) => 
+                Object.entries(this.editFields).filter(([key]) =>
                     !key.endsWith('_count') && !key.startsWith('Emp') && !key.endsWith('at')
                 )
             );
@@ -542,7 +542,7 @@ export default {
     onRowSelect(event) {
     console.log('Row selected:', event.data);
     this.selectedRow = event.data;
-    this.openEditDialog(this.selectedRow); // Directly call the edit dialog 
+    this.openEditDialog(this.selectedRow); // Directly call the edit dialog
     },
 
 
@@ -631,7 +631,7 @@ saveUpdate() {
         .catch(error => {
             console.error('Error updating data:', error);
         });
-    
+
     // Hide the confirmation dialog
     this.hideUpdateDialog();
 },
@@ -905,7 +905,7 @@ saveUpdate() {
         const showAddVoluntaryWorkDialog = ref(false);
         const showAddLearndevDialog = ref(false);
         const showAddRecogdistDialog = ref(false);
-        const showSuccessDialog = ref(false);        
+        const showSuccessDialog = ref(false);
         const showUpdateDialog = ref(false);
 
 
@@ -994,12 +994,12 @@ saveUpdate() {
 
         const searchQuery = ref('');
 
-        
+
         const hideUpdateDialog = () => {
             showUpdateDialog.value = false;
         };
 
-        const hideSuccessDialog = () => {   
+        const hideSuccessDialog = () => {
             showSuccessDialog.value = false;
         };
 

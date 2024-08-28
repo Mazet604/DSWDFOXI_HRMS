@@ -1,18 +1,18 @@
 <template>
-    <div class="flex min-h-screen bg-gray-100" @click="closeDropdown">
+    <div class="flex min-h-screen bg-gray-100">
         <!-- Sidebar -->
-        <aside class="relative flex flex-col w-64 p-4 text-white bg-blue-900" @click.stop>
+        <aside class="fixed top-0 left-0 h-full flex flex-col w-64 p-4 text-white bg-blue-900 z-20">
             <!-- Sidebar Background Image -->
-            <img src="/images/bgthisd.png" alt="Sidebar Background" class="absolute inset-0 object-cover w-full h-full opacity-30" />
+            <img src="/images/bgthisd.png" alt="Sidebar Background" class="absolute inset-0 object-cover w-full h-full opacity-5" />
             <div class="relative z-10 flex flex-col flex-1">
                 <div class="text-center">
                     <img src="/images/dswd-logo.png" alt="DSWD Logo" class="mx-auto mb-4 h-22" />
                 </div>
                 <div class="mb-4 search-bar relative">
-                    <input 
-                        type="text" 
-                        placeholder="Search..." 
-                        v-model="searchQuery" 
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        v-model="searchQuery"
                         @input="filterSuggestions"
                         @keydown.down="highlightNext"
                         @keydown.up="highlightPrevious"
@@ -21,9 +21,9 @@
                     />
                     <i class="fas fa-search"></i>
                     <ul v-if="showSuggestions && filteredSuggestions.length" class="suggestions-dropdown">
-                        <li 
-                            v-for="(suggestion, index) in filteredSuggestions" 
-                            :key="index" 
+                        <li
+                            v-for="(suggestion, index) in filteredSuggestions"
+                            :key="index"
                             :class="{ 'highlighted': index === highlightedIndex }"
                             @click="search(suggestion)"
                             @mouseover="highlightedIndex = index"
@@ -56,16 +56,17 @@
                         </div>
                     </div>
                 </nav>
-                <button @click="confirmLogout" class="px-4 py-2 mt-4 text-white bg-red-600 rounded hover:bg-red-700">
-                    Log-out
+                <button @click="confirmLogout" class="flex items-center justify-center px-4 py-2 mt-4 text-white bg-red-600 rounded hover:bg-red-700">
+                    <i class="fas fa-sign-out-alt mr-2"></i>
+                    <span>Log-out</span>
                 </button>
             </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="relative flex-1 p-8">
+        <main class="flex-1 p-8 ml-64 overflow-y-auto relative">
             <!-- Main Content Background Image -->
-            <img src="/images/bgwhiteredblue.png" alt="Main Background" class="absolute inset-0 object-cover w-full h-full opacity-30" />
+            <img src="/images/bgwhiteredblue.png" alt="Main Background" class="fixed inset-0 object-cover w-full h-full opacity-100" />
             <div class="relative z-10">
                 <slot></slot>
             </div>
@@ -239,7 +240,7 @@ watch(activeTab, (newValue) => {
     padding: 1rem;
     background: transparent;
     cursor: pointer;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(255, 252, 127);
     transition: background 0.3s ease-in-out;
     font-weight: bold;
 }
@@ -330,5 +331,8 @@ watch(activeTab, (newValue) => {
 /* Ensure the logout button stays at the bottom */
 button {
     margin-top: auto;
+    align-items: center;
 }
 </style>
+
+

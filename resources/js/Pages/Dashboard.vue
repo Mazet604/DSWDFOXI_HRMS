@@ -3,14 +3,14 @@
     <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="relative col-span-1">
         <div class="relative group">
-          <img 
-            alt="Profile Picture" 
-            :src="profilePictureUrl" 
+          <img
+            alt="Profile Picture"
+            :src="profilePictureUrl"
             class="w-full rounded-lg cursor-pointer"
-            height="300" 
-            width="300" 
+            height="300"
+            width="300"
             :class="{ 'blur-md': !isUnblurred }"
-            @click="toggleBlur" 
+            @click="toggleBlur"
           />
           <button @click="toggleBlur" class="absolute top-0 right-0 m-2 p-2 bg-gray-800 bg-opacity-75 rounded-full">
       <i class="fas fa-eye text-white text-4xl"></i>
@@ -61,7 +61,7 @@
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY</label>
                     <input type="date" class="text-center input-field" v-model="fields.birthday" :disabled="!isEditing" />
-                </div>  
+                </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
                     <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
@@ -220,7 +220,7 @@
       <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
         <div class="p-4">
           <div class="text-center">
-            <i class="mb-4 text-4xl fas fa-exclamation-triangle" style="color: red;"></i>
+            <i class="mb-4 mt-4 text-4xl fas fa-circle-question" style="color: red;"></i>
             <h2 class="mb-4 text-xl font-semibold">Are you sure you want to update?</h2>
             <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
           </div>
@@ -651,7 +651,7 @@ export default {
       axios.get('/get-profile-picture')
         .then(response => {
           this.profilePictureUrl = response.data.url ? response.data.url : '/storage/uploads/profile-pictures/default-profile.png';
-          console.log('Profile Picture URL:', this.profilePictureUrl); 
+          console.log('Profile Picture URL:', this.profilePictureUrl);
         })
         .catch(error => {
           console.error('Error fetching profile picture:', error);
@@ -781,7 +781,7 @@ onCroppingComplete(croppedBlob) {
     },
     hidePhotoSuccessDialog() {
       this.showPhotoSuccessDialog = false;
-      location.reload(); 
+      location.reload();
     },
 
     uploadFile() {
@@ -802,7 +802,7 @@ onCroppingComplete(croppedBlob) {
 
     hidePhotoSuccessDialog() {
       this.showPhotoSuccessDialog = false; // Hide the success modal
-      location.reload(); 
+      location.reload();
     },
 
     toggleEditing() {
@@ -823,7 +823,7 @@ onCroppingComplete(croppedBlob) {
     },
     hideSuccessDialog() {
       this.showSuccessDialog = false;
-      location.reload(); 
+      location.reload();
     },
 
     saveProfile() {
@@ -895,7 +895,7 @@ onCroppingComplete(croppedBlob) {
 }
 
 .border-box {
-    background: white;
+    background: rgb(255, 255, 255);
     border-radius: 8px;
     padding: 20px;
     box-shadow: none;

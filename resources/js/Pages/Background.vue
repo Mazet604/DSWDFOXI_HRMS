@@ -117,12 +117,12 @@
                     </TabPanel>
                     <TabPanel header="ORGANIZATION">
                     <h1 style="font-size: 25px; font-weight: bold;">Organization</h1>
-                    <DataTable 
-                        v-model:selection="selectedRow" 
-                        :value="organizationData" 
-                        class="mt-8" 
-                        :paginator="true" 
-                        :rows="5" 
+                    <DataTable
+                        v-model:selection="selectedRow"
+                        :value="organizationData"
+                        class="mt-8"
+                        :paginator="true"
+                        :rows="5"
                         @selection-change="onRowSelect"
                     >
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -223,7 +223,7 @@
             <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
                 <div class="p-4">
                     <div class="text-center">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-4" style="color: red;"></i>
+                        <i class="mb-4 mt-4 text-4xl fas fa-circle-question" style="color: red;"></i>
                         <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
                         <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                     </div>
@@ -602,7 +602,7 @@ export default {
     computed: {
         filteredEditFields() {
             return Object.fromEntries(
-                Object.entries(this.editFields).filter(([key]) => 
+                Object.entries(this.editFields).filter(([key]) =>
                     !key.endsWith('_count') && !key.startsWith('full') && !key.startsWith('age')
                 )
             );
@@ -620,7 +620,7 @@ export default {
     onRowSelect(event) {
     console.log('Row selected:', event.data);
     this.selectedRow = event.data;
-    this.openEditDialog(this.selectedRow); // Directly call the edit dialog 
+    this.openEditDialog(this.selectedRow); // Directly call the edit dialog
     },
 
 
@@ -635,7 +635,7 @@ export default {
             this.editFields = { ...row }; // Deep copy of the selected row
             this.currentTabLabel = this.getCurrentTabLabel();
             this.showEditDialog = true;
-            
+
         } else {
             console.log('No row selected.');
         }
@@ -720,7 +720,7 @@ saveUpdate() {
         .catch(error => {
             console.error('Error updating data:', error);
         });
-    
+
     // Hide the confirmation dialog
     this.hideUpdateDialog();
 },
@@ -1139,7 +1139,7 @@ saveUpdate() {
             showAddReferencesDialog.value = false;
         };
 
-        const hideSuccessDialog = () => {   
+        const hideSuccessDialog = () => {
             showSuccessDialog.value = false;
         };
 
@@ -1187,7 +1187,7 @@ saveUpdate() {
         });
 
         return {
-            activeTab,  
+            activeTab,
             educationData,
             organizationData,
             workExperienceData,

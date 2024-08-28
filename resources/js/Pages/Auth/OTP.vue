@@ -140,15 +140,14 @@ const formattedTimer = computed(() => {
 
 <template>
     <Head title="OTP Verification" />
-    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/bgwhiteredblue.png');">
+    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/background-image.png');">
         <div v-if="!otpExpired && !passwordChanged" class="w-full max-w-lg p-6 bg-white rounded-lg shadow-md sm:p-8 lg:p-10 sm:max-w-xl lg:max-w-2xl">
-            <div class="mb-6 text-2xl font-semibold text-center lg:text-3xl">OTP Verification</div>
-            <p class="mb-8 text-center text-gray-500">Please enter the OTP sent to your email.</p>
+            <div class="mb-6 text-2xl font-semibold text-center lg:text-3xl">AUTHENTICATION REQUIRED</div>
+            <p class="mb-8 text-center font-semibold text-gray-500">Your OTP code was sent to your email <span class="text-black">&#9993;</span> </p>
 
-            <!-- Timer Display -->
-            <div class="mb-4 text-center text-red-500">
-                OTP expires in: <strong>{{ formattedTimer }}</strong>
-            </div>
+            <hr class="mb-16 border-gray-300">
+
+
 
             <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
                 {{ status }}
@@ -176,13 +175,20 @@ const formattedTimer = computed(() => {
                     <InputError class="mt-2" :message="form.errors.otp" />
                 </div>
 
-                <div class="mt-8">
-                    <PrimaryButton :class="{ 'opacity-50': form.processing }" :disabled="form.processing" class="w-full py-3 text-center text-white rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600">
+                <!-- Timer Display -->
+                <div class="mb-4 mt-5 text-center text-red-500">
+                OTP WILL EXPIRE: <strong>{{ formattedTimer }}</strong>
+            </div>
+
+                <div class="flex justify-center mt-8">
+                    <PrimaryButton :class="{ 'opacity-50': form.processing }" :disabled="form.processing" class="py-4 px-8 text-center text-white rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600">
                         <span class="w-full text-center">VERIFY OTP</span>
                     </PrimaryButton>
                 </div>
             </form>
         </div>
+
+
 
         <!-- Password Changed Success Message -->
         <div v-else-if="passwordChanged" class="w-full max-w-lg p-6 bg-white rounded-lg shadow-md sm:p-8 lg:p-10 sm:max-w-xl lg:max-w-2xl">
@@ -193,9 +199,9 @@ const formattedTimer = computed(() => {
         <!-- OTP Expired Modal -->
         <div v-else class="w-full max-w-lg p-6 bg-white rounded-lg shadow-md sm:p-8 lg:p-10 sm:max-w-xl lg:max-w-2xl">
             <div class="mb-6 text-2xl font-semibold text-center lg:text-3xl">OTP Expired</div>
-            <p class="mb-8 text-center text-gray-500">Your OTP has expired. Please click the button below to resend a new OTP.</p>
+            <p class="mb-8 text-center font-semibold text-gray-500">Your OTP has expired. Please click the button below to resend a new OTP.</p>
             <div class="flex justify-center">
-                <PrimaryButton @click="resendOtp" class="w-full py-3 text-center text-white rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600">
+                <PrimaryButton @click="resendOtp" class="py-4 px-8 text-center text-white rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600">
                     Resend OTP
                 </PrimaryButton>
             </div>
