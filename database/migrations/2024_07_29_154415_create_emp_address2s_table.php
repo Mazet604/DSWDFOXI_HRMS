@@ -12,19 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emp_address2', function (Blueprint $table) {
-            $table->increments('add2_count');  
-            $table->unsignedInteger('emp_count');  
+            $table->unsignedInteger('emp_count')->change();  
             $table->string('emp_house2',20)->nullable();
-            $table->string('emp_street2',30)->nullable();
             $table->string('emp_subd2',60)->nullable(); //30 for subdivisions with high character count
-            $table->string('emp_brgy2',60);
-            $table->string('emp_city2',60);
-            $table->string('emp_prov2',60);
-            $table->string('emp_region2',60);
-            $table->string('emp_country2',60); //60 for the countries with high character count
-            $table->date('emp_datereg2');
-            $table->string('emp_zip2s',6);
-            $table->timestamps();  // Add timestamps for created_at and updated_at
+            $table->string('emp_brgy2',60)->nullable();
+            $table->string('emp_city2',60)->nullable();
+            $table->string('emp_prov2',60)->nullable();
+            $table->string('emp_region2',60)->nullable();
+            $table->string('emp_country2',60)->nullable(); //60 for the countries with high character count
+            $table->string('emp_zip2s',6)->nullable();
 
             // Define foreign key constraint
             $table->foreign('emp_count')

@@ -11,6 +11,7 @@ class emp_spouse extends Model
 
     protected $table = 'emp_spouse'; // Set the table name
     protected $primaryKey = 'emp_count'; // Assuming the primary key is 'spouse_id'
+    public $timestamps = false;
    
 
     public function empSpouse()

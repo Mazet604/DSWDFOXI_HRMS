@@ -9,8 +9,9 @@ class emp_mother extends Model
 {
     use HasFactory;
 
-    protected $table = 'emp_mother'; // Set the table name
-    protected $primaryKey = 'emp_count'; // Assuming the primary key is 'mother_id'
+    protected $table = 'emp_mother';
+    protected $primaryKey = 'emp_count';
+    public $timestamps = false;
  
 
     public function empMother()
