@@ -367,18 +367,18 @@ class BackgroundController extends Controller
 
             $spouseSurname = $emp_spouse->spouse_lname;
             $spouseFirstName = $emp_spouse->spouse_fname;
-            $MiddleName = $emp_spouse->spouse_mname;
-            $ExtName = $emp_spouse->spouse_xname;
-            $Occupation = $emp_spouse->spouse_occup;
+            $spouseMiddleName = $emp_spouse->spouse_mname;
+            $spouseExtName = $emp_spouse->spouse_xname;
+            $spouseOccupation = $emp_spouse->spouse_occup;
             $spouseBusinessName = $emp_spouse->spouse_office;
             $spouseBusinessAddress = $emp_spouse->spouse_busadd;
             $spouseTelNo = $emp_spouse->spouse_tel;
             return response()->json([
                 'spouseSurname' => $spouseSurname, 
                 'spouseFirstName' => $spouseFirstName, 
-                'MiddleName' => $MiddleName,
-                'ExtName' => $ExtName,
-                'Occupation' => $Occupation, 
+                'spouseMiddleName' => $spouseMiddleName,
+                'spouseExtName' => $spouseExtName,
+                'spouseOccupation' => $spouseOccupation, 
                 'spouseBusinessName' => $spouseBusinessName, 
                 'spouseBusinessAddress' => $spouseBusinessAddress,
                 'spouseTelNo' => $spouseTelNo

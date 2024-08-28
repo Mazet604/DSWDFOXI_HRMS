@@ -823,9 +823,9 @@ saveUpdate() {
                 const response = await axios.get('/emp_spouse/Spouse');
                 this.fields.spouseSurname = response.data.spouseSurname;
                 this.fields.spouseFirstName = response.data.spouseFirstName;
-                this.fields.MiddleName = response.data.MiddleName;
-                this.fields.ExtName = response.data.ExtName;
-                this.fields.Occupation = response.data.Occupation;
+                this.fields.spouseMiddleName = response.data.spouseMiddleName;
+                this.fields.spouseExtName = response.data.spouseExtName;
+                this.fields.spouseOccupation = response.data.spouseOccupation;
                 this.fields.spouseBusinessName = response.data.spouseBusinessName;
                 this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
                 this.fields.spouseTelNo = response.data.spouseTelNo;
