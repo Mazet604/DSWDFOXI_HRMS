@@ -47,8 +47,8 @@ DROP TABLE IF EXISTS `cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -71,8 +71,8 @@ DROP TABLE IF EXISTS `cache_locks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -96,14 +96,14 @@ DROP TABLE IF EXISTS `education`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `education` (
   `educ_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `educ_level` int unsigned DEFAULT NULL,
-  `educ_school` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `educ_degree` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `educ_school` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `educ_degree` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `educ_from` date DEFAULT NULL,
   `educ_year_grad` int DEFAULT NULL,
-  `educ_academic_honor` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `educ_hl_earned` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `educ_academic_honor` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `educ_hl_earned` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`educ_count`),
@@ -133,7 +133,7 @@ DROP TABLE IF EXISTS `education_level`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `education_level` (
   `lvl_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `level_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `level_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`lvl_count`)
@@ -158,11 +158,11 @@ DROP TABLE IF EXISTS `emp_acc`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_acc` (
-  `empid` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `empmail` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `empuser` char(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emppass` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `empid` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empmail` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empuser` char(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emppass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`empid`),
@@ -176,7 +176,7 @@ CREATE TABLE `emp_acc` (
 
 LOCK TABLES `emp_acc` WRITE;
 /*!40000 ALTER TABLE `emp_acc` DISABLE KEYS */;
-INSERT INTO `emp_acc` VALUES ('11-0070','jgmatugas117@gmail.com','jgmatugas','$2y$12$mZsw5uzUC68xnR.4xHlhP.LhkUNtI7mWhG7L2MyMVxA5fHaJF2giK',NULL,'2024-07-31 21:44:22','2024-08-16 05:12:39'),('11-0071','loidandre30@gmail.com','tdadlawan','$2y$12$9WL35defMGo9IuURU6RLD.F35V7gJMHw7nF3syzwrUT4f.zK6Mv8q',NULL,'2024-07-31 21:44:22','2024-07-31 21:44:22'),('11-0072','mnpartiaga03450@usep.edu.ph','mnartiaga','$2y$12$j6G0MUCqCwCWWsxDFvi44.bOBA0ttN.kak0VxyNeW.tIS/cBcyUiW',NULL,'2024-08-12 22:51:41','2024-08-12 22:51:41');
+INSERT INTO `emp_acc` VALUES ('11-0070','jgmatugas117@gmail.com','jgmatugas','$2y$12$mZsw5uzUC68xnR.4xHlhP.LhkUNtI7mWhG7L2MyMVxA5fHaJF2giK',NULL,'2024-07-31 21:44:22','2024-08-16 05:12:39'),('11-0071','loidandre30@gmail.com','tdadlawan','$2y$12$9WL35defMGo9IuURU6RLD.F35V7gJMHw7nF3syzwrUT4f.zK6Mv8q',NULL,'2024-07-31 21:44:22','2024-07-31 21:44:22'),('11-0072','lacaringoy02577@usep.edu.ph','mnartiaga','$2y$12$2BH66yWlkTTxMh7P4j6JG.4J26VxkUFIA3v3LtrH1a10jldkM7p5u',NULL,'2024-08-12 22:51:41','2024-08-27 05:35:21');
 /*!40000 ALTER TABLE `emp_acc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,13 +189,13 @@ DROP TABLE IF EXISTS `emp_address`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_address` (
   `emp_count` int unsigned NOT NULL,
-  `emp_house` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_subd` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_brgy` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_city` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_prov` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_region` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_zip` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_house` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_subd` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_brgy` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_city` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_prov` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_region` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_zip` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`emp_count`),
@@ -209,7 +209,7 @@ CREATE TABLE `emp_address` (
 
 LOCK TABLES `emp_address` WRITE;
 /*!40000 ALTER TABLE `emp_address` DISABLE KEYS */;
-INSERT INTO `emp_address` VALUES (1,'#45, Sunset Blvd','Golden Village','112402074','112402000','112400000','110000000','9000','2024-07-31 21:44:22','2024-08-25 02:13:35'),(2,'#23, Sta. Rita St.','Pagasa Village','112319001','112319000','112300000','110000000','8000','2024-07-31 21:44:22','2024-08-20 23:48:43');
+INSERT INTO `emp_address` VALUES (1,'#45, Sunset Blvd','Golden Village','112402074','112402000','112400000','110000000','9000','2024-07-31 21:44:22','2024-08-25 02:13:35'),(2,'#23, Sta. Rita St.','Pagasa Village','112319001','112319000','112300000','110000000','8000','2024-07-31 21:44:22','2024-08-20 23:48:43'),(3,'#45, Sunset Blvd','Golden Village','112402074','112402000','112400000','110000000','8000',NULL,NULL);
 /*!40000 ALTER TABLE `emp_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,13 +222,13 @@ DROP TABLE IF EXISTS `emp_address2`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_address2` (
   `emp_count` int unsigned NOT NULL,
-  `emp_house2` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_subd2` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_brgy2` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_city2` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_prov2` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_region2` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_zip2` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_house2` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_subd2` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_brgy2` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_city2` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_prov2` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_region2` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_zip2` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`emp_count`)
@@ -241,7 +241,7 @@ CREATE TABLE `emp_address2` (
 
 LOCK TABLES `emp_address2` WRITE;
 /*!40000 ALTER TABLE `emp_address2` DISABLE KEYS */;
-INSERT INTO `emp_address2` VALUES (1,'#31, Sta. Rita St.','Proper','112319001','112319000','112300000','110000000','8000',NULL,'2024-08-25 03:05:59'),(2,'asdas','asdasd','118202006','118202000','118200000','110000000','8000',NULL,'2024-08-25 03:08:18');
+INSERT INTO `emp_address2` VALUES (1,'#32, Sunset Blvd','D. A. Village','124711018','124711000','124700000','120000000','9000',NULL,'2024-08-27 18:11:30'),(2,'asdas','asdasd','118202006','118202000','118200000','110000000','8000',NULL,'2024-08-25 03:08:18'),(3,'awdawds4','Sunone Village','060415014','060415000','060400000','060000000','8000',NULL,'2024-08-27 05:42:11');
 /*!40000 ALTER TABLE `emp_address2` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,10 +255,10 @@ DROP TABLE IF EXISTS `emp_child`;
 CREATE TABLE `emp_child` (
   `child_count` int unsigned NOT NULL AUTO_INCREMENT,
   `emp_count` int unsigned NOT NULL,
-  `child_fname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `child_mname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `child_lname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `child_xname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `child_fname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `child_mname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `child_lname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `child_xname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `child_dob` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -274,7 +274,7 @@ CREATE TABLE `emp_child` (
 
 LOCK TABLES `emp_child` WRITE;
 /*!40000 ALTER TABLE `emp_child` DISABLE KEYS */;
-INSERT INTO `emp_child` VALUES (1,1,'Aerox','Cutie','Aringoy','II','2024-08-13','2024-08-11 22:41:22','2024-08-11 22:41:22'),(2,3,'Martha','Achilles','Artiaga',NULL,'2021-02-13','2024-08-12 22:57:27','2024-08-12 22:57:27'),(3,2,'Marc','Neo','Artiaga',NULL,'2024-08-16','2024-08-13 16:23:03','2024-08-13 16:23:03'),(4,2,'yhena mae','eljay','adlawan',NULL,'2024-08-01','2024-08-13 17:32:17','2024-08-13 17:32:17');
+INSERT INTO `emp_child` VALUES (1,1,'Aeroxasdd','Cutie','Aringoy','II','2024-08-13','2024-08-11 22:41:22','2024-08-27 18:08:59'),(2,3,'Martha','Achilles','Artiaga',NULL,'2021-02-13','2024-08-12 22:57:27','2024-08-12 22:57:27'),(3,2,'Marc','Neo','Artiaga',NULL,'2024-08-16','2024-08-13 16:23:03','2024-08-13 16:23:03'),(4,2,'yhena mae','eljay','adlawan',NULL,'2024-08-01','2024-08-13 17:32:17','2024-08-13 17:32:17');
 /*!40000 ALTER TABLE `emp_child` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,12 +287,12 @@ DROP TABLE IF EXISTS `emp_eligibility`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_eligibility` (
   `eli_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `eli_service` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `eli_service` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `eli_rating` decimal(65,2) NOT NULL,
   `eli_doe` date NOT NULL,
-  `eli_poe` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `eli_license_no` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `eli_poe` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `eli_license_no` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `eli_licen_valid` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -322,10 +322,10 @@ DROP TABLE IF EXISTS `emp_emergency`;
 CREATE TABLE `emp_emergency` (
   `emer_count` int unsigned NOT NULL AUTO_INCREMENT,
   `emp_count` int unsigned NOT NULL,
-  `emer_fname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emer_mname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emer_lname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emer_xname` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emer_fname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emer_mname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emer_lname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emer_xname` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `emer_cnum` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -352,15 +352,12 @@ DROP TABLE IF EXISTS `emp_father`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_father` (
-  `father_count` int unsigned NOT NULL AUTO_INCREMENT,
   `emp_count` int unsigned NOT NULL,
-  `father_fname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `father_mname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `father_lname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `father_xname` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`father_count`),
+  `father_fname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `father_mname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `father_lname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `father_xname` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`emp_count`),
   KEY `emp_father_emp_count_foreign` (`emp_count`),
   CONSTRAINT `emp_father_emp_count_foreign` FOREIGN KEY (`emp_count`) REFERENCES `employee` (`emp_count`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -372,6 +369,7 @@ CREATE TABLE `emp_father` (
 
 LOCK TABLES `emp_father` WRITE;
 /*!40000 ALTER TABLE `emp_father` DISABLE KEYS */;
+INSERT INTO `emp_father` VALUES (1,'Vegeta','Vader','Omblero','Jr.d');
 /*!40000 ALTER TABLE `emp_father` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -384,13 +382,13 @@ DROP TABLE IF EXISTS `emp_learning`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_learning` (
   `learn_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `learn_title` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `learn_title` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `learn_fr` date DEFAULT NULL,
   `learn_to` date DEFAULT NULL,
   `learn_hrs` int DEFAULT NULL,
-  `learn_type` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `learn_con` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `learn_type` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `learn_con` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`learn_count`),
@@ -416,15 +414,12 @@ DROP TABLE IF EXISTS `emp_mother`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_mother` (
-  `mother_count` int unsigned NOT NULL AUTO_INCREMENT,
   `emp_count` int unsigned NOT NULL,
-  `mother_fname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mother_mname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mother_lname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `maidenname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`mother_count`),
+  `mother_fname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mother_mname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mother_lname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `maidenname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`emp_count`),
   KEY `emp_mother_emp_count_foreign` (`emp_count`),
   CONSTRAINT `emp_mother_emp_count_foreign` FOREIGN KEY (`emp_count`) REFERENCES `employee` (`emp_count`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -436,6 +431,7 @@ CREATE TABLE `emp_mother` (
 
 LOCK TABLES `emp_mother` WRITE;
 /*!40000 ALTER TABLE `emp_mother` DISABLE KEYS */;
+INSERT INTO `emp_mother` VALUES (1,'Shen Rah','Wu','Kong','Dragon');
 /*!40000 ALTER TABLE `emp_mother` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -448,8 +444,8 @@ DROP TABLE IF EXISTS `emp_org`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_org` (
   `org_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `org_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `org_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`org_count`),
@@ -477,31 +473,31 @@ DROP TABLE IF EXISTS `emp_otherinfo`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_otherinfo` (
   `other_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_34a` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_34b` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_34bif` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_35a` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_35aif` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_35b` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_35bif` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_34a` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_34b` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_34bif` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_35a` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_35aif` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_35b` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_35bif` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `other_35bfiled` date NOT NULL,
-  `other_35stat` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_36` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_36if` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_37` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_37if` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_38a` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_38aif` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_38b` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_39` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_39if` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_40a` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_40aif` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_40b` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_40bif` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_40c` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_40cif` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_35stat` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_36` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_36if` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_37` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_37if` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_38a` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_38aif` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_38b` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_39` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_39if` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_40a` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_40aif` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_40b` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_40bif` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_40c` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `other_40cif` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`other_count`),
@@ -528,8 +524,8 @@ DROP TABLE IF EXISTS `emp_recog`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_recog` (
   `recog_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `recog_name` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recog_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`recog_count`),
@@ -556,12 +552,12 @@ DROP TABLE IF EXISTS `emp_reference`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_reference` (
   `ref_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ref_fname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ref_mname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ref_lname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ref_xname` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ref_add` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ref_fname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ref_mname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ref_lname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ref_xname` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ref_add` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ref_cnum` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -590,8 +586,8 @@ DROP TABLE IF EXISTS `emp_skills`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_skills` (
   `skill_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `skill` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `skill` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`skill_count`),
@@ -618,19 +614,16 @@ DROP TABLE IF EXISTS `emp_spouse`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_spouse` (
-  `spouse_count` int unsigned NOT NULL AUTO_INCREMENT,
   `emp_count` int unsigned NOT NULL,
-  `spouse_fname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `spouse_mname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `spouse_lname` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `spouse_xname` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `spouse_occup` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `spouse_office` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `spouse_busadd` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spouse_fname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spouse_mname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spouse_lname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spouse_xname` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spouse_occup` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spouse_office` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spouse_busadd` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `spouse_tel` int DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`spouse_count`),
+  PRIMARY KEY (`emp_count`),
   KEY `emp_spouse_emp_count_foreign` (`emp_count`),
   CONSTRAINT `emp_spouse_emp_count_foreign` FOREIGN KEY (`emp_count`) REFERENCES `employee` (`emp_count`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -642,6 +635,7 @@ CREATE TABLE `emp_spouse` (
 
 LOCK TABLES `emp_spouse` WRITE;
 /*!40000 ALTER TABLE `emp_spouse` DISABLE KEYS */;
+INSERT INTO `emp_spouse` VALUES (1,'Crist Mar','Luterte','De Asis','Ex.','Penetration Tester','DSWD FO XI','Matina Aplaya',12345);
 /*!40000 ALTER TABLE `emp_spouse` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -654,13 +648,13 @@ DROP TABLE IF EXISTS `emp_voluntary`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_voluntary` (
   `vol_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `vol_name` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vol_add` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vol_name` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vol_add` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `vol_fr` date DEFAULT NULL,
   `vol_to` date DEFAULT NULL,
   `vol_hrs` int DEFAULT NULL,
-  `vol_pos` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vol_pos` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`vol_count`),
@@ -687,15 +681,15 @@ DROP TABLE IF EXISTS `emp_work`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `emp_work` (
   `work_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `workfr` date NOT NULL,
   `workto` date NOT NULL,
-  `work_pos` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `work_dept` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `work_pos` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `work_dept` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `work_salary` decimal(10,2) NOT NULL,
   `work_salarygrade` int DEFAULT NULL,
-  `work_stat` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `work_gov` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `work_stat` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `work_gov` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`work_count`),
@@ -723,37 +717,37 @@ DROP TABLE IF EXISTS `employee`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `employee` (
   `emp_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_fname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_mname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_lname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_ext` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_fname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_mname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_lname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_ext` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `emp_dob` date NOT NULL,
   `emp_age` int DEFAULT NULL,
-  `emp_pob` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_position` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_sex` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_blood` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_pob` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_position` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_sex` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_blood` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_height` int DEFAULT NULL,
   `emp_weight` int DEFAULT NULL,
-  `emp_civ_stat` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_citizen` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_civ_stat` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_citizen` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_cnum` int DEFAULT NULL,
-  `emp_idlicense` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_idplace` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emp_iduse` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_idlicense` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_idplace` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emp_iduse` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `emp_iddate` date NOT NULL,
   `emp_telnum` int DEFAULT NULL,
-  `emp_religion` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_religion` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `User_type` int NOT NULL,
-  `esignature` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_disability` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_ip` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_pwd` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `emp_ip_group` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `esignature` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_disability` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_ip` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_pwd` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_ip_group` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `emp_pic` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emp_pic` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`emp_count`),
   KEY `employee_empid_foreign` (`empid`),
   CONSTRAINT `employee_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
@@ -766,7 +760,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'11-0070','Janelle','Gallamozo','Matugas','0','1985-05-15',NULL,'Davao City','HRMDD Head','2','2',175,75,'1','Filipino',1234567891,'ID654321','City','Personal','2005-01-01',98765432,'Roman Catholic',1,'signature1.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-25 10:43:29','cropped-image.png'),(2,'11-0071','Teddygardo Jr.','Baugbog','Adlawan','0','1989-12-20',NULL,'Davao City','Administrative Assistant II','1','3',160,70,'1','Filipino',1234567890,'ID123456','City','Personal','2010-01-01',98765432,'Roman Catholic',1,'signature.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-14 18:29:07','cropped-image.png'),(3,'11-0072','Marc Neo','Perez','Artiaga',NULL,'2002-12-28',NULL,'New York','Manager','1','3',169,70,'6','American',1234567890,'A1234567','New York','Driver’s License','2024-01-01',1234567890,'Christian',1,'signature_here','None','No','password_hash','Group1','2024-08-13 06:55:37','2024-08-12 22:56:51',NULL);
+INSERT INTO `employee` VALUES (1,'11-0070','Janelle','Gallamozo','Matugas','0','1985-05-15',NULL,'Davao City','HRMDD Head','2','2',175,75,'1','Filipino',1234567891,'ID654321','City','Personal','2005-01-01',98765432,'Roman Catholic',1,'signature1.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-25 10:43:29','cropped-image.png'),(2,'11-0071','Teddygardo Jr.','Baugbog','Adlawan','0','1989-12-20',NULL,'Davao City','Administrative Assistant II','1','3',160,70,'1','Filipino',1234567890,'ID123456','City','Personal','2010-01-01',98765432,'Roman Catholic',1,'signature.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-08-14 18:29:07','cropped-image.png'),(3,'11-0072','Marc Neo','Perez','Artiaga',NULL,'2002-12-28',NULL,'New York','Manager','1','3',169,70,'6','American',1234567890,'A1234567','New York','Driver’s License','2024-01-01',1234567890,'Christian',1,'signature_here','None','No','password_hash','Group1','2024-08-13 06:55:37','2024-08-27 05:38:54','undefined_image.png');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -779,11 +773,11 @@ DROP TABLE IF EXISTS `failed_jobs`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `failed_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
@@ -808,8 +802,8 @@ DROP TABLE IF EXISTS `gsisinfo`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `gsisinfo` (
   `gsis_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pb_no` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pb_no` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`gsis_count`),
@@ -835,13 +829,13 @@ DROP TABLE IF EXISTS `job_batches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int NOT NULL,
   `pending_jobs` int NOT NULL,
   `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `failed_job_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
   `finished_at` int DEFAULT NULL,
@@ -867,8 +861,8 @@ DROP TABLE IF EXISTS `jobs`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint unsigned NOT NULL,
   `reserved_at` int unsigned DEFAULT NULL,
   `available_at` int unsigned NOT NULL,
@@ -896,9 +890,9 @@ DROP TABLE IF EXISTS `lib_acc_status`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_acc_status` (
   `lib_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lib_stat` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lib_desc` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib_stat` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib_desc` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`lib_count`),
@@ -925,7 +919,7 @@ DROP TABLE IF EXISTS `lib_blood_types`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_blood_types` (
   `lib2_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `lib2_blood_type` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib2_blood_type` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`lib2_count`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -948,9 +942,9 @@ DROP TABLE IF EXISTS `lib_brgies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_brgies` (
-  `brgy_psgc` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `col_brgy` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `citmun_psgc` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `brgy_psgc` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `col_brgy` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `citmun_psgc` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`brgy_psgc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -974,9 +968,9 @@ DROP TABLE IF EXISTS `lib_cities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_cities` (
-  `citmun_psgc` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `col_citymuni` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prv_psgc` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `citmun_psgc` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `col_citymuni` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prv_psgc` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`citmun_psgc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1000,7 +994,7 @@ DROP TABLE IF EXISTS `lib_civil_stats`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_civil_stats` (
   `lib3_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `lib3_civil_stat` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib3_civil_stat` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`lib3_count`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1024,10 +1018,10 @@ DROP TABLE IF EXISTS `lib_divisions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_divisions` (
   `lib5_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `lib5_divname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lib5_divdesc` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lib5_rec_approval` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lib5_approval` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib5_divname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib5_divdesc` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib5_rec_approval` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib5_approval` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`lib5_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1050,10 +1044,10 @@ DROP TABLE IF EXISTS `lib_positions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_positions` (
   `lib6_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `lib6_posname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lib6_parenthetical_title` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lib6_pos_level` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lib6_salary_grade` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib6_posname` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib6_parenthetical_title` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib6_pos_level` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib6_salary_grade` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`lib6_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1075,9 +1069,9 @@ DROP TABLE IF EXISTS `lib_provinces`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_provinces` (
-  `prv_psgc` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `col_province` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reg_psgc` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prv_psgc` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `col_province` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reg_psgc` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`prv_psgc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1100,8 +1094,8 @@ DROP TABLE IF EXISTS `lib_regions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_regions` (
-  `reg_psgc` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `col_region` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reg_psgc` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `col_region` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`reg_psgc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1125,7 +1119,7 @@ DROP TABLE IF EXISTS `lib_sexes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_sexes` (
   `lib4_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `lib4_sex` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib4_sex` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`lib4_count`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1149,7 +1143,7 @@ DROP TABLE IF EXISTS `lib_suffixes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lib_suffixes` (
   `lib1_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `lib1_suffix` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lib1_suffix` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`lib1_count`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1173,7 +1167,7 @@ DROP TABLE IF EXISTS `migrations`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1198,8 +1192,8 @@ DROP TABLE IF EXISTS `pagibiginfo`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pagibiginfo` (
   `pgbg_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pgbg_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pgbg_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `pgbg_amt` decimal(10,2) NOT NULL,
   `pgbg_mem` decimal(10,2) NOT NULL,
   `pgbg_emp` decimal(10,2) NOT NULL,
@@ -1228,8 +1222,8 @@ DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1253,9 +1247,9 @@ DROP TABLE IF EXISTS `philhealthinfo`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `philhealthinfo` (
   `phl_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ph_lid` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phl_stat` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ph_lid` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phl_stat` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `phl_com` decimal(10,2) NOT NULL,
   `phl_mem` decimal(10,2) NOT NULL,
   `phl_emp` decimal(10,2) NOT NULL,
@@ -1284,11 +1278,11 @@ DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sessions_user_id_index` (`user_id`),
@@ -1302,7 +1296,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('AyfJv4cOISn49WUFWhrwTLBVaOihCitKKabepzPB','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36','YTo3OntzOjY6Il90b2tlbiI7czo0MDoiTFE4SUZvSGt2d2p0bWY3YVMwRVVZT0QxMWpYbTBNd1A1WE5wYnRsRSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1724724101),('bTdHIUnykKopYN9KDy8to6XS5J6K0hUgFEaFMm86','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36','YTo3OntzOjY6Il90b2tlbiI7czo0MDoiTGhKTkxHNklEMmQ5OEVKd2dhaVpkcnRhZ1hKZDZPb0FjVmNnSlQ5SiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1724611810),('cvfOgUkVVOZLPXXglr8UJfgpVSnjNTa54L6FA075',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiZlFycXNNMmJtWUFKVEdsdmVrSVhEYjkyVlpKNXJkUlR5cGZYMVRsTCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1724609123),('RFzYOmEvhMThptnuSiPAqHvwKAVcED5WXNHOunKe','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0','YTo3OntzOjY6Il90b2tlbiI7czo0MDoiZ25ERTRrNmRrY1ZDOUdHbndNaEtYbnMxcVZSa1Z0bk9qSjFrT09vSyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1724609908);
+INSERT INTO `sessions` VALUES ('6EVxl6HBGFHf5Pdrk7C29JR34e6XJoavSyrgi6yv','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36','YTo3OntzOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoiakZ2YU9YQ0VVdUdldGdCaVBrOGVuVkhsOGF4VEhNcHhWSUJtU2tPTyI7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO3M6NzoiMTEtMDA3MCI7czoxMjoidXNlcl9lbXBtYWlsIjtzOjIyOiJqZ21hdHVnYXMxMTdAZ21haWwuY29tIjtzOjc6InVzZXJfaWQiO3M6NzoiMTEtMDA3MCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1724825558),('lCJ9MrJ6odvqcqoSmwlLbfq2DVShbvJc7NiICsMl',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiaFJEWDdXcEZsRHgyREFVbFJMZzFxWFIzWVR2TDl1dnJqYlM2ZzAwQyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724822969),('PLfQeCf2tOAUDz83Ih51i7tVesLgRiTmDR3y7KEI',NULL,'127.0.0.1','Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiNDRTdXVMaUQ1bEQyQndOMzlQeVBSRzBhSUt5dEh6OHBxZUxyTkZYTiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724822969),('X9NG5JMxTRICXnsjoE31gQXJCAH1kxdGPRv6v4TL',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoick45TE02N2hwUFkxc3lNc3NjNURVT091MkNLWlBCUWZvWnMxWkZoWiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1724822969);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1315,9 +1309,9 @@ DROP TABLE IF EXISTS `sssinfo`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sssinfo` (
   `sss_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sss_num` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sss_type` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sss_num` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sss_type` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sss_amt` decimal(10,2) NOT NULL,
   `sss_stat` decimal(10,2) NOT NULL,
   `sss_ec` decimal(10,2) NOT NULL,
@@ -1347,8 +1341,8 @@ DROP TABLE IF EXISTS `tininfo`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tininfo` (
   `tin_count` int unsigned NOT NULL AUTO_INCREMENT,
-  `empid` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tin_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tin_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`tin_count`),
@@ -1375,4 +1369,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-27 10:32:01
+-- Dump completed on 2024-08-28 14:16:41
