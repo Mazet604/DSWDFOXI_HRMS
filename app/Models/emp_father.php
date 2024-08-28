@@ -9,12 +9,13 @@ class emp_father extends Model
 {
     use HasFactory;
 
-    protected $table = 'emp_father'; // Set the table name
-    protected $primaryKey = 'emp_count'; // Assuming the primary key is 'father_id'
+    protected $table = 'emp_father';
+    protected $primaryKey = 'emp_count';
+    public $timestamps = false;
     
 
     public function empFather()
     {
-        return $this->belongsTo(EmpAcc::class, 'emp_count', 'emp_count');
+        return $this->belongsTo(employee::class, 'emp_count', 'emp_count');
     }
 }

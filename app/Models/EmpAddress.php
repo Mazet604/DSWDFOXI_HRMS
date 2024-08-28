@@ -17,4 +17,8 @@ class EmpAddress extends Model
         'emp_subd', 'emp_brgy', 'emp_city', 'emp_prov', 'emp_region', 'emp_zip'
     ];
 
+    public function empAddress2()
+    {
+        return $this->hasMany(EmpAddress2::class, 'emp_count', 'emp_count');
+    }
 }

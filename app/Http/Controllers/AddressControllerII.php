@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use App\Models\EmpAddress2;
+use App\Models\EmpAddress;
 use App\Models\lib_region;
 use App\Models\lib_province;
 use App\Models\lib_city;
@@ -37,6 +38,7 @@ class AddressControllerII extends Controller
 
             // Return the region and province
             return response()->json([
+                'emp_count' => $address2->emp_count,
                 'zipcode2' => $address2->emp_zip2,
                 'block2' => $address2->emp_house2,
                 'villsub2' => $address2->emp_subd2,

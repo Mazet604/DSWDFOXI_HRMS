@@ -107,7 +107,7 @@
             <TabPanel header="ADDRESS" :active="activeSubTab === 'address'">
               <!-- Address Fields -->
               <h1 style="font-size: 25px; font-weight: bold; margin-bottom: 3%; margin-top: 1%;">PERMANENT ADDRESS</h1>
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
                   <select class="input-field" v-model="fields.Region" :disabled="!isEditing" @change="fetchProvinces()">
@@ -132,24 +132,32 @@
                     <option v-for="(barangay, index) in barangays" :key="index" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
                   </select>
                 </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE</label>
-                  <input type="text" class="input-field" v-model="fields.zipcode" :disabled="!isEditing" />
                 </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
-                  <input type="text" class="input-field" v-model="fields.block" :disabled="!isEditing" />
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-3" style="margin-top: 3%;">
+                  <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE</label>
+                    <input type="text" class="input-field addgrid" v-model="fields.zipcode" :disabled="!isEditing" />
+                  </div>
+                  <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
+                    <input type="text" class="input-field addgrid" v-model="fields.block" :disabled="!isEditing" />
+                  </div>
+                  <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
+                    <input type="text" class="input-field addgrid" v-model="fields.villsub" :disabled="!isEditing" />
+                  </div>
                 </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
-                  <input type="text" class="input-field" v-model="fields.villsub" :disabled="!isEditing" />
-                </div>
-              </div>
               <span class="broken-line"></span>
               <!--CHECK BOX HERE TO COPY PASTE PERMANENT ADD to CURRENT ADD-->
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-              <h1 style="font-size: 25px; font-weight: bold; margin-bottom: 3%; margin-top: 1%;">CURRENT ADDRESS</h1>
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+              <div class="checkbox"  style="width: 100%;">
+                <h1 style="font-size: 25px; font-weight: bold; margin-right: 40%;">CURRENT ADDRESS</h1>
+                <label class="ml-2 text-sm font-bold text-gray-700">
+                  <input type="checkbox" class="check" v-model="copyPermanentToCurrent" :disabled="!isEditing"/>
+                  Copy Permanent Address
+                </label>
+              </div>
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2" style="margin-top: 2%;">
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
                   <select class="input-field" v-model="fields.Region2" :disabled="!isEditing" @change="fetchProvinces2()">
@@ -174,19 +182,21 @@
                     <option v-for="(barangay2, index) in barangays2" :key="index" :value="barangay2.brgy_psgc">{{ barangay2.col_brgy }}</option>
                   </select>
                 </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE</label>
-                  <input type="text" class="input-field" v-model="fields.zipcode2" :disabled="!isEditing" />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
-                  <input type="text" class="input-field" v-model="fields.block2" :disabled="!isEditing" />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
-                  <input type="text" class="input-field" v-model="fields.villsub2" :disabled="!isEditing" />
-                </div>
               </div>
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-3" style="margin-top: 3%;">
+                <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE</label>
+                    <input type="text" class="input-field addgrid" v-model="fields.zipcode2" :disabled="!isEditing" />
+                  </div>
+                  <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
+                    <input type="text" class="input-field addgrid" v-model="fields.block2" :disabled="!isEditing" />
+                  </div>
+                  <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
+                    <input type="text" class="input-field addgrid" v-model="fields.villsub2" :disabled="!isEditing" />
+                  </div>
+                </div>
             </TabPanel>
             <TabPanel header="SECURITY & CONTACT DETAILS" :active="activeSubTab === 'security'">
               <!-- Security & Contact Fields -->
@@ -312,6 +322,7 @@ export default {
       fullName: '',
       empPosition: '',
       profilePictureUrl: '',
+      copyPermanentToCurrent: false,
       fields: {
         empUser: '',
         empID: '',
@@ -396,7 +407,17 @@ export default {
     },
   },
 
+
+  watch: {
+    copyPermanentToCurrent(newValue) {
+      if (newValue) {
+        this.copyPermanentAddress();
+      }
+    }
+  },
+
   methods: {
+
     validateName(field) {
       this.fields[field] = this.fields[field].replace(/[0-9]/g, '');
     },
@@ -635,6 +656,16 @@ export default {
         }.bind(this));
     },
 
+    copyPermanentAddress() {
+      this.fields.Region2 = this.fields.Region;
+      this.fields.Province2 = this.fields.Province;
+      this.fields.City2 = this.fields.City;
+      this.fields.Barangay2 = this.fields.Barangay;
+      this.fields.zipcode2 = this.fields.zipcode;
+      this.fields.block2 = this.fields.block;
+      this.fields.villsub2 = this.fields.villsub;
+    },
+
     fetchSecurityandContact() {
       axios.get('/employee/SecurityandContact')
         .then(response => {
@@ -759,29 +790,28 @@ onCroppingComplete(croppedBlob) {
         }
     },
 
-    uploadCroppedImage(blob, empid) {
-      const formData = new FormData();
-      const customFileName = `${empid}_image.png`; // Create the filename using the employee ID
+    uploadCroppedImage(blob) {
+  const formData = new FormData();
+  formData.append('file', blob, 'profile_image.png'); // Use a placeholder name
 
-      formData.append('file', blob, customFileName); // Use the custom filename
-
-      axios.post('/upload-profile-picture', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }).then(response => {
-        this.profilePictureUrl = response.data.url;
-        this.cropping = false;
-        this.showPhotoSuccessDialog = true;
-      }).catch(error => {
-        console.error('Error uploading file:', error);
-      });
-  },
+  axios.post('/upload-profile-picture', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }).then(response => {
+    this.profilePictureUrl = response.data.url;
+    this.cropping = false;
+    this.showPhotoSuccessDialog = true;
+  }).catch(error => {
+    console.error('Error uploading file:', error);
+  });
+},
 
     cancelCrop() {
       this.cropping = false;
     },
     hidePhotoSuccessDialog() {
       this.showPhotoSuccessDialog = false;
-      location.reload();
+      this.selectedFile = null;
+      this.profilePictureUrl = ''
     },
 
     uploadFile() {
@@ -867,6 +897,7 @@ onCroppingComplete(croppedBlob) {
     this.fetchRegions();
     this.fetchRegions2();
   },
+
 };
 </script>
 
@@ -943,7 +974,7 @@ onCroppingComplete(croppedBlob) {
 }
 
 .tight {
-  margin-top: 2%;
+  margin-top: 1%;
   width: 79%;
 }
 
@@ -952,4 +983,16 @@ onCroppingComplete(croppedBlob) {
   height: auto;
 }
 
+.checkbox {
+  display: flex;
+  flex-direction: row;
+}
+
+.check {
+  cursor: pointer;
+}
+
+.addgrid {
+  text-align: center;
+}
 </style>
