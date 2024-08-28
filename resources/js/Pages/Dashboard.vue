@@ -759,22 +759,20 @@ onCroppingComplete(croppedBlob) {
         }
     },
 
-    uploadCroppedImage(blob, empid) {
-      const formData = new FormData();
-      const customFileName = `${empid}_image.png`; // Create the filename using the employee ID
+    uploadCroppedImage(blob) {
+  const formData = new FormData();
+  formData.append('file', blob, 'profile_image.png'); // Use a placeholder name
 
-      formData.append('file', blob, customFileName); // Use the custom filename
-
-      axios.post('/upload-profile-picture', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }).then(response => {
-        this.profilePictureUrl = response.data.url;
-        this.cropping = false;
-        this.showPhotoSuccessDialog = true;
-      }).catch(error => {
-        console.error('Error uploading file:', error);
-      });
-  },
+  axios.post('/upload-profile-picture', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }).then(response => {
+    this.profilePictureUrl = response.data.url;
+    this.cropping = false;
+    this.showPhotoSuccessDialog = true;
+  }).catch(error => {
+    console.error('Error uploading file:', error);
+  });
+},
 
     cancelCrop() {
       this.cropping = false;

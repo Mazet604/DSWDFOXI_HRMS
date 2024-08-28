@@ -15,6 +15,7 @@ use App\Http\Controllers\EmpAccController;
 use App\Http\Controllers\DropDownControllers;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AddressControllerII;
+use App\Http\Controllers\PDSController;
 
 Route::get('/', function () {
     return Inertia::render('Login', [
@@ -150,6 +151,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/emp_recog/UpdateRecogDistData', [OtherInfoController::class, 'updateRecogDistData']);
     Route::get('/emp_otherinfo/other-info', [OtherInfoController::class, 'getOtherInfoData']);
     Route::put('/emp_otherinfo/other-info', [OtherInfoController::class, 'updateOtherInfoData']);
+
+    Route::get('/download-pds', [PDSController::class, 'downloadPDS']);
+
 });
 
 require __DIR__.'/auth.php';

@@ -56,6 +56,11 @@
                         </div>
                     </div>
                 </nav>
+                
+                <button @click="downloadPDS" class="px-4 py-2 mt-4 text-white bg-green-600 rounded hover:bg-green-700">
+                    Download PDS
+                </button>
+                <br><br><br><br>
                 <button @click="confirmLogout" class="px-4 py-2 mt-4 text-white bg-red-600 rounded hover:bg-red-700">
                     Log-out
                 </button>
@@ -197,33 +202,51 @@ const search = (query) => {
     } else if (searchLower.includes('security')) {
         navigateTo('dashboard', 0, 2);
     } else if (searchLower.includes('family')) {
-        navigateTo('background', 0, 0);
-    } else if (searchLower.includes('education')) {
         navigateTo('background', 1, 0);
+    } else if (searchLower.includes('education')) {
+        navigateTo('background', 1, 1);
     } else if (searchLower.includes('organization')) {
-        navigateTo('background', 2, 0);
+        navigateTo('background', 1, 2);
     } else if (searchLower.includes('work experience')) {
-        navigateTo('background', 3, 0);
+        navigateTo('background', 1, 3);
     } else if (searchLower.includes('skills')) {
-        navigateTo('background', 4, 0);
+        navigateTo('background', 1, 4);
     } else if (searchLower.includes('references')) {
-        navigateTo('background', 5, 0);
+        navigateTo('background', 1, 5);
     } else if (searchLower.includes('eligibility')) {
-        navigateTo('otherinfo', 0, 0);
-    } else if (searchLower.includes('voluntary')) {
-        navigateTo('otherinfo', 1, 0);
-    } else if (searchLower.includes('learning')) {
         navigateTo('otherinfo', 2, 0);
+    } else if (searchLower.includes('voluntary')) {
+        navigateTo('otherinfo', 2, 1);
+    } else if (searchLower.includes('learning')) {
+        navigateTo('otherinfo', 2, 2);
     } else if (searchLower.includes('recognition')) {
-        navigateTo('otherinfo', 3, 0);
+        navigateTo('otherinfo', 2, 3);
     } else if (searchLower.includes('government')) {
-        navigateTo('otherinfo', 4, 0);
+        navigateTo('otherinfo', 2, 4);
     } else if (searchLower.includes('other')) {
-        navigateTo('otherinfo', 5, 0);
+        navigateTo('otherinfo', 2, 5);
     } else {
         alert('No matching tab found.');
     }
     showSuggestions.value = false;
+};
+
+const downloadPDS = async () => {
+    try {
+        const response = await axios.get('/download-pds', {
+            responseType: 'blob', // Important for PDF files
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'PDS.pdf'); // Set the file name
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    } catch (error) {
+        console.error('Error downloading PDS:', error);
+    }
 };
 
 watch(activeTab, (newValue) => {

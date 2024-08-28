@@ -240,44 +240,36 @@ class EmployeeController extends Controller
 
     public function uploadProfilePicture(Request $request)
     {
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated'], 401);
-        }
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
         try {
-            // Validate the request
-            $request->validate([
-                'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // only allow image files
-            ]);
+            $user = Auth::user();
 
-            // Store the file
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $fileName =  $file->getClientOriginalName();
-                $filePath = $file->storeAs('public/uploads/profile-pictures', $fileName);
-
-                // Save the filename to the database
-                $employee = Employee::where('empid', $user->empid)->first();
-                if ($employee) {
-                    $employee->emp_pic = $fileName;
-                    $employee->save();
-                } else {
-                    return response()->json(['error' => 'Employee not found'], 404);
-                }
-
-                // Return the file path or URL
-                return response()->json(['url' => Storage::url($filePath)]);
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
             }
 
-            return response()->json(['error' => 'File upload failed.'], 400);
+            $empid = $user->empid; // Get the employee ID from the authenticated user
+
+            // Generate a custom filename using the empid
+            $fileName = $empid . '_image.' . $request->file('file')->getClientOriginalExtension();
+
+            // Store the file in the 'public/uploads/profile-pictures' directory, you can change this when the system will be deployed
+            $path = $request->file('file')->storeAs('uploads/profile-pictures', $fileName, 'public');
+
+            $employee = Employee::where('empid', $empid)->first();
+            $employee->emp_pic = $fileName;
+            $employee->save();
+
+            // Return the file URL to the frontend
+            return response()->json(['url' => '/storage/' . $path]);
+
         } catch (\Exception $e) {
-            // Log the error
-            \Log::error('File upload error: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal server error'], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
     public function getProfilePicture()
     {
         $user = Auth::user();
