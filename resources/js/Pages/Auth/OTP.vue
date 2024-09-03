@@ -181,7 +181,7 @@ const formattedTimer = computed(() => {
             </div>
 
                 <div class="flex justify-center mt-8">
-                    <PrimaryButton :class="{ 'opacity-50': form.processing }" :disabled="form.processing" class="py-4 px-8 text-center text-white rounded-full bg-blue-800 hover:bg-blue-900">
+                    <PrimaryButton :class="{ 'opacity-50': form.processing }" :disabled="form.processing" class="py-4 px-8 text-center text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700bg-gradient-to-r from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700">
                         <span class="w-full text-center">VERIFY OTP</span>
                     </PrimaryButton>
                 </div>
