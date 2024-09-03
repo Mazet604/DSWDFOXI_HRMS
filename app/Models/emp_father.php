@@ -11,7 +11,7 @@ class emp_father extends Model
 
     protected $table = 'emp_father';
     protected $primaryKey = 'emp_count';
-    public $timestamps = false;
+    
     
 
     public function empFather()

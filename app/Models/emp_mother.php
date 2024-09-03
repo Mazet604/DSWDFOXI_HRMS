@@ -11,7 +11,6 @@ class emp_mother extends Model
 
     protected $table = 'emp_mother';
     protected $primaryKey = 'emp_count';
-    public $timestamps = false;
  
 
     public function empMother()

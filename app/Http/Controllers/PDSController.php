@@ -66,12 +66,19 @@ class PDSController extends Controller
             ? 'data:image/png;base64,' . base64_encode(file_get_contents($profilePicturePath))
             : null;
 
+        $profilePicturePath = public_path('storage/uploads/profile-pictures/' . $employee->empid . '_image.png');
+        $profilePictureBase64 = file_exists($profilePicturePath) 
+            ? 'data:image/png;base64,' . base64_encode(file_get_contents($profilePicturePath))
+            : null;
+
         $suffix = lib_suffix::where('lib1_count', $employee->emp_ext)->first();
         if ($suffix && ($suffix->lib1_suffix === '0' || strtolower($suffix->lib1_suffix) === 'none')) {
             $emp_ext = null;
         } else {
             $emp_ext = $suffix ? $suffix->lib1_suffix : $employee->emp_ext;
         }
+        $emp_mname_initial = $employee->emp_mname ? substr($employee->emp_mname, 0, 1) . '.' : '';
+        $fullName = $employee->emp_lname . ', ' . $employee->emp_fname . ' ' . $emp_mname_initial . ' ' . $emp_ext;
         $emp_mname_initial = $employee->emp_mname ? substr($employee->emp_mname, 0, 1) . '.' : '';
         $fullName = $employee->emp_lname . ', ' . $employee->emp_fname . ' ' . $emp_mname_initial . ' ' . $emp_ext;
 
@@ -85,10 +92,14 @@ class PDSController extends Controller
         $civstat = lib_civil_stat::where('lib3_count', $employee->emp_civ_stat)->first();
         if ($civstat && ($civstat->lib3_civil_stat === '0' || strtolower($civstat->lib3_civil_stat) === 'none')) {
             $emp_civstats = null;
+            $emp_civstats = null;
         } else {
+            $emp_civstats = $civstat ? $civstat->lib3_civil_stat : $employee->emp_civ_stat;
             $emp_civstats = $civstat ? $civstat->lib3_civil_stat : $employee->emp_civ_stat;
         }
 
+        // Fetch the blood type based on the numeric identifier stored in the employee table
+        $blood = lib_blood_type::where('lib2_count', $employee->emp_blood)->first(); // Use emp_blood
         // Fetch the blood type based on the numeric identifier stored in the employee table
         $blood = lib_blood_type::where('lib2_count', $employee->emp_blood)->first(); // Use emp_blood
 
@@ -156,4 +167,3 @@ class PDSController extends Controller
 
     }
 }
-

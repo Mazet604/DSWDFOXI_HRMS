@@ -1,44 +1,49 @@
 <template>
     <Head title="Log in" />
 
-    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/bgwhiteredblue.png');">
-        <div class="w-full max-w-xs p-4 bg-white rounded-lg shadow-md sm:p-6 lg:p-8 sm:max-w-md lg:max-w-lg">
+    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/backgrounddswd.jpg');">
+        <div class="w-full max-w-xs p-4 bg-white-700 rounded-lg shadow-md sm:p-6 lg:p-8 sm:max-w-md lg:max-w-lg">
             <div class="flex justify-center mb-6 lg:mb-8">
                 <img src="/images/dswd-logo1.png" alt="DSWD Logo" class="h-20 lg:h-40" />
             </div>
 
+            <hr class="my-4 border-gray-300">
+
             <div class="mb-4 text-xl font-semibold text-center lg:text-2xl">Human Resource Management System</div>
 
-            <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+            <div v-if="status" class="mb-4 text-sm font-medium text-blue-600">
                 {{ status }}
             </div>
 
             <form @submit.prevent="submit">
-                <div>
+                <div class="relative">
                     <InputLabel for="empuser" value="Username" />
-                    <InputText id="empuser" type="text" class="block w-full mt-1" v-model="form.empuser" required autofocus autocomplete="username" />
+                    <div class="relative mt-1">
+                        <InputText id="empuser" type="text" class="block w-full pl-4 pr-10 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" v-model="form.empuser" required autofocus autocomplete="username" />
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </span>
+                    </div>
                     <InputError class="mt-2" :message="form.errors.empuser" />
                 </div>
 
-                <div class="mt-4">
+                <div class="relative mt-4">
                     <InputLabel for="emppass" value="Password" />
-                    <InputText :type="showPassword ? 'text' : 'password'" id="emppass" class="block w-full mt-1" v-model="form.emppass" required autocomplete="current-password" />
+                    <div class="relative mt-1">
+                        <InputText :type="showPassword ? 'text' : 'password'" id="emppass" class="block w-full pl-4 pr-10 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" v-model="form.emppass" required autocomplete="current-password" />
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" @click="togglePassword">
+                            <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-gray-400"></i>
+                        </span>
+                    </div>
                     <InputError class="mt-2" :message="form.errors.emppass" />
                 </div>
 
-                <div class="flex items-center justify-between mt-4">
-                    <div class="flex items-center">
-                        <input type="checkbox" id="showPassword" v-model="showPassword" class="mr-2" />
-                        <label for="showPassword" class="text-sm text-gray-600">Show Password</label>
-                    </div>
-                    <Link v-if="canResetPassword" :href="route('password.request')" class="text-sm text-blue-600 hover:underline">
-                        Forgot Password?
+                <div class="flex items-center justify-between mt-8">
+                    <Link v-if="canResetPassword" :href="route('password.request')" class="text-lg text-blue-600 hover:underline">
+                        Forgot password?
                     </Link>
-                </div>
-
-                <div class="mt-4">
-                    <PrimaryButton class="w-full py-2 text-center text-white rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        <span class="w-full text-center">LOG IN</span>
+                    <PrimaryButton class="py-4 px-8 text-lg font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-500" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        SIGN IN
                     </PrimaryButton>
                 </div>
             </form>
@@ -71,6 +76,10 @@ const form = useForm({
 });
 
 const showPassword = ref(false);
+
+const togglePassword = () => {
+    showPassword.value = !showPassword.value;
+};
 
 const submit = () => {
     form.post(route('login'), {
