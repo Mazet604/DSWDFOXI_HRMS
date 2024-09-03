@@ -37,29 +37,29 @@
                     <input type="text" class="input-field text-color" v-model="fields.empID" disabled />
                 </div><div class="col-span-1"></div><div class="col-span-1"></div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME <span style="color: red;">*</span></label>
                     <input type="text" class="input-field" v-model="fields.firstName" :disabled="!isEditing" @input="validateName('firstName')"/>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME <span style="color: red;">*</span></label>
                     <input type="text" class="input-field" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')"/>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME <span style="color: red;">*</span></label>
                     <input type="text" class="input-field" v-model="fields.lastName" :disabled="!isEditing" @input="validateName('lastName')"/>
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX <span style="color: red;">*</span></label>
                   <select class="input-field" v-model="fields.suffix" :disabled="!isEditing">
                     <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                   </select>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">CITIZENSHIP</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">CITIZENSHIP <span style="color: red;">*</span></label>
                     <input type="text" class="input-field" v-model="fields.citizenship" :disabled="!isEditing" @input="validateName('citizenship')"/>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY <span style="color: red;">*</span></label>
                     <input type="date" class="text-center input-field" v-model="fields.birthday" :disabled="!isEditing" />
                 </div>
                 <div>
@@ -67,7 +67,7 @@
                     <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS <span style="color: red;">*</span></label>
                     <select class="input-field" v-model="fields.civilStatus" :disabled="!isEditing">
                         <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
@@ -77,7 +77,7 @@
                 <div class="tight">
                   <div class="grid grid-cols-5 gap-4">
                   <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">SEX</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">SEX <span style="color: red;">*</span></label>
                     <select class="input-field" v-model="fields.sex" :disabled="!isEditing">
                         <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                     </select>
@@ -93,11 +93,11 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M)</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M) <span style="color: red;">*</span></label>
                     <input type="number" step="0.01" class="input-field" v-model="fields.height" :disabled="!isEditing" />
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG)</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG) <span style="color: red;">*</span></label>
                     <input type="number" class="input-field" v-model="fields.weight" :disabled="!isEditing" />
                 </div>
             </div>
@@ -109,25 +109,25 @@
               <h1 style="font-size: 25px; font-weight: bold; margin-bottom: 3%; margin-top: 1%;">PERMANENT ADDRESS</h1>
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">REGION <span style="color: red;">*</span></label>
                   <select class="input-field" v-model="fields.Region" :disabled="!isEditing" @change="fetchProvinces()">
                     <option v-for="(region, index) in regions" :key="index" :value="region.reg_psgc">{{ region.col_region }}</option>
                   </select>
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE <span style="color: red;">*</span></label>
                   <select class="input-field" v-model="fields.Province" :disabled="!isEditing" @change="fetchCities()">
                     <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
                   </select>
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">CITY <span style="color: red;">*</span></label>
                   <select class="input-field" v-model="fields.City" :disabled="!isEditing"@change="fetchBarangays()">
                     <option v-for="(city, index) in cities" :key="index" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
                   </select>
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY <span style="color: red;">*</span></label>
                   <select class="input-field" v-model="fields.Barangay" :disabled="!isEditing">
                     <option v-for="(barangay, index) in barangays" :key="index" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
                   </select>
@@ -135,7 +135,7 @@
                 </div>
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-3" style="margin-top: 3%;">
                   <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE <span style="color: red;">*</span></label>
                     <input type="text" class="input-field addgrid" v-model="fields.zipcode" :disabled="!isEditing" />
                   </div>
                   <div>
@@ -202,22 +202,22 @@
               <!-- Security & Contact Fields -->
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                  <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">MOBILE NUMBER</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">MOBILE NUMBER <span style="color: red;">*</span></label>
                   <input type="text" class="input-field" v-model="fields.mobilenum" maxlength="9" @input="validateMobileNumber" :disabled="!isEditing" />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER <span style="color: red;">*</span></label>
                   <input type="text" class="input-field" v-model="fields.telnum" maxlength="7" @input="validateTelephoneNumber" :disabled="!isEditing" />
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">EMAIL ADDRESS</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">EMAIL ADDRESS <span style="color: red;">*</span></label>
                   <input type="text" class="input-field" v-model="fields.emailadd" :disabled="!isEditing" />
                 </div>
               </div>
             </TabPanel>
           </TabView>
         </div>
-        <Button label="UPDATE" v-if="!isEditing" class="float-right px-8 py-2 mt-6 text-white bg-green-500 rounded-lg update-button" @click="toggleEditing" />
+        <Button label="EDIT" v-if="!isEditing" class="float-right px-8 py-2 mt-6 text-white bg-green-500 rounded-lg update-button" @click="toggleEditing" />
         <div v-if="isEditing" class="float-right mt-6 space-x-4">
           <Button label="CANCEL" class="px-8 py-2 text-white rounded-lg custom-cancel-button" @click="cancelEditing" />
           <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg update-button" @click="confirmUpdate" />

@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         <div class="flex justify-end gap-4 mt-6">
-                            <Button v-if="!isEditingFamily" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
+                            <Button v-if="!isEditingFamily" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
                             <div v-if="isEditingFamily" class="space-x-4">
                                 <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelFamilyEditing" />
                                 <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateFamilyData" />
@@ -101,6 +101,12 @@
                         <Column field="age" header="Age"></Column>
                         <Column field="child_dob" header="Date of Birth"></Column>
                     </DataTable>
+                    <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
                     </TabPanel>
                     <TabPanel header="EDUCATION">
                         <h1 style="font-size: 25px; font-weight: bold;">Education</h1>
@@ -114,6 +120,12 @@
                             <Column field="educ_year_grad" header="YEAR GRADUATED"></Column>
                             <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
                         </DataTable>
+                        <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
                     </TabPanel>
                     <TabPanel header="ORGANIZATION">
                     <h1 style="font-size: 25px; font-weight: bold;">Organization</h1>
@@ -128,6 +140,12 @@
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                         <Column field="org_name" header="Organizations"></Column>
                     </DataTable>
+                    <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
                     </TabPanel>
                     <TabPanel header="WORK EXPERIENCE">
                         <h1 style="font-size: 25px; font-weight: bold;">Work Experience</h1>
@@ -142,6 +160,12 @@
                             <Column field="work_stat" header="STATUS OF APPOINTMENT"></Column>
                             <Column field="work_gov" header="GOV'T SERVICE"></Column>
                         </DataTable>
+                        <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
                     </TabPanel>
                     <TabPanel header="SKILLS">
                         <h1 style="font-size: 25px; font-weight: bold;">Skills</h1>
@@ -149,6 +173,12 @@
                             <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                             <Column field="skill" header="SKILLS"></Column>
                         </DataTable>
+                        <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
                     </TabPanel>
                     <TabPanel header="REFERENCES">
                         <h1 style="font-size: 25px; font-weight: bold;">References</h1>
@@ -158,16 +188,15 @@
                             <Column field="ref_add" header="ADDRESS"></Column>
                             <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
                         </DataTable>
+                        <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
                     </TabPanel>
                 </TabView>
             </div>
-
-            <div class="flex justify-end gap-4 mt-6">
-                <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                <Button v-if="!isEditingProfile" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
-                </div>
         </div>
 
         <!-- Edit Modal -->

@@ -1,4 +1,5 @@
 <template>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <div class="flex min-h-screen bg-gray-100">
         <!-- Sidebar -->
         <aside class="fixed top-0 left-0 h-full flex flex-col w-64 p-4 text-white bg-blue-900 z-20">
@@ -57,12 +58,12 @@
                     </div>
                 </nav>
 
-                <button @click="downloadPDS" class="px-4 py-2 mt-4 text-white bg-green-600 rounded hover:bg-green-700">
-                    Download PDS
+                <button @click="downloadPDS" class="w-30 px-4 py-2 mt-4 text-white bg-blue-700 rounded hover:bg-blue-600">
+                    <i class="fas fa-download mr-2"></i> Personal Data Sheet
                 </button>
-                <br><br><br><br>
-                <button @click="confirmLogout" class="px-4 py-2 mt-4 text-white bg-red-600 rounded hover:bg-red-700">
-                    Log-out
+                <br>
+                <button @click="confirmLogout" class="w-30 px-4 py-2 mt-4 text-white bg-red-600 rounded hover:bg-red-700">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Log Out
                 </button>
             </div>
         </aside>
@@ -70,7 +71,7 @@
         <!-- Main Content -->
         <main class="flex-1 p-8 ml-64 overflow-y-auto relative">
             <!-- Main Content Background Image -->
-            <img src="/images/bgwhiteredblue.png" alt="Main Background" class="fixed inset-0 object-cover w-full h-full opacity-100" />
+            <img src="/images/backgrounddswd.jpg" alt="Main Background" class="fixed inset-0 object-cover w-full h-full opacity-100" />
             <div class="relative z-10">
                 <slot></slot>
             </div>

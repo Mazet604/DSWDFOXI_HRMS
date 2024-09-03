@@ -1,8 +1,8 @@
 <template>
     <Head title="Log in" />
 
-    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/background-image.png');">
-        <div class="w-full max-w-xs p-4 bg-white rounded-lg shadow-md sm:p-6 lg:p-8 sm:max-w-md lg:max-w-lg">
+    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/backgrounddswd.jpg');">
+        <div class="w-full max-w-xs p-4 bg-white-700 rounded-lg shadow-md sm:p-6 lg:p-8 sm:max-w-md lg:max-w-lg">
             <div class="flex justify-center mb-6 lg:mb-8">
                 <img src="/images/dswd-logo1.png" alt="DSWD Logo" class="h-20 lg:h-40" />
             </div>
@@ -11,7 +11,7 @@
 
             <div class="mb-4 text-xl font-semibold text-center lg:text-2xl">Human Resource Management System</div>
 
-            <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+            <div v-if="status" class="mb-4 text-sm font-medium text-blue-600">
                 {{ status }}
             </div>
 
@@ -42,7 +42,7 @@
                     <Link v-if="canResetPassword" :href="route('password.request')" class="text-lg text-blue-600 hover:underline">
                         Forgot password?
                     </Link>
-                    <PrimaryButton class="py-4 px-8 text-lg font-semibold text-white rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <PrimaryButton class="py-4 px-8 text-lg font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-500" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         SIGN IN
                     </PrimaryButton>
                 </div>
