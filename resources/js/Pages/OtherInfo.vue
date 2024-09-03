@@ -42,9 +42,6 @@
                         <Column field="recog_name" header="NON-ACADEMIC DISTINCTIONS/RESTRICTIONS"></Column>
                     </DataTable>
                 </TabPanel>
-
-        
-
                 <TabPanel header="GOVERNMENT ID" :active="activeSubTab === 'government'">
                      <div class="grid grid-cols-2 gap-4">
                         <div class="border-box">
@@ -177,7 +174,7 @@
                                 </div>
                 </TabPanel>
                         
-                        </TabView>
+                </TabView>
                         
                 
                 <div class="flex justify-end gap-4 mt-6">
@@ -185,9 +182,9 @@
                         <Button v-if="!isEditingProfile" label="UPDATE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
                         <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
                         <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
-                        </div>
+                </div>
                 
-                    </div>
+                </div>
 
                     <!-- Edit Modal -->
                     <div v-if="showEditDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
@@ -219,8 +216,8 @@
                         </div>
                     </div>
 
-                        <!-- Add CS Eligibility Modal -->
-                        <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                    <!-- Add CS Eligibility Modal -->
+                    <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
                             <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
                                 <div class="p-4">
                                     <div class="text-center">
@@ -262,10 +259,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div>
 
-                        <!-- Add Voluntary Work Modal -->
-                        <div v-if="showAddVoluntaryWorkDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                    <!-- Add Voluntary Work Modal -->
+                    <div v-if="showAddVoluntaryWorkDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
                             <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
                                 <div class="p-4">
                                     <div class="text-center">
@@ -307,10 +304,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div>
 
-                        <!-- Add Learning & Development Modal -->
-                        <div v-if="showAddLearndevDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                    <!-- Add Learning & Development Modal -->
+                    <div v-if="showAddLearndevDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
                             <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
                                 <div class="p-4">
                                     <div class="text-center">
@@ -352,10 +349,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div>
 
-                        <!-- Add Recognition & Distinctions Modal -->
-                        <div v-if="showAddRecogdistDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                    <!-- Add Recognition & Distinctions Modal -->
+                    <div v-if="showAddRecogdistDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
                             <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
                                 <div class="p-4">
                                     <div class="text-center">
@@ -377,10 +374,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div>
 
-                        <!-- Update Confirmation Modal -->
-                        <div v-if="showUpdateDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                    <!-- Update Confirmation Modal -->
+                    <div v-if="showUpdateDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
                             <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-md w-full p-6 text-center">
                                 <i class="fas fa-exclamation-triangle text-4xl mb-4" style="color: red;"></i>
                                 <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
@@ -394,10 +391,10 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                    </div>
 
-                        <!-- Update Success Modal -->
-                        <div v-if="showSuccessDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                    <!-- Update Success Modal -->
+                    <div v-if="showSuccessDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
                             <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
                                 <div class="p-4">
                                     <div class="text-center">
@@ -412,7 +409,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div>
 
     </AppLayout>
 </template>
