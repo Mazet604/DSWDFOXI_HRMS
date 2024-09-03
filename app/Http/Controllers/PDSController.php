@@ -16,6 +16,26 @@ use App\Models\lib_region;
 use App\Models\lib_province;
 use App\Models\lib_city;
 use App\Models\lib_brgy;
+use App\Models\education;
+use App\Models\emp_org;
+use App\Models\emp_reference;
+use App\Models\emp_work;
+use App\Models\emp_child;
+use App\Models\emp_skills;
+use App\Models\emp_father;
+use App\Models\emp_mother;
+use App\Models\emp_spouse;
+use App\Models\EmpFamily;
+use App\Models\emp_eligibility;
+use App\Models\emp_voluntary;
+use App\Models\emp_learning;
+use App\Models\emp_recog;
+use App\Models\emp_otherinfo;
+use App\Models\sssinfo;
+use App\Models\pagibiginfo;
+use App\Models\gsisinfo;
+use App\Models\tininfo;
+use App\Models\philhealthinfo;
 use Illuminate\Support\Facades\Auth;
 
 class PDSController extends Controller
@@ -26,6 +46,25 @@ class PDSController extends Controller
         $emp_acc = EmpAcc::where('empid', Auth::user()->empid)->first();
         $emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first();
         $emp_address2 = EmpAddress::where('emp_count', $employee->emp_count)->first();
+        $emp_spouse = emp_spouse::where('emp_count', $employee->emp_count)->first();
+        $emp_father = emp_father::where('emp_count', $employee->emp_count)->first();
+        $emp_mother = emp_mother::where('emp_count', $employee->emp_count)->first();
+        $emp_child = emp_child::where('emp_count', $employee->emp_count)->first();
+        $education = education::where('empid', Auth::user()->empid)->first();
+        $emp_eligibility = emp_eligibility::where('empid', Auth::user()->empid)->first();
+        $emp_work = emp_work::where('empid', Auth::user()->empid)->first();
+        $emp_voluntary = emp_voluntary::where('empid', Auth::user()->empid)->first();
+        $emp_learning = emp_learning::where('empid', Auth::user()->empid)->first();
+        $emp_skills = emp_skills::where('empid', Auth::user()->empid)->first();
+        $emp_org = emp_org::where('empid', Auth::user()->empid)->first();
+        $emp_recog = emp_recog::where('empid', Auth::user()->empid)->first();
+        $emp_otherinfo = emp_otherinfo::where('empid', Auth::user()->empid)->first();
+        $emp_reference = emp_reference::where('empid', Auth::user()->empid)->first();
+
+        $profilePicturePath = public_path('storage/uploads/profile-pictures/' . $employee->empid . '_image.png');
+        $profilePictureBase64 = file_exists($profilePicturePath) 
+            ? 'data:image/png;base64,' . base64_encode(file_get_contents($profilePicturePath))
+            : null;
 
         $profilePicturePath = public_path('storage/uploads/profile-pictures/' . $employee->empid . '_image.png');
         $profilePictureBase64 = file_exists($profilePicturePath) 
@@ -40,6 +79,8 @@ class PDSController extends Controller
         }
         $emp_mname_initial = $employee->emp_mname ? substr($employee->emp_mname, 0, 1) . '.' : '';
         $fullName = $employee->emp_lname . ', ' . $employee->emp_fname . ' ' . $emp_mname_initial . ' ' . $emp_ext;
+        $emp_mname_initial = $employee->emp_mname ? substr($employee->emp_mname, 0, 1) . '.' : '';
+        $fullName = $employee->emp_lname . ', ' . $employee->emp_fname . ' ' . $emp_mname_initial . ' ' . $emp_ext;
 
         $sex = lib_sex::where('lib4_count', $employee->emp_sex)->first();
         if ($sex && ($sex->lib4_sex === '0' || strtolower($sex->lib4_sex) === 'none')) {
@@ -51,10 +92,14 @@ class PDSController extends Controller
         $civstat = lib_civil_stat::where('lib3_count', $employee->emp_civ_stat)->first();
         if ($civstat && ($civstat->lib3_civil_stat === '0' || strtolower($civstat->lib3_civil_stat) === 'none')) {
             $emp_civstats = null;
+            $emp_civstats = null;
         } else {
+            $emp_civstats = $civstat ? $civstat->lib3_civil_stat : $employee->emp_civ_stat;
             $emp_civstats = $civstat ? $civstat->lib3_civil_stat : $employee->emp_civ_stat;
         }
 
+        // Fetch the blood type based on the numeric identifier stored in the employee table
+        $blood = lib_blood_type::where('lib2_count', $employee->emp_blood)->first(); // Use emp_blood
         // Fetch the blood type based on the numeric identifier stored in the employee table
         $blood = lib_blood_type::where('lib2_count', $employee->emp_blood)->first(); // Use emp_blood
 
@@ -99,11 +144,21 @@ class PDSController extends Controller
         . ' ' .$emp_address->emp_house
         . ' ' .$emp_address->emp_subd
         . ', ' .$emp_address->emp_zip;
-
+        
+        
+        $child_mname_initial = $emp_child->child_mname ? substr($emp_child->child_mname, 0, 1) . '.' : '';
+        $fullchildName = $emp_child->child_fname . ' ' . 
+                         $child_mname_initial . ' ' . 
+                         $emp_child->child_lname . ' ' . 
+                         $emp_child->child_xname;
+        
 
         $pdf = new Dompdf();
-        $pdf->loadHtml(view('pdf.pds', compact('employee', 'address', 'emp_address2', 'emp_acc', 'fullName', 'profilePictureBase64', 'emp_sexes', 'emp_civstats', 'emp_bloods'))->render());
-        $pdf->setPaper('A4', 'portrait');
+        $pdf->loadHtml(view('pdf.pds', compact('employee', 'address', 'emp_address2', 'emp_acc', 'fullName', 
+        'profilePictureBase64', 'emp_sexes', 'emp_civstats', 'emp_bloods', 'emp_provinces', 'emp_cities', 'emp_brgies',
+         'emp_address', 'emp_spouse', 'emp_father', 'emp_mother', 'education', 'emp_eligibility', 'emp_work', 'emp_voluntary',
+         'emp_learning', 'emp_otherinfo', 'emp_child', 'child_mname_initial', 'emp_skills', 'emp_org', 'emp_recog', 'emp_reference'))->render());
+        $pdf->setPaper('legal', 'portrait');
         $pdf->render();
 
         return response()->streamDownload(function () use ($pdf) {
