@@ -1,4 +1,4 @@
-<template>
+ <template>
   <AppLayout>
     <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div class="relative col-span-1">
@@ -201,9 +201,14 @@
             <TabPanel header="SECURITY & CONTACT DETAILS" :active="activeSubTab === 'security'">
               <!-- Security & Contact Fields -->
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">MOBILE NUMBER <span style="color: red;">*</span></label>
-                  <input type="text" class="input-field" v-model="fields.mobilenum" maxlength="9" @input="validateMobileNumber" :disabled="!isEditing" />
+                <div>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">
+                    MOBILE NUMBER <span style="color: red;">*</span>
+                  </label>
+                  <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-700">+63 |</span>
+                    <input type="text" class="input-field number-field pl-12" v-model="fields.mobilenum" maxlength="9" @input="validateMobileNumber" :disabled="!isEditing" />
+                  </div>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER <span style="color: red;">*</span></label>
@@ -994,5 +999,9 @@ onCroppingComplete(croppedBlob) {
 
 .addgrid {
   text-align: center;
+}
+
+.number-field {
+  padding-left: 15%;
 }
 </style>

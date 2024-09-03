@@ -42,7 +42,7 @@
                     <Link v-if="canResetPassword" :href="route('password.request')" class="text-lg text-blue-600 hover:underline">
                         Forgot password?
                     </Link>
-                    <PrimaryButton class="py-4 px-8 text-lg font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-500" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <PrimaryButton class="py-4 px-8 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         SIGN IN
                     </PrimaryButton>
                 </div>
