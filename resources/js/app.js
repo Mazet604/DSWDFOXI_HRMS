@@ -18,8 +18,11 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import 'primeicons/primeicons.css';
 
 
+
 // Import PrimeVue CSS
 import Aura from '@primevue/themes/aura';
+
+
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

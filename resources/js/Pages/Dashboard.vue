@@ -1,307 +1,277 @@
- <template>
-  <AppLayout>
-    <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div class="relative col-span-1">
-        <div class="relative group">
-          <img
-            alt="Profile Picture"
-            :src="profilePictureUrl"
-            class="w-full rounded-lg cursor-pointer"
-            height="300"
-            width="300"
-            :class="{ 'blur-md': !isUnblurred }"
-            @click="toggleBlur"
-          />
-          <button @click="toggleBlur" class="absolute top-0 right-0 m-2 p-2 bg-gray-800 bg-opacity-75 rounded-full">
-      <i class="fas fa-eye text-white text-4xl"></i>
-    </button>
-        </div>
-        <!-- Hidden file input -->
-        <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
-        <Button label="Upload Photo" class="w-full py-2 mt-4 text-white rounded-lg bg-gradient-to-r from-pink-500 to-purple-500" @click="triggerFileUpload" />
-      </div>
-      <div class="col-span-1 md:col-span-2">
-        <h1 class="mb-4 text-3xl font-bold lg:text-5xl">{{ fullName }}</h1>
-        <p class="mb-4 text-gray-600">{{ empPosition }}</p>
-        <div class="border-box">
-          <TabView v-model:activeIndex="activeTab" class="no-background">
-            <TabPanel header="PERSONAL INFO" :active="activeSubTab === 'personal'">
-            <!-- Personal Info Fields -->
-            <div class="grid grid-cols-4 gap-4">
-                <div class="col-span-1">
-                    <label class="block mb-2 text-sm font-bold text-gray-700">USER NAME</label>
-                    <input type="text" class="input-field text-color" v-model="fields.empUser" disabled />
-                </div>
-                <div class="col-span-1">
-                    <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYEE ID</label>
-                    <input type="text" class="input-field text-color" v-model="fields.empID" disabled />
-                </div><div class="col-span-1"></div><div class="col-span-1"></div>
+<template>
+    <AppLayout>
+            <div class="flex flex-col lg:flex-row">
+                <!-- Sidebar -->
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field" v-model="fields.firstName" :disabled="!isEditing" @input="validateName('firstName')"/>
+                <Sidebar />
                 </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')"/>
+
+                <!-- Main Content -->
+                <div class="w-full p-6 relative">
+                <!-- Profile Section -->
+                <div class="flex items-center mb-4 absolute -top-16 right-0 lg:static lg:mt-0 lg:mb-8">
+                    <!-- Profile Image with Hover Effect -->
+                    <div class="relative w-24 h-24 lg:w-36 lg:h-36 rounded-full object-cover group">
+                    <!-- Profile Picture -->
+                    <img
+                        :src="profilePictureUrl"
+                        alt="Profile Picture"
+                        class="w-full h-full rounded-full object-cover"
+                    />
+                    <!-- Camera Icon Overlay -->
+                    <div
+                        class="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                        @click="triggerFileUpload"
+                    >
+                        <i class="fas fa-camera text-white text-3xl"></i>
+                    </div>
+                    <!-- Hidden File Input -->
+                    <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
+                    </div>
+
+                    <!-- Profile Details -->
+                    <div class="ml-4 text-left">
+                    <h2 class="text-4xl font-semibold text-blue-800">{{ fullName }}</h2>
+                    <hr class="my-2 border-yellow-200 border-2" />
+                    <p class="text-gray-600 text-lg">{{ empPosition }}</p>
+                    </div>
                 </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field" v-model="fields.lastName" :disabled="!isEditing" @input="validateName('lastName')"/>
+
+                <!-- Custom Tabs (optional) -->
+                <div class="flex justify-end -mb-px">
+                    <button
+                    @click="activeTab = 'personal-info'"
+                    :class="tabButtonClass('personal-info')"
+                    >
+                    PERSONAL INFO
+                    </button>
+                    <button
+                    @click="activeTab = 'address'"
+                    :class="tabButtonClass('address')"
+                    >
+                    ADDRESS
+                    </button>
                 </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.suffix" :disabled="!isEditing">
-                    <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                  </select>
+
+                <!-- Personal Info Tab -->
+                <div v-if="activeTab === 'personal-info'" class="bg-white border border-blue-900 rounded-lg p-6">
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">BASIC INFORMATION</h2>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Employee ID *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.empID" disabled/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Username *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.empUser" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Firstname *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.firstName"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Middlename *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.middleName"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Lastname *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.lastName"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Suffix *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.suffix">
+                                <option value="">None</option>
+                                <option value="Jr.">Jr.</option>
+                                <option value="Sr.">Sr.</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Citizenship *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.citizenship"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Birthday *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="fields.birthday"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Place of Birth *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.placeOfBirth"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Civil Status *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.civilStatus">
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-5 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sex *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.sex">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Age *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="calculatedAge" disabled/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Blood Type *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.bloodType">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="AB">AB</option>
+                                <option value="O">O</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Height *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="number" step="0.01" v-model="fields.height"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Weight *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="number" v-model="fields.weight"/>
+                        </div>
+                    </div>
+
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">CONTACT INFORMATION</h2>
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Mobile Number *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.mobilenum"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Telephone Number *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.telnum"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="email" v-model="fields.emailadd"/>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-right">
+                        <button @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md font-semibold">EDIT</button>
+                    </div>
                 </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">CITIZENSHIP <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field" v-model="fields.citizenship" :disabled="!isEditing" @input="validateName('citizenship')"/>
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY <span style="color: red;">*</span></label>
-                    <input type="date" class="text-center input-field" v-model="fields.birthday" :disabled="!isEditing" />
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
-                    <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS <span style="color: red;">*</span></label>
-                    <select class="input-field" v-model="fields.civilStatus" :disabled="!isEditing">
-                        <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                    </select>
-                </div>
-              </div>
-              <br>
-                <div class="tight">
-                  <div class="grid grid-cols-5 gap-4">
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">SEX <span style="color: red;">*</span></label>
-                    <select class="input-field" v-model="fields.sex" :disabled="!isEditing">
-                        <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
-                    <input type="text" class="input-field text-color" :value="calculatedAge" disabled />
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
-                    <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
-                        <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M) <span style="color: red;">*</span></label>
-                    <input type="number" step="0.01" class="input-field" v-model="fields.height" :disabled="!isEditing" />
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG) <span style="color: red;">*</span></label>
-                    <input type="number" class="input-field" v-model="fields.weight" :disabled="!isEditing" />
+
+                <!-- Address Tab -->
+                <div v-if="activeTab === 'address'" class="bg-white border border-blue-900 rounded-lg p-6">
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">PERMANENT ADDRESS</h2>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Region *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region">
+                                <option value="NCR">NCR</option>
+                                <option value="Region 1">Region 1</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Province *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province">
+                                <option value="Ilocos Norte">Ilocos Norte</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City">
+                                <option value="City 1">City 1</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Barangay *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay">
+                                <option value="Barangay 1">Barangay 1</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Village/Subdivision *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.villsub"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Block/Street/Purok *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.block"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Zip Code *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.zipcode"/>
+                        </div>
+                    </div>
+
+                    <!-- Align Checkbox to the Right -->
+                    <div class="flex justify-end mb-6">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="sameAddressCheckbox" v-model="sameCurrentAddress" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <label for="sameAddressCheckbox" class="ml-2 block text-sm font-medium text-gray-700">Same current address?</label>
+                        </div>
+                    </div>
+
+                    <!-- Current Address Section -->
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">CURRENT ADDRESS</h2>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Region *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region2">
+                                <option value="NCR">NCR</option>
+                                <option value="Region 1">Region 1</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Province *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province2">
+                                <option value="Ilocos Norte">Ilocos Norte</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City2">
+                                <option value="City 1">City 1</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Barangay *</label>
+                            <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay2">
+                                <option value="Barangay 1">Barangay 1</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Village/Subdivision *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.villsub2"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Block/Street/Purok *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.block2"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Zip Code *</label>
+                            <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.zipcode2"/>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-right">
+                        <button @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md font-semibold">EDIT</button>
+                    </div>
                 </div>
             </div>
-                </div>
-
-            </TabPanel>
-            <TabPanel header="ADDRESS" :active="activeSubTab === 'address'">
-              <!-- Address Fields -->
-              <h1 style="font-size: 25px; font-weight: bold; margin-bottom: 3%; margin-top: 1%;">PERMANENT ADDRESS</h1>
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">REGION <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Region" :disabled="!isEditing" @change="fetchProvinces()">
-                    <option v-for="(region, index) in regions" :key="index" :value="region.reg_psgc">{{ region.col_region }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Province" :disabled="!isEditing" @change="fetchCities()">
-                    <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">CITY <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.City" :disabled="!isEditing"@change="fetchBarangays()">
-                    <option v-for="(city, index) in cities" :key="index" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Barangay" :disabled="!isEditing">
-                    <option v-for="(barangay, index) in barangays" :key="index" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
-                  </select>
-                </div>
-                </div>
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-3" style="margin-top: 3%;">
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field addgrid" v-model="fields.zipcode" :disabled="!isEditing" />
-                  </div>
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
-                    <input type="text" class="input-field addgrid" v-model="fields.block" :disabled="!isEditing" />
-                  </div>
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
-                    <input type="text" class="input-field addgrid" v-model="fields.villsub" :disabled="!isEditing" />
-                  </div>
-                </div>
-              <span class="broken-line"></span>
-              <!--CHECK BOX HERE TO COPY PASTE PERMANENT ADD to CURRENT ADD-->
-<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-              <div class="checkbox"  style="width: 100%;">
-                <h1 style="font-size: 25px; font-weight: bold; margin-right: 40%;">CURRENT ADDRESS</h1>
-                <label class="ml-2 text-sm font-bold text-gray-700">
-                  <input type="checkbox" class="check" v-model="copyPermanentToCurrent" :disabled="!isEditing"/>
-                  Copy Permanent Address
-                </label>
-              </div>
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-2" style="margin-top: 2%;">
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
-                  <select class="input-field" v-model="fields.Region2" :disabled="!isEditing" @change="fetchProvinces2()">
-                    <option v-for="(region2, index) in regions2" :key="index" :value="region2.reg_psgc">{{ region2.col_region }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
-                  <select class="input-field" v-model="fields.Province2" :disabled="!isEditing" @change="fetchCities2()">
-                    <option v-for="(province2, index) in provinces2" :key="index" :value="province2.prv_psgc">{{ province2.col_province }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
-                  <select class="input-field" v-model="fields.City2" :disabled="!isEditing"@change="fetchBarangays2()">
-                    <option v-for="(city2, index) in cities2" :key="index" :value="city2.citmun_psgc">{{ city2.col_citymuni }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
-                  <select class="input-field" v-model="fields.Barangay2" :disabled="!isEditing">
-                    <option v-for="(barangay2, index) in barangays2" :key="index" :value="barangay2.brgy_psgc">{{ barangay2.col_brgy }}</option>
-                  </select>
-                </div>
-              </div>
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-3" style="margin-top: 3%;">
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE</label>
-                    <input type="text" class="input-field addgrid" v-model="fields.zipcode2" :disabled="!isEditing" />
-                  </div>
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
-                    <input type="text" class="input-field addgrid" v-model="fields.block2" :disabled="!isEditing" />
-                  </div>
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
-                    <input type="text" class="input-field addgrid" v-model="fields.villsub2" :disabled="!isEditing" />
-                  </div>
-                </div>
-            </TabPanel>
-            <TabPanel header="SECURITY & CONTACT DETAILS" :active="activeSubTab === 'security'">
-              <!-- Security & Contact Fields -->
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">
-                    MOBILE NUMBER <span style="color: red;">*</span>
-                  </label>
-                  <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-700">+63 |</span>
-                    <input type="text" class="input-field number-field pl-12" v-model="fields.mobilenum" maxlength="9" @input="validateMobileNumber" :disabled="!isEditing" />
-                  </div>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER <span style="color: red;">*</span></label>
-                  <input type="text" class="input-field" v-model="fields.telnum" maxlength="7" @input="validateTelephoneNumber" :disabled="!isEditing" />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">EMAIL ADDRESS <span style="color: red;">*</span></label>
-                  <input type="text" class="input-field" v-model="fields.emailadd" :disabled="!isEditing" />
-                </div>
-              </div>
-            </TabPanel>
-          </TabView>
         </div>
-        <Button label="EDIT" v-if="!isEditing" class="float-right px-8 py-2 mt-6 text-white bg-green-500 rounded-lg update-button" @click="toggleEditing" />
-        <div v-if="isEditing" class="float-right mt-6 space-x-4">
-          <Button label="CANCEL" class="px-8 py-2 text-white rounded-lg custom-cancel-button" @click="cancelEditing" />
-          <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg update-button" @click="confirmUpdate" />
-        </div>
-      </div>
-    </div>
-
-    <!-- Update Confirmation Modal -->
-    <div v-if="showUpdateDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-        <div class="p-4">
-          <div class="text-center">
-            <i class="mb-4 mt-4 text-4xl fas fa-circle-question" style="color: red;"></i>
-            <h2 class="mb-4 text-xl font-semibold">Are you sure you want to update?</h2>
-            <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
-          </div>
-          <div class="flex justify-center gap-4">
-            <button @click="hideUpdateDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">
-              Cancel
-            </button>
-            <button @click="saveProfile" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">
-              Confirm
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Update Success Modal -->
-    <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-        <div class="p-4">
-          <div class="text-center">
-            <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
-            <h2 class="mb-4 text-xl font-semibold">Updated Successfully!</h2>
-            <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
-          </div>
-          <div class="flex justify-center">
-            <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Photo Upload Success Modal -->
-    <div v-if="showPhotoSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-        <div class="p-4">
-          <div class="text-center">
-            <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
-            <h2 class="mb-4 text-xl font-semibold">Photo Uploaded Successfully!</h2>
-            <div class="flex justify-center">
-              <button @click="hidePhotoSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
-                OK
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Crop Image Modal -->
-    <div v-if="cropping" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div class="w-full max-w-lg p-4 overflow-hidden transition-all transform bg-white rounded-lg">
-        <h2 class="text-xl font-semibold text-center mb-4">Crop Your Image</h2>
-        <div class="crop-container">
-          <img ref="cropperImage" :src="cropperSrc" alt="Cropper Image" />
-        </div>
-        <div class="flex justify-center mt-4">
-          <Button label="Crop" @click="cropImage" class="bg-blue-500 text-white mr-4" />
-          <Button label="Cancel" @click="cancelCrop" class="bg-red-500 text-white" />
-        </div>
-      </div>
-    </div>
-
-  </AppLayout>
+    </AppLayout>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -316,10 +286,6 @@ import TabPanel from 'primevue/tabpanel';
 export default {
   components: {
     AppLayout, Button, TabView, TabPanel
-  },
-
-  mounted() {
-    console.log('Component mounted.')
   },
 
   data() {
@@ -372,16 +338,17 @@ export default {
       civilStatusOptions: [],
       bloodTypeOptions: [],
       extOptions: [],
-      regions:[],
-      provinces:[],
-      cities:[],
-      barangays:[],
-      regions2:[],
-      provinces2:[],
-      cities2:[],
-      barangays2:[],
-      activeTab: 0,
+      regions: [],
+      provinces: [],
+      cities: [],
+      barangays: [],
+      regions2: [],
+      provinces2: [],
+      cities2: [],
+      barangays2: [],
+      activeTab: 'personal-info', // Add the activeTab data property here
       activeSubTab: '',
+      sameCurrentAddress: false,
       searchQuery: '',
       isHovered: false,
       isUnblurred: false,
@@ -391,11 +358,6 @@ export default {
       cropper: null,
       cropperSrc: '',
     };
-  },
-
-  created() {
-    // Retrieve the empid from session or local storage when the component is created
-    this.empid = sessionStorage.getItem('empid') || localStorage.getItem('empid') || '';
   },
 
   computed: {
@@ -412,7 +374,6 @@ export default {
     },
   },
 
-
   watch: {
     copyPermanentToCurrent(newValue) {
       if (newValue) {
@@ -421,7 +382,30 @@ export default {
     }
   },
 
+    watch: {
+    // If "Same current address?" is checked, copy permanent address to current address
+    sameCurrentAddress(newValue) {
+      if (newValue) {
+        this.fields.Region2 = this.fields.Region;
+        this.fields.Province2 = this.fields.Province;
+        this.fields.City2 = this.fields.City;
+        this.fields.Barangay2 = this.fields.Barangay;
+        this.fields.villsub2 = this.fields.villsub;
+        this.fields.block2 = this.fields.block;
+        this.fields.zipcode2 = this.fields.zipcode;
+      }
+    },
+  },
+
   methods: {
+    // Add the tabButtonClass method here
+    tabButtonClass(tabName) {
+      return {
+        'px-6 py-2 rounded-t-lg font-semibold border-t border-l border-r border-gray-200': true,
+        'bg-blue-900 text-white': this.activeTab === tabName,
+        'bg-gray-300 text-gray-700': this.activeTab !== tabName,
+      };
+    },
 
     validateName(field) {
       this.fields[field] = this.fields[field].replace(/[0-9]/g, '');
@@ -430,6 +414,7 @@ export default {
     validateMobileNumber() {
       this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
     },
+
     validateTelephoneNumber() {
       this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
     },
@@ -946,7 +931,6 @@ onCroppingComplete(croppedBlob) {
     text-align: left; /* Ensure text is left-aligned */
 }
 
-
 .col-span-1 {
     width: 100%;
 }
@@ -1004,4 +988,5 @@ onCroppingComplete(croppedBlob) {
 .number-field {
   padding-left: 15%;
 }
+
 </style>

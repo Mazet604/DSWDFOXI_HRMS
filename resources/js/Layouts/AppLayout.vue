@@ -34,29 +34,41 @@
                     </ul>
                 </div>
                 <nav class="flex-1">
-                    <div class="custom-accordion">
-                        <div class="custom-accordion-header" @click="toggleAccordion">
-                            <span class="font-bold">USER PROFILE</span>
-                            <i :class="{'rotate-180': isAccordionOpen}" class="fas fa-chevron-down"></i>
+                        <div class="custom-accordion">
+                            <div class="custom-accordion-header" @click="toggleAccordion">
+                                <i class="fa-regular fa-circle-user text-3xl"></i>
+                                <span class="font-bold ">USER PROFILE</span>
+                                <i :class="{'rotate-180': isAccordionOpen}" class="fas fa-chevron-down"></i>
+                            </div>
+                            <div v-show="isAccordionOpen" class="custom-accordion-content">
+                                <ul class="custom-menu">
+                                        <li
+                                            :class="{ active: activeMenuItem === 'basicInfo' }"
+                                            @click="navigateTo('basicInfo', 'dashboard', 0)"
+                                            class="menu-item"
+                                        >
+                                            BASIC INFO
+                                        </li>
+                                        <li
+                                            :class="{ active: activeMenuItem === 'background' }"
+                                            @click="navigateTo('background', 'background', 0)"
+                                            class="menu-item"
+                                        >
+                                            BACKGROUND
+                                        </li>
+                                        <li
+                                            :class="{ active: activeMenuItem === 'otherInfo' }"
+                                            @click="navigateTo('otherInfo', 'otherinfo', 0)"
+                                            class="menu-item"
+                                        >
+                                            OTHER INFO
+                                        </li>
+                                    </ul>
+
+                            </div>
                         </div>
-                        <div v-show="isAccordionOpen" class="custom-accordion-content">
-                            <ul class="custom-menu">
-                                <li @click="navigateTo('dashboard', 0)">
-                                    <i class="mr-2 fas fa-user"></i>
-                                    Basic Info
-                                </li>
-                                <li @click="navigateTo('background', 0)">
-                                    <i class="mr-2 fas fa-briefcase"></i>
-                                    Background
-                                </li>
-                                <li @click="navigateTo('otherinfo', 0)">
-                                    <i class="mr-2 fas fa-info-circle"></i>
-                                    Other Info
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                    </nav>
+
 
                 <button @click="downloadPDS" class="w-30 px-4 py-2 mt-4 text-white bg-blue-700 rounded hover:bg-blue-600">
                     <i class="fas fa-download mr-2"></i> Personal Data Sheet
@@ -71,7 +83,7 @@
         <!-- Main Content -->
         <main class="flex-1 p-8 ml-64 overflow-y-auto relative">
             <!-- Main Content Background Image -->
-            <img src="/images/backgrounddswd.jpg" alt="Main Background" class="fixed inset-0 object-cover w-full h-full opacity-100" />
+            <img src="/images/backgrounddswdnotop.png" alt="Main Background" class="fixed inset-0 object-cover w-full h-full opacity-100" />
             <div class="relative z-10">
                 <slot></slot>
             </div>
@@ -108,6 +120,7 @@ const showLogoutDialog = ref(false);
 const searchQuery = ref('');
 const activeTab = ref(0);
 const activeSubTab = ref(0);
+const activeMenuItem = ref(''); // Initialize with empty
 
 const suggestions = [
     'Personal Info',
@@ -167,15 +180,20 @@ const toggleAccordion = () => {
     isAccordionOpen.value = !isAccordionOpen.value;
 };
 
-const navigateTo = (routeName, tab = 0, subTab = 0) => {
+
+const navigateTo = (menuItem, routeName, tab = 0, subTab = 0) => {
+    activeMenuItem.value = menuItem; // Set the active menu item
+    // Use Inertia.js to navigate smoothly without refreshing the page
     router.visit(route(routeName), {
-        preserveState: true,
+        preserveState: true, // Preserve component state to prevent full refresh
+        replace: true, // Optionally, replace history to avoid multiple back entries
         onSuccess: () => {
             activeTab.value = tab;
             activeSubTab.value = subTab;
         },
     });
 };
+
 
 const confirmLogout = () => {
     showLogoutDialog.value = true;
@@ -256,6 +274,8 @@ watch(activeTab, (newValue) => {
 </script>
 
 <style scoped>
+
+
 .custom-accordion-header {
     display: flex;
     justify-content: space-between;
@@ -273,6 +293,7 @@ watch(activeTab, (newValue) => {
 .custom-accordion-content {
     background: transparent;
     padding: 0;
+
 }
 .custom-menu {
     list-style: none;
@@ -281,22 +302,39 @@ watch(activeTab, (newValue) => {
 }
 .custom-menu li {
     display: flex;
+    justify-content: center;
     align-items: center;
     padding: 0.75rem 1rem;
     background: transparent;
     cursor: pointer;
     transition: background 0.3s ease-in-out;
     font-weight: bold;
+    text-transform: uppercase;
+    color: white;
 }
+
+/* Style when item is hovered */
 .custom-menu li:hover {
     background: rgba(255, 255, 255, 0.1);
 }
-.custom-menu li i {
-    margin-right: 0.5rem;
+
+/* Style when item is clicked/active */
+.custom-menu li.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: yellow;
 }
+
 .rotate-180 {
     transform: rotate(180deg);
 }
+
+.centered-text {
+    margin: 0 auto;  /* centers the text horizontally */
+    padding: 10px 0;  /* optional padding to add vertical space */
+    text-align: center;  /* aligns text to the center */
+    list-style-type: none;  /* removes the bullet points */
+}
+
 /* Additional CSS for the search bar */
 .search-bar {
     position: relative;

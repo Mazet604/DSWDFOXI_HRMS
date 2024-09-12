@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+input:focus {
+    border-color: blue; /* Change the border color to blue */
+    outline: none;      /* Remove default outline */
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Optional: Adds a soft blue shadow */}
+
+.p-inputtext:focus {
+    border-color: blue; /* Change the border color to blue */
+    outline: none;      /* Remove default outline */
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Optional: Adds a soft blue shadow */
+}
