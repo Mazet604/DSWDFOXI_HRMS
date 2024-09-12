@@ -84,7 +84,9 @@ const togglePassword = () => {
 const submit = () => {
     form.post(route('login'), {
         onSuccess: (page) => {
+            console.log('Server response:', page); // Log the server response
             if (page.props.otp_required) {
+                console.log('OTP is required'); // Log OTP requirement
                 Inertia.visit(route('otp.form'), {
                     method: 'get',
                     data: {
@@ -92,9 +94,13 @@ const submit = () => {
                     }
                 });
             } else {
+                console.log('Redirecting to dashboard'); // Log redirection to dashboard
                 Inertia.visit(route('dashboard'));
             }
         },
+        onError: (errors) => {
+            console.error('Login error:', errors); // Log any errors
+        }
     });
 };
 </script>

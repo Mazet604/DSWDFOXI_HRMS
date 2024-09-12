@@ -56,15 +56,15 @@
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">CITIZENSHIP <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field" v-model="fields.citizenship" :disabled="!isEditing" @input="validateName('citizenship')"/>
+                    <input type="text" class="input-field text-color" v-model="fields.citizenship" disabled>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY <span style="color: red;">*</span></label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY <span style="color: gray;">(DD-MM-YYYY)</span> <span style="color: red;">*</span></label>
                     <input type="date" class="text-center input-field" v-model="fields.birthday" :disabled="!isEditing" />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
-                    <input type="text" class="input-field" v-model="fields.placeOfBirth" :disabled="!isEditing" />
+                    <input type="text" class="input-field text-color" v-model="fields.placeOfBirth" disabled />
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS <span style="color: red;">*</span></label>
@@ -110,19 +110,19 @@
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Region" :disabled="!isEditing" @change="fetchProvinces()">
+                  <select class="input-field" v-model="fields.Region" :disabled="!isEditing">
                     <option v-for="(region, index) in regions" :key="index" :value="region.reg_psgc">{{ region.col_region }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Province" :disabled="!isEditing" @change="fetchCities()">
+                  <select class="input-field" v-model="fields.Province" :disabled="!isEditing">
                     <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">CITY <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.City" :disabled="!isEditing"@change="fetchBarangays()">
+                  <select class="input-field" v-model="fields.City" :disabled="!isEditing">
                     <option v-for="(city, index) in cities" :key="index" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
                   </select>
                 </div>
@@ -160,19 +160,19 @@
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2" style="margin-top: 2%;">
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
-                  <select class="input-field" v-model="fields.Region2" :disabled="!isEditing" @change="fetchProvinces2()">
+                  <select class="input-field" v-model="fields.Region2" :disabled="!isEditing">
                     <option v-for="(region2, index) in regions2" :key="index" :value="region2.reg_psgc">{{ region2.col_region }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
-                  <select class="input-field" v-model="fields.Province2" :disabled="!isEditing" @change="fetchCities2()">
+                  <select class="input-field" v-model="fields.Province2" :disabled="!isEditing">
                     <option v-for="(province2, index) in provinces2" :key="index" :value="province2.prv_psgc">{{ province2.col_province }}</option>
                   </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
-                  <select class="input-field" v-model="fields.City2" :disabled="!isEditing"@change="fetchBarangays2()">
+                  <select class="input-field" v-model="fields.City2" :disabled="!isEditing">
                     <option v-for="(city2, index) in cities2" :key="index" :value="city2.citmun_psgc">{{ city2.col_citymuni }}</option>
                   </select>
                 </div>
@@ -418,7 +418,42 @@ export default {
       if (newValue) {
         this.copyPermanentAddress();
       }
-    }
+    },
+
+    'fields.Region'(newVal) {
+      if (newVal) {
+        this.fetchProvinces();
+      }
+    },
+    'fields.Province'(newVal) {
+      if (newVal) {
+        this.fetchCities();
+      }
+    },
+    'fields.City'(newVal) {
+      if (newVal) {
+        this.fetchBarangays();
+      }
+    },
+
+    'fields.Region2'(newVal) {
+      if (newVal) {
+        this.fetchProvinces2();
+      }
+    },
+
+    'fields.Province2'(newVal) {
+      if (newVal) {
+        this.fetchCities2();
+      }
+    },
+
+    'fields.City2'(newVal) {
+      if (newVal) {
+        this.fetchBarangays2();
+      }
+    },
+
   },
 
   methods: {
@@ -849,6 +884,7 @@ onCroppingComplete(croppedBlob) {
     cancelEditing() {
       this.fields = JSON.parse(JSON.stringify(this.originalFields)); // Revert fields to the original state
       this.isEditing = false;
+      this.copyPermanentToCurrent = false;
     },
     confirmUpdate() {
       this.showUpdateDialog = true;

@@ -23,7 +23,7 @@
                                 <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">EXT. NAME</label>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
                                 <input class="input-field" type="text" v-model="fields.spouseExtName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
@@ -61,7 +61,7 @@
                                 <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">EXT. NAME</label>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
                                 <input class="input-field" type="text" v-model="fields.fatherExtName" :disabled="!isEditingFamily" />
                             </div>
                             <div class="col-span-1"></div> <!-- Empty space for alignment -->

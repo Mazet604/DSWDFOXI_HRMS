@@ -82,4 +82,10 @@ class AddressController extends Controller
                              ->get();
         return response()->json($barangays);
     }
+
+    public function getAllCities()
+    {
+        $cities = lib_city::all();
+        return response()->json($cities);
+    }
 }

@@ -100,6 +100,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/cities2', [AddressControllerII::class, 'getCities2']);
     Route::get('/api/barangays2', [AddressControllerII::class, 'getBarangays2']);
 
+    Route::get('/all-cities', [AddressController::class, 'getAllCities']);
+
 
 
 
