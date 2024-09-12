@@ -18,14 +18,14 @@
         }
         /* Table Styling */
         table {
-          width: 100%;
+            width: 100%;
           border-collapse: collapse; /* Remove spacing between table cells */
         }
 
         th, td {
-          border: 1px solid black;
-          padding: 5px;
-          text-align: left;
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
         }
 
         /* Column Styling */
@@ -54,9 +54,9 @@
 
         /* Additional Styling (Optional) */
         h1 { /* Style the heading */
-          text-align: center;
-          font-size: 24px;
-          margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
         th {

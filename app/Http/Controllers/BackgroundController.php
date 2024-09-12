@@ -15,10 +15,22 @@ use App\Models\emp_mother;
 use App\Models\emp_spouse;
 use App\Models\employee;
 use App\Models\EmpFamily;
+use App\Models\lib_suffix;
 use Illuminate\Support\Facades\Log;
 
 class BackgroundController extends Controller
 {
+
+    public function suffix()
+    {
+        try {
+            $suffixes = lib_suffix::all(['lib1_count as value', 'lib1_suffix as label']);
+            return response()->json($suffixes);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function getEducationData()
     {
         try {

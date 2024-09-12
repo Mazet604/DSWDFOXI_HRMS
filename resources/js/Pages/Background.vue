@@ -24,7 +24,11 @@
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                                <input class="input-field" type="text" v-model="fields.spouseExtName" :disabled="!isEditingFamily" />
+                                <select class="input-field" v-model="fields.spouseExtName" :disabled="!isEditingFamily">
+                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                        {{ suffix.label }}
+                                    </option>
+                                </select>
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
@@ -62,7 +66,11 @@
                             </div>
                             <div class="col-span-1">
                                 <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                                <input class="input-field" type="text" v-model="fields.fatherExtName" :disabled="!isEditingFamily" />
+                                <select class="input-field" v-model="fields.fatherExtName" :disabled="!isEditingFamily">
+                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                        {{ suffix.label }}
+                                    </option>
+                                </select>
                             </div>
                             <div class="col-span-1"></div> <!-- Empty space for alignment -->
                             <!-- Separator for Mother's Information -->
@@ -289,8 +297,12 @@
                             <input class="input-field" type="text" v-model="newChild.child_lname" />
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Extension Name</label>
-                            <input class="input-field" type="text" v-model="newChild.child_xname" />
+                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Suffix</label>
+                            <select class="input-field" v-model="newChild.child_xname">
+                                <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                    {{ suffix.label }}
+                                </option>
+                            </select>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">Child Birth Date</label>
@@ -482,7 +494,7 @@
                             <input class="input-field" type="text" v-model="newReference.ref_lname" />
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">EXTENSION NAME</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
                             <input class="input-field" type="text" v-model="newReference.ref_xname" />
                         </div>
                         <div>
@@ -568,6 +580,7 @@ export default {
         isEditingProfile: false,
         originalProfileFields: {},
         childData: [],
+        suffixes:[],
         newChild: {
             child_fname: '',
             child_mname: '',
@@ -628,6 +641,10 @@ export default {
     };
     },
 
+    created() {
+    this.fetchSuffixes();
+    },
+
     computed: {
         filteredEditFields() {
             return Object.fromEntries(
@@ -640,6 +657,23 @@ export default {
 
 
     methods: {
+
+        fetchSuffixes() {
+            fetch('/dropdown/suffixes')
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch suffix options');
+            }
+            return response.json();
+            })
+            .then(data => {
+            this.suffixes = data;
+            })
+            .catch(error => {
+            console.error(error);
+        });
+    },
+        
     toggleProfileEditing() {
         console.log('Toggling profile editing:', this.isEditingProfile);
         console.log('Selected row:', this.selectedRow);

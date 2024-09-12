@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/laravel',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '845db9c2c9196ca7d842a53e5152b7b26f2e55d1',
+        'pretty_version' => 'dev-Mazet604-patch-1',
+        'version' => 'dev-Mazet604-patch-1',
+        'reference' => '39407cd92a6dec7c7ed6a89c33e93dde47080a75',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -434,9 +434,9 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '845db9c2c9196ca7d842a53e5152b7b26f2e55d1',
+            'pretty_version' => 'dev-Mazet604-patch-1',
+            'version' => 'dev-Mazet604-patch-1',
+            'reference' => '39407cd92a6dec7c7ed6a89c33e93dde47080a75',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
