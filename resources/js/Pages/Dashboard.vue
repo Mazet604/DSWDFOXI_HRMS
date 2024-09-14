@@ -42,8 +42,7 @@
                     <input type="text" class="input-field" v-model="fields.firstName" :disabled="!isEditing" @input="validateName('firstName')"/>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')"/>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME <span style="color: red;">*</span></label>                    <input type="text" class="input-field" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')"/>
                 </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME <span style="color: red;">*</span></label>
