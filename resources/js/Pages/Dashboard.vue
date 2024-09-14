@@ -1,28 +1,29 @@
  <template>
   <AppLayout>
-    <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div class="relative col-span-1">
-        <div class="relative group">
-          <img
-            alt="Profile Picture"
-            :src="profilePictureUrl"
-            class="w-full rounded-lg cursor-pointer"
-            height="300"
-            width="300"
-            :class="{ 'blur-md': !isUnblurred }"
-            @click="toggleBlur"
-          />
-          <button @click="toggleBlur" class="absolute top-0 right-0 m-2 p-2 bg-gray-800 bg-opacity-75 rounded-full">
-      <i class="fas fa-eye text-white text-4xl"></i>
-    </button>
+    <div class="flex flex-col lg:flex-row">
+                <!-- Profile Section -->
+                <div class="flex items-center mb-4 absolute -top-16 right-0 lg:static lg:mt-0 lg:mb-8">
+                    <!-- Profile Image with Hover Effect -->
+                    <div class="relative w-24 h-24 lg:w-36 lg:h-36 rounded-full object-cover group">
+                    <!-- Profile Picture -->
+                    <img :src="profilePictureUrl" alt="Profile Picture" class="w-full h-full rounded-full object-cover"/>
+                    <!-- Camera Icon Overlay -->
+                    <div class="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"@click="triggerFileUpload">
+                  <i class="fas fa-camera text-white text-3xl"></i>
+                </div>
+                    <!-- Hidden File Input -->
+                <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
+                </div>
+
+                    <!-- Profile Details -->
+                <div class="ml-4 text-left">
+                <h2 class="text-4xl font-semibold text-blue-800">{{ fullName }}</h2>
+                <hr class="my-2 border-yellow-200 border-2" />
+                <p class="text-gray-600 text-lg">{{ empPosition }}</p>
+            </div>
         </div>
-        <!-- Hidden file input -->
-        <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
-        <Button label="Upload Photo" class="w-full py-2 mt-4 text-white rounded-lg bg-gradient-to-r from-pink-500 to-purple-500" @click="triggerFileUpload" />
-      </div>
+        
       <div class="col-span-1 md:col-span-2">
-        <h1 class="mb-4 text-3xl font-bold lg:text-5xl">{{ fullName }}</h1>
-        <p class="mb-4 text-gray-600">{{ empPosition }}</p>
         <div class="border-box">
           <TabView v-model:activeIndex="activeTab" class="no-background">
             <TabPanel header="PERSONAL INFO" :active="activeSubTab === 'personal'">
@@ -159,25 +160,25 @@
               </div>
               <div class="grid grid-cols-1 gap-4 md:grid-cols-2" style="margin-top: 2%;">
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">REGION</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">REGION <span style="color: red;">*</span></label>
                   <select class="input-field" v-model="fields.Region2" :disabled="!isEditing">
                     <option v-for="(region2, index) in regions2" :key="index" :value="region2.reg_psgc">{{ region2.col_region }}</option>
                   </select>
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE <span style="color: red;">*</span></label>
                   <select class="input-field" v-model="fields.Province2" :disabled="!isEditing">
                     <option v-for="(province2, index) in provinces2" :key="index" :value="province2.prv_psgc">{{ province2.col_province }}</option>
                   </select>
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">CITY</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">CITY <span style="color: red;">*</span></label>
                   <select class="input-field" v-model="fields.City2" :disabled="!isEditing">
                     <option v-for="(city2, index) in cities2" :key="index" :value="city2.citmun_psgc">{{ city2.col_citymuni }}</option>
                   </select>
                 </div>
                 <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY</label>
+                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY <span style="color: red;">*</span></label>
                   <select class="input-field" v-model="fields.Barangay2" :disabled="!isEditing">
                     <option v-for="(barangay2, index) in barangays2" :key="index" :value="barangay2.brgy_psgc">{{ barangay2.col_brgy }}</option>
                   </select>
@@ -185,7 +186,7 @@
               </div>
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-3" style="margin-top: 3%;">
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE <span style="color: red;">*</span></label>
                     <input type="text" class="input-field addgrid" v-model="fields.zipcode2" :disabled="!isEditing" />
                   </div>
                   <div>
