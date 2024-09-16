@@ -1,277 +1,288 @@
- <template>
-  <AppLayout>
-    <div class="flex flex-col lg:flex-row">
-                <!-- Profile Section -->
-                <div class="flex items-center mb-4 absolute -top-16 right-0 lg:static lg:mt-0 lg:mb-8">
-                    <!-- Profile Image with Hover Effect -->
-                    <div class="relative w-24 h-24 lg:w-36 lg:h-36 rounded-full object-cover group">
-                    <!-- Profile Picture -->
-                    <img :src="profilePictureUrl" alt="Profile Picture" class="w-full h-full rounded-full object-cover"/>
-                    <!-- Camera Icon Overlay -->
-                    <div class="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"@click="triggerFileUpload">
-                  <i class="fas fa-camera text-white text-3xl"></i>
-                </div>
-                    <!-- Hidden File Input -->
-                <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
-                </div>
+<template>
+    <AppLayout>
+      <div class="flex flex-col lg:flex-row">
+        <!-- Sidebar -->
+        <div>
+          <Sidebar />
+        </div>
 
-                    <!-- Profile Details -->
-                <div class="ml-4 text-left">
-                <h2 class="text-4xl font-semibold text-blue-800">{{ fullName }}</h2>
-                <hr class="my-2 border-yellow-200 border-2" />
-                <p class="text-gray-600 text-lg">{{ empPosition }}</p>
-            </div>
-        </div>
-        
-      <div class="col-span-1 md:col-span-2">
-        <div class="border-box">
-          <TabView v-model:activeIndex="activeTab" class="no-background">
-            <TabPanel header="PERSONAL INFO" :active="activeSubTab === 'personal'">
-            <!-- Personal Info Fields -->
-            <div class="grid grid-cols-4 gap-4">
-                <div class="col-span-1">
-                    <label class="block mb-2 text-sm font-bold text-gray-700">USER NAME</label>
-                    <input type="text" class="input-field text-color" v-model="fields.empUser" disabled />
-                </div>
-                <div class="col-span-1">
-                    <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYEE ID</label>
-                    <input type="text" class="input-field text-color" v-model="fields.empID" disabled />
-                </div><div class="col-span-1"></div><div class="col-span-1"></div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field" v-model="fields.firstName" :disabled="!isEditing" @input="validateName('firstName')"/>
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME <span style="color: red;">*</span></label>                    <input type="text" class="input-field" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')"/>
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field" v-model="fields.lastName" :disabled="!isEditing" @input="validateName('lastName')"/>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.suffix" :disabled="!isEditing">
-                    <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                  </select>
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">CITIZENSHIP <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field text-color" v-model="fields.citizenship" disabled>
-                </div>
-                <div>
-                      <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY <span style="color: red;">*</span></label>
-                      <input type="date" class="text-center input-field"v-model="fields.birthday":disabled="!isEditing":max="maxDate":class="{'border-red-500': hasBirthdayError}"/>
-                      <p v-if="hasBirthdayError" class="mt-1 text-xs text-red-500">{{ birthdayErrorMessage }}</p>
-                  </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
-                    <input type="text" class="input-field text-color" v-model="fields.placeOfBirth" disabled />
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">CIVIL STATUS <span style="color: red;">*</span></label>
-                    <select class="input-field" v-model="fields.civilStatus" :disabled="!isEditing">
-                        <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                    </select>
-                </div>
+        <!-- Main Content -->
+        <div class="w-full p-6 relative">
+          <!-- Profile Section -->
+          <div class="flex items-center mb-4 absolute -top-16 right-0 lg:static lg:mt-0 lg:mb-8">
+            <!-- Profile Image with Hover Effect -->
+            <div class="relative w-24 h-24 lg:w-36 lg:h-36 rounded-full object-cover group">
+              <!-- Profile Picture -->
+              <img :src="profilePictureUrl" alt="Profile Picture" class="w-full h-full rounded-full object-cover" />
+              <!-- Camera Icon Overlay -->
+              <div class="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" @click="triggerFileUpload">
+                <i class="fas fa-camera text-white text-3xl"></i>
               </div>
-              <br>
-                <div class="tight">
-                  <div class="grid grid-cols-5 gap-4">
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">SEX <span style="color: red;">*</span></label>
-                    <select class="input-field" v-model="fields.sex" :disabled="!isEditing">
-                        <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                    </select>
-                </div>
-                <div>
-                      <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
-                      <input
-                          type="text"
-                          class="input-field text-color"
-                          :value="calculatedAge"
-                          disabled
-                          :class="{'border-red-500': hasBirthdayError}"
-                      />
-                      <p v-if="hasBirthdayError" class="mt-1 text-xs text-red-500">Invalid age. Please check the birthday.</p>
-                  </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
-                    <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
-                        <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">HEIGHT(M) <span style="color: red;">*</span></label>
-                    <input type="number" step="0.01" class="input-field" v-model="fields.height" :disabled="!isEditing" />
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">WEIGHT(KG) <span style="color: red;">*</span></label>
-                    <input type="number" class="input-field" v-model="fields.weight" :disabled="!isEditing" />
-                </div>
+              <!-- Hidden File Input -->
+              <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
             </div>
-                </div>
 
-            </TabPanel>
-            <TabPanel header="ADDRESS" :active="activeSubTab === 'address'">
-              <!-- Address Fields -->
-              <h1 style="font-size: 25px; font-weight: bold; margin-bottom: 3%; margin-top: 1%;">PERMANENT ADDRESS</h1>
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">REGION <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Region" :disabled="!isEditing">
-                    <option v-for="(region, index) in regions" :key="index" :value="region.reg_psgc">{{ region.col_region }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Province" :disabled="!isEditing">
-                    <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">CITY <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.City" :disabled="!isEditing">
-                    <option v-for="(city, index) in cities" :key="index" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Barangay" :disabled="!isEditing">
-                    <option v-for="(barangay, index) in barangays" :key="index" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
-                  </select>
-                </div>
-                </div>
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-3" style="margin-top: 3%;">
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field addgrid" v-model="fields.zipcode" :disabled="!isEditing" />
-                  </div>
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
-                    <input type="text" class="input-field addgrid" v-model="fields.block" :disabled="!isEditing" />
-                  </div>
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
-                    <input type="text" class="input-field addgrid" v-model="fields.villsub" :disabled="!isEditing" />
-                  </div>
-                </div>
-              <span class="broken-line"></span>
-              <!--CHECK BOX HERE TO COPY PASTE PERMANENT ADD to CURRENT ADD-->
-<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-              <div class="checkbox"  style="width: 100%;">
-                <h1 style="font-size: 25px; font-weight: bold; margin-right: 40%;">CURRENT ADDRESS</h1>
-                <label class="ml-2 text-sm font-bold text-gray-700">
-                  <input type="checkbox" class="check" v-model="copyPermanentToCurrent" :disabled="!isEditing"/>
-                  Copy Permanent Address
-                </label>
+            <!-- Profile Details -->
+            <div class="ml-4 text-left">
+              <h2 class="text-4xl font-semibold text-blue-800">{{ fullName }}</h2>
+              <hr class="my-2 border-yellow-200 border-2" />
+              <p class="text-gray-600 text-lg">{{ empPosition }}</p>
+            </div>
+          </div>
+
+          <!-- Custom Tabs -->
+          <div class="flex justify-end -mb-px">
+            <button @click="activeTab = 0" :class="tabButtonClass(0)">PERSONAL INFO</button>
+            <button @click="activeTab = 1" :class="tabButtonClass(1)">ADDRESS</button>
+          </div>
+
+          <!-- Personal Info Tab -->
+          <div v-if="activeTab === 0" class="bg-white border border-blue-900 rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">BASIC INFORMATION</h2>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">EMPLOYEE ID</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md text-color" type="text" v-model="fields.empID" disabled />
               </div>
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-2" style="margin-top: 2%;">
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">REGION <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Region2" :disabled="!isEditing">
-                    <option v-for="(region2, index) in regions2" :key="index" :value="region2.reg_psgc">{{ region2.col_region }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">PROVINCE <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Province2" :disabled="!isEditing">
-                    <option v-for="(province2, index) in provinces2" :key="index" :value="province2.prv_psgc">{{ province2.col_province }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">CITY <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.City2" :disabled="!isEditing">
-                    <option v-for="(city2, index) in cities2" :key="index" :value="city2.citmun_psgc">{{ city2.col_citymuni }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">BARANGAY <span style="color: red;">*</span></label>
-                  <select class="input-field" v-model="fields.Barangay2" :disabled="!isEditing">
-                    <option v-for="(barangay2, index) in barangays2" :key="index" :value="barangay2.brgy_psgc">{{ barangay2.col_brgy }}</option>
-                  </select>
-                </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">USERNAME</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md text-color" type="text" v-model="fields.empUser" disabled />
               </div>
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-3" style="margin-top: 3%;">
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">ZIP CODE <span style="color: red;">*</span></label>
-                    <input type="text" class="input-field addgrid" v-model="fields.zipcode2" :disabled="!isEditing" />
-                  </div>
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
-                    <input type="text" class="input-field addgrid" v-model="fields.block2" :disabled="!isEditing" />
-                  </div>
-                  <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">VILLAGE SUBDIVISION</label>
-                    <input type="text" class="input-field addgrid" v-model="fields.villsub2" :disabled="!isEditing" />
-                  </div>
-                </div>
-            </TabPanel>
-            <TabPanel header="SECURITY & CONTACT DETAILS" :active="activeSubTab === 'security'">
-              <!-- Security & Contact Fields -->
-              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">
-                    MOBILE NUMBER <span style="color: red;">*</span>
-                  </label>
-                  <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-700">+63 |</span>
-                    <input type="text" class="input-field number-field pl-12" v-model="fields.mobilenum" maxlength="9" @input="validateMobileNumber" :disabled="!isEditing" />
-                  </div>
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER <span style="color: red;">*</span></label>
-                  <input type="text" class="input-field" v-model="fields.telnum" maxlength="7" @input="validateTelephoneNumber" :disabled="!isEditing" />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-bold text-gray-700">EMAIL ADDRESS <span style="color: red;">*</span></label>
-                  <input type="text" class="input-field" v-model="fields.emailadd" :disabled="!isEditing" />
+            </div>
+
+            <div class="grid grid-cols-4 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">FIRST NAME <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.firstName" :disabled="!isEditing" @input="validateName('firstName')" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">MIDDLE NAME <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">LAST NAME <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.lastName" :disabled="!isEditing" @input="validateName('lastName')" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">SUFFIX <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.suffix" :disabled="!isEditing">
+                  <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">CITIZENSHIP</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md text-color" type="text" v-model="fields.citizenship" disabled />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">BIRTHDAY <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="fields.birthday" :disabled="!isEditing" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">PLACE OF BIRTH</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md text-color" type="text" v-model="fields.placeOfBirth" disabled />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">CIVIL STATUS <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.civilStatus" :disabled="!isEditing">
+                  <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-5 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">SEX <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.sex" :disabled="!isEditing">
+                  <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">AGE</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md text-color" type="text" :value="calculatedAge" disabled />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">BLOOD TYPE</label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.bloodType" :disabled="!isEditing">
+                  <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">HEIGHT(M) <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" step="0.01" v-model="fields.height" :disabled="!isEditing" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">WEIGHT(KG) <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" v-model="fields.weight" :disabled="!isEditing" />
+              </div>
+            </div>
+
+            <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">CONTACT INFORMATION</h2>
+            <div class="grid grid-cols-3 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">MOBILE NUMBER <span style="color: red;">*</span></label>
+                <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-700">+63 |</span>
+                <input class="w-full p-2 border border-gray-300 rounded-md number-field" type="text" v-model="fields.mobilenum" @input="validateMobileNumber" :disabled="!isEditing" />
                 </div>
               </div>
-            </TabPanel>
-          </TabView>
-        </div>
-        <Button label="EDIT" v-if="!isEditing" class="float-right px-8 py-2 mt-6 text-white bg-green-500 rounded-lg update-button" @click="toggleEditing" />
-        <div v-if="isEditing" class="float-right mt-6 space-x-4">
-          <Button label="CANCEL" class="px-8 py-2 text-white rounded-lg custom-cancel-button" @click="cancelEditing" />
-          <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg update-button" @click="confirmUpdate" />
-        </div>
-      </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">TELEPHONE NUMBER <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.telnum" @input="validateTelephoneNumber" :disabled="!isEditing" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">EMAIL ADDRESS <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="email" v-model="fields.emailadd" :disabled="!isEditing" />
+              </div>
+            </div>
+
+            <div class="mt-6 text-right">
+            <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-30 font-semibold">EDIT</button>
+            <div v-if="isEditing" class="inline-flex space-x-4">
+                <button @click="cancelEditing" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
+            </div>
+            </div>
     </div>
 
-    <!-- Update Confirmation Modal -->
-    <div v-if="showUpdateDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-        <div class="p-4">
-          <div class="text-center">
-            <i class="mb-4 mt-4 text-4xl fas fa-circle-question" style="color: red;"></i>
-            <h2 class="mb-4 text-xl font-semibold">Are you sure you want to update?</h2>
-            <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
+          <!-- Address Tab -->
+          <div v-if="activeTab === 1" class="bg-white border border-blue-900 rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">PERMANENT ADDRESS</h2>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">REGION <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region" :disabled="!isEditing">
+                  <option v-for="(region, index) in regions" :key="index" :value="region.reg_psgc">{{ region.col_region }}</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">PROVINCE <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province" :disabled="!isEditing">
+                  <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">CITY <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City" :disabled="!isEditing">
+                  <option v-for="(city, index) in cities" :key="index" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">BARANGAY <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay" :disabled="!isEditing">
+                  <option v-for="(barangay, index) in barangays" :key="index" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode" :disabled="!isEditing" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">VILLAGE SUBDIVISION</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.villsub" :disabled="!isEditing" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">BLOCK/STREET/PUROK</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.block" :disabled="!isEditing" />
+              </div>
+            </div>
+
+            <!-- Align Checkbox to the Right -->
+            <div class="flex justify-end mb-6">
+              <div class="flex items-center">
+                <input type="checkbox" id="sameAddressCheckbox" v-model="copyPermanentToCurrent" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" :disabled="!isEditing" />
+                <label for="sameAddressCheckbox" class="ml-2 block text-sm font-medium text-gray-700">Same current address?</label>
+              </div>
+            </div>
+
+            <!-- Current Address Section -->
+            <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">CURRENT ADDRESS</h2>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">REGION <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region2" :disabled="!isEditing">
+                  <option v-for="(region2, index) in regions2" :key="index" :value="region2.reg_psgc">{{ region2.col_region }}</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">PROVINCE <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province2" :disabled="!isEditing">
+                  <option v-for="(province2, index) in provinces2" :key="index" :value="province2.prv_psgc">{{ province2.col_province }}</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">CITY <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City2" :disabled="!isEditing">
+                  <option v-for="(city2, index) in cities2" :key="index" :value="city2.citmun_psgc">{{ city2.col_citymuni }}</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">BARANGAY <span style="color: red;">*</span></label>
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay2" :disabled="!isEditing">
+                  <option v-for="(barangay2, index) in barangays2" :key="index" :value="barangay2.brgy_psgc">{{ barangay2.col_brgy }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode2" :disabled="!isEditing" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">VILLAGE SUBDIVISION</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.villsub2" :disabled="!isEditing" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">BLOCK/STREET/PUROK</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.block2" :disabled="!isEditing" />
+              </div>
+            </div>
+
+            <div class="mt-6 text-right">
+            <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-30 font-semibold">EDIT</button>
+            <div v-if="isEditing" class="inline-flex space-x-4">
+                <button @click="cancelEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Update Confirmation Modal -->
+      <div v-if="showUpdateDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+        <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
+          <div class="p-4">
+            <div class="text-center">
+              <i class="mb-4 mt-4 text-4xl fas fa-circle-question" style="color: red;"></i>
+              <h2 class="mb-4 text-xl font-semibold">Are you sure you want to update?</h2>
+              <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
+            </div>
+            <div class="flex justify-center gap-4">
+              <button @click="hideUpdateDialog" class="px-6 py-2 text-white rounded-md bg-red-700 font-semibold hover:bg-red-800">Cancel</button>
+              <button @click="saveProfile" class="px-6 py-2 text-white bg-blue-900 rounded-md font-semibold hover:bg-blue-800">Confirm</button>
+            </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- Update Success Modal -->
+      <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+        <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
+          <div class="p-4">
+            <div class="text-center">
+              <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
+              <h2 class="mb-4 text-xl font-semibold">Updated Successfully!</h2>
+            <p class="mb-4">Your profile has been updated successfully.</p>
           </div>
           <div class="flex justify-center gap-4">
-            <button @click="hideUpdateDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">
-              Cancel
-            </button>
-            <button @click="saveProfile" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">
-              Confirm
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Update Success Modal -->
-    <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-        <div class="p-4">
-          <div class="text-center">
-            <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
-            <h2 class="mb-4 text-xl font-semibold">Updated Successfully!</h2>
-            <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
-          </div>
-          <div class="flex justify-center">
-            <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
-              OK
-            </button>
+            <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-900 hover:bg-blue-800 rounded-md">OKAY</button>
           </div>
         </div>
       </div>
@@ -285,9 +296,7 @@
             <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
             <h2 class="mb-4 text-xl font-semibold">Photo Uploaded Successfully!</h2>
             <div class="flex justify-center">
-              <button @click="hidePhotoSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
-                OK
-              </button>
+              <button @click="hidePhotoSuccessDialog" class="px-4 py-2 text-white bg-blue-900 rounded hover:bg-blue-800 font-semibold">OKAY</button>
             </div>
           </div>
         </div>
@@ -302,12 +311,11 @@
           <img ref="cropperImage" :src="cropperSrc" alt="Cropper Image" />
         </div>
         <div class="flex justify-center mt-4">
-          <Button label="Crop" @click="cropImage" class="bg-blue-500 text-white mr-4" />
-          <Button label="Cancel" @click="cancelCrop" class="bg-red-500 text-white" />
+            <button @click="cancelCrop" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">Cancel</button>
+          <button @click="cropImage" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 font-semibold">Crop</button>
         </div>
       </div>
     </div>
-
   </AppLayout>
 </template>
 
@@ -318,12 +326,10 @@ import 'cropperjs/dist/cropper.css';
 import { ref, watch } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
-import TabView from 'primevue/tabview';
-import TabPanel from 'primevue/tabpanel';
 
 export default {
   components: {
-    AppLayout, Button, TabView, TabPanel
+    AppLayout, Button
   },
 
   mounted() {
@@ -370,6 +376,8 @@ export default {
         block2: '',
         villsub2: '',
       },
+      activeTab: 'personal-info',
+      activeSubTab: '',
       isEditing: false,
       originalFields: {},
       errorMessage: '',
@@ -907,6 +915,14 @@ onCroppingComplete(croppedBlob) {
       location.reload();
     },
 
+    tabButtonClass(tabName) {
+      return {
+        'px-6 py-2 rounded-t-lg font-semibold border-t border-l border-r border-gray-200': true,
+        'bg-blue-900 text-white': this.activeTab === tabName,
+        'bg-gray-300 text-gray-700': this.activeTab !== tabName,
+      };
+    },
+
     toggleEditing() {
       if (!this.isEditing) {
         this.originalFields = JSON.parse(JSON.stringify(this.fields)); // Store the current state of fields
@@ -1034,16 +1050,6 @@ onCroppingComplete(croppedBlob) {
 
 .blur-md {
     filter: blur(8px);
-}
-
-.custom-cancel-button {
-    background-color: #dc3545 !important; /* Red background for cancel button */
-    border-color: #dc3545 !important; /* Red border for cancel button */
-}
-
-.custom-cancel-button:hover {
-    background-color: #e57373 !important; /* Lighter red for hover state */
-    border-color: #e57373 !important; /* Lighter red border for hover state */
 }
 
 .tight {

@@ -1,210 +1,248 @@
 <template>
     <AppLayout>
-        <div class="w-full">
-            <h1 class="mb-4 text-3xl font-bold">BACKGROUND</h1>
-            <div class="border-box">
-                <TabView v-model:activeIndex="activeTab" class="no-background">
-                    <TabPanel header="FAMILY">
-                        <div class="grid grid-cols-5 gap-4 mt-8">
-                            <div class="col-span-5">
-                                <h1 style="font-size: 25px; font-weight: bold;">Spouse</h1>
-                            </div>
-                            <!-- Spouse Information -->
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseSurname" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseFirstName" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                                <select class="input-field" v-model="fields.spouseExtName" :disabled="!isEditingFamily">
-                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
-                                        {{ suffix.label }}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
-                                <input class="input-field" type="text" v-model="fields.spouseOccupation" :disabled="!isEditingFamily" />
-                            </div>
-                            <!-- Employer/Business Information -->
-                            <div class="col-span-2">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYER'S/BUSINESS NAME</label>
-                                <input class="input-field" type="text" v-model="fields.spouseBusinessName" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">BUSINESS ADDRESS</label>
-                                <input class="input-field" type="text" v-model="fields.spouseBusinessAddress" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
-                                <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" />
-                            </div>
-                            <!-- Separator for Father's Information -->
-                            <div class="col-span-5">
-                                <h1 style="font-size: 25px; font-weight: bold;">Father</h1>
-                            </div>
-                            <!-- Father's Information -->
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherSurname" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherFirstName" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                                <select class="input-field" v-model="fields.fatherExtName" :disabled="!isEditingFamily">
-                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
-                                        {{ suffix.label }}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-span-1"></div> <!-- Empty space for alignment -->
-                            <!-- Separator for Mother's Information -->
-                            <div class="col-span-5">
-                                <h1 style="font-size: 25px; font-weight: bold;">Mother</h1>
-                            </div>
-                            <!-- Mother's Information -->
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherSurname" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherFirstName" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherMiddleName" :disabled="!isEditingFamily" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block mb-2 text-sm font-bold text-gray-700">MAIDEN NAME</label>
-                                <input class="input-field" type="text" v-model="fields.motherMaidenName" :disabled="!isEditingFamily" />
-                            </div>
+            <!-- Header Section -->
+            <div class="bg-white p-6 border-b border-yellow-200">
+                <h1 class="text-3xl font-bold text-blue-900">BACKGROUND</h1>
+                <p class="text-gray-600">Fill and check the necessary information below.</p>
+            </div>
+        <div class="flex flex-col lg:flex-row">
+            <!-- Sidebar -->
+            <div>
+                <Sidebar />
+            </div>
+
+            <!-- Main Content -->
+            <div class="w-full p-6 relative">
+
+                <!-- Custom Tabs -->
+                <div class="flex justify-end -mb-px">
+                    <button @click="activeTab = 0" :class="tabButtonClass(0)">FAMILY</button>
+                    <button @click="activeTab = 1" :class="tabButtonClass(1)">EDUCATION</button>
+                    <button @click="activeTab = 2" :class="tabButtonClass(2)">ORGANIZATION</button>
+                    <button @click="activeTab = 3" :class="tabButtonClass(3)">WORK EXPERIENCE</button>
+                    <button @click="activeTab = 4" :class="tabButtonClass(4)">SKILLS</button>
+                    <button @click="activeTab = 5" :class="tabButtonClass(5)">REFERENCES</button>
+                </div>
+
+                <!-- Family Tab -->
+                <div v-if="activeTab === 0" class="bg-white border border-blue-900 rounded-lg p-6">
+                    <!-- Spouse Information -->
+                    <div class="grid grid-cols-5 gap-4">
+                        <div class="col-span-5 text-blue-800 mb-4 pb-2 border-b border-yellow-200">
+                            <h1 style="font-size: 25px; font-weight: bold;">SPOUSE</h1>
                         </div>
-                        <div class="flex justify-end gap-4 mt-6">
-                            <Button v-if="!isEditingFamily" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
-                            <div v-if="isEditingFamily" class="space-x-4">
-                                <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelFamilyEditing" />
-                                <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateFamilyData" />
-                            </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                            <input class="input-field" type="text" v-model="fields.spouseSurname" :disabled="!isEditingFamily" />
                         </div>
-                        <h1 style="font-size: 25px; font-weight: bold;">Child</h1>
-                        <DataTable v-model:selection="selectedRow" :value="childData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                            <input class="input-field" type="text" v-model="fields.spouseFirstName" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                            <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
+                            <select class="input-field" v-model="fields.spouseExtName" :disabled="!isEditingFamily">
+                                <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                    {{ suffix.label }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
+                            <input class="input-field" type="text" v-model="fields.spouseOccupation" :disabled="!isEditingFamily" />
+                        </div>
+                        <!-- Employer/Business Information -->
+                        <div class="col-span-2">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYER'S/BUSINESS NAME</label>
+                            <input class="input-field" type="text" v-model="fields.spouseBusinessName" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">BUSINESS ADDRESS</label>
+                            <input class="input-field" type="text" v-model="fields.spouseBusinessAddress" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
+                            <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" />
+                        </div>
+                        <!-- Separator for Father's Information -->
+                        <div class="col-span-5 text-blue-800 mb-4 pb-2 border-b border-yellow-200">
+                            <h1 style="font-size: 25px; font-weight: bold;">FATHER</h1>
+                        </div>
+                        <!-- Father's Information -->
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                            <input class="input-field" type="text" v-model="fields.fatherSurname" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                            <input class="input-field" type="text" v-model="fields.fatherFirstName" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                            <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
+                            <select class="input-field" v-model="fields.fatherExtName" :disabled="!isEditingFamily">
+                                <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                    {{ suffix.label }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-span-1"></div> <!-- Empty space for alignment -->
+                        <!-- Separator for Mother's Information -->
+                        <div class="col-span-5 text-blue-800 mb-4 pb-2 border-b border-yellow-200">
+                            <h1 style="font-size: 25px; font-weight: bold;">MOTHER</h1>
+                        </div>
+                        <!-- Mother's Information -->
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                            <input class="input-field" type="text" v-model="fields.motherSurname" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                            <input class="input-field" type="text" v-model="fields.motherFirstName" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                            <input class="input-field" type="text" v-model="fields.motherMiddleName" :disabled="!isEditingFamily" />
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">MAIDEN NAME</label>
+                            <input class="input-field" type="text" v-model="fields.motherMaidenName" :disabled="!isEditingFamily" />
+                        </div>
+                    </div>
+                    <div class="mt-6 text-right">
+                        <button v-if="!isEditingFamily" @click="toggleFamilyEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                        <div v-if="isEditingFamily" class="inline-flex space-x-4">
+                            <button @click="cancelFamilyEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                            <button @click="updateFamilyData" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
+                        </div>
+                    </div>
+
+                    <div class="col-span-5 text-blue-800 mb-4 pb-2 border-b border-yellow-200">
+                            <h1 style="font-size: 25px; font-weight: bold;">CHILD</h1>
+                        </div>
+                    <DataTable v-model:selection="selectedRow" :value="childData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="full_name" header="Name of Child"></Column>
-                        <Column field="child_dob" header="Date of Birth"></Column>
+                        <Column field="full_name" header="FULL NAME"></Column>
+                        <Column field="child_dob" header="DATE OF BIRTH"></Column>
                     </DataTable>
-                    <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                    <div class="mt-6 text-right">
+                        <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                        <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                        <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                            <button @click="cancelProfileEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                            <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                        </div>
+                    </div>
                 </div>
-                    </TabPanel>
-                    <TabPanel header="EDUCATION">
-                        <h1 style="font-size: 25px; font-weight: bold;">Education</h1>
-                        <DataTable v-model:selection="selectedRow" :value="educationData" class="mt-8" :paginator="true" :rows="5">
-                            <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                            <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
-                            <Column field="educ_school" header="NAME OF SCHOOL"></Column>
-                            <Column field="educ_degree" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
-                            <Column field="educ_from" header="INCLUSIVE DATES (FROM - TO)"></Column>
-                            <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED"></Column>
-                            <Column field="educ_year_grad" header="YEAR GRADUATED"></Column>
-                            <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
-                        </DataTable>
-                        <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
-                </div>
-                    </TabPanel>
-                    <TabPanel header="ORGANIZATION">
-                    <h1 style="font-size: 25px; font-weight: bold;">Organization</h1>
-                    <DataTable
-                        v-model:selection="selectedRow"
-                        :value="organizationData"
-                        class="mt-8"
-                        :paginator="true"
-                        :rows="5"
-                        @selection-change="onRowSelect"
-                    >
+
+                <!-- Education Tab -->
+                <div v-if="activeTab === 1" class="bg-white border border-blue-900 rounded-lg p-6">
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">EDUCATION</h2>
+                    <DataTable v-model:selection="selectedRow" :value="educationData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="org_name" header="Organizations"></Column>
+                        <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
+                        <Column field="educ_school" header="NAME OF SCHOOL"></Column>
+                        <Column field="educ_degree" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
+                        <Column field="educ_from" header="INCLUSIVE DATES (FROM - TO)"></Column>
+                        <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED"></Column>
+                        <Column field="educ_year_grad" header="YEAR GRADUATED"></Column>
+                        <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
                     </DataTable>
-                    <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                    <div class="mt-6 text-right">
+                        <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                        <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                        <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                            <button @click="cancelProfileEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                            <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                        </div>
+                    </div>
                 </div>
-                    </TabPanel>
-                    <TabPanel header="WORK EXPERIENCE">
-                        <h1 style="font-size: 25px; font-weight: bold;">Work Experience</h1>
-                        <DataTable v-model:selection="selectedRow" :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
-                            <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                            <Column field="workfr" header="INCLUSIVE DATES (FROM)"></Column>
-                            <Column field="workto" header="INCLUSIVE DATES (TO)"></Column>
-                            <Column field="work_pos" header="POSITION"></Column>
-                            <Column field="work_dept" header="DEPARTMENT|AGENCY|OFFICE|COMPANY"></Column>
-                            <Column field="work_salary" header="MONTHLY SALARY"></Column>
-                            <Column field="work_salarygrade" header="SALARY GRADE"></Column>
-                            <Column field="work_stat" header="STATUS OF APPOINTMENT"></Column>
-                            <Column field="work_gov" header="GOV'T SERVICE"></Column>
-                        </DataTable>
-                        <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+
+                <!-- Organization Tab -->
+                <div v-if="activeTab === 2" class="bg-white border border-blue-900 rounded-lg p-6">
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">ORGANIZATIONS</h2>
+                    <DataTable v-model:selection="selectedRow" :value="organizationData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                        <Column field="org_name" header=""></Column>
+                    </DataTable>
+                    <div class="mt-6 text-right">
+                        <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                        <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                        <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                            <button @click="cancelProfileEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                            <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                        </div>
+                    </div>
                 </div>
-                    </TabPanel>
-                    <TabPanel header="SKILLS">
-                        <h1 style="font-size: 25px; font-weight: bold;">Skills</h1>
-                        <DataTable v-model:selection="selectedRow" :value="skillsData" class="mt-8" :paginator="true" :rows="5">
-                            <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                            <Column field="skill" header="SKILLS"></Column>
-                        </DataTable>
-                        <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+
+                <!-- Work Experience Tab -->
+                <div v-if="activeTab === 3" class="bg-white border border-blue-900 rounded-lg p-6">
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">WORK EXPERIENCE</h2>
+                    <DataTable v-model:selection="selectedRow" :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
+                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                        <Column field="workfr" header="INCLUSIVE DATES (FROM)"></Column>
+                        <Column field="workto" header="INCLUSIVE DATES (TO)"></Column>
+                        <Column field="work_pos" header="POSITION"></Column>
+                        <Column field="work_dept" header="DEPARTMENT|AGENCY|OFFICE|COMPANY"></Column>
+                        <Column field="work_salary" header="MONTHLY SALARY"></Column>
+                        <Column field="work_salarygrade" header="SALARY GRADE"></Column>
+                        <Column field="work_stat" header="STATUS OF APPOINTMENT"></Column>
+                        <Column field="work_gov" header="GOV'T SERVICE"></Column>
+                    </DataTable>
+                    <div class="mt-6 text-right">
+                        <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                        <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                        <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                            <button @click="cancelProfileEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                            <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                        </div>
+                    </div>
                 </div>
-                    </TabPanel>
-                    <TabPanel header="REFERENCES">
-                        <h1 style="font-size: 25px; font-weight: bold;">References</h1>
-                        <DataTable v-model:selection="selectedRow" :value="referencesData" class="mt-8" :paginator="true" :rows="5">
-                            <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                            <Column field="full_name" header="FULL NAME"></Column>
-                            <Column field="ref_add" header="ADDRESS"></Column>
-                            <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
-                        </DataTable>
-                        <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+
+                <!-- Skills Tab -->
+                <div v-if="activeTab === 4" class="bg-white border border-blue-900 rounded-lg p-6">
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">SKILLS</h2>
+                    <DataTable v-model:selection="selectedRow" :value="skillsData" class="mt-8" :paginator="true" :rows="5">
+                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                        <Column field="skill" header="SKILLS"></Column>
+                    </DataTable>
+                    <div class="mt-6 text-right">
+                        <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                        <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                        <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                            <button @click="cancelProfileEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                            <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                        </div>
+                    </div>
                 </div>
-                    </TabPanel>
-                </TabView>
+
+                <!-- References Tab -->
+                <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">REFERENCES</h2>
+                <DataTable v-model:selection="selectedRow" :value="referencesData" class="mt-8" :paginator="true" :rows="5">
+                    <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                    <Column field="full_name" header="FULL NAME"></Column>
+                    <Column field="ref_add" header="ADDRESS"></Column>
+                    <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
+                </DataTable>
+                <div class="mt-6 text-right">
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                        <button @click="cancelProfileEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
         <!-- Edit Modal -->
         <div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
@@ -262,15 +300,11 @@
                             />
                         </div>
                     </div>
-
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideEditDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">
+                    <div class="mt-6 text-right">
+                        <button @click="hideEditDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button
-                            @click="saveEdit"
-                            class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
-                        >
+                        <button @click="saveEdit" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Save
                         </button>
                     </div>
@@ -287,8 +321,8 @@
                         <h2 class="text-xl font-semibold mb-4">Updated Successfully!</h2>
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
-                    <div class="flex justify-center">
-                        <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                    <div class="text-center">
+                        <button @click="hideSuccessDialog" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             OK
                         </button>
                     </div>
@@ -305,11 +339,11 @@
                         <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
                         <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                     </div>
-                    <div class="flex justify-center gap-4">
-                        <button @click="hideUpdateDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                    <div class="mt-6 text-right">
+                        <button @click="hideUpdateDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button @click="saveUpdate" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                        <button @click="saveUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Confirm
                         </button>
                     </div>
@@ -355,11 +389,11 @@
                             />
                         </div>
                     </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddChildDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                    <div class="mt-6 text-right">
+                        <button @click="hideAddChildDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button @click="addChild" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                        <button @click="addChild" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Add
                         </button>
                     </div>
@@ -404,11 +438,11 @@
                             <input class="input-field" type="text" v-model="newEducation.educ_academic_honor" />
                         </div>
                     </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddEducationDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                    <div class="mt-6 text-right">
+                        <button @click="hideAddEducationDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button @click="addEducation" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                        <button @click="addEducation" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Add
                         </button>
                     </div>
@@ -429,11 +463,11 @@
                             <input class="input-field" type="text" v-model="newOrganization.org_name" />
                         </div>
                     </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddOrganizationDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                    <div class="mt-6 text-right">
+                        <button @click="hideAddOrganizationDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button @click="addOrganization" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                        <button @click="addOrganization" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Add
                         </button>
                     </div>
@@ -482,11 +516,11 @@
                             <input class="input-field" type="text" v-model="newWorkExperience.work_gov" />
                         </div>
                     </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddWorkExperienceDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                    <div class="mt-6 text-right">
+                        <button @click="hideAddWorkExperienceDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button @click="addWorkExperience" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                        <button @click="addWorkExperience" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Add
                         </button>
                     </div>
@@ -507,11 +541,11 @@
                             <input class="input-field" type="text" v-model="newSkill.skill" />
                         </div>
                     </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddSkillsDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                    <div class="mt-6 text-right">
+                        <button @click="hideAddSkillsDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button @click="addSkill" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                        <button @click="addSkill" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Add
                         </button>
                     </div>
@@ -552,11 +586,11 @@
                             <input class="input-field" type="text" v-model="newReference.ref_cnum" />
                         </div>
                     </div>
-                    <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideAddReferencesDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                    <div class="mt-6 text-right">
+                        <button @click="hideAddReferencesDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button @click="addReference" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                        <button @click="addReference" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Add
                         </button>
                     </div>
@@ -573,8 +607,8 @@
                         <h2 class="text-xl font-semibold mb-4">Updated Successfully!</h2>
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
-                    <div class="flex justify-center">
-                        <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                    <div class="mt-6 text-right">
+                        <button @click="hideSuccessDialog" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             OK
                         </button>
                     </div>
@@ -621,6 +655,9 @@ export default {
             motherFirstName: '',
             motherMiddleName: ''
         },
+        currentPage: 1,
+        totalPages: 5,
+        activeTab: 0,
         isEditingFamily: false,
         originalFamilyFields: {},
         isEditingProfile: false,
@@ -726,7 +763,15 @@ export default {
             console.error(error);
         });
     },
-        
+
+    tabButtonClass(tabName) {
+            return {
+                'px-6 py-2 rounded-t-lg font-semibold border-t border-l border-r border-gray-200': true,
+                'bg-blue-900 text-white': this.activeTab === tabName,
+                'bg-gray-300 text-gray-700': this.activeTab !== tabName,
+            };
+        },
+
     toggleProfileEditing() {
         console.log('Toggling profile editing:', this.isEditingProfile);
         console.log('Selected row:', this.selectedRow);
