@@ -93,25 +93,25 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="border-box">
                         <div>
-                            <label class="label-field">SSS ID:</label>
+                            <label class="label-field"><b>SSS ID:</b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId"/>
                         </div>
                         <div>
-                            <label class="label-field">PAG-IBIG ID:</label>
+                            <label class="label-field"><b>PAG-IBIG ID:</b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId"/>
                         </div>
                         <div>
-                            <label class="label-field">TIN ID:</label>
+                            <label class="label-field">T<b>IN ID:</b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId"/>
                         </div>
                     </div>
                     <div class="border-box">
                         <div>
-                            <label class="label-field">GSIS ID:</label>
+                            <label class="label-field"><b>GSIS ID:</b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId"/>
                         </div>
                         <div>
-                            <label class="label-field">PHILHEALTH ID:</label>
+                            <label class="label-field"><b>PHILHEALTH ID:</b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId"/>
                         </div>
                     </div>
