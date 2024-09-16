@@ -167,10 +167,14 @@ class BackgroundController extends Controller
 
             // Format the full name
             $formattedReferences = $referencesData->map(function($reference) {
+                // Fetch the suffix value based on the numerical value in ref_xname
+                $suffix = lib_suffix::where('lib1_count', $reference->ref_xname)->first();
+                $suffix_value = $suffix ? $suffix->lib1_suffix : '';
+
                 $reference->full_name = trim($reference->ref_fname . ' ' .
                                             $reference->ref_mname . ' ' .
                                             $reference->ref_lname . ' ' .
-                                            $reference->ref_xname);
+                                            $suffix_value);
                 return $reference;
             });
 
@@ -506,14 +510,19 @@ public function getChildData()
             return response()->json(['error' => 'No child data found'], 404);
         }
 
-        // Map and format the data to include full name, child count, and date of birth
         $formattedChild = $childData->map(function($child) {
             $child_mname_initial = $child->child_mname ? substr($child->child_mname, 0, 1) . '.' : '';
+            
+            // Fetch the suffix value based on the numerical value in child_xname
+            $suffix = lib_suffix::where('lib1_count', $child->child_xname)->first();
+            $suffix_value = $suffix ? $suffix->lib1_suffix : '';
+        
             $fullName = trim($child->child_fname . ' ' .
                              $child_mname_initial . ' ' .
                              $child->child_lname . ' ' .
-                             $child->child_xname);
+                             $suffix_value);
             $age = \Carbon\Carbon::parse($child->child_dob)->age;
+        
 
             return [
                 'child_count' => $child->child_count,

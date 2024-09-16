@@ -73,13 +73,13 @@
                     </nav>
 
 
-                <button @click="choosePDS" class="w-30 px-4 py-2 mt-4 text-white bg-blue-700 rounded hover:bg-blue-600">
-                    <i class="fas fa-download mr-2"></i> Personal Data Sheet
-                </button>
-                <br>
-                <button @click="confirmLogout" class="w-30 px-4 py-2 mt-4 text-white bg-red-600 rounded hover:bg-red-700">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Log Out
-                </button>
+                    <button @click="downloadPDS" class="w-30 px-2 py-2 mt-4 text-white bg-blue-700 rounded hover:bg-blue-600" style="font-size: 16px;">
+                        <i class="fas fa-download mr-2"></i> Personal Data Sheet
+                    </button>
+                    <br>
+                    <button @click="confirmLogout" class="w-30 px-2 py-2 mt-0 text-white bg-red-600 rounded hover:bg-red-700" style="font-size: 16px;">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                    </button>
             </div>
         </aside>
 

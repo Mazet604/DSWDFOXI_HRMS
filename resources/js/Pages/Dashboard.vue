@@ -122,12 +122,20 @@
             <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CONTACT INFORMATION</h2>
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">MOBILE NUMBER <span style="color: red;">*</span></label>
-                <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-700" style="color:#707A88">+63 |</span>
-                <input class="w-full p-2 border border-gray-300 rounded-md number-field" type="text" v-model="fields.mobilenum" @input="validateMobileNumber" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
+                  <label class="block mb-1 text-sm font-medium text-gray-700">
+                    MOBILE NUMBER <span style="color: red;">*</span>
+                  </label>
+                  <div class="flex items-center">
+                    <span class="p-2 border border-gray-300 rounded-l-md bg-gray-200" style="color:#707A88;">+63</span>
+                    <input
+                      class="w-full p-2 border border-gray-300 rounded-r-md"
+                      v-model="fields.mobilenum"
+                      @input="validateMobileNumber"
+                      :disabled="!isEditing"
+                      :class="{ 'disabled-input': !isEditing }"
+                    />
+                  </div>
                 </div>
-              </div>
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">TELEPHONE NUMBER <span style="color: red;">*</span></label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.telnum" @input="validateTelephoneNumber" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
@@ -1007,7 +1015,7 @@ onCroppingComplete(croppedBlob) {
 }
 
 .text-color {
-    color: #707A88;
+    color: #66686b;
     background-color: #eeeeee;
 }
 
@@ -1020,7 +1028,7 @@ onCroppingComplete(croppedBlob) {
 }
 
 .disabled-input {
-  color: #707A88;
+  color: #66686b;
   background-color: #eeeeee;
 }
 
@@ -1085,7 +1093,4 @@ onCroppingComplete(croppedBlob) {
   text-align: center;
 }
 
-.number-field {
-  padding-left: 15%;
-}
 </style>
