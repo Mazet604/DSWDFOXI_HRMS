@@ -142,7 +142,7 @@
                 <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200"></h2>
                 <div class="other-info">
                     <div class='columns'>
-                        <h2 style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</b></h2>
+                        <p style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</b></p>
                         <div class="form-group">
                             <label style="margin-left: 1%;">a. within the third degree?</label>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
@@ -157,13 +157,13 @@
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <h2 style="margin-bottom: 1%;"><b>Have you ever been found guilty of any administrative offense?</b></h2>
+                        <p style="margin-bottom: 1%;"><b>Have you ever been found guilty of any administrative offense?</b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="Yes" /> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" />
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="No" /> No
                         </div>
-                        <h2 style=" margin-bottom: 1%;"><b>Have you been criminally charged before any court?</b></h2>
+                        <p style=" margin-bottom: 1%;"><b>Have you been criminally charged before any court?</b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
@@ -174,13 +174,13 @@
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <h2 style="margin-bottom: 1%;"><b>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</b></h2>
+                        <p style="margin-bottom: 1%;"><b>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="Yes" /> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" />
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="No" /> No
                         </div>
-                        <h2 style="margin-bottom: 1%;"><b>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</b></h2>
+                        <p style="margin-bottom: 1%;"><b>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_37" value="Yes" /> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" />
@@ -189,13 +189,13 @@
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <h2 style=" margin-bottom: 1%;"><b>Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</b></h2>
+                        <p style=" margin-bottom: 1%;"><b>Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="Yes" /> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" />
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="No" /> No
                         </div>
-                        <h2 style="margin-bottom: 1%;"><b>Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</b></h2>
+                        <p style="margin-bottom: 1%;"><b>Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38b" value="Yes" /> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
@@ -204,14 +204,14 @@
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <h2 style="margin-bottom: 1%;"><b>Have you acquired the status of an immigrant or permanent resident of another country?</b></h2>
+                        <p style="margin-bottom: 1%;"><b>Have you acquired the status of an immigrant or permanent resident of another country?</b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="Yes" /> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" />
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="No" /> No
                         </div>
                         <span class="broken-line"></span>
-                        <h2 style="margin-bottom: 1%;"><b>Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</b></h2>
+                        <p style="margin-bottom: 1%;"><b>Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</b></p>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">a. Are you a member of any indigenous group?</label>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
