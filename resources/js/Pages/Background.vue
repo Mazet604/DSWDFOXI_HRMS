@@ -229,7 +229,7 @@
                 <DataTable v-model:selection="selectedRow" :value="referencesData" class="mt-8" :paginator="true" :rows="5">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="full_name" header="FULL NAME"></Column>
-                    <Column field="ref_add" header="ADDRESS"></Column>
+                    <Column field="ref_add" header="BLOCK/STREET/PUROK"></Column>
                     <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
@@ -588,7 +588,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">ADDRESS</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
                             <input class="input-field" type="text" v-model="newReference.ref_add" />
                         </div>
                         <div>
@@ -671,7 +671,7 @@ export default {
                 ref_mname: 'MIDDLE NAME',
                 ref_lname: 'LAST NAME',
                 ref_xname: 'SUFFIX',
-                ref_add: 'ADDRESS',
+                ref_add: 'BLOCK/STREET/PUROK',
                 ref_cnum: 'CONTACT NUMBER',
             },
             fullName: '',
