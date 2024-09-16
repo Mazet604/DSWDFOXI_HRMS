@@ -7,16 +7,16 @@
         </div>
 
         <!-- Main Content -->
-        <div class="w-full p-6 relative">
+        <div class="relative w-full p-6">
           <!-- Profile Section -->
-          <div class="flex items-center mb-4 absolute -top-16 right-0 lg:static lg:mt-0 lg:mb-8">
+          <div class="absolute right-0 flex items-center mb-4 -top-16 lg:static lg:mt-0 lg:mb-8">
             <!-- Profile Image with Hover Effect -->
-            <div class="relative w-24 h-24 lg:w-36 lg:h-36 rounded-full object-cover group">
+            <div class="relative object-cover w-24 h-24 rounded-full lg:w-36 lg:h-36 group">
               <!-- Profile Picture -->
-              <img :src="profilePictureUrl" alt="Profile Picture" class="w-full h-full rounded-full object-cover" />
+              <img :src="profilePictureUrl" alt="Profile Picture" class="object-cover w-full h-full rounded-full" />
               <!-- Camera Icon Overlay -->
-              <div class="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" @click="triggerFileUpload">
-                <i class="fas fa-camera text-white text-3xl"></i>
+              <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 bg-black bg-opacity-50 rounded-full opacity-0 cursor-pointer group-hover:opacity-100" @click="triggerFileUpload">
+                <i class="text-3xl text-white fas fa-camera"></i>
               </div>
               <!-- Hidden File Input -->
               <input type="file" ref="fileInput" @change="onFileSelected" class="hidden" />
@@ -25,8 +25,8 @@
             <!-- Profile Details -->
             <div class="ml-4 text-left">
               <h2 class="text-4xl font-semibold text-blue-800">{{ fullName }}</h2>
-              <hr class="my-2 border-yellow-200 border-2" />
-              <p class="text-gray-600 text-lg">{{ empPosition }}</p>
+              <hr class="my-2 border-2 border-yellow-200" />
+              <p class="text-lg text-gray-600">{{ empPosition }}</p>
             </div>
           </div>
 
@@ -37,34 +37,34 @@
           </div>
 
           <!-- Personal Info Tab -->
-          <div v-if="activeTab === 0" class="bg-white border border-blue-900 rounded-lg p-6">
-            <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">BASIC INFORMATION</h2>
+          <div v-if="activeTab === 0" class="p-6 bg-white border border-blue-900 rounded-lg">
+            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">BASIC INFORMATION</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Employee ID *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Employee ID *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.empID" disabled />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Username *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Username *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.empUser" disabled />
               </div>
             </div>
 
             <div class="grid grid-cols-4 gap-4 mb-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Firstname *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Firstname *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.firstName" :disabled="!isEditing" @input="validateName('firstName')" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Middlename *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Middlename *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Lastname *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Lastname *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.lastName" :disabled="!isEditing" @input="validateName('lastName')" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Suffix *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Suffix *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.suffix" :disabled="!isEditing">
                   <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                 </select>
@@ -73,19 +73,19 @@
 
             <div class="grid grid-cols-4 gap-4 mb-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Citizenship *</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.citizenship" disabled />
+                <label class="block mb-1 text-sm font-medium text-gray-700">Citizenship *</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.citizenship" disabled @input="validateName('citizenship')"/>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Birthday *</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="fields.birthday" :disabled="!isEditing" />
+                <label class="block mb-1 text-sm font-medium text-gray-700">Birthday *</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="fields.birthday" :disabled="!isEditing" :max="maxDate" :class="{'border-red-500': hasBirthdayError}" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Place of Birth *</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.placeOfBirth" disabled />
+                <label class="block mb-1 text-sm font-medium text-gray-700">Place of Birth *</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.placeOfBirth" disabled @input="validateName('placeOfBirth')"/>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Civil Status *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Civil Status *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.civilStatus" :disabled="!isEditing">
                   <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                 </select>
@@ -94,80 +94,81 @@
 
             <div class="grid grid-cols-5 gap-4 mb-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Sex *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Sex *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.sex" :disabled="!isEditing">
                   <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Age *</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" :value="calculatedAge" disabled />
+                <label class="block mb-1 text-sm font-medium text-gray-700">Age *</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" :value="calculatedAge" disabled :class="{'border-red-500': hasBirthdayError}"/>
+                <p v-if="hasBirthdayError" class="mt-1 text-xs text-red-500">Invalid age. Please check the birthday.</p>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Blood Type *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Blood Type *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.bloodType" :disabled="!isEditing">
                   <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Height *</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" step="0.01" v-model="fields.height" :disabled="!isEditing" />
+                <label class="block mb-1 text-sm font-medium text-gray-700">Height *</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" step="0.01" v-model="fields.height" :disabled="!isEditing" @input="validateNumber('height')"/>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Weight *</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" v-model="fields.weight" :disabled="!isEditing" />
+                <label class="block mb-1 text-sm font-medium text-gray-700">Weight *</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" v-model="fields.weight" :disabled="!isEditing" @input="validateNumber('height')"/>
               </div>
             </div>
 
-            <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">CONTACT INFORMATION</h2>
+            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CONTACT INFORMATION</h2>
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Mobile Number *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Mobile Number *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.mobilenum" @input="validateMobileNumber" :disabled="!isEditing" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Telephone Number *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Telephone Number *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.telnum" @input="validateTelephoneNumber" :disabled="!isEditing" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Email Address *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="email" v-model="fields.emailadd" :disabled="!isEditing" />
               </div>
             </div>
 
             <div class="mt-6 text-right">
-            <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-30 font-semibold">EDIT</button>
+            <button v-if="!isEditing" @click="toggleEditing" class="px-8 py-2 font-semibold text-white transition bg-blue-900 rounded-md hover:bg-blue-800 duration-30">EDIT</button>
             <div v-if="isEditing" class="inline-flex space-x-4">
-                <button @click="cancelEditing" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
+                <button @click="cancelEditing" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                <button @click="confirmUpdate" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">SAVE</button>
             </div>
             </div>
     </div>
 
           <!-- Address Tab -->
-          <div v-if="activeTab === 1" class="bg-white border border-blue-900 rounded-lg p-6">
-            <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">PERMANENT ADDRESS</h2>
+          <div v-if="activeTab === 1" class="p-6 bg-white border border-blue-900 rounded-lg">
+            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">PERMANENT ADDRESS</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Region *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Region *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region" :disabled="!isEditing">
                   <option v-for="(region, index) in regions" :key="index" :value="region.reg_psgc">{{ region.col_region }}</option>
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Province *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Province *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province" :disabled="!isEditing">
                   <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">City *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City" :disabled="!isEditing">
                   <option v-for="(city, index) in cities" :key="index" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Barangay *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Barangay *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay" :disabled="!isEditing">
                   <option v-for="(barangay, index) in barangays" :key="index" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
                 </select>
@@ -176,50 +177,50 @@
 
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Village/Subdivision *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Village/Subdivision *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.villsub" :disabled="!isEditing" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Block/Street/Purok *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Block/Street/Purok *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.block" :disabled="!isEditing" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Zip Code *</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.zipcode" :disabled="!isEditing" />
+                <label class="block mb-1 text-sm font-medium text-gray-700">Zip Code *</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.zipcode" :disabled="!isEditing" @input="validateNumber('zipcode')"/>
               </div>
             </div>
 
             <!-- Align Checkbox to the Right -->
             <div class="flex justify-end mb-6">
               <div class="flex items-center">
-                <input type="checkbox" id="sameAddressCheckbox" v-model="copyPermanentToCurrent" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" :disabled="!isEditing" />
-                <label for="sameAddressCheckbox" class="ml-2 block text-sm font-medium text-gray-700">Same current address?</label>
+                <input type="checkbox" id="sameAddressCheckbox" v-model="copyPermanentToCurrent" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" :disabled="!isEditing" />
+                <label for="sameAddressCheckbox" class="block ml-2 text-sm font-medium text-gray-700">Same current address?</label>
               </div>
             </div>
 
             <!-- Current Address Section -->
-            <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">CURRENT ADDRESS</h2>
+            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CURRENT ADDRESS</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Region *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Region *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region2" :disabled="!isEditing">
                   <option v-for="(region2, index) in regions2" :key="index" :value="region2.reg_psgc">{{ region2.col_region }}</option>
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Province *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Province *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province2" :disabled="!isEditing">
                   <option v-for="(province2, index) in provinces2" :key="index" :value="province2.prv_psgc">{{ province2.col_province }}</option>
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">City *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City2" :disabled="!isEditing">
                   <option v-for="(city2, index) in cities2" :key="index" :value="city2.citmun_psgc">{{ city2.col_citymuni }}</option>
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Barangay *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Barangay *</label>
                 <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay2" :disabled="!isEditing">
                   <option v-for="(barangay2, index) in barangays2" :key="index" :value="barangay2.brgy_psgc">{{ barangay2.col_brgy }}</option>
                 </select>
@@ -228,24 +229,24 @@
 
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Village/Subdivision *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Village/Subdivision *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.villsub2" :disabled="!isEditing" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Block/Street/Purok *</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Block/Street/Purok *</label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.block2" :disabled="!isEditing" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Zip Code *</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.zipcode2" :disabled="!isEditing" />
+                <label class="block mb-1 text-sm font-medium text-gray-700">Zip Code *</label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.zipcode2" :disabled="!isEditing" @input="validateNumber('zipcode')"/>
               </div>
             </div>
 
             <div class="mt-6 text-right">
-            <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-30 font-semibold">EDIT</button>
+            <button v-if="!isEditing" @click="toggleEditing" class="px-8 py-2 font-semibold text-white transition bg-blue-900 rounded-md hover:bg-blue-800 duration-30">EDIT</button>
             <div v-if="isEditing" class="inline-flex space-x-4">
-                <button @click="cancelEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
+                <button @click="cancelEditing" class="px-8 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                <button @click="confirmUpdate" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">SAVE</button>
             </div>
             </div>
           </div>
@@ -257,13 +258,13 @@
         <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
           <div class="p-4">
             <div class="text-center">
-              <i class="mb-4 mt-4 text-4xl fas fa-circle-question" style="color: red;"></i>
+              <i class="mt-4 mb-4 text-4xl fas fa-circle-question" style="color: red;"></i>
               <h2 class="mb-4 text-xl font-semibold">Are you sure you want to update?</h2>
               <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
             </div>
             <div class="flex justify-center gap-4">
-              <button @click="hideUpdateDialog" class="px-6 py-2 text-white rounded-md bg-red-700 font-semibold hover:bg-red-800">Cancel</button>
-              <button @click="saveProfile" class="px-6 py-2 text-white bg-blue-900 rounded-md font-semibold hover:bg-blue-800">Confirm</button>
+              <button @click="hideUpdateDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">Cancel</button>
+              <button @click="saveProfile" class="px-6 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">Confirm</button>
             </div>
         </div>
       </div>
@@ -279,7 +280,7 @@
             <p class="mb-4">Your profile has been updated successfully.</p>
           </div>
           <div class="flex justify-center gap-4">
-            <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-900 hover:bg-blue-800 rounded-md">OKAY</button>
+            <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800">OKAY</button>
           </div>
         </div>
       </div>
@@ -293,7 +294,7 @@
             <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
             <h2 class="mb-4 text-xl font-semibold">Photo Uploaded Successfully!</h2>
             <div class="flex justify-center">
-              <button @click="hidePhotoSuccessDialog" class="px-4 py-2 text-white bg-blue-900 rounded hover:bg-blue-800 font-semibold">OKAY</button>
+              <button @click="hidePhotoSuccessDialog" class="px-4 py-2 font-semibold text-white bg-blue-900 rounded hover:bg-blue-800">OKAY</button>
             </div>
           </div>
         </div>
@@ -303,13 +304,13 @@
     <!-- Crop Image Modal -->
     <div v-if="cropping" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
       <div class="w-full max-w-lg p-4 overflow-hidden transition-all transform bg-white rounded-lg">
-        <h2 class="text-xl font-semibold text-center mb-4">Crop Your Image</h2>
+        <h2 class="mb-4 text-xl font-semibold text-center">Crop Your Image</h2>
         <div class="crop-container">
           <img ref="cropperImage" :src="cropperSrc" alt="Cropper Image" />
         </div>
         <div class="flex justify-center mt-4">
-            <button @click="cancelCrop" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">Cancel</button>
-          <button @click="cropImage" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 font-semibold">Crop</button>
+            <button @click="cancelCrop" class="px-6 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">Cancel</button>
+          <button @click="cropImage" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">Crop</button>
         </div>
       </div>
     </div>
@@ -412,17 +413,41 @@ export default {
   },
 
   computed: {
+    maxDate() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = (today.getMonth() + 1).toString().padStart(2, '0');
+      const day = today.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
     calculatedAge() {
       if (!this.fields.birthday) return '';
       const today = new Date();
       const birthDate = new Date(this.fields.birthday);
+
+      // Check if birthday is in the future
+      if (birthDate > today) {
+        this.hasBirthdayError = true;
+        this.birthdayErrorMessage = 'Birthday cannot be in the future.';
+        return 'Invalid Date';
+      }
+
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDiff = today.getMonth() - birthDate.getMonth();
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
+
+      if (age < 18) {
+        this.hasBirthdayError = true;
+        this.birthdayErrorMessage = 'Age must be at least 18 years old.';
+        return 'Invalid Age';
+      }
+
+      this.hasBirthdayError = false;
+      this.birthdayErrorMessage = '';
       return age;
-    },
+    }
   },
 
 
@@ -473,6 +498,10 @@ export default {
 
     validateName(field) {
       this.fields[field] = this.fields[field].replace(/[0-9]/g, '');
+    },
+
+    validateNumber(field) {
+      this.fields[field] = this.fields[field].replace(/\D/g, '');
     },
 
     validateMobileNumber() {
