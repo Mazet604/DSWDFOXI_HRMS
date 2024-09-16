@@ -180,7 +180,7 @@
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid number-field" type="text" v-model="fields.zipcode" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">VILLAGE SUBDIVISION</label>
@@ -232,7 +232,7 @@
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid number-field" type="text" v-model="fields.zipcode2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">VILLAGE SUBDIVISION</label>
