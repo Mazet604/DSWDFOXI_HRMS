@@ -28,8 +28,8 @@
                 <div v-if="activeTab === 0" class="bg-white border border-blue-900 rounded-lg p-6">
                     <!-- Spouse Information -->
                     <div class="grid grid-cols-5 gap-4">
-                        <div class="col-span-5 text-blue-800 mb-4 pb-2 border-b border-yellow-200">
-                            <h1 style="font-size: 25px; font-weight: bold;">SPOUSE</h1>
+                        <div class="col-span-5 text-blue-800 mb-1 pb-2 border-b border-yellow-200">
+                            <h1 style="font-size: 20px; font-weight: bold;">SPOUSE</h1>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
@@ -69,8 +69,8 @@
                             <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <!-- Separator for Father's Information -->
-                        <div class="col-span-5 text-blue-800 mb-4 pb-2 border-b border-yellow-200">
-                            <h1 style="font-size: 25px; font-weight: bold;">FATHER</h1>
+                        <div class="col-span-5 text-blue-800 mt-2 mb-1 pb-2 border-b border-yellow-200">
+                            <h1 style="font-size: 20px; font-weight: bold;">FATHER</h1>
                         </div>
                         <!-- Father's Information -->
                         <div class="col-span-1">
@@ -95,8 +95,8 @@
                         </div>
                         <div class="col-span-1"></div> <!-- Empty space for alignment -->
                         <!-- Separator for Mother's Information -->
-                        <div class="col-span-5 text-blue-800 mb-4 pb-2 border-b border-yellow-200">
-                            <h1 style="font-size: 25px; font-weight: bold;">MOTHER</h1>
+                        <div class="col-span-5 text-blue-800 mt-2 mb-1 pb-2 border-b border-yellow-200">
+                            <h1 style="font-size: 20px; font-weight: bold;">MOTHER</h1>
                         </div>
                         <!-- Mother's Information -->
                         <div class="col-span-1">
@@ -124,8 +124,8 @@
                         </div>
                     </div>
 
-                    <div class="col-span-5 text-blue-800 mb-4 pb-2 border-b border-yellow-200">
-                            <h1 style="font-size: 25px; font-weight: bold;">CHILD</h1>
+                    <div class="col-span-5 text-blue-800 mb-1 pb-2 border-b border-yellow-200">
+                            <h1 style="font-size: 20px; font-weight: bold;">CHILD</h1>
                         </div>
                     <DataTable v-model:selection="selectedRow" :value="childData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -254,7 +254,7 @@
                     <div class="grid grid-cols-1 gap-4">
                         <!-- Render fields -->
                         <div v-for="(value, key) in filteredEditFields" :key="key">
-                            <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
 
                             <!-- Child Date of Birth (with validation) -->
                             <template v-if="key === 'child_dob'">
@@ -575,7 +575,11 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                            <input class="input-field" type="text" v-model="newReference.ref_xname" />
+                            <select class="input-field" v-model="newChild.child_xname">
+                                <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                    {{ suffix.label }}
+                                </option>
+                            </select>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">ADDRESS</label>
@@ -634,6 +638,22 @@ export default {
 
     data() {
         return {
+            formatFieldLabel: {
+                child_fname: 'Child First Name',
+                child_mname: 'Child Middle Name',
+                child_lname: 'Child Last Name',
+                child_xname: 'Child Suffix',
+                child_dob: 'Child Birth Date',
+                workfr: 'Work From',
+                workto: 'Work To',
+                work_pos: 'Work Position',
+                work_dept: 'Work Department',
+                work_salary: 'Work Salary',
+                work_salarygrade: 'Work Salary Grade',
+                work_stat: 'Work Status',
+                work_gov: 'Government Work',
+                // Add other fields as needed
+            },
             fullName: '',
             empPosition: '',
             profilePictureUrl: '',
