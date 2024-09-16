@@ -141,7 +141,7 @@
             <div class="mt-6 text-right">
             <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-30 font-semibold">EDIT</button>
             <div v-if="isEditing" class="inline-flex space-x-4">
-                <button @click="cancelEditing" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                <button @click="cancelEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
                 <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
             </div>
             </div>
@@ -247,7 +247,7 @@
             <div class="mt-6 text-right">
             <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-30 font-semibold">EDIT</button>
             <div v-if="isEditing" class="inline-flex space-x-4">
-                <button @click="cancelEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                <button @click="cancelEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
                 <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
             </div>
             </div>

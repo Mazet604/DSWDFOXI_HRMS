@@ -30,10 +30,12 @@
                     <Column field="eli_licen_valid" header="VALIDITY"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
-                    <Button v-if="!isEditingProfile" label="ADD" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                    </div>
                 </div>
             </div>
 
@@ -49,11 +51,13 @@
                     <Column field="vol_hrs" header="NUMBER OF HOURS"></Column>
                     <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
                 </DataTable>
-                <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                <div class="mt-6 text-right">
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                    </div>
                 </div>
             </div>
 
@@ -69,11 +73,13 @@
                     <Column field="learn_type" header="TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)"></Column>
                     <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
                 </DataTable>
-                <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                <div class="mt-6 text-right">
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                    </div>
                 </div>
             </div>
 
@@ -84,11 +90,13 @@
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="recog_name" header=""></Column>
                 </DataTable>
-                <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                <div class="mt-6 text-right">
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                    </div>
                 </div>
             </div>
 
@@ -121,18 +129,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingGovId" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
-                    <div v-if="isEditingGovId" class="space-x-4">
-                        <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelGovIdEditing" />
-                        <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateGovIdData" />
+                <div class="mt-6 text-right">
+                    <button v-if="!isEditingGovId" @click="toggleFamilyEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingGovId" class="inline-flex space-x-4">
+                        <button @click="cancelGovIdEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button @click="updateGovIdData" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
                     </div>
                 </div>
             </div>
-
             <!-- Other Information Tab -->
             <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
-                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">OTHER INFORMATION</h2>
+                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200"></h2>
                 <div class="other-info">
                     <div class='columns'>
                         <h2 style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</b></h2>
@@ -224,7 +231,7 @@
                             <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40c" value="No" /> No
                         </div>
                                 <div class="flex justify-end gap-4 mt-6">
-                                    <Button label="SAVE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                                    <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
                                 </div>
                             </div>
                         </div>
@@ -253,10 +260,10 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-center gap-4 mt-4">
-                                    <button @click="hideEditDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">
+                                    <button @click="hideEditDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                         Cancel
                                     </button>
-                                    <button @click="saveEdit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+                                    <button @click="saveEdit" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                         Save
                                     </button>
                                 </div>
@@ -298,10 +305,10 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddCSEligibilityDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                        <button @click="hideAddCSEligibilityDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                             Cancel
                                         </button>
-                                        <button @click="addCSEligibility" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="addCSEligibility" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Add
                                         </button>
                                     </div>
@@ -343,10 +350,10 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddVoluntaryWorkDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                        <button @click="hideAddVoluntaryWorkDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                             Cancel
                                         </button>
-                                        <button @click="addVoluntaryWork" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="addVoluntaryWork" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Add
                                         </button>
                                     </div>
@@ -388,10 +395,10 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddLearndevDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                        <button @click="hideAddLearndevDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                             Cancel
                                         </button>
-                                        <button @click="addLearndev" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="addLearndev" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Add
                                         </button>
                                     </div>
@@ -413,10 +420,10 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddRecogdistDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                        <button @click="hideAddRecogdistDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                             Cancel
                                         </button>
-                                        <button @click="addRecogdist" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="addRecogdist" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Add
                                         </button>
                                     </div>
@@ -431,10 +438,10 @@
                                 <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
                                 <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                                 <div class="flex justify-center gap-4">
-                                    <button @click="hideUpdateDialog" class="py-2 px-4 rounded bg-red-300 text-#dc3545-700 hover:bg-#dc3545-400">
+                                    <button @click="hideUpdateDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                         Cancel
                                     </button>
-                                    <button @click="saveUpdate" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                    <button @click="saveUpdate" class="px-6 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                         Confirm
                                     </button>
                                 </div>
@@ -451,13 +458,14 @@
                                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                                     </div>
                                     <div class="flex justify-center">
-                                        <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="hideSuccessDialog" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Back
                                         </button>
                                     </div>
+                                    </div>
                                 </div>
                             </div>
-                    </div>
+
 
     </AppLayout>
 </template>
@@ -621,6 +629,19 @@ export default {
             } else {
                 console.log('No row selected.');
             }
+        },
+
+        hideAddCSEligibilityDialog() {
+            this.showAddCSEligibilityDialog = false;
+        },
+        hideAddVoluntaryWorkDialog() {
+            this.showAddVoluntaryWorkDialog = false;
+        },
+        hideAddLearndevDialog() {
+            this.showAddLearndevDialog = false;
+        },
+        hideAddRecogdistDialog() {
+            this.showAddRecogdistDialog = false;
         },
 
 
