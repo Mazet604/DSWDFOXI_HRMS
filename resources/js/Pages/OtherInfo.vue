@@ -1,7 +1,12 @@
 <template>
     <AppLayout>
-        <div class="w-full">
-            <h1 class="mb-4 text-3xl font-bold">OTHER INFO</h1>
+            <!-- Header Section -->
+                <div class="bg-white p-6 border-b border-yellow-200">
+                <h1 class="text-3xl font-bold text-blue-900">OTHER INFO</h1>
+                <p class="text-gray-600">Fill and check the necessary information below.</p>
+                </div>
+
+        <div class="w-full p-6 relative">
             <!-- Custom Tabs -->
             <div class="flex justify-end -mb-px">
                 <button @click="activeTab = 0" :class="tabButtonClass(0)">CS ELIGIBILITY</button>
@@ -572,7 +577,7 @@ export default {
 
     methods: {
 
-        tabButtonClass(tabName) {
+    tabButtonClass(tabName) {
             return {
                 'px-6 py-2 rounded-t-lg font-semibold border-t border-l border-r border-gray-200': true,
                 'bg-blue-900 text-white': this.activeTab === tabName,
