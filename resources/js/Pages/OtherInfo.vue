@@ -2,209 +2,230 @@
     <AppLayout>
         <div class="w-full">
             <h1 class="mb-4 text-3xl font-bold">OTHER INFO</h1>
-            <TabView v-model:activeIndex="activeTab" class="no-background">
-                <TabPanel header="CS ELIGIBILITY" :active="activeSubTab === 'eligibility'">
-                    <DataTable v-model:selection="selectedRow" :value="cseligibilityData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
-                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="eli_service" header="CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE"></Column>
-                        <Column field="eli_rating" header="RATING (IF APPLICABLE)"></Column>
-                        <Column field="eli_doe" header="DATE OF EXAMINATION/CONFERMENT"></Column>
-                        <Column field="eli_poe" header="PLACE OF EXAMINATION/CONFERMENT"></Column>
-                        <Column field="eli_license_no" header="LICENSE (IF APPLICABLE)"></Column>
-                        <Column field="eli_licen_valid" header="VALIDITY"></Column>
-                    </DataTable>
-                    <div class="flex justify-end gap-4 mt-6">
-                        <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                        <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                        <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                        <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
-                        </div>
-                </TabPanel>
-                <TabPanel header="VOLUNTARY WORK" :active="activeSubTab === 'voluntary'">
-                    <DataTable v-model:selection="selectedRow" :value="voluntaryworkData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
-                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="vol_name" header="NAME OF ORGANIZATION"></Column>
-                        <Column field="vol_add" header="ADDRESS OF ORGANIZATION"></Column>
-                        <Column field="vol_fr" header="INCLUSIVE DATES FROM"></Column>
-                        <Column field="vol_to" header="INCLUSIVE DATES TO"></Column>
-                        <Column field="vol_hrs" header="NUMBER OF HOURS"></Column>
-                        <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
-                    </DataTable>
-                    <div class="flex justify-end gap-4 mt-6">
-                        <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                        <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                        <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                        <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
-                        </div>
-                </TabPanel>
-                <TabPanel header="LEARNING & DEVELOPMENT" :active="activeSubTab === 'learning'">
-                    <DataTable v-model:selection="selectedRow" :value="learndevData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
-                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="learn_title" header="TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)"></Column>
-                        <Column field="learn_fr" header="INCLUSIVE DATES (MM/DD/YYYY) FROM"></Column>
-                        <Column field="learn_to" header="INCLUSIVE DATES (MM/DD/YYYY) TO"></Column>
-                        <Column field="learn_hrs" header="NUMBER OF HOURS"></Column>
-                        <Column field="learn_type" header="TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)"></Column>
-                        <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
-                    </DataTable>
-                    <div class="flex justify-end gap-4 mt-6">
-                        <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                        <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                        <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                        <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
-                        </div>
-                </TabPanel>
-                <TabPanel header="RECOGNITION AND DISTINCTIONS" :active="activeSubTab === 'recognition'">
-                    <DataTable v-model:selection="selectedRow" :value="recogdistData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
-                        <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="recog_name" header="NON-ACADEMIC DISTINCTIONS/RESTRICTIONS"></Column>
-                    </DataTable>
-                    <div class="flex justify-end gap-4 mt-6">
-                        <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                        <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                        <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                        <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
-                        </div>
-                </TabPanel>
+            <!-- Custom Tabs -->
+            <div class="flex justify-end -mb-px">
+                <button @click="activeTab = 0" :class="tabButtonClass(0)">CS ELIGIBILITY</button>
+                <button @click="activeTab = 1" :class="tabButtonClass(1)">VOLUNTARY WORK</button>
+                <button @click="activeTab = 2" :class="tabButtonClass(2)">LEARNING & DEVELOPMENT</button>
+                <button @click="activeTab = 3" :class="tabButtonClass(3)">RECOGNITION AND DISTINCTIONS</button>
+                <button @click="activeTab = 4" :class="tabButtonClass(4)">GOVERNMENT ID</button>
+                <button @click="activeTab = 5" :class="tabButtonClass(5)">OTHER INFORMATION</button>
+            </div>
 
+            <!-- CS Eligibility Tab -->
+            <div v-if="activeTab === 0" class="bg-white border border-blue-900 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">CS ELIGIBILITY</h2>
+                <DataTable v-model:selection="selectedRow" :value="cseligibilityData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                    <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                    <Column field="eli_service" header="CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE"></Column>
+                    <Column field="eli_rating" header="RATING (IF APPLICABLE)"></Column>
+                    <Column field="eli_doe" header="DATE OF EXAMINATION/CONFERMENT"></Column>
+                    <Column field="eli_poe" header="PLACE OF EXAMINATION/CONFERMENT"></Column>
+                    <Column field="eli_license_no" header="LICENSE (IF APPLICABLE)"></Column>
+                    <Column field="eli_licen_valid" header="VALIDITY"></Column>
+                </DataTable>
+                <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
+            </div>
 
+            <!-- Voluntary Work Tab -->
+            <div v-if="activeTab === 1" class="bg-white border border-blue-900 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">VOLUNTARY WORK</h2>
+                <DataTable v-model:selection="selectedRow" :value="voluntaryworkData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                    <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                    <Column field="vol_name" header="NAME OF ORGANIZATION"></Column>
+                    <Column field="vol_add" header="ADDRESS OF ORGANIZATION"></Column>
+                    <Column field="vol_fr" header="INCLUSIVE DATES FROM"></Column>
+                    <Column field="vol_to" header="INCLUSIVE DATES TO"></Column>
+                    <Column field="vol_hrs" header="NUMBER OF HOURS"></Column>
+                    <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
+                </DataTable>
+                <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
+            </div>
 
-                <TabPanel header="GOVERNMENT ID" :active="activeSubTab === 'government'">
-                     <div class="grid grid-cols-2 gap-4">
-                        <div class="border-box">
-                            <div>
-                                <label class="label-field">SSS ID:</label>
-                                <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId"/>
-                            </div>
-                            <div>
-                                <label class="label-field">PAG-IBIG ID:</label>
-                                <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId"/>
-                            </div>
-                            <div>
-                                <label class="label-field">TIN ID:</label>
-                                <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId"/>
-                            </div>
-                            </div>
-                            <div class="border-box">
-                            <div>
-                                <label class="label-field">GSIS ID:</label>
-                                <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId"/>
-                            </div>
-                            <div>
-                                <label class="label-field">PHILHEALTH ID:</label>
-                                <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId"/>
-                            </div>
-                            </div>
-                            </div>
-                            <div class="flex justify-end gap-4 mt-6">
-                            <Button v-if="!isEditingGovId" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
-                            <div v-if="isEditingGovId" class="space-x-4">
-                                <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelGovIdEditing" />
-                                <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateGovIdData" />
-                            </div>
-                            </div>
-                </TabPanel>
-                <TabPanel header="OTHER INFORMATION" :active="activeSubTab === 'other'">
-                                <div class="other-info">
-                                    <div v-if="currentPage === 1">
-                                        <h2>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</h2>
-                                        <div class="form-group">
-                                            <label>a. within the third degree?</label>
-                                            <input type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
-                                            <input type="radio" v-model="otherInfo.other_34a" value="No" /> No
-                                        </div>
-                                        <div class="form-group">
-                                            <label>b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
-                                            <input type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_34b" value="No" /> No
-                                        </div>
-                                    </div>
-                                    <span class="broken-line"></span>
-                                    <div>
-                                        <h2>a. Have you ever been found guilty of any administrative offense?</h2>
-                                        <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.other_35a" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_35a" value="No" /> No
-                                        </div>
-                                        <h2>b. Have you been criminally charged before any court?</h2>
-                                        <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
-                                            <input type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" />
-                                            <input type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" />
-                                            <input type="radio" v-model="otherInfo.other_35b" value="No" /> No
-                                        </div>
-                                    </div>
-                                    <span class="broken-line"></span>
-                                    <div>
-                                        <h2>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</h2>
-                                        <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.other_36" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_36" value="No" /> No
-                                        </div>
-                                        <h2>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</h2>
-                                        <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.other_37" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_37" value="No" /> No
-                                        </div>
-                                    </div>
-                                    <span class="broken-line"></span>
-                                    <div>
-                                        <h2>a. Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</h2>
-                                        <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.other_38a" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_38a" value="No" /> No
-                                        </div>
-                                        <h2>b. Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</h2>
-                                        <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.other_38b" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_38b" value="No" /> No
-                                        </div>
-                                    </div>
-                                    <span class="broken-line"></span>
-                                    <div>
-                                        <h2>Have you acquired the status of an immigrant or permanent resident of another country?</h2>
-                                        <div class="form-group">
-                                            <input type="radio" v-model="otherInfo.other_39" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_39" value="No" /> No
-                                        </div>
-                                        <span class="broken-line"></span>
-                                        <h2>Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</h2>
-                                        <div class="form-group">
-                                            <label>a. Are you a member of any indigenous group?</label>
-                                            <input type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_40a" value="No" /> No
-                                        </div>
-                                        <div class="form-group">
-                                            <label>b. Are you a person with disability?</label>
-                                            <input type="radio" v-model="otherInfo.other_40b" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_40b" value="No" /> No
-                                        </div>
-                                        <div class="form-group">
-                                            <label>c. Are you a solo parent?</label>
-                                            <input type="radio" v-model="otherInfo.other_40c" value="Yes" /> Yes
-                                            <input type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" />
-                                            <input type="radio" v-model="otherInfo.other_40c" value="No" /> No
-                                        </div>
-                                    </div>
-                                </div>
+            <!-- Learning & Development Tab -->
+            <div v-if="activeTab === 2" class="bg-white border border-blue-900 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">LEARNING & DEVELOPMENT</h2>
+                <DataTable v-model:selection="selectedRow" :value="learndevData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                    <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                    <Column field="learn_title" header="TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)"></Column>
+                    <Column field="learn_fr" header="INCLUSIVE DATES (MM/DD/YYYY) FROM"></Column>
+                    <Column field="learn_to" header="INCLUSIVE DATES (MM/DD/YYYY) TO"></Column>
+                    <Column field="learn_hrs" header="NUMBER OF HOURS"></Column>
+                    <Column field="learn_type" header="TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)"></Column>
+                    <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
+                </DataTable>
+                <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
+            </div>
+
+            <!-- Recognition and Distinctions Tab -->
+            <div v-if="activeTab === 3" class="bg-white border border-blue-900 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">RECOGNITION AND DISTINCTIONS</h2>
+                <DataTable v-model:selection="selectedRow" :value="recogdistData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
+                    <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
+                    <Column field="recog_name" header="NON-ACADEMIC DISTINCTIONS/RESTRICTIONS"></Column>
+                </DataTable>
+                <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
+                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
+                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
+                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                </div>
+            </div>
+
+            <!-- Government ID Tab -->
+            <div v-if="activeTab === 4" class="bg-white border border-blue-900 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">GOVERNMENT ID</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="border-box">
+                        <div>
+                            <label class="label-field">SSS ID:</label>
+                            <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId"/>
+                        </div>
+                        <div>
+                            <label class="label-field">PAG-IBIG ID:</label>
+                            <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId"/>
+                        </div>
+                        <div>
+                            <label class="label-field">TIN ID:</label>
+                            <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId"/>
+                        </div>
+                    </div>
+                    <div class="border-box">
+                        <div>
+                            <label class="label-field">GSIS ID:</label>
+                            <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId"/>
+                        </div>
+                        <div>
+                            <label class="label-field">PHILHEALTH ID:</label>
+                            <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-4 mt-6">
+                    <Button v-if="!isEditingGovId" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
+                    <div v-if="isEditingGovId" class="space-x-4">
+                        <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelGovIdEditing" />
+                        <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateGovIdData" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Information Tab -->
+            <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
+                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">OTHER INFORMATION</h2>
+                <div class="other-info">
+                    <div v-if="currentPage === 1">
+                        <h2>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</h2>
+                        <div class="form-group">
+                            <label>a. within the third degree?</label>
+                            <input type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
+                            <input type="radio" v-model="otherInfo.other_34a" value="No" /> No
+                        </div>
+                        <div class="form-group">
+                            <label>b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
+                            <input type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_34b" value="No" /> No
+                        </div>
+                    </div>
+                    <span class="broken-line"></span>
+                    <div>
+                        <h2>a. Have you ever been found guilty of any administrative offense?</h2>
+                        <div class="form-group">
+                            <input type="radio" v-model="otherInfo.other_35a" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_35a" value="No" /> No
+                        </div>
+                        <h2>b. Have you been criminally charged before any court?</h2>
+                        <div class="form-group">
+                            <input type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
+                            <input type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" />
+                            <input type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" />
+                            <input type="radio" v-model="otherInfo.other_35b" value="No" /> No
+                        </div>
+                    </div>
+                    <span class="broken-line"></span>
+                    <div>
+                        <h2>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</h2>
+                        <div class="form-group">
+                            <input type="radio" v-model="otherInfo.other_36" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_36" value="No" /> No
+                        </div>
+                        <h2>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</h2>
+                        <div class="form-group">
+                            <input type="radio" v-model="otherInfo.other_37" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_37" value="No" /> No
+                        </div>
+                    </div>
+                    <span class="broken-line"></span>
+                    <div>
+                        <h2>a. Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</h2>
+                        <div class="form-group">
+                            <input type="radio" v-model="otherInfo.other_38a" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_38a" value="No" /> No
+                        </div>
+                        <h2>b. Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</h2>
+                        <div class="form-group">
+                            <input type="radio" v-model="otherInfo.other_38b" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_38b" value="No" /> No
+                        </div>
+                    </div>
+                    <span class="broken-line"></span>
+                    <div>
+                        <h2>Have you acquired the status of an immigrant or permanent resident of another country?</h2>
+                        <div class="form-group">
+                            <input type="radio" v-model="otherInfo.other_39" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_39" value="No" /> No
+                        </div>
+                        <span class="broken-line"></span>
+                        <h2>Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</h2>
+                        <div class="form-group">
+                            <label>a. Are you a member of any indigenous group?</label>
+                            <input type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_40a" value="No" /> No
+                        </div>
+                        <div class="form-group">
+                            <label>b. Are you a person with disability?</label>
+                            <input type="radio" v-model="otherInfo.other_40b" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_40b" value="No" /> No
+                        </div>
+                        <div class="form-group">
+                            <label>c. Are you a solo parent?</label>
+                            <input type="radio" v-model="otherInfo.other_40c" value="Yes" /> Yes
+                            <input type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" />
+                            <input type="radio" v-model="otherInfo.other_40c" value="No" /> No
+                        </div>
+
                                 <div class="flex justify-end gap-4 mt-6">
                                     <Button label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
                                 </div>
-                </TabPanel>
-
-                        </TabView>
-
+                            </div>
+                        </div>
                     </div>
+                </div>
 
                     <!-- Edit Modal -->
                     <div v-if="showEditDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
@@ -486,7 +507,7 @@ export default {
         },
         currentPage: 1,
         totalPages: 5,
-        activeSubTab: 'other',
+        activeTab: 0,
         isEditingProfile: false,
         originalProfileFields: {},
         cseligibilityData: [],
@@ -550,6 +571,15 @@ export default {
 
 
     methods: {
+
+        tabButtonClass(tabName) {
+            return {
+                'px-6 py-2 rounded-t-lg font-semibold border-t border-l border-r border-gray-200': true,
+                'bg-blue-900 text-white': this.activeTab === tabName,
+                'bg-gray-300 text-gray-700': this.activeTab !== tabName,
+            };
+        },
+
     toggleProfileEditing() {
         console.log('Toggling profile editing:', this.isEditingProfile);
         console.log('Selected row:', this.selectedRow);

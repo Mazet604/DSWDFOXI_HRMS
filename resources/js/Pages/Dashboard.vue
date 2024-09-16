@@ -32,12 +32,12 @@
 
           <!-- Custom Tabs -->
           <div class="flex justify-end -mb-px">
-            <button @click="activeTab = 'personal-info'" :class="tabButtonClass('personal-info')">PERSONAL INFO</button>
-            <button @click="activeTab = 'address'" :class="tabButtonClass('address')">ADDRESS</button>
+            <button @click="activeTab = 0" :class="tabButtonClass(0)">PERSONAL INFO</button>
+            <button @click="activeTab = 1" :class="tabButtonClass(1)">ADDRESS</button>
           </div>
 
           <!-- Personal Info Tab -->
-          <div v-if="activeTab === 'personal-info'" class="bg-white border border-blue-900 rounded-lg p-6">
+          <div v-if="activeTab === 0" class="bg-white border border-blue-900 rounded-lg p-6">
             <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">BASIC INFORMATION</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
@@ -136,16 +136,16 @@
             </div>
 
             <div class="mt-6 text-right">
-            <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md font-semibold">EDIT</button>
+            <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-30 font-semibold">EDIT</button>
             <div v-if="isEditing" class="inline-flex space-x-4">
-                <button @click="cancelEditing" class="px-8 py-2 text-white rounded-md bg-red-700 font-semibold">CANCEL</button>
-                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md font-semibold">SAVE</button>
+                <button @click="cancelEditing" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
             </div>
             </div>
     </div>
 
           <!-- Address Tab -->
-          <div v-if="activeTab === 'address'" class="bg-white border border-blue-900 rounded-lg p-6">
+          <div v-if="activeTab === 1" class="bg-white border border-blue-900 rounded-lg p-6">
             <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">PERMANENT ADDRESS</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
@@ -242,10 +242,10 @@
             </div>
 
             <div class="mt-6 text-right">
-            <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md font-semibold">EDIT</button>
+            <button v-if="!isEditing" @click="toggleEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-30 font-semibold">EDIT</button>
             <div v-if="isEditing" class="inline-flex space-x-4">
-                <button @click="cancelEditing" class="px-8 py-2 text-white rounded-md bg-red-700 font-semibold">CANCEL</button>
-                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md font-semibold">SAVE</button>
+                <button @click="cancelEditing" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
             </div>
             </div>
           </div>
@@ -262,11 +262,11 @@
               <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
             </div>
             <div class="flex justify-center gap-4">
-              <button @click="hideUpdateDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
-              <button @click="saveProfile" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">Confirm</button>
+              <button @click="hideUpdateDialog" class="px-6 py-2 text-white rounded-md bg-red-700 font-semibold hover:bg-red-800">Cancel</button>
+              <button @click="saveProfile" class="px-6 py-2 text-white bg-blue-900 rounded-md font-semibold hover:bg-blue-800">Confirm</button>
             </div>
-          </div>
         </div>
+      </div>
       </div>
 
       <!-- Update Success Modal -->
@@ -279,7 +279,7 @@
             <p class="mb-4">Your profile has been updated successfully.</p>
           </div>
           <div class="flex justify-center gap-4">
-            <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">OK</button>
+            <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-900 hover:bg-blue-800 rounded-md">OKAY</button>
           </div>
         </div>
       </div>
@@ -293,7 +293,7 @@
             <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
             <h2 class="mb-4 text-xl font-semibold">Photo Uploaded Successfully!</h2>
             <div class="flex justify-center">
-              <button @click="hidePhotoSuccessDialog" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">OK</button>
+              <button @click="hidePhotoSuccessDialog" class="px-4 py-2 text-white bg-blue-900 rounded hover:bg-blue-800 font-semibold">OKAY</button>
             </div>
           </div>
         </div>
@@ -308,8 +308,8 @@
           <img ref="cropperImage" :src="cropperSrc" alt="Cropper Image" />
         </div>
         <div class="flex justify-center mt-4">
-          <Button label="Crop" @click="cropImage" class="bg-blue-500 text-white mr-4" />
-          <Button label="Cancel" @click="cancelCrop" class="bg-red-500 text-white" />
+            <button @click="cancelCrop" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">Cancel</button>
+          <button @click="cropImage" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 font-semibold">Crop</button>
         </div>
       </div>
     </div>
