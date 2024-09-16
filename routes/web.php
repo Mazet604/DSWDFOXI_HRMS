@@ -154,7 +154,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/emp_otherinfo/other-info', [OtherInfoController::class, 'getOtherInfoData']);
     Route::put('/emp_otherinfo/other-info', [OtherInfoController::class, 'updateOtherInfoData']);
 
-    Route::get('/download-pds', [PDSController::class, 'downloadPDS']);
+    Route::get('/download-pds/{page?}', [PDSController::class, 'downloadPDS']);
+
 
 });
 

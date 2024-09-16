@@ -1,5 +1,7 @@
 <template>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <div class="flex min-h-screen bg-gray-100">
         <!-- Sidebar -->
         <aside class="fixed top-0 left-0 h-full flex flex-col w-64 p-4 text-white bg-blue-900 z-20">
@@ -71,7 +73,7 @@
                     </nav>
 
 
-                <button @click="downloadPDS" class="w-30 px-4 py-2 mt-4 text-white bg-blue-700 rounded hover:bg-blue-600">
+                <button @click="choosePDS" class="w-30 px-4 py-2 mt-4 text-white bg-blue-700 rounded hover:bg-blue-600">
                     <i class="fas fa-download mr-2"></i> Personal Data Sheet
                 </button>
                 <br>
@@ -109,6 +111,62 @@
                 </div>
             </div>
         </div>
+        <!-- New Download PDS Modal -->
+    <div v-if="showPdsDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+        <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
+            <div class="p-4">
+                <div class="text-center">
+                    <h2 class="mb-4 text-xl font-semibold">Download Personal Data Sheet</h2>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <button @click="downloadPDS(1)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 1</button>
+                    <button @click="downloadPDS(2)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 2</button>
+                    <button @click="downloadPDS(3)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 3</button>
+                    <button @click="downloadPDS(4)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 4</button>
+                    <button @click="downloadPDS(5)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download All Pages</button>
+                </div>
+                <div class="mt-4 flex justify-center">
+                    <button @click="hidePdsDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Download Modal -->
+    <div v-if="showModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="downloadModalLabel" aria-hidden="true" style="display: block;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="downloadModalLabel">Downloading File</h5>
+                        <button type="button" class="close" @click="showModal = false" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalMessage">
+                        Please wait, your file is being downloaded...
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+        <!-- Download Result Modal -->
+        <div v-if="showResultModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true" style="display: block;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="resultModalLabel">{{ downloadStatus === 'success' ? 'Download Failed' : 'Download Successful' }}</h5>
+                        <button type="button" class="close" @click="showResultModal = false" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ downloadStatus === 'success' ? 'There was an error downloading your file. Please try again.' : 'Your file has been downloaded successfully.' }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="showResultModal = false">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -118,6 +176,10 @@ import { router } from '@inertiajs/vue3';
 
 const isAccordionOpen = ref(true); // Ensure the accordion is open by default for demonstration
 const showLogoutDialog = ref(false);
+const showModal = ref(false);
+const showResultModal = ref(false);
+const downloadStatus = ref('');
+const showPdsDialog = ref(false);
 const searchQuery = ref('');
 const activeTab = ref(0);
 const activeSubTab = ref(0);
@@ -251,21 +313,54 @@ const search = (query) => {
     showSuggestions.value = false;
 };
 
-const downloadPDS = async () => {
+const showPdsDialogFn = () => {
+    showPdsDialog.value = true;
+};
+
+const hidePdsDialog = () => {
+    showPdsDialog.value = false;
+};
+
+const showPDSprogress = () => {
+    showModal.value = true; // Show download in progress modal
+    console.log("Download modal should be visible");
+};
+
+const choosePDS = () => {
+    showPdsDialogFn();
+};
+
+// Download PDS pages
+const downloadPDS = async (page) => {
+    
+    hidePdsDialog(); // Hide the modal after download
     try {
-        const response = await axios.get('/download-pds', {
+        showPDSprogress();
+        let url = '/download-pds';
+        if (page !== 'all') {
+            url += `/${page}`; // Append the page number to the URL
+        }
+
+        const response = await axios.get(url, {
             responseType: 'blob', // Important for PDF files
         });
 
-        const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'PDS.pdf'); // Set the file name
-        document.body.appendChild(link);
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const objectURL = URL.createObjectURL(blob);
+
+        link.href = objectURL;
+        link.download = page === 'all' ? 'PDS_All_Pages.pdf' : `PDS_Page_${page}.pdf`;
         link.click();
+        URL.revokeObjectURL(objectURL);
         link.remove();
+
     } catch (error) {
         console.error('Error downloading PDS:', error);
+    }finally {
+        // Hide the progress modal and show the result modal
+        showModal.value = false;
+        showResultModal.value = true;
     }
 };
 
