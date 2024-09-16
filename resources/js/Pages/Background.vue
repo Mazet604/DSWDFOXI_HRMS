@@ -129,9 +129,8 @@
                         </div>
                     <DataTable v-model:selection="selectedRow" :value="childData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="full_name" header="Name of Child"></Column>
-                        <Column field="age" header="Age"></Column>
-                        <Column field="child_dob" header="Date of Birth"></Column>
+                        <Column field="full_name" header="FULL NAME"></Column>
+                        <Column field="child_dob" header="DATE OF BIRTH"></Column>
                     </DataTable>
                     <div class="mt-6 text-right">
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
@@ -145,7 +144,7 @@
 
                 <!-- Education Tab -->
                 <div v-if="activeTab === 1" class="bg-white border border-blue-900 rounded-lg p-6">
-                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">Education</h2>
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">EDUCATION</h2>
                     <DataTable v-model:selection="selectedRow" :value="educationData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                         <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
@@ -168,10 +167,10 @@
 
                 <!-- Organization Tab -->
                 <div v-if="activeTab === 2" class="bg-white border border-blue-900 rounded-lg p-6">
-                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">Organization</h2>
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">ORGANIZATIONS</h2>
                     <DataTable v-model:selection="selectedRow" :value="organizationData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="org_name" header="Organizations"></Column>
+                        <Column field="org_name" header=""></Column>
                     </DataTable>
                     <div class="mt-6 text-right">
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
@@ -185,7 +184,7 @@
 
                 <!-- Work Experience Tab -->
                 <div v-if="activeTab === 3" class="bg-white border border-blue-900 rounded-lg p-6">
-                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">Work Experience</h2>
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">WORK EXPERIENCE</h2>
                     <DataTable v-model:selection="selectedRow" :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                         <Column field="workfr" header="INCLUSIVE DATES (FROM)"></Column>
@@ -209,10 +208,10 @@
 
                 <!-- Skills Tab -->
                 <div v-if="activeTab === 4" class="bg-white border border-blue-900 rounded-lg p-6">
-                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">Skills</h2>
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">SKILLS</h2>
                     <DataTable v-model:selection="selectedRow" :value="skillsData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="skill" header="SKILLS"></Column>
+                        <Column field="skill" header=""></Column>
                     </DataTable>
                     <div class="mt-6 text-right">
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
@@ -226,7 +225,7 @@
 
                 <!-- References Tab -->
                 <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
-                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">References</h2>
+                    <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">REFERENCES</h2>
                 <DataTable v-model:selection="selectedRow" :value="referencesData" class="mt-8" :paginator="true" :rows="5">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="full_name" header="FULL NAME"></Column>
@@ -246,17 +245,55 @@
     </div>
 
         <!-- Edit Modal -->
-        <div v-if="showEditDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-            <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
+        <div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
                 <div class="p-4">
                     <div class="text-center">
-                        <h2 class="text-xl font-semibold mb-4">Edit {{ currentTabLabel }}</h2>
+                        <h2 class="mb-4 text-xl font-semibold">Edit {{ currentTabLabel }}</h2>
                     </div>
                     <div class="grid grid-cols-1 gap-4">
-                        <!-- Fields will be dynamically rendered here based on the selected row -->
+                        <!-- Render fields -->
                         <div v-for="(value, key) in filteredEditFields" :key="key">
                             <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
+
+                            <!-- Child Date of Birth (with validation) -->
+                            <template v-if="key === 'child_dob'">
+                                <input
+                                    class="input-field"
+                                    :type="getInputType(key, value)"
+                                    v-model="editFields[key]"
+                                    :max="maxDate"
+                                    :class="{'border-red-500': !isChildDobValid}"
+                                    @input="validateChildDob"
+                                />
+                                <!-- Error message for Child DOB -->
+                                <p v-if="!isChildDobValid" class="mt-1 text-xs text-red-500">
+                                    Date of birth must be at least 1 month ago and cannot be in the future.
+                                </p>
+                            </template>
+
+                            <!-- Work Experience Date Fields (with validation) -->
+                            <template v-else-if="key === 'workfr' || key === 'workto'">
+                                <input
+                                    class="input-field"
+                                    type="date"
+                                    v-model="editFields[key]"
+                                    :max="maxDate"
+                                />
+                            </template>
+
+                            <!-- Other input fields for Work Experience (text inputs) -->
+                            <template v-else-if="key === 'work_pos' || key === 'work_dept' || key === 'work_salary' || key === 'work_salarygrade' || key === 'work_stat' || key === 'work_gov'">
+                                <input
+                                    class="input-field"
+                                    :type="getInputType(key, value)"
+                                    v-model="editFields[key]"
+                                />
+                            </template>
+
+                            <!-- Other input fields -->
                             <input
+                                v-else
                                 class="input-field"
                                 :type="getInputType(key, value)"
                                 v-model="editFields[key]"
@@ -344,7 +381,12 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">Child Birth Date</label>
-                            <input class="input-field" type="date" v-model="newChild.child_dob" />
+                            <input
+                                class="input-field"
+                                type="date"
+                                v-model="newChild.child_dob"
+                                :max="maxDate"
+                            />
                         </div>
                     </div>
                     <div class="mt-6 text-right">
@@ -443,11 +485,11 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM)</label>
-                            <input class="input-field" type="date" v-model="newWorkExperience.workfr" />
+                            <input class="input-field" type="date" v-model="newWorkExperience.workfr" :max="maxDate" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (TO)</label>
-                            <input class="input-field" type="date" v-model="newWorkExperience.workto" />
+                            <input class="input-field" type="date" v-model="newWorkExperience.workto" :max="maxDate"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">POSITION</label>
@@ -565,7 +607,7 @@
                         <h2 class="text-xl font-semibold mb-4">Updated Successfully!</h2>
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideSuccessDialog" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             OK
                         </button>
@@ -693,7 +735,14 @@ export default {
                     !key.endsWith('_count') && !key.startsWith('full') && !key.startsWith('age')
                 )
             );
-        }
+        },
+        maxDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = (today.getMonth() + 1).toString().padStart(2, '0');
+            const day = today.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        },
     },
 
 
@@ -765,77 +814,77 @@ export default {
     let dataArray = null;
     let countField = '';
 
-    switch (this.activeTab) {
-        case 0:
-            url = '/emp_child/UpdateChildData';
-            dataArray = this.childData;
-            countField = 'child_count';
-            break;
-        case 1:
-            url = '/education/UpdateEducationData';
-            dataArray = this.educationData;
-            countField = 'educ_count';
-            break;
-        case 2:
-            url = '/emp_org/UpdateOrganizationData';
-            dataArray = this.organizationData;
-            countField = 'org_count';
-            break;
-        case 3:
-            url = '/emp_work/UpdateWorkExperienceData';
-            dataArray = this.workExperienceData;
-            countField = 'work_count';
-            break;
-        case 4:
-            url = '/emp_skills/UpdateSkillsData';
-            dataArray = this.skillsData;
-            countField = 'skill_count';
-            break;
-        case 5:
-            url = '/emp_reference/UpdateReferencesData';
-            dataArray = this.referencesData;
-            countField = 'ref_count';
-            break;
-        default:
-            console.error('Unknown tab selected');
-            return;
-    }
+        switch (this.activeTab) {
+            case 0:
+                url = '/emp_child/UpdateChildData';
+                dataArray = this.childData;
+                countField = 'child_count';
+                break;
+            case 1:
+                url = '/education/UpdateEducationData';
+                dataArray = this.educationData;
+                countField = 'educ_count';
+                break;
+            case 2:
+                url = '/emp_org/UpdateOrganizationData';
+                dataArray = this.organizationData;
+                countField = 'org_count';
+                break;
+            case 3:
+                url = '/emp_work/UpdateWorkExperienceData';
+                dataArray = this.workExperienceData;
+                countField = 'work_count';
+                break;
+            case 4:
+                url = '/emp_skills/UpdateSkillsData';
+                dataArray = this.skillsData;
+                countField = 'skill_count';
+                break;
+            case 5:
+                url = '/emp_reference/UpdateReferencesData';
+                dataArray = this.referencesData;
+                countField = 'ref_count';
+                break;
+            default:
+                console.error('Unknown tab selected');
+                return;
+        }
 
-    // Store the necessary information for updating
-    this.updateUrl = url;
-    this.updateDataArray = dataArray;
-    this.updateCountField = countField;
+        // Store the necessary information for updating
+        this.updateUrl = url;
+        this.updateDataArray = dataArray;
+        this.updateCountField = countField;
 
-    // Show the confirmation dialog
-    this.showUpdateDialog = true;
-},
+        // Show the confirmation dialog
+        this.showUpdateDialog = true;
+    },
 
-// Function to proceed with the update after confirmation
-saveUpdate() {
-    axios.post(this.updateUrl, this.editFields)
-        .then(() => {
-            const index = this.updateDataArray.findIndex(item =>
-                item.empid === this.editFields.empid &&
-                item[this.updateCountField] === this.editFields[this.updateCountField]
-            );
+    // Function to proceed with the update after confirmation
+    saveUpdate() {
+        axios.post(this.updateUrl, this.editFields)
+            .then(() => {
+                const index = this.updateDataArray.findIndex(item =>
+                    item.empid === this.editFields.empid &&
+                    item[this.updateCountField] === this.editFields[this.updateCountField]
+                );
 
-            if (index !== -1) {
-                this.updateDataArray[index] = { ...this.editFields };
-            } else {
-                console.error('Item not found');
-            }
+                if (index !== -1) {
+                    this.updateDataArray[index] = { ...this.editFields };
+                } else {
+                    console.error('Item not found');
+                }
 
-            this.showSuccessDialog = true;
-            this.hideEditDialog();
-            this.isEditingProfile = false;
-        })
-        .catch(error => {
-            console.error('Error updating data:', error);
-        });
+                this.showSuccessDialog = true;
+                this.hideEditDialog();
+                this.isEditingProfile = false;
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
 
-    // Hide the confirmation dialog
-    this.hideUpdateDialog();
-},
+        // Hide the confirmation dialog
+        this.hideUpdateDialog();
+    },
 
 
     isDate(value) {
@@ -906,58 +955,61 @@ saveUpdate() {
             this.isEditingFamily = false;
         },
 
-        async fetchFather() {
-            try {
-                const response = await axios.get('/emp_father/Father');
-                this.fields.fatherSurname = response.data.fatherSurname;
-                this.fields.fatherFirstName = response.data.fatherFirstName;
-                this.fields.fatherMiddleName = response.data.fatherMiddleName;
-                this.fields.fatherExtName = response.data.fatherExtName;
-            } catch (error) {
-                this.errorMessage = 'Failed to load father.';
-            }
+            fetchFather() {
+            axios.get('/emp_father/Father')
+                .then(response => {
+                    this.fields.fatherSurname = response.data.fatherSurname;
+                    this.fields.fatherFirstName = response.data.fatherFirstName;
+                    this.fields.fatherMiddleName = response.data.fatherMiddleName;
+                    this.fields.fatherExtName = response.data.fatherExtName;
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to load father.';
+                });
         },
 
-        async fetchMother() {
-            try {
-                const response = await axios.get('/emp_mother/Mother');
-                this.fields.motherMaidenName = response.data.motherMaidenName;
-                this.fields.motherSurname = response.data.motherSurname;
-                this.fields.motherFirstName = response.data.motherFirstName;
-                this.fields.motherMiddleName = response.data.motherMiddleName;
-            } catch (error) {
-                this.errorMessage = 'Failed to load mother.';
-            }
+        fetchMother() {
+            axios.get('/emp_mother/Mother')
+                .then(response => {
+                    this.fields.motherMaidenName = response.data.motherMaidenName;
+                    this.fields.motherSurname = response.data.motherSurname;
+                    this.fields.motherFirstName = response.data.motherFirstName;
+                    this.fields.motherMiddleName = response.data.motherMiddleName;
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to load mother.';
+                });
         },
 
-        async fetchSpouse() {
-            try {
-                const response = await axios.get('/emp_spouse/Spouse');
-                this.fields.spouseSurname = response.data.spouseSurname;
-                this.fields.spouseFirstName = response.data.spouseFirstName;
-                this.fields.spouseMiddleName = response.data.spouseMiddleName;
-                this.fields.spouseExtName = response.data.spouseExtName;
-                this.fields.spouseOccupation = response.data.spouseOccupation;
-                this.fields.spouseBusinessName = response.data.spouseBusinessName;
-                this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
-                this.fields.spouseTelNo = response.data.spouseTelNo;
-            } catch (error) {
-                this.errorMessage = 'Failed to load spouse.';
-            }
+        fetchSpouse() {
+            axios.get('/emp_spouse/Spouse')
+                .then(response => {
+                    this.fields.spouseSurname = response.data.spouseSurname;
+                    this.fields.spouseFirstName = response.data.spouseFirstName;
+                    this.fields.spouseMiddleName = response.data.spouseMiddleName;
+                    this.fields.spouseExtName = response.data.spouseExtName;
+                    this.fields.spouseOccupation = response.data.spouseOccupation;
+                    this.fields.spouseBusinessName = response.data.spouseBusinessName;
+                    this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
+                    this.fields.spouseTelNo = response.data.spouseTelNo;
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to load spouse.';
+                });
         },
 
-
-        async updateFamilyData() {
-            try {
-                await axios.patch('/EmpFamily/updateFamilyData', this.fields);
-                this.isEditing = false;
-                this.showUpdateDialog = false;
-                this.showSuccessDialog = true;
-                location.reload();
-                } catch (error) {
-                this.errorMessage = 'Failed to update Family. Please try again.';
-                this.showUpdateDialog = false;
-            }
+        updateFamilyData() {
+            axios.patch('/EmpFamily/updateFamilyData', this.fields)
+                .then(() => {
+                    this.isEditing = false;
+                    this.showUpdateDialog = false;
+                    this.showSuccessDialog = true;
+                    //location.reload();
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to update Family. Please try again.';
+                    this.showUpdateDialog = false;
+                });
         }
     },
 
@@ -1253,6 +1305,7 @@ saveUpdate() {
 
         const hideSuccessDialog = () => {
             showSuccessDialog.value = false;
+            location.reload();
         };
 
         const confirmUpdate = () => {
