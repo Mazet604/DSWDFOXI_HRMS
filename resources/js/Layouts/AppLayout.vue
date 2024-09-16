@@ -88,25 +88,25 @@
             </div>
         </div>
         <!-- New Download PDS Modal -->
-    <div v-if="showPdsDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-        <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
-            <div class="p-4">
-                <div class="text-center">
-                    <h2 class="mb-4 text-xl font-semibold">Download Personal Data Sheet</h2>
-                </div>
-                <div class="flex flex-col gap-4">
-                    <button @click="downloadPDS(1)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 1</button>
-                    <button @click="downloadPDS(2)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 2</button>
-                    <button @click="downloadPDS(3)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 3</button>
-                    <button @click="downloadPDS(4)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 4</button>
-                    <button @click="downloadPDS(5)" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download All Pages</button>
-                </div>
-                <div class="mt-4 flex justify-center">
-                    <button @click="hidePdsDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+        <div v-if="showPdsDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div class="w-full max-w-md overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
+                <div class="p-4">
+                    <div class="text-center">
+                        <h2 class="mb-4 text-xl font-semibold">Download Personal Data Sheet</h2>
+                    </div>
+                    <div class="flex flex-col gap-1 justify-center">
+                        <button @click="downloadPDS(1)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 1</button>
+                        <button @click="downloadPDS(2)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 2</button>
+                        <button @click="downloadPDS(3)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 3</button>
+                        <button @click="downloadPDS(4)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 4</button>
+                        <button @click="downloadPDS(5)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download All Pages</button>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <button @click="hidePdsDialog" class="w-32 px-4 py-2 text-white bg-red-700 rounded hover:bg-red-800">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     <!-- Download Modal -->
     <div v-if="showModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="downloadModalLabel" aria-hidden="true" style="display: block;">
             <div class="modal-dialog" role="document">

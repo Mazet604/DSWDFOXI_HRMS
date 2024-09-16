@@ -256,21 +256,25 @@
                         <div v-for="(value, key) in filteredEditFields" :key="key">
                             <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
 
-                            <!-- Child Date of Birth (with validation) -->
-                            <template v-if="key === 'child_dob'">
-                                <input
-                                    class="input-field"
-                                    :type="getInputType(key, value)"
-                                    v-model="editFields[key]"
-                                    :max="maxDate"
-                                    :class="{'border-red-500': !isChildDobValid}"
-                                    @input="validateChildDob"
-                                />
-                                <!-- Error message for Child DOB -->
-                                <p v-if="!isChildDobValid" class="mt-1 text-xs text-red-500">
-                                    Date of birth must be at least 1 month ago and cannot be in the future.
-                                </p>
-                            </template>
+                    <!-- Child Date of Birth (with validation) -->
+                    <template v-if="key === 'child_dob'">
+                        <input
+                            class="input-field"
+                            :type="getInputType(key, value)"
+                            v-model="editFields[key]"
+                            :max="maxDate"
+                            :class="{'border-red-500': !isChildDobValid}"
+                            @input="validateChildDob"
+                        />
+                    </template>
+
+                    <template v-if="key === 'child_xname'">
+                        <select class="input-field" v-model="newChild.child_xname">
+                            <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                {{ suffix.label }}
+                            </option>
+                        </select>
+                    </template>
 
                             <!-- Work Experience Date Fields (with validation) -->
                             <template v-else-if="key === 'workfr' || key === 'workto'">
