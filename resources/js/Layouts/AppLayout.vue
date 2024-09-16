@@ -73,7 +73,7 @@
                     </nav>
 
 
-                    <button @click="downloadPDS" class="w-30 px-2 py-2 mt-4 text-white bg-blue-700 rounded hover:bg-blue-600" style="font-size: 16px;">
+                    <button @click="choosePDS" class="w-30 px-2 py-2 mt-4 text-white bg-blue-700 rounded hover:bg-blue-600" style="font-size: 16px;">
                         <i class="fas fa-download mr-2"></i> Personal Data Sheet
                     </button>
                     <br>
