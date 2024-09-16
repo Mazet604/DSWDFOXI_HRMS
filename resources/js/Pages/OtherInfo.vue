@@ -129,98 +129,97 @@
             <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
                 <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">OTHER INFORMATION</h2>
                 <div class="other-info">
-                    <div v-if="currentPage === 1">
-                        <h2>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</h2>
+                    <div class='columns'>
+                        <h2 style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</b></h2>
                         <div class="form-group">
-                            <label>a. within the third degree?</label>
-                            <input type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
-                            <input type="radio" v-model="otherInfo.other_34a" value="No" /> No
+                            <label style="margin-left: 1%;">a. within the third degree?</label>
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34a" value="No" /> No
                         </div>
                         <div class="form-group">
-                            <label>b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
-                            <input type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_34b" value="No" /> No
-                        </div>
-                    </div>
-                    <span class="broken-line"></span>
-                    <div>
-                        <h2>a. Have you ever been found guilty of any administrative offense?</h2>
-                        <div class="form-group">
-                            <input type="radio" v-model="otherInfo.other_35a" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_35a" value="No" /> No
-                        </div>
-                        <h2>b. Have you been criminally charged before any court?</h2>
-                        <div class="form-group">
-                            <input type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
-                            <input type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" />
-                            <input type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" />
-                            <input type="radio" v-model="otherInfo.other_35b" value="No" /> No
+                            <label style="margin-left: 1%;">b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_34b" value="No" /> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <h2>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</h2>
+                        <h2 style="margin-bottom: 1%;"><b>Have you ever been found guilty of any administrative offense?</b></h2>
                         <div class="form-group">
-                            <input type="radio" v-model="otherInfo.other_36" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_36" value="No" /> No
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_35a" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_35a" value="No" /> No
                         </div>
-                        <h2>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</h2>
+                        <h2 style=" margin-bottom: 1%;"><b>Have you been criminally charged before any court?</b></h2>
                         <div class="form-group">
-                            <input type="radio" v-model="otherInfo.other_37" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_37" value="No" /> No
-                        </div>
-                    </div>
-                    <span class="broken-line"></span>
-                    <div>
-                        <h2>a. Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</h2>
-                        <div class="form-group">
-                            <input type="radio" v-model="otherInfo.other_38a" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_38a" value="No" /> No
-                        </div>
-                        <h2>b. Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</h2>
-                        <div class="form-group">
-                            <input type="radio" v-model="otherInfo.other_38b" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_38b" value="No" /> No
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" />
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_35b" value="No" /> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <h2>Have you acquired the status of an immigrant or permanent resident of another country?</h2>
+                        <h2 style="margin-bottom: 1%;"><b>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</b></h2>
                         <div class="form-group">
-                            <input type="radio" v-model="otherInfo.other_39" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_39" value="No" /> No
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_36" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_36" value="No" /> No
+                        </div>
+                        <h2 style="margin-bottom: 1%;"><b>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</b></h2>
+                        <div class="form-group">
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_37" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_37" value="No" /> No
+                        </div>
+                    </div>
+                    <span class="broken-line"></span>
+                    <div>
+                        <h2 style=" margin-bottom: 1%;"><b>Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</b></h2>
+                        <div class="form-group">
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_38a" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_38a" value="No" /> No
+                        </div>
+                        <h2 style="margin-bottom: 1%;"><b>Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</b></h2>
+                        <div class="form-group">
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_38b" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_38b" value="No" /> No
+                        </div>
+                    </div>
+                    <span class="broken-line"></span>
+                    <div>
+                        <h2 style="margin-bottom: 1%;"><b>Have you acquired the status of an immigrant or permanent resident of another country?</b></h2>
+                        <div class="form-group">
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_39" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_39" value="No" /> No
                         </div>
                         <span class="broken-line"></span>
-                        <h2>Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</h2>
+                        <h2 style="margin-bottom: 1%;"><b>Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</b></h2>
                         <div class="form-group">
-                            <label>a. Are you a member of any indigenous group?</label>
-                            <input type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_40a" value="No" /> No
+                            <label style="margin-left: 1%; margin-bottom: 1%;">a. Are you a member of any indigenous group?</label>
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40a" value="No" /> No
                         </div>
                         <div class="form-group">
-                            <label>b. Are you a person with disability?</label>
-                            <input type="radio" v-model="otherInfo.other_40b" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_40b" value="No" /> No
+                            <label style="margin-left: 1%; margin-bottom: 1%;">b. Are you a person with disability?</label>
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40b" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40b" value="No" /> No
                         </div>
                         <div class="form-group">
-                            <label>c. Are you a solo parent?</label>
-                            <input type="radio" v-model="otherInfo.other_40c" value="Yes" /> Yes
-                            <input type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" />
-                            <input type="radio" v-model="otherInfo.other_40c" value="No" /> No
+                            <label style="margin-left: 1%; margin-bottom: 1%;">c. Are you a solo parent?</label>
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40c" value="Yes" /> Yes
+                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40c" value="No" /> No
                         </div>
-
                                 <div class="flex justify-end gap-4 mt-6">
-                                    <Button label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                                    <Button label="SAVE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
                                 </div>
                             </div>
                         </div>
@@ -590,108 +589,108 @@ export default {
             };
         },
 
-    toggleProfileEditing() {
-        console.log('Toggling profile editing:', this.isEditingProfile);
-        console.log('Selected row:', this.selectedRow);
-        this.isEditingProfile = !this.isEditingProfile;
-    },
+        toggleProfileEditing() {
+            console.log('Toggling profile editing:', this.isEditingProfile);
+            console.log('Selected row:', this.selectedRow);
+            this.isEditingProfile = !this.isEditingProfile;
+        },
 
-    onRowSelect(event) {
-    console.log('Row selected:', event.data);
-    this.selectedRow = event.data;
-    this.openEditDialog(this.selectedRow); // Directly call the edit dialog
-    },
-
-
-    cancelProfileEditing() {
-        this.isEditingProfile = false;
-        this.selectedRow = null;
-    },
-
-    openEditDialog(row) {
-        if (row) {
-            console.log('Opening Edit Dialog for row:', row);
-            this.editFields = { ...row }; // Deep copy of the selected row
-            this.currentTabLabel = this.getCurrentTabLabel();
-            this.showEditDialog = true;
-        } else {
-            console.log('No row selected.');
-        }
-    },
+        onRowSelect(event) {
+        console.log('Row selected:', event.data);
+        this.selectedRow = event.data;
+        this.openEditDialog(this.selectedRow); // Directly call the edit dialog
+        },
 
 
-    hideEditDialog() {
-        console.log('Hiding Edit Dialog');
-        this.showEditDialog = false;
-        this.selectedRow = null;  // Optionally clear the selectedRow if you want to reset the selection
-    },
-
-    saveEdit() {
-    let url = '';
-    let dataArray = null;
-    let countField = '';
-
-    switch (this.activeTab) {
-        case 0:
-            url = '/emp_eligibility/UpdateCSEligibilityData';
-            dataArray = this.cseligibilityData;
-            countField = 'eli_count';
-            break;
-        case 1:
-            url = '/emp_voluntary/UpdateVoluntaryWorkData';
-            dataArray = this.voluntaryworkData;
-            countField = 'vol_count';
-            break;
-        case 2:
-            url = '/emp_learning/UpdateLearnDevData';
-            dataArray = this.learndevData;
-            countField = 'learn_count';
-            break;
-        case 3:
-            url = '/emp_recog/UpdateRecogDistData';
-            dataArray = this.recogdistData;
-            countField = 'recog_count';
-            break;
-        default:
-            console.error('Unknown tab selected');
-            return;
-    }
-
-    // Store the necessary information for updating
-    this.updateUrl = url;
-    this.updateDataArray = dataArray;
-    this.updateCountField = countField;
-
-    // Show the confirmation dialog
-    this.showUpdateDialog = true;
-},
-
-// Function to proceed with the update after confirmation
-saveUpdate() {
-    axios.post(this.updateUrl, this.editFields)
-        .then(() => {
-            const index = this.updateDataArray.findIndex(item =>
-                item.empid === this.editFields.empid &&
-                item[this.updateCountField] === this.editFields[this.updateCountField]
-            );
-
-            if (index !== -1) {
-                this.updateDataArray[index] = { ...this.editFields };
-            } else {
-                console.error('Item not found');
-            }
-
-            this.showSuccessDialog = true;
-            this.hideEditDialog();
+        cancelProfileEditing() {
             this.isEditingProfile = false;
-        })
-        .catch(error => {
-            console.error('Error updating data:', error);
-        });
+            this.selectedRow = null;
+        },
 
-    // Hide the confirmation dialog
-    this.hideUpdateDialog();
-},
+        openEditDialog(row) {
+            if (row) {
+                console.log('Opening Edit Dialog for row:', row);
+                this.editFields = { ...row }; // Deep copy of the selected row
+                this.currentTabLabel = this.getCurrentTabLabel();
+                this.showEditDialog = true;
+            } else {
+                console.log('No row selected.');
+            }
+        },
+
+
+        hideEditDialog() {
+            console.log('Hiding Edit Dialog');
+            this.showEditDialog = false;
+            this.selectedRow = null;  // Optionally clear the selectedRow if you want to reset the selection
+        },
+
+        saveEdit() {
+        let url = '';
+        let dataArray = null;
+        let countField = '';
+
+        switch (this.activeTab) {
+            case 0:
+                url = '/emp_eligibility/UpdateCSEligibilityData';
+                dataArray = this.cseligibilityData;
+                countField = 'eli_count';
+                break;
+            case 1:
+                url = '/emp_voluntary/UpdateVoluntaryWorkData';
+                dataArray = this.voluntaryworkData;
+                countField = 'vol_count';
+                break;
+            case 2:
+                url = '/emp_learning/UpdateLearnDevData';
+                dataArray = this.learndevData;
+                countField = 'learn_count';
+                break;
+            case 3:
+                url = '/emp_recog/UpdateRecogDistData';
+                dataArray = this.recogdistData;
+                countField = 'recog_count';
+                break;
+            default:
+                console.error('Unknown tab selected');
+                return;
+        }
+
+        // Store the necessary information for updating
+        this.updateUrl = url;
+        this.updateDataArray = dataArray;
+        this.updateCountField = countField;
+
+        // Show the confirmation dialog
+        this.showUpdateDialog = true;
+    },
+
+    // Function to proceed with the update after confirmation
+    saveUpdate() {
+        axios.post(this.updateUrl, this.editFields)
+            .then(() => {
+                const index = this.updateDataArray.findIndex(item =>
+                    item.empid === this.editFields.empid &&
+                    item[this.updateCountField] === this.editFields[this.updateCountField]
+                );
+
+                if (index !== -1) {
+                    this.updateDataArray[index] = { ...this.editFields };
+                } else {
+                    console.error('Item not found');
+                }
+
+                this.showSuccessDialog = true;
+                this.hideEditDialog();
+                this.isEditingProfile = false;
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
+
+        // Hide the confirmation dialog
+        this.hideUpdateDialog();
+    },
 
     isDate(value) {
         const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -847,18 +846,6 @@ saveUpdate() {
     },
     hideSuccessDialog() {
         this.showSuccessDialog = false; // Hide the success dialog
-    },
-
-    nextPage() {
-        if (this.currentPage < this.totalPages) {
-            this.currentPage++;
-        }
-    },
-
-    previousPage() {
-        if (this.currentPage > 1) {
-            this.currentPage--;
-        }
     },
 
     },
