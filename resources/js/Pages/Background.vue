@@ -106,7 +106,6 @@
                         <DataTable v-model:selection="selectedRow" :value="childData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                         <Column field="full_name" header="Name of Child"></Column>
-                        <Column field="age" header="Age"></Column>
                         <Column field="child_dob" header="Date of Birth"></Column>
                     </DataTable>
                     <div class="flex justify-end gap-4 mt-6">
@@ -208,28 +207,70 @@
         </div>
 
         <!-- Edit Modal -->
-        <div v-if="showEditDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-            <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
+        <div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
                 <div class="p-4">
                     <div class="text-center">
-                        <h2 class="text-xl font-semibold mb-4">Edit {{ currentTabLabel }}</h2>
+                        <h2 class="mb-4 text-xl font-semibold">Edit {{ currentTabLabel }}</h2>
                     </div>
                     <div class="grid grid-cols-1 gap-4">
-                        <!-- Fields will be dynamically rendered here based on the selected row -->
+                        <!-- Render fields -->
                         <div v-for="(value, key) in filteredEditFields" :key="key">
                             <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
+
+                            <!-- Child Date of Birth (with validation) -->
+                            <template v-if="key === 'child_dob'">
+                                <input
+                                    class="input-field"
+                                    :type="getInputType(key, value)"
+                                    v-model="editFields[key]"
+                                    :max="maxDate"
+                                    :class="{'border-red-500': !isChildDobValid}"
+                                    @input="validateChildDob"
+                                />
+                                <!-- Error message for Child DOB -->
+                                <p v-if="!isChildDobValid" class="mt-1 text-xs text-red-500">
+                                    Date of birth must be at least 1 month ago and cannot be in the future.
+                                </p>
+                            </template>
+
+                            <!-- Work Experience Date Fields (with validation) -->
+                            <template v-else-if="key === 'workfr' || key === 'workto'">
+                                <input
+                                    class="input-field"
+                                    type="date"
+                                    v-model="editFields[key]"
+                                    :max="maxDate"
+                                />
+                            </template>
+
+                            <!-- Other input fields for Work Experience (text inputs) -->
+                            <template v-else-if="key === 'work_pos' || key === 'work_dept' || key === 'work_salary' || key === 'work_salarygrade' || key === 'work_stat' || key === 'work_gov'">
+                                <input
+                                    class="input-field"
+                                    :type="getInputType(key, value)"
+                                    v-model="editFields[key]"
+                                />
+                            </template>
+
+                            <!-- Other input fields -->
                             <input
+                                v-else
                                 class="input-field"
                                 :type="getInputType(key, value)"
                                 v-model="editFields[key]"
                             />
                         </div>
                     </div>
+
                     <div class="flex justify-center gap-4 mt-4">
-                        <button @click="hideEditDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                        <button @click="hideEditDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">
                             Cancel
                         </button>
-                        <button @click="saveEdit" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                        <button
+                            @click="saveEdit"
+                            class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+                        >
                             Save
                         </button>
                     </div>
@@ -306,7 +347,12 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">Child Birth Date</label>
-                            <input class="input-field" type="date" v-model="newChild.child_dob" />
+                            <input
+                                class="input-field"
+                                type="date"
+                                v-model="newChild.child_dob"
+                                :max="maxDate"
+                            />
                         </div>
                     </div>
                     <div class="flex justify-center gap-4 mt-4">
@@ -405,11 +451,11 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM)</label>
-                            <input class="input-field" type="date" v-model="newWorkExperience.workfr" />
+                            <input class="input-field" type="date" v-model="newWorkExperience.workfr" :max="maxDate" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (TO)</label>
-                            <input class="input-field" type="date" v-model="newWorkExperience.workto" />
+                            <input class="input-field" type="date" v-model="newWorkExperience.workto" :max="maxDate"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">POSITION</label>
@@ -652,7 +698,14 @@ export default {
                     !key.endsWith('_count') && !key.startsWith('full') && !key.startsWith('age')
                 )
             );
-        }
+        },
+        maxDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = (today.getMonth() + 1).toString().padStart(2, '0');
+            const day = today.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        },
     },
 
 

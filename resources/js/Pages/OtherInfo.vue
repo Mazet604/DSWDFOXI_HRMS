@@ -132,7 +132,7 @@
                                         <div class="form-group">
                                             <input type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
                                             <input type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
-                                            <input type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" />
+                                            <input type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" :max="maxDate" />
                                             <input type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" />
                                             <input type="radio" v-model="otherInfo.other_35b" value="No" /> No
                                         </div>
@@ -207,28 +207,31 @@
                     </div>
 
                     <!-- Edit Modal -->
-                    <div v-if="showEditDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                        <div class="bg-white rounded-lg overflow-hidden transform transition-all max-w-lg w-full">
+                    <div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                        <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
                             <div class="p-4">
                                 <div class="text-center">
-                                    <h2 class="text-xl font-semibold mb-4">Edit {{ currentTabLabel }}</h2>
+                                    <h2 class="mb-4 text-xl font-semibold">Edit {{ currentTabLabel }}</h2>
                                 </div>
                                 <div class="grid grid-cols-1 gap-4">
                                     <!-- Fields will be dynamically rendered here based on the selected row -->
                                     <div v-for="(value, key) in filteredEditFields" :key="key">
                                         <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
+
+                                        <!-- For Date Fields, add :max="maxDate" to restrict future dates -->
                                         <input
                                             class="input-field"
                                             :type="getInputType(key, value)"
                                             v-model="editFields[key]"
+                                            :max="getInputType(key, value) === 'date' ? maxDate : null"
                                         />
                                     </div>
                                 </div>
                                 <div class="flex justify-center gap-4 mt-4">
-                                    <button @click="hideEditDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                    <button @click="hideEditDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">
                                         Cancel
                                     </button>
-                                    <button @click="saveEdit" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                    <button @click="saveEdit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
                                         Save
                                     </button>
                                 </div>
@@ -254,7 +257,7 @@
                                         </div>
                                         <div>
                                             <label class="label-field">DATE OF EXAMINATION/CONFERMENT</label>
-                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_doe" />
+                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_doe" :max="maxDate"/>
                                         </div>
                                         <div>
                                             <label class="label-field">PLACE OF EXAMINATION/CONFERMENT</label>
@@ -266,7 +269,7 @@
                                         </div>
                                         <div>
                                             <label class="label-field">VALIDITY</label>
-                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_licen_valid" />
+                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_licen_valid" :max="maxDate"/>
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
@@ -299,11 +302,11 @@
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
-                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_fr" />
+                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_fr" :max="maxDate"/>
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_to" />
+                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_to"/>
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
@@ -340,11 +343,11 @@
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
-                                            <input class="input-field" type="date" v-model="newLearndev.learn_fr" />
+                                            <input class="input-field" type="date" v-model="newLearndev.learn_fr" :max="maxDate"/>
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="date" v-model="newLearndev.learn_to" />
+                                            <input class="input-field" type="date" v-model="newLearndev.learn_to"/>
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
@@ -545,7 +548,14 @@ export default {
                     !key.endsWith('_count') && !key.startsWith('Emp') && !key.endsWith('at')
                 )
             );
-        }
+        },
+        maxDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = (today.getMonth() + 1).toString().padStart(2, '0');
+            const day = today.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        },
     },
 
 
@@ -819,7 +829,7 @@ saveUpdate() {
         if (this.currentPage > 1) {
             this.currentPage--;
         }
-    }
+    },
 
     },
 

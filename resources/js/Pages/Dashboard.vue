@@ -59,9 +59,10 @@
                     <input type="text" class="input-field text-color" v-model="fields.citizenship" disabled>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY <span style="color: gray;">(DD-MM-YYYY)</span> <span style="color: red;">*</span></label>
-                    <input type="date" class="text-center input-field" v-model="fields.birthday" :disabled="!isEditing" />
-                </div>
+                      <label class="block mb-2 text-sm font-bold text-gray-700">BIRTHDAY <span style="color: red;">*</span></label>
+                      <input type="date" class="text-center input-field"v-model="fields.birthday":disabled="!isEditing":max="maxDate":class="{'border-red-500': hasBirthdayError}"/>
+                      <p v-if="hasBirthdayError" class="mt-1 text-xs text-red-500">{{ birthdayErrorMessage }}</p>
+                  </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
                     <input type="text" class="input-field text-color" v-model="fields.placeOfBirth" disabled />
@@ -83,9 +84,16 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
-                    <input type="text" class="input-field text-color" :value="calculatedAge" disabled />
-                </div>
+                      <label class="block mb-2 text-sm font-bold text-gray-700">AGE</label>
+                      <input
+                          type="text"
+                          class="input-field text-color"
+                          :value="calculatedAge"
+                          disabled
+                          :class="{'border-red-500': hasBirthdayError}"
+                      />
+                      <p v-if="hasBirthdayError" class="mt-1 text-xs text-red-500">Invalid age. Please check the birthday.</p>
+                  </div>
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-700">BLOOD TYPE</label>
                     <select class="input-field" v-model="fields.bloodType" :disabled="!isEditing">
@@ -399,15 +407,39 @@ export default {
   },
 
   computed: {
+    maxDate() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = (today.getMonth() + 1).toString().padStart(2, '0');
+      const day = today.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
     calculatedAge() {
       if (!this.fields.birthday) return '';
       const today = new Date();
       const birthDate = new Date(this.fields.birthday);
+
+      // Check if birthday is in the future
+      if (birthDate > today) {
+        this.hasBirthdayError = true;
+        this.birthdayErrorMessage = 'Birthday cannot be in the future.';
+        return 'Invalid Date';
+      }
+
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDiff = today.getMonth() - birthDate.getMonth();
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
+
+      if (age < 18) {
+        this.hasBirthdayError = true;
+        this.birthdayErrorMessage = 'Age must be at least 18 years old.';
+        return 'Invalid Age';
+      }
+
+      this.hasBirthdayError = false;
+      this.birthdayErrorMessage = '';
       return age;
     },
   },
