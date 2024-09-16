@@ -11,30 +11,6 @@
                 <div class="text-center">
                     <img src="/images/dswd-logo.png" alt="DSWD Logo" class="mx-auto mb-4 h-22" />
                 </div>
-                <div class="mb-4 search-bar relative">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        v-model="searchQuery"
-                        @input="filterSuggestions"
-                        @keydown.down="highlightNext"
-                        @keydown.up="highlightPrevious"
-                        @keydown.enter="selectSuggestion"
-                        @focus="showSuggestions = true"
-                    />
-                    <i class="fas fa-search"></i>
-                    <ul v-if="showSuggestions && filteredSuggestions.length" class="suggestions-dropdown">
-                        <li
-                            v-for="(suggestion, index) in filteredSuggestions"
-                            :key="index"
-                            :class="{ 'highlighted': index === highlightedIndex }"
-                            @click="search(suggestion)"
-                            @mouseover="highlightedIndex = index"
-                        >
-                            {{ suggestion }}
-                        </li>
-                    </ul>
-                </div>
                 <nav class="flex-1">
                         <div class="custom-accordion">
                             <div class="custom-accordion-header" @click="toggleAccordion">
@@ -180,7 +156,6 @@ const showModal = ref(false);
 const showResultModal = ref(false);
 const downloadStatus = ref('');
 const showPdsDialog = ref(false);
-const searchQuery = ref('');
 const activeTab = ref(0);
 const activeSubTab = ref(0);
 const activeMenuItem = ref(''); // Initialize with empty
@@ -207,18 +182,6 @@ const filteredSuggestions = ref([]);
 const showSuggestions = ref(false);
 const highlightedIndex = ref(-1);
 
-const filterSuggestions = () => {
-    const query = searchQuery.value.toLowerCase();
-    if (query) {
-        filteredSuggestions.value = suggestions.filter(suggestion =>
-            suggestion.toLowerCase().includes(query)
-        );
-    } else {
-        filteredSuggestions.value = [];
-    }
-    highlightedIndex.value = -1;
-};
-
 const highlightNext = () => {
     if (highlightedIndex.value < filteredSuggestions.value.length - 1) {
         highlightedIndex.value += 1;
@@ -228,14 +191,6 @@ const highlightNext = () => {
 const highlightPrevious = () => {
     if (highlightedIndex.value > 0) {
         highlightedIndex.value -= 1;
-    }
-};
-
-const selectSuggestion = () => {
-    if (highlightedIndex.value >= 0) {
-        search(filteredSuggestions.value[highlightedIndex.value]);
-    } else {
-        search(searchQuery.value);
     }
 };
 
@@ -271,45 +226,6 @@ const logout = () => {
 };
 
 const closeDropdown = () => {
-    showSuggestions.value = false;
-};
-
-const search = (query) => {
-    searchQuery.value = query;
-    const searchLower = query.toLowerCase();
-    if (searchLower.includes('personal info')) {
-        navigateTo('dashboard', 0, 0);
-    } else if (searchLower.includes('address')) {
-        navigateTo('dashboard', 0, 1);
-    } else if (searchLower.includes('security')) {
-        navigateTo('dashboard', 0, 2);
-    } else if (searchLower.includes('family')) {
-        navigateTo('background', 1, 0);
-    } else if (searchLower.includes('education')) {
-        navigateTo('background', 1, 1);
-    } else if (searchLower.includes('organization')) {
-        navigateTo('background', 1, 2);
-    } else if (searchLower.includes('work experience')) {
-        navigateTo('background', 1, 3);
-    } else if (searchLower.includes('skills')) {
-        navigateTo('background', 1, 4);
-    } else if (searchLower.includes('references')) {
-        navigateTo('background', 1, 5);
-    } else if (searchLower.includes('eligibility')) {
-        navigateTo('otherinfo', 2, 0);
-    } else if (searchLower.includes('voluntary')) {
-        navigateTo('otherinfo', 2, 1);
-    } else if (searchLower.includes('learning')) {
-        navigateTo('otherinfo', 2, 2);
-    } else if (searchLower.includes('recognition')) {
-        navigateTo('otherinfo', 2, 3);
-    } else if (searchLower.includes('government')) {
-        navigateTo('otherinfo', 2, 4);
-    } else if (searchLower.includes('other')) {
-        navigateTo('otherinfo', 2, 5);
-    } else {
-        alert('No matching tab found.');
-    }
     showSuggestions.value = false;
 };
 
@@ -431,32 +347,6 @@ watch(activeTab, (newValue) => {
     list-style-type: none;  /* removes the bullet points */
 }
 
-/* Additional CSS for the search bar */
-.search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-.search-bar input {
-    flex: 1;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 4px;
-    outline: none;
-    background: transparent;
-    color: white;
-}
-.search-bar input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
-.search-bar i {
-    margin-left: 0.5rem;
-    color: white;
-}
 .suggestions-dropdown {
     position: absolute;
     top: 100%;
