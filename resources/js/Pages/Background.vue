@@ -256,28 +256,30 @@
                         <div v-for="(value, key) in filteredEditFields" :key="key">
                             <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
 
-                    <!-- Child Date of Birth (with validation) -->
-                    <template v-if="key === 'child_dob'">
-                        <input
-                            class="input-field"
-                            :type="getInputType(key, value)"
-                            v-model="editFields[key]"
-                            :max="maxDate"
-                            :class="{'border-red-500': !isChildDobValid}"
-                            @input="validateChildDob"
-                        />
-                    </template>
+                            <template v-if="key === 'child_xname'">
+                                <select
+                                    class="input-field"
+                                    v-model="editFields[key]"
+                                >
+                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                        {{ suffix.label }}
+                                    </option>
+                                </select>
+                            </template>
 
-                    <template v-if="key === 'child_xname'">
-                        <select class="input-field" v-model="newChild.child_xname">
-                            <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
-                                {{ suffix.label }}
-                            </option>
-                        </select>
-                    </template>
+                            <template v-else-if="key === 'ref_xname'">
+                                <select
+                                    class="input-field"
+                                    v-model="editFields[key]"
+                                >
+                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                        {{ suffix.label }}
+                                    </option>
+                                </select>
+                            </template>
 
                             <!-- Work Experience Date Fields (with validation) -->
-                            <template v-else-if="key === 'workfr' || key === 'workto'">
+                            <template v-else-if="key === 'workfr' || key === 'workto' || key === 'child_dob'">
                                 <input
                                     class="input-field"
                                     type="date"
@@ -671,7 +673,6 @@ export default {
                 ref_xname: 'SUFFIX',
                 ref_add: 'ADDRESS',
                 ref_cnum: 'CONTACT NUMBER',
-                // Add other fields as needed
             },
             fullName: '',
             empPosition: '',
