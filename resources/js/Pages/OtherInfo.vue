@@ -211,7 +211,6 @@
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="No" /> No
                         </div>
                         <span class="broken-line"></span>
-                        <p style="margin-bottom: 1%;"><b>Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</b></p>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">a. Are you a member of any indigenous group?</label>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
@@ -248,7 +247,7 @@
                                 <div class="grid grid-cols-1 gap-4">
                                     <!-- Fields will be dynamically rendered here based on the selected row -->
                                     <div v-for="(value, key) in filteredEditFields" :key="key">
-                                        <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
+                                        <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
 
                                         <!-- Alphabet-only validation for names  -->
                                         <template v-if="key === 'eli_service' || key === 'eli_poe' || key === 'vol_name' || key === 'vol_pos' || key === 'learn_title' || key === 'learn_type' || key === 'learn_con'
@@ -520,12 +519,28 @@ export default {
 
     data() {
         return {
-            governmentIdFields: {
+        governmentIdFields: {
             sssId: '',
             pagIbigId: '',
             tinId: '',
             gsisId: '',
             philHealthId: ''
+        },
+        formatFieldLabel: {
+            child_fname: 'Child First Name',
+            child_mname: 'Child Middle Name',
+            child_lname: 'Child Last Name',
+            child_xname: 'Child Suffix',
+            child_dob: 'Child Birth Date',
+            workfr: 'Work From',
+            workto: 'Work To',
+            work_pos: 'Work Position',
+            work_dept: 'Work Department',
+            work_salary: 'Work Salary',
+            work_salarygrade: 'Work Salary Grade',
+            work_stat: 'Work Status',
+            work_gov: 'Government Work',
+            // Add other fields as needed
         },
         otherInfo: {
             degree: '',
