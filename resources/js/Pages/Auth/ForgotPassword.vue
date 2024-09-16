@@ -42,7 +42,7 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/background-image.png');">
+    <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/backgrounddswd.png');">
         <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg bg-opacity-90">
             <Head title="Forgot Password" />
             <div class="mb-2 text-3xl font-bold text-center text-black">
@@ -59,11 +59,14 @@ const submit = () => {
                 {{ status }}
             </div>
             <form @submit.prevent="submit">
+            <div class="mb-2 text-sm font-semibold text-gray-700">
+                Email
+            </div>
             <div class="mb-4 relative">
                 <TextInput
                     id="empmail"
                     type="email"
-                    class="block w-full p-3 pr-12 text-lg border-gray-300 rounded-md"
+                    class="block w-full p-3 pr-12 text-sm border-gray-300 rounded-md"
                     v-model="form.empmail"
                     required
                     autofocus
@@ -73,7 +76,7 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.empmail" />
             </div>
                 <div class="flex items-center justify-center mt-4">
-                    <PrimaryButton :class="{ 'opacity-25': form.processing || isLoading }" :disabled="form.processing || isLoading" class="mt-4 py-4 px-8 font-semibold text-white rounded-md bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600">
+                    <PrimaryButton :class="{ 'opacity-25': form.processing || isLoading }" :disabled="form.processing || isLoading" class="mt-4 py-2 px-12 font-semibold text-white rounded-md bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700">
                         <span v-if="!isLoading">SEND OTP</span>
                         <span v-else>Sending...</span>
                     </PrimaryButton>
