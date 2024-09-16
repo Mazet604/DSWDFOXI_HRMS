@@ -150,7 +150,7 @@
                         <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
                         <Column field="educ_school" header="NAME OF SCHOOL"></Column>
                         <Column field="educ_degree" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
-                        <Column field="educ_from" header="INCLUSIVE DATES (FROM - TO)"></Column>
+                        <Column field="educ_from" header="DATE ENROLLED"></Column>
                         <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED"></Column>
                         <Column field="educ_year_grad" header="YEAR GRADUATED"></Column>
                         <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
@@ -187,8 +187,8 @@
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">WORK EXPERIENCE</h2>
                     <DataTable v-model:selection="selectedRow" :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="workfr" header="INCLUSIVE DATES (FROM)"></Column>
-                        <Column field="workto" header="INCLUSIVE DATES (TO)"></Column>
+                        <Column field="workfr" header="WORK FROM"></Column>
+                        <Column field="workto" header="WORK TO"></Column>
                         <Column field="work_pos" header="POSITION"></Column>
                         <Column field="work_dept" header="DEPARTMENT|AGENCY|OFFICE|COMPANY"></Column>
                         <Column field="work_salary" header="MONTHLY SALARY"></Column>
@@ -360,19 +360,19 @@
                     </div>
                     <div class="grid grid-cols-1 gap-4">
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">Child First Name</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">CHILD FIRST NAME</label>
                             <input class="input-field" type="text" v-model="newChild.child_fname" />
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Middle Name</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">CHILD MIDDLE NAME</label>
                             <input class="input-field" type="text" v-model="newChild.child_mname" />
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Last Name</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">CHILD LAST NAME</label>
                             <input class="input-field" type="text" v-model="newChild.child_lname" />
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Suffix</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">CHILD SUFFIX</label>
                             <select class="input-field" v-model="newChild.child_xname">
                                 <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
                                     {{ suffix.label }}
@@ -380,7 +380,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">Child Birth Date</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">CHILD BIRTH DATE</label>
                             <input
                                 class="input-field"
                                 type="date"
@@ -422,7 +422,7 @@
                             <input class="input-field" type="text" v-model="newEducation.educ_degree" />
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM)</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">DATE ENROLLED</label>
                             <input class="input-field" type="date" v-model="newEducation.educ_from" />
                         </div>
                         <div>
@@ -484,11 +484,11 @@
                     </div>
                     <div class="grid grid-cols-1 gap-4">
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM)</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">WORK FROM</label>
                             <input class="input-field" type="date" v-model="newWorkExperience.workfr" :max="maxDate" />
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (TO)</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">WORK TO</label>
                             <input class="input-field" type="date" v-model="newWorkExperience.workto" :max="maxDate"/>
                         </div>
                         <div>
@@ -639,19 +639,34 @@ export default {
     data() {
         return {
             formatFieldLabel: {
-                child_fname: 'Child First Name',
-                child_mname: 'Child Middle Name',
-                child_lname: 'Child Last Name',
-                child_xname: 'Child Suffix',
-                child_dob: 'Child Birth Date',
-                workfr: 'Work From',
-                workto: 'Work To',
-                work_pos: 'Work Position',
-                work_dept: 'Work Department',
-                work_salary: 'Work Salary',
-                work_salarygrade: 'Work Salary Grade',
-                work_stat: 'Work Status',
-                work_gov: 'Government Work',
+                child_fname: 'FIRST NAME',
+                child_mname: 'MIDDLE NAME',
+                child_lname: 'LAST NAME',
+                child_xname: 'SUFFIX',
+                child_dob: 'BIRTH DATE',
+                educ_level: 'LEVEL OF EDUCATION',
+                educ_school: 'NAME OF SCHOOL',
+                educ_degree: 'BASIC EDUCATION|DEGREE|COURSE',
+                educ_from: 'DATE ENROLLED',
+                educ_hl_earned: 'HIGHEST LEVEL EARNED',
+                educ_year_grad: 'YEAR GRADUATED',
+                educ_academic_honor: 'SCHOLARSHIPS & ACADEMIC EXCELLENCE',
+                org_name: 'ORGANIZATION NAME',
+                workfr: 'WORK FROM',
+                workto: 'WORK TO',
+                work_pos: 'WORK POSITION',
+                work_dept: 'WORK DEPARTMENT',
+                work_salary: 'WORK SALARY',
+                work_salarygrade: 'WORK SALARY GRADE',
+                work_stat: 'WORK STATUS',
+                work_gov: 'GOVERNMENT WORK',
+                skill: 'SKILL',
+                ref_fname: 'FIRST NAME',
+                ref_mname: 'MIDDLE NAME',
+                ref_lname: 'LAST NAME',
+                ref_xname: 'SUFFIX',
+                ref_add: 'ADDRESS',
+                ref_cnum: 'CONTACT NUMBER',
                 // Add other fields as needed
             },
             fullName: '',
