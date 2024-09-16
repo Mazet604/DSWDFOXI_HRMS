@@ -43,12 +43,12 @@ class BackgroundController extends Controller
             $educationData = Education::where('empid', $user->empid)
                 ->select(
                     'educ_count',
-                    'educ_level', 
-                    'educ_school', 
-                    'educ_degree', 
-                    'educ_from', 
-                    'educ_year_grad', 
-                    'educ_academic_honor', 
+                    'educ_level',
+                    'educ_school',
+                    'educ_degree',
+                    'educ_from',
+                    'educ_year_grad',
+                    'educ_academic_honor',
                     'educ_hl_earned')
                 ->get();
 
@@ -61,7 +61,7 @@ class BackgroundController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    
+
     public function getOrganizationData()
     {
         try {
@@ -116,7 +116,7 @@ class BackgroundController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    
+
     public function getSkillsData()
     {
         try {
@@ -167,9 +167,9 @@ class BackgroundController extends Controller
 
             // Format the full name
             $formattedReferences = $referencesData->map(function($reference) {
-                $reference->full_name = trim($reference->ref_fname . ' ' . 
-                                            $reference->ref_mname . ' ' . 
-                                            $reference->ref_lname . ' ' . 
+                $reference->full_name = trim($reference->ref_fname . ' ' .
+                                            $reference->ref_mname . ' ' .
+                                            $reference->ref_lname . ' ' .
                                             $reference->ref_xname);
                 return $reference;
             });
@@ -306,7 +306,7 @@ class BackgroundController extends Controller
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-            $emp_father = emp_father::where('emp_count', $employee->emp_count)->first(); 
+            $emp_father = emp_father::where('emp_count', $employee->emp_count)->first();
             if (!$emp_father) {
                 return response()->json(['error' => 'Father not found'], 404);
             }
@@ -316,8 +316,8 @@ class BackgroundController extends Controller
             $fatherMiddleName = $emp_father->father_mname;
             $fatherExtName = $emp_father->father_xname;
             return response()->json([
-                'fatherSurname' => $fatherSurname, 
-                'fatherFirstName' => $fatherFirstName, 
+                'fatherSurname' => $fatherSurname,
+                'fatherFirstName' => $fatherFirstName,
                 'fatherMiddleName' => $fatherMiddleName,
                 'fatherExtName' => $fatherExtName
             ]);
@@ -339,7 +339,7 @@ class BackgroundController extends Controller
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-            $emp_mother = emp_mother::where('emp_count', $employee->emp_count)->first(); 
+            $emp_mother = emp_mother::where('emp_count', $employee->emp_count)->first();
             if (!$emp_mother) {
                 return response()->json(['error' => 'Mother not found'], 404);
             }
@@ -349,8 +349,8 @@ class BackgroundController extends Controller
             $motherMiddleName = $emp_mother->mother_mname;
             $motherMaidenName = $emp_mother->maidenname;
             return response()->json([
-                'motherSurname' => $motherSurname, 
-                'motherFirstName' => $motherFirstName, 
+                'motherSurname' => $motherSurname,
+                'motherFirstName' => $motherFirstName,
                 'motherMiddleName' => $motherMiddleName,
                 'motherMaidenName' => $motherMaidenName
             ]);
@@ -372,7 +372,7 @@ class BackgroundController extends Controller
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-            $emp_spouse = emp_spouse::where('emp_count', $employee->emp_count)->first(); 
+            $emp_spouse = emp_spouse::where('emp_count', $employee->emp_count)->first();
             if (!$emp_spouse) {
                 return response()->json(['error' => 'Mother not found'], 404);
             }
@@ -386,12 +386,12 @@ class BackgroundController extends Controller
             $spouseBusinessAddress = $emp_spouse->spouse_busadd;
             $spouseTelNo = $emp_spouse->spouse_tel;
             return response()->json([
-                'spouseSurname' => $spouseSurname, 
-                'spouseFirstName' => $spouseFirstName, 
+                'spouseSurname' => $spouseSurname,
+                'spouseFirstName' => $spouseFirstName,
                 'spouseMiddleName' => $spouseMiddleName,
                 'spouseExtName' => $spouseExtName,
-                'spouseOccupation' => $spouseOccupation, 
-                'spouseBusinessName' => $spouseBusinessName, 
+                'spouseOccupation' => $spouseOccupation,
+                'spouseBusinessName' => $spouseBusinessName,
                 'spouseBusinessAddress' => $spouseBusinessAddress,
                 'spouseTelNo' => $spouseTelNo
             ]);
@@ -468,7 +468,7 @@ class BackgroundController extends Controller
         }
 
         $child = new emp_child();
-        $child->emp_count = $employee->emp_count; 
+        $child->emp_count = $employee->emp_count;
         $child->child_fname = $request->input('child_fname');
         $child->child_mname = $request->input('child_mname');
         $child->child_lname = $request->input('child_lname');
@@ -509,9 +509,9 @@ public function getChildData()
         // Map and format the data to include full name, child count, and date of birth
         $formattedChild = $childData->map(function($child) {
             $child_mname_initial = $child->child_mname ? substr($child->child_mname, 0, 1) . '.' : '';
-            $fullName = trim($child->child_fname . ' ' . 
-                             $child_mname_initial . ' ' . 
-                             $child->child_lname . ' ' . 
+            $fullName = trim($child->child_fname . ' ' .
+                             $child_mname_initial . ' ' .
+                             $child->child_lname . ' ' .
                              $child->child_xname);
             $age = \Carbon\Carbon::parse($child->child_dob)->age;
 

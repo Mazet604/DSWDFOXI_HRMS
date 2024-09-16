@@ -33,19 +33,19 @@
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseSurname" :disabled="!isEditingFamily" @input="validateName('spouseSurname', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.spouseSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('spouseSurname', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseFirstName" :disabled="!isEditingFamily" @input="validateName('spouseFirstName', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.spouseFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('spouseFirstName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" @input="validateName('spouseMiddleName', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('spouseMiddleName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                            <select class="input-field" v-model="fields.spouseExtName" :disabled="!isEditingFamily">
+                            <select class="input-field" v-model="fields.spouseExtName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" >
                                 <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
                                     {{ suffix.label }}
                                 </option>
@@ -53,20 +53,20 @@
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
-                            <input class="input-field" type="text" v-model="fields.spouseOccupation" :disabled="!isEditingFamily" @input="validateName('spouseOccupation', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.spouseOccupation" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('spouseOccupation', 'fields')"/>
                         </div>
                         <!-- Employer/Business Information -->
                         <div class="col-span-2">
                             <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYER'S/BUSINESS NAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseBusinessName" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.spouseBusinessName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-2">
                             <label class="block mb-2 text-sm font-bold text-gray-700">BUSINESS ADDRESS</label>
-                            <input class="input-field" type="text" v-model="fields.spouseBusinessAddress" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.spouseBusinessAddress" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
-                            <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" @input="validateTelephoneNumber('spouseTelNo', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateTelephoneNumber('spouseTelNo', 'fields')"/>
                         </div>
                         <!-- Separator for Father's Information -->
                         <div class="col-span-5 pb-2 mb-4 text-blue-800 border-b border-yellow-200">
@@ -75,19 +75,19 @@
                         <!-- Father's Information -->
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.fatherSurname" :disabled="!isEditingFamily" @input="validateName('fatherSurname', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.fatherSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('fatherSurname', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.fatherFirstName" :disabled="!isEditingFamily" @input="validateName('fatherFirstName', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.fatherFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('fatherFirstName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" @input="validateName('fatherMiddleName', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('fatherMiddleName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                            <select class="input-field" v-model="fields.fatherExtName" :disabled="!isEditingFamily">
+                            <select class="input-field" v-model="fields.fatherExtName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }">
                                 <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
                                     {{ suffix.label }}
                                 </option>
@@ -101,19 +101,19 @@
                         <!-- Mother's Information -->
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherSurname" :disabled="!isEditingFamily" @input="validateName('motherSurname', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.motherSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('motherSurname', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherFirstName" :disabled="!isEditingFamily" @input="validateName('motherFirstName', 'fields')">
+                            <input class="input-field" type="text" v-model="fields.motherFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('motherFirstName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherMiddleName" :disabled="!isEditingFamily" @input="validateName('motherMiddleName', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.motherMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('motherMiddleName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MAIDEN NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherMaidenName" :disabled="!isEditingFamily" @input="validateName('motherMaidenName', 'fields')"/>
+                            <input class="input-field" type="text" v-model="fields.motherMaidenName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('motherMaidenName', 'fields')"/>
                         </div>
                     </div>
                     <div class="mt-6 text-right">
@@ -129,9 +129,8 @@
                         </div>
                     <DataTable v-model:selection="selectedRow" :value="childData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="full_name" header="Name of Child"></Column>
-
-                        <Column field="child_dob" header="Date of Birth"></Column>
+                        <Column field="full_name" header="FULL NAME"></Column>
+                        <Column field="child_dob" header="DATE OF BIRTH"></Column>
                     </DataTable>
                     <div class="mt-6 text-right">
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
@@ -145,7 +144,7 @@
 
                 <!-- Education Tab -->
                 <div v-if="activeTab === 1" class="p-6 bg-white border border-blue-900 rounded-lg">
-                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Education</h2>
+                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">EDUCATION</h2>
                     <DataTable v-model:selection="selectedRow" :value="educationData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                         <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
@@ -168,10 +167,10 @@
 
                 <!-- Organization Tab -->
                 <div v-if="activeTab === 2" class="p-6 bg-white border border-blue-900 rounded-lg">
-                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Organization</h2>
+                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">ORGANIZATIONS</h2>
                     <DataTable v-model:selection="selectedRow" :value="organizationData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="org_name" header="Organizations"></Column>
+                        <Column field="org_name" header=""></Column>
                     </DataTable>
                     <div class="mt-6 text-right">
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
@@ -185,7 +184,7 @@
 
                 <!-- Work Experience Tab -->
                 <div v-if="activeTab === 3" class="p-6 bg-white border border-blue-900 rounded-lg">
-                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Work Experience</h2>
+                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">WORK EXPERIENCE</h2>
                     <DataTable v-model:selection="selectedRow" :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                         <Column field="workfr" header="INCLUSIVE DATES (FROM)"></Column>
@@ -209,10 +208,10 @@
 
                 <!-- Skills Tab -->
                 <div v-if="activeTab === 4" class="p-6 bg-white border border-blue-900 rounded-lg">
-                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Skills</h2>
+                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">SKILLS</h2>
                     <DataTable v-model:selection="selectedRow" :value="skillsData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                        <Column field="skill" header="SKILLS"></Column>
+                        <Column field="skill" header=""></Column>
                     </DataTable>
                     <div class="mt-6 text-right">
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
@@ -226,7 +225,7 @@
 
                 <!-- References Tab -->
                 <div v-if="activeTab === 5" class="p-6 bg-white border border-blue-900 rounded-lg">
-                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">References</h2>
+                    <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">REFERENCES</h2>
                 <DataTable v-model:selection="selectedRow" :value="referencesData" class="mt-8" :paginator="true" :rows="5">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="full_name" header="FULL NAME"></Column>
@@ -509,7 +508,7 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (FROM)</label>
-                            <input class="input-field" type="date" v-model="newWorkExperience.workfr" :max="maxDate"/>
+                            <input class="input-field" type="date" v-model="newWorkExperience.workfr" :max="maxDate" />
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (TO)</label>
@@ -631,7 +630,7 @@
                         <h2 class="mb-4 text-xl font-semibold">Updated Successfully!</h2>
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideSuccessDialog" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
                             OK
                         </button>
@@ -766,7 +765,14 @@ export default {
                     !key.endsWith('_count') && !key.startsWith('full') && !key.startsWith('age')
                 )
             );
-        }
+        },
+        maxDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = (today.getMonth() + 1).toString().padStart(2, '0');
+            const day = today.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        },
     },
 
 
@@ -859,77 +865,77 @@ export default {
     let dataArray = null;
     let countField = '';
 
-    switch (this.activeTab) {
-        case 0:
-            url = '/emp_child/UpdateChildData';
-            dataArray = this.childData;
-            countField = 'child_count';
-            break;
-        case 1:
-            url = '/education/UpdateEducationData';
-            dataArray = this.educationData;
-            countField = 'educ_count';
-            break;
-        case 2:
-            url = '/emp_org/UpdateOrganizationData';
-            dataArray = this.organizationData;
-            countField = 'org_count';
-            break;
-        case 3:
-            url = '/emp_work/UpdateWorkExperienceData';
-            dataArray = this.workExperienceData;
-            countField = 'work_count';
-            break;
-        case 4:
-            url = '/emp_skills/UpdateSkillsData';
-            dataArray = this.skillsData;
-            countField = 'skill_count';
-            break;
-        case 5:
-            url = '/emp_reference/UpdateReferencesData';
-            dataArray = this.referencesData;
-            countField = 'ref_count';
-            break;
-        default:
-            console.error('Unknown tab selected');
-            return;
-    }
+        switch (this.activeTab) {
+            case 0:
+                url = '/emp_child/UpdateChildData';
+                dataArray = this.childData;
+                countField = 'child_count';
+                break;
+            case 1:
+                url = '/education/UpdateEducationData';
+                dataArray = this.educationData;
+                countField = 'educ_count';
+                break;
+            case 2:
+                url = '/emp_org/UpdateOrganizationData';
+                dataArray = this.organizationData;
+                countField = 'org_count';
+                break;
+            case 3:
+                url = '/emp_work/UpdateWorkExperienceData';
+                dataArray = this.workExperienceData;
+                countField = 'work_count';
+                break;
+            case 4:
+                url = '/emp_skills/UpdateSkillsData';
+                dataArray = this.skillsData;
+                countField = 'skill_count';
+                break;
+            case 5:
+                url = '/emp_reference/UpdateReferencesData';
+                dataArray = this.referencesData;
+                countField = 'ref_count';
+                break;
+            default:
+                console.error('Unknown tab selected');
+                return;
+        }
 
-    // Store the necessary information for updating
-    this.updateUrl = url;
-    this.updateDataArray = dataArray;
-    this.updateCountField = countField;
+        // Store the necessary information for updating
+        this.updateUrl = url;
+        this.updateDataArray = dataArray;
+        this.updateCountField = countField;
 
-    // Show the confirmation dialog
-    this.showUpdateDialog = true;
-},
+        // Show the confirmation dialog
+        this.showUpdateDialog = true;
+    },
 
-// Function to proceed with the update after confirmation
-saveUpdate() {
-    axios.post(this.updateUrl, this.editFields)
-        .then(() => {
-            const index = this.updateDataArray.findIndex(item =>
-                item.empid === this.editFields.empid &&
-                item[this.updateCountField] === this.editFields[this.updateCountField]
-            );
+    // Function to proceed with the update after confirmation
+    saveUpdate() {
+        axios.post(this.updateUrl, this.editFields)
+            .then(() => {
+                const index = this.updateDataArray.findIndex(item =>
+                    item.empid === this.editFields.empid &&
+                    item[this.updateCountField] === this.editFields[this.updateCountField]
+                );
 
-            if (index !== -1) {
-                this.updateDataArray[index] = { ...this.editFields };
-            } else {
-                console.error('Item not found');
-            }
+                if (index !== -1) {
+                    this.updateDataArray[index] = { ...this.editFields };
+                } else {
+                    console.error('Item not found');
+                }
 
-            this.showSuccessDialog = true;
-            this.hideEditDialog();
-            this.isEditingProfile = false;
-        })
-        .catch(error => {
-            console.error('Error updating data:', error);
-        });
+                this.showSuccessDialog = true;
+                this.hideEditDialog();
+                this.isEditingProfile = false;
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
 
-    // Hide the confirmation dialog
-    this.hideUpdateDialog();
-},
+        // Hide the confirmation dialog
+        this.hideUpdateDialog();
+    },
 
 
     isDate(value) {
@@ -1000,58 +1006,61 @@ saveUpdate() {
             this.isEditingFamily = false;
         },
 
-        async fetchFather() {
-            try {
-                const response = await axios.get('/emp_father/Father');
-                this.fields.fatherSurname = response.data.fatherSurname;
-                this.fields.fatherFirstName = response.data.fatherFirstName;
-                this.fields.fatherMiddleName = response.data.fatherMiddleName;
-                this.fields.fatherExtName = response.data.fatherExtName;
-            } catch (error) {
-                this.errorMessage = 'Failed to load father.';
-            }
+            fetchFather() {
+            axios.get('/emp_father/Father')
+                .then(response => {
+                    this.fields.fatherSurname = response.data.fatherSurname;
+                    this.fields.fatherFirstName = response.data.fatherFirstName;
+                    this.fields.fatherMiddleName = response.data.fatherMiddleName;
+                    this.fields.fatherExtName = response.data.fatherExtName;
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to load father.';
+                });
         },
 
-        async fetchMother() {
-            try {
-                const response = await axios.get('/emp_mother/Mother');
-                this.fields.motherMaidenName = response.data.motherMaidenName;
-                this.fields.motherSurname = response.data.motherSurname;
-                this.fields.motherFirstName = response.data.motherFirstName;
-                this.fields.motherMiddleName = response.data.motherMiddleName;
-            } catch (error) {
-                this.errorMessage = 'Failed to load mother.';
-            }
+        fetchMother() {
+            axios.get('/emp_mother/Mother')
+                .then(response => {
+                    this.fields.motherMaidenName = response.data.motherMaidenName;
+                    this.fields.motherSurname = response.data.motherSurname;
+                    this.fields.motherFirstName = response.data.motherFirstName;
+                    this.fields.motherMiddleName = response.data.motherMiddleName;
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to load mother.';
+                });
         },
 
-        async fetchSpouse() {
-            try {
-                const response = await axios.get('/emp_spouse/Spouse');
-                this.fields.spouseSurname = response.data.spouseSurname;
-                this.fields.spouseFirstName = response.data.spouseFirstName;
-                this.fields.spouseMiddleName = response.data.spouseMiddleName;
-                this.fields.spouseExtName = response.data.spouseExtName;
-                this.fields.spouseOccupation = response.data.spouseOccupation;
-                this.fields.spouseBusinessName = response.data.spouseBusinessName;
-                this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
-                this.fields.spouseTelNo = response.data.spouseTelNo;
-            } catch (error) {
-                this.errorMessage = 'Failed to load spouse.';
-            }
+        fetchSpouse() {
+            axios.get('/emp_spouse/Spouse')
+                .then(response => {
+                    this.fields.spouseSurname = response.data.spouseSurname;
+                    this.fields.spouseFirstName = response.data.spouseFirstName;
+                    this.fields.spouseMiddleName = response.data.spouseMiddleName;
+                    this.fields.spouseExtName = response.data.spouseExtName;
+                    this.fields.spouseOccupation = response.data.spouseOccupation;
+                    this.fields.spouseBusinessName = response.data.spouseBusinessName;
+                    this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
+                    this.fields.spouseTelNo = response.data.spouseTelNo;
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to load spouse.';
+                });
         },
 
-
-        async updateFamilyData() {
-            try {
-                await axios.patch('/EmpFamily/updateFamilyData', this.fields);
-                this.isEditing = false;
-                this.showUpdateDialog = false;
-                this.showSuccessDialog = true;
-                location.reload();
-                } catch (error) {
-                this.errorMessage = 'Failed to update Family. Please try again.';
-                this.showUpdateDialog = false;
-            }
+        updateFamilyData() {
+            axios.patch('/EmpFamily/updateFamilyData', this.fields)
+                .then(() => {
+                    this.isEditing = false;
+                    this.showUpdateDialog = false;
+                    this.showSuccessDialog = true;
+                    //location.reload();
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to update Family. Please try again.';
+                    this.showUpdateDialog = false;
+                });
         }
     },
 
@@ -1347,6 +1356,7 @@ saveUpdate() {
 
         const hideSuccessDialog = () => {
             showSuccessDialog.value = false;
+            location.reload();
         };
 
         const confirmUpdate = () => {
@@ -1456,6 +1466,11 @@ saveUpdate() {
     padding: 8px;
     border: 1px solid #e2e8f0;
     border-radius: 4px;
+}
+
+.disabled-input {
+    color: #707A88;
+    background-color: #eeeeee;
 }
 
 .grid-cols-5 {

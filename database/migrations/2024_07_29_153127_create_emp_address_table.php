@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emp_address', function (Blueprint $table) {
-            $table->unsignedInteger('emp_count');    
+            $table->unsignedInteger('emp_count');
             $table->string('emp_house',20)->nullable();
             $table->string('emp_subd',60)->nullable(); //30 for subdivisions with high character count
             $table->string('emp_brgy',60);
