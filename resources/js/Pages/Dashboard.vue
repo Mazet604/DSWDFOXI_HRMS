@@ -78,7 +78,7 @@
               </div>
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">BIRTHDAY <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="fields.birthday" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="fields.birthday" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }" :max="maxDate" />
               </div>
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">PLACE OF BIRTH</label>
@@ -179,8 +179,8 @@
 
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">ZIP CODE <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
+                <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid number-field" @input="validateNumber('zipcode', 'fields')" type="text" v-model="fields.zipcode" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">VILLAGE SUBDIVISION</label>
@@ -231,8 +231,8 @@
 
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">ZIP CODE <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
+                <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid number-field" @input="validateNumber('zipcode2', 'fields')" type="text" v-model="fields.zipcode2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">VILLAGE SUBDIVISION</label>
