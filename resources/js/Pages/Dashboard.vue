@@ -13,7 +13,7 @@
             <!-- Profile Image with Hover Effect -->
             <div class="relative object-cover w-24 h-24 rounded-full lg:w-36 lg:h-36 group">
               <!-- Profile Picture -->
-              <img :src="profilePictureUrl" alt="Profile Picture" class="object-cover w-full h-full rounded-full" />
+              <img :src="profilePictureUrl" alt="Profile Picture" class="object-cover w-full h-full rounded-full border" />
               <!-- Camera Icon Overlay -->
               <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 bg-black bg-opacity-50 rounded-full opacity-0 cursor-pointer group-hover:opacity-100" @click="triggerFileUpload">
                 <i class="text-3xl text-white fas fa-camera"></i>

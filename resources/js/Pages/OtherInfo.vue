@@ -18,7 +18,7 @@
             </div>
 
             <!-- CS Eligibility Tab -->
-            <div v-if="activeTab === 0" class="p-6 bg-white border border-blue-900 rounded-lg">
+            <div v-if="activeTab === 0" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
                 <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CS ELIGIBILITY</h2>
                 <DataTable v-model:selection="selectedRow" :value="cseligibilityData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -40,7 +40,7 @@
             </div>
 
             <!-- Voluntary Work Tab -->
-            <div v-if="activeTab === 1" class="p-6 bg-white border border-blue-900 rounded-lg">
+            <div v-if="activeTab === 1" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
                 <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">VOLUNTARY WORK</h2>
                 <DataTable v-model:selection="selectedRow" :value="voluntaryworkData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -62,7 +62,7 @@
             </div>
 
             <!-- Learning & Development Tab -->
-            <div v-if="activeTab === 2" class="p-6 bg-white border border-blue-900 rounded-lg">
+            <div v-if="activeTab === 2" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
                 <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">LEARNING & DEVELOPMENT</h2>
                 <DataTable v-model:selection="selectedRow" :value="learndevData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -84,7 +84,7 @@
             </div>
 
             <!-- Recognition and Distinctions Tab -->
-            <div v-if="activeTab === 3" class="p-6 bg-white border border-blue-900 rounded-lg">
+            <div v-if="activeTab === 3" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
                 <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">RECOGNITION AND DISTINCTIONS</h2>
                 <DataTable v-model:selection="selectedRow" :value="recogdistData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -101,7 +101,7 @@
             </div>
 
             <!-- Government ID Tab -->
-            <div v-if="activeTab === 4" class="p-6 bg-white border border-blue-900 rounded-lg">
+            <div v-if="activeTab === 4" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
                 <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">GOVERNMENT ID</h2>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="border-box">
@@ -138,7 +138,7 @@
                 </div>
             </div>
             <!-- Other Information Tab -->
-            <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
+            <div v-if="activeTab === 5" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                 <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200"></h2>
                 <div class="other-info">
                     <div class='columns'>
@@ -970,7 +970,7 @@ export default {
     // Method to proceed with the update after confirmation
     updateData() {
         this.showUpdateDialog = false; // Hide the update confirmation dialog
-        
+
         axios.put('/emp_otherinfo/other-info', this.otherInfo)
             .then(response => {
                 console.log('Update successful:', response.data);
