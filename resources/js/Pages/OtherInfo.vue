@@ -1,12 +1,12 @@
 <template>
     <AppLayout>
             <!-- Header Section -->
-                <div class="bg-white p-6 border-b border-yellow-200">
+                <div class="p-6 bg-white border-b border-yellow-200">
                 <h1 class="text-3xl font-bold text-blue-900">OTHER INFO</h1>
                 <p class="text-gray-600">Fill and check the necessary information below.</p>
                 </div>
 
-        <div class="w-full p-6 relative">
+        <div class="relative w-full p-6">
             <!-- Custom Tabs -->
             <div class="flex justify-end -mb-px">
                 <button @click="activeTab = 0" :class="tabButtonClass(0)">CS ELIGIBILITY</button>
@@ -18,8 +18,8 @@
             </div>
 
             <!-- CS Eligibility Tab -->
-            <div v-if="activeTab === 0" class="bg-white border border-blue-900 rounded-lg p-6">
-                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">CS ELIGIBILITY</h2>
+            <div v-if="activeTab === 0" class="p-6 bg-white border border-blue-900 rounded-lg">
+                <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CS ELIGIBILITY</h2>
                 <DataTable v-model:selection="selectedRow" :value="cseligibilityData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="eli_service" header="CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE"></Column>
@@ -30,16 +30,18 @@
                     <Column field="eli_licen_valid" header="VALIDITY"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
-                    <Button v-if="!isEditingProfile" label="ADD" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Voluntary Work Tab -->
-            <div v-if="activeTab === 1" class="bg-white border border-blue-900 rounded-lg p-6">
-                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">VOLUNTARY WORK</h2>
+            <div v-if="activeTab === 1" class="p-6 bg-white border border-blue-900 rounded-lg">
+                <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">VOLUNTARY WORK</h2>
                 <DataTable v-model:selection="selectedRow" :value="voluntaryworkData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="vol_name" header="NAME OF ORGANIZATION"></Column>
@@ -49,17 +51,19 @@
                     <Column field="vol_hrs" header="NUMBER OF HOURS"></Column>
                     <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
                 </DataTable>
-                <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                <div class="mt-6 text-right">
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Learning & Development Tab -->
-            <div v-if="activeTab === 2" class="bg-white border border-blue-900 rounded-lg p-6">
-                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">LEARNING & DEVELOPMENT</h2>
+            <div v-if="activeTab === 2" class="p-6 bg-white border border-blue-900 rounded-lg">
+                <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">LEARNING & DEVELOPMENT</h2>
                 <DataTable v-model:selection="selectedRow" :value="learndevData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="learn_title" header="TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)"></Column>
@@ -69,32 +73,36 @@
                     <Column field="learn_type" header="TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)"></Column>
                     <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
                 </DataTable>
-                <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                <div class="mt-6 text-right">
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Recognition and Distinctions Tab -->
-            <div v-if="activeTab === 3" class="bg-white border border-blue-900 rounded-lg p-6">
-                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">RECOGNITION AND DISTINCTIONS</h2>
+            <div v-if="activeTab === 3" class="p-6 bg-white border border-blue-900 rounded-lg">
+                <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">RECOGNITION AND DISTINCTIONS</h2>
                 <DataTable v-model:selection="selectedRow" :value="recogdistData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="recog_name" header=""></Column>
                 </DataTable>
-                <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingProfile" label="ADD" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="openAddDialog" />
-                    <Button v-if="!isEditingProfile" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleProfileEditing" />
-                    <Button v-if="isEditingProfile" label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelProfileEditing" />
-                    <Button v-if="isEditingProfile && selectedRow" label="EDIT" class="px-8 py-2 text-white bg-yellow-500 rounded-lg" @click="openEditDialog(selectedRow)" />
+                <div class="mt-6 text-right">
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingProfile" class="inline-flex space-x-4">
+                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Government ID Tab -->
-            <div v-if="activeTab === 4" class="bg-white border border-blue-900 rounded-lg p-6">
-                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">GOVERNMENT ID</h2>
+            <div v-if="activeTab === 4" class="p-6 bg-white border border-blue-900 rounded-lg">
+                <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">GOVERNMENT ID</h2>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="border-box">
                         <div>
@@ -103,33 +111,32 @@
                         </div>
                         <div>
                             <label class="label-field"><b>PAG-IBIG ID:</b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId":class="{ 'disabled-input': !isEditingGovId }"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                         <div>
                             <label class="label-field">T<b>IN ID:</b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId":class="{ 'disabled-input': !isEditingGovId }"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                     </div>
                     <div class="border-box">
                         <div>
                             <label class="label-field"><b>GSIS ID:</b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId":class="{ 'disabled-input': !isEditingGovId }"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                         <div>
                             <label class="label-field"><b>PHILHEALTH ID:</b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId":class="{ 'disabled-input': !isEditingGovId }"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-end gap-4 mt-6">
-                    <Button v-if="!isEditingGovId" label="EDIT" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="toggleFamilyEditing" />
-                    <div v-if="isEditingGovId" class="space-x-4">
-                        <Button label="CANCEL" class="px-8 py-2 text-white custom-cancel-button" @click="cancelGovIdEditing" />
-                        <Button label="SAVE" class="px-8 py-2 text-white bg-blue-500 rounded-lg" @click="updateGovIdData" />
+                <div class="mt-6 text-right">
+                    <button v-if="!isEditingGovId" @click="toggleFamilyEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <div v-if="isEditingGovId" class="inline-flex space-x-4">
+                        <button @click="cancelGovIdEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                        <button @click="updateGovIdData" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
                     </div>
                 </div>
             </div>
-
             <!-- Other Information Tab -->
             <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
                 <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200"></h2>
@@ -138,93 +145,93 @@
                         <h2 style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</b></h2>
                         <div class="form-group">
                             <label style="margin-left: 1%;">a. within the third degree?</label>
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34a" value="No" /> No
                         </div>
                         <div class="form-group">
                             <label style="margin-left: 1%;">b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_34b" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34b" value="No" /> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
                         <h2 style="margin-bottom: 1%;"><b>Have you ever been found guilty of any administrative offense?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_35a" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_35a" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="No" /> No
                         </div>
                         <h2 style=" margin-bottom: 1%;"><b>Have you been criminally charged before any court?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" />
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_35b" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" />
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35b" value="No" /> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
                         <h2 style="margin-bottom: 1%;"><b>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_36" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_36" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="No" /> No
                         </div>
                         <h2 style="margin-bottom: 1%;"><b>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_37" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_37" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_37" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_37" value="No" /> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
                         <h2 style=" margin-bottom: 1%;"><b>Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_38a" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_38a" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="No" /> No
                         </div>
                         <h2 style="margin-bottom: 1%;"><b>Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_38b" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_38b" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38b" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38b" value="No" /> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
                         <h2 style="margin-bottom: 1%;"><b>Have you acquired the status of an immigrant or permanent resident of another country?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_39" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_39" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="No" /> No
                         </div>
                         <span class="broken-line"></span>
                         <h2 style="margin-bottom: 1%;"><b>Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</b></h2>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">a. Are you a member of any indigenous group?</label>
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40a" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="No" /> No
                         </div>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">b. Are you a person with disability?</label>
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40b" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40b" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40b" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40b" value="No" /> No
                         </div>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">c. Are you a solo parent?</label>
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40c" value="Yes" /> Yes
-                            <input style="margin-left: 1%;"type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;"type="radio" v-model="otherInfo.other_40c" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40c" value="Yes" /> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40c" value="No" /> No
                         </div>
                                 <div class="flex justify-end gap-4 mt-6">
-                                    <Button label="SAVE" class="px-8 py-2 text-white bg-green-500 rounded-lg" @click="confirmUpdate" />
+                                    <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
                                 </div>
                             </div>
                         </div>
@@ -243,20 +250,53 @@
                                     <div v-for="(value, key) in filteredEditFields" :key="key">
                                         <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel(key) }}</label>
 
-                                        <!-- For Date Fields, add :max="maxDate" to restrict future dates -->
-                                        <input
-                                            class="input-field"
-                                            :type="getInputType(key, value)"
-                                            v-model="editFields[key]"
-                                            :max="getInputType(key, value) === 'date' ? maxDate : null"
-                                        />
+                                        <!-- Alphabet-only validation for names  -->
+                                        <template v-if="key === 'eli_service' || key === 'eli_poe' || key === 'vol_name' || key === 'vol_pos' || key === 'learn_title' || key === 'learn_type' || key === 'learn_con'
+                                        || key === 'recog_name'">
+                                            <input
+                                                class="input-field"
+                                                :type="getInputType(key, value)"
+                                                v-model="editFields[key]"
+                                                @input="validateAlphabetOnly(key, 'editFields')"
+                                            />
+                                        </template>
+
+                                        <!-- Number-only validation for fields  -->
+                                        <template v-else-if="key === 'eli_rating' || key === 'eli_license_no' || key === 'vol_hrs' || key === 'learn_hrs'">
+                                            <input
+                                                class="input-field"
+                                                :type="getInputType(key, value)"
+                                                v-model="editFields[key]"
+                                                @input="validateNumberOnly(key, 'editFields')"
+                                            />
+                                        </template>
+
+                                        <!-- Date input fields  -->
+                                        <template v-else-if="key === 'eli_doe' || key === 'eli_licen_valid' || key === 'vol_fr'  || key === 'vol_to'
+                                        || key ===  'learn_fr'  || key === 'learn_to'">
+                                            <input
+                                                class="input-field"
+                                                type="date"
+                                                v-model="editFields[key]"
+                                                :max="maxDate"
+                                            />
+                                        </template>
+
+                                        <!-- Default input (for any other fields) -->
+                                        <template v-else>
+                                            <input
+                                                class="input-field"
+                                                :type="getInputType(key, value)"
+                                                v-model="editFields[key]"
+                                            />
+                                        </template>
                                     </div>
                                 </div>
                                 <div class="flex justify-center gap-4 mt-4">
-                                    <button @click="hideEditDialog" class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">
+                                    <button @click="hideEditDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                         Cancel
                                     </button>
-                                    <button @click="saveEdit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+                                    <button @click="saveEdit" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                         Save
                                     </button>
                                 </div>
@@ -264,21 +304,22 @@
                         </div>
                     </div>
 
+
                     <!-- Add CS Eligibility Modal -->
-                    <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
                                 <div class="p-4">
                                     <div class="text-center">
-                                        <h2 class="text-xl font-semibold mb-4">Add CS Eligibility</h2>
+                                        <h2 class="mb-4 text-xl font-semibold">Add CS Eligibility</h2>
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
                                         <div>
                                             <label class="label-field">CAREER SERVICE/RA 1080</label>
-                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_service" />
+                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_service" @input="validateName('eli_service', 'newCSEligibility')"/>
                                         </div>
                                         <div>
                                             <label class="label-field">RATING (IF APPLICABLE)</label>
-                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_rating" />
+                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_rating" @input="validateDecimal('eli_rating', 'newCSEligibility')" />
                                         </div>
                                         <div>
                                             <label class="label-field">DATE OF EXAMINATION/CONFERMENT</label>
@@ -286,7 +327,7 @@
                                         </div>
                                         <div>
                                             <label class="label-field">PLACE OF EXAMINATION/CONFERMENT</label>
-                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_poe" />
+                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_poe" @input="validateName('eli_poe', 'newCSEligibility')"/>
                                         </div>
                                         <div>
                                             <label class="label-field">LICENSE (IF APPLICABLE)</label>
@@ -298,10 +339,10 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddCSEligibilityDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                        <button @click="hideAddCSEligibilityDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                             Cancel
                                         </button>
-                                        <button @click="addCSEligibility" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="addCSEligibility" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Add
                                         </button>
                                     </div>
@@ -310,16 +351,16 @@
                     </div>
 
                     <!-- Add Voluntary Work Modal -->
-                    <div v-if="showAddVoluntaryWorkDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div v-if="showAddVoluntaryWorkDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
                                 <div class="p-4">
                                     <div class="text-center">
-                                        <h2 class="text-xl font-semibold mb-4">Add Voluntary Work</h2>
+                                        <h2 class="mb-4 text-xl font-semibold">Add Voluntary Work</h2>
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
                                         <div>
                                             <label class="label-field">NAME OF ORGANIZATION (WRITE IN FULL)</label>
-                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_name" />
+                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_name" @input="validateName('vol_name', 'newVoluntaryWork')"/>
                                         </div>
                                         <div>
                                             <label class="label-field">ADDRESS OF ORGANIZATION</label>
@@ -335,18 +376,18 @@
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
-                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_hrs" />
+                                            <input class="input-field" type="number" v-model="newVoluntaryWork.vol_hrs" @input="validateNumber('vol_hrs', 'newVoluntaryWork')"/>
                                         </div>
                                         <div>
                                             <label class="label-field">POSITION / NATURE OF WORK</label>
-                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_pos" />
+                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_pos" @input="validateName('vol_pos', 'newVoluntaryWork')"/>
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddVoluntaryWorkDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                        <button @click="hideAddVoluntaryWorkDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                             Cancel
                                         </button>
-                                        <button @click="addVoluntaryWork" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="addVoluntaryWork" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Add
                                         </button>
                                     </div>
@@ -355,16 +396,16 @@
                     </div>
 
                     <!-- Add Learning & Development Modal -->
-                    <div v-if="showAddLearndevDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div v-if="showAddLearndevDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
                                 <div class="p-4">
                                     <div class="text-center">
-                                        <h2 class="text-xl font-semibold mb-4">Add Learning & Development</h2>
+                                        <h2 class="mb-4 text-xl font-semibold">Add Learning & Development</h2>
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
                                         <div>
                                             <label class="label-field">TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)</label>
-                                            <input class="input-field" type="text" v-model="newLearndev.learn_title" />
+                                            <input class="input-field" type="text" v-model="newLearndev.learn_title" @input="validateName('learn_title', 'newLearndev')"/>
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
@@ -376,22 +417,22 @@
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
-                                            <input class="input-field" type="text" v-model="newLearndev.learn_hrs" />
+                                            <input class="input-field" type="number" v-model="newLearndev.learn_hrs" @input="validateNumber('learn_hrs', 'newLearndevk')"/>
                                         </div>
                                         <div>
                                             <label class="label-field">TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)</label>
-                                            <input class="input-field" type="text" v-model="newLearndev.learn_type" />
+                                            <input class="input-field" type="text" v-model="newLearndev.learn_type" @input="validateName('learn_type', 'newLearndev')"/>
                                         </div>
                                         <div>
                                             <label class="label-field">CONDUCTED/SPONSORED BY (WRITE IN FULL)</label>
-                                            <input class="input-field" type="text" v-model="newLearndev.learn_con" />
+                                            <input class="input-field" type="text" v-model="newLearndev.learn_con" @input="validateName('learn_con', 'newLearndev')"/>
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddLearndevDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                        <button @click="hideAddLearndevDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                             Cancel
                                         </button>
-                                        <button @click="addLearndev" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="addLearndev" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Add
                                         </button>
                                     </div>
@@ -400,23 +441,23 @@
                     </div>
 
                     <!-- Add Recognition & Distinctions Modal -->
-                    <div v-if="showAddRecogdistDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div v-if="showAddRecogdistDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
                                 <div class="p-4">
                                     <div class="text-center">
-                                        <h2 class="text-xl font-semibold mb-4">Add Recognition & Distinctions</h2>
+                                        <h2 class="mb-4 text-xl font-semibold">Add Recognition & Distinctions</h2>
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
                                         <div>
                                             <label class="label-field">NON-ACADEMIC DISTINCTIONS/RESTRICTIONS</label>
-                                            <input class="input-field" type="text" v-model="newRecogdist.recog_name" />
+                                            <input class="input-field" type="text" v-model="newRecogdist.recog_name" @input="validateName('recog_name', 'newRecogdist')"/>
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddRecogdistDialog" class="py-2 px-4 rounded bg-gray-300 text-gray-700 hover:bg-gray-400">
+                                        <button @click="hideAddRecogdistDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                             Cancel
                                         </button>
-                                        <button @click="addRecogdist" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="addRecogdist" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Add
                                         </button>
                                     </div>
@@ -425,16 +466,16 @@
                     </div>
 
                     <!-- Update Confirmation Modal -->
-                    <div v-if="showUpdateDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-md w-full p-6 text-center">
-                                <i class="mb-4 mt-4 text-4xl fas fa-circle-question" style="color: red;"></i>
-                                <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
+                    <div v-if="showUpdateDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                            <div class="w-full max-w-md p-6 overflow-hidden text-center transition-all transform bg-white rounded-lg shadow-xl">
+                                <i class="mt-4 mb-4 text-4xl fas fa-circle-question" style="color: red;"></i>
+                                <h2 class="mb-4 text-xl font-semibold">Are you sure you want to update?</h2>
                                 <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                                 <div class="flex justify-center gap-4">
-                                    <button @click="hideUpdateDialog" class="py-2 px-4 rounded bg-red-300 text-#dc3545-700 hover:bg-#dc3545-400">
+                                    <button @click="hideUpdateDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
                                         Cancel
                                     </button>
-                                    <button @click="saveUpdate" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                    <button @click="saveUpdate" class="px-6 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                         Confirm
                                     </button>
                                 </div>
@@ -442,22 +483,23 @@
                     </div>
 
                     <!-- Update Success Modal -->
-                    <div v-if="showSuccessDialog" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                    <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
                                 <div class="p-4">
                                     <div class="text-center">
-                                        <i class="fas fa-check-circle text-4xl mb-4" style="color: green;"></i>
-                                        <h2 class="text-xl font-semibold mb-4">Updated Successfully!</h2>
+                                        <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
+                                        <h2 class="mb-4 text-xl font-semibold">Updated Successfully!</h2>
                                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                                     </div>
                                     <div class="flex justify-center">
-                                        <button @click="hideSuccessDialog" class="py-2 px-4 rounded bg-blue-600 text-white hover:bg-blue-700">
+                                        <button @click="hideSuccessDialog" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                                             Back
                                         </button>
                                     </div>
+                                    </div>
                                 </div>
                             </div>
-                    </div>
+
 
     </AppLayout>
 </template>
@@ -567,6 +609,13 @@ export default {
     },
 
     computed: {
+        maxDate() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = (today.getMonth() + 1).toString().padStart(2, '0');
+      const day = today.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
         filteredEditFields() {
             return Object.fromEntries(
                 Object.entries(this.editFields).filter(([key]) =>
@@ -585,6 +634,52 @@ export default {
 
 
     methods: {
+
+
+    validateAlphabetOnly(field, model) {
+        this[model][field] = this[model][field].replace(/[^a-zA-Z\s]/g, '');
+    },
+
+    validateName(field, model) {
+      this[model][field] = this[model][field].replace(/[0-9]/g, '');
+    },
+
+    validateMobileNumber(field, model) {
+      this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 10);
+    },
+
+    validateTelephoneNumber(field, model) {
+      this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 7);
+    },
+
+    validateNumberOnly(field, model) {
+        this[model][field] = this[model][field].replace(/\D/g, '');
+    },
+
+    validateDecimal(field, model) {
+        const value = this[model][field];
+        // Regex to allow only numbers and one decimal point
+        const regex = /^\d*\.?\d*$/;
+
+        if (!regex.test(value)) {
+            // If the value doesn't match the regex, strip non-numeric characters except for the first decimal
+            this[model][field] = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        }
+    },
+
+    hideEditDialog() {
+        this.showEditDialog = false;
+    },
+
+    saveEdit() {
+        this.hideEditDialog();
+    },
+
+    getInputType(key, value) {
+        if (typeof value === 'number') return 'number';
+        if (key.includes('date')) return 'date';
+        return 'text';
+    },
 
     tabButtonClass(tabName) {
             return {
@@ -621,6 +716,19 @@ export default {
             } else {
                 console.log('No row selected.');
             }
+        },
+
+        hideAddCSEligibilityDialog() {
+            this.showAddCSEligibilityDialog = false;
+        },
+        hideAddVoluntaryWorkDialog() {
+            this.showAddVoluntaryWorkDialog = false;
+        },
+        hideAddLearndevDialog() {
+            this.showAddLearndevDialog = false;
+        },
+        hideAddRecogdistDialog() {
+            this.showAddRecogdistDialog = false;
         },
 
 
