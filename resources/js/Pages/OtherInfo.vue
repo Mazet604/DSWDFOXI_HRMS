@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 <div class="mt-6 text-right">
-                    <button v-if="!isEditingGovId" @click="toggleFamilyEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <button v-if="!isEditingGovId" @click="toggleGovIdEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
                     <div v-if="isEditingGovId" class="inline-flex space-x-4">
                         <button @click="cancelGovIdEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
                         <button @click="updateGovIdData" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
@@ -145,93 +145,97 @@
                         <h2 style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</b></h2>
                         <div class="form-group">
                             <label style="margin-left: 1%;">a. within the third degree?</label>
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34a" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34a" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34a" value="No" :disabled="!isEditingOtherInfo"/> No
                         </div>
                         <div class="form-group">
                             <label style="margin-left: 1%;">b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34b" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34b" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" :disabled="!(otherInfo.other_34b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_34b !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34b" value="No" @change="checkFields('other_34b')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
                         <h2 style="margin-bottom: 1%;"><b>Have you ever been found guilty of any administrative offense?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" :disabled="!(otherInfo.other_35a === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35a !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="No" @change="checkFields('other_35a')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                         <h2 style=" margin-bottom: 1%;"><b>Have you been criminally charged before any court?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35b" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" />
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35b" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35b" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35b" value="No" @change="checkFields('other_35b')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
                         <h2 style="margin-bottom: 1%;"><b>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" :disabled="!(otherInfo.other_36 === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_36 !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="No" @change="checkFields('other_36')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                         <h2 style="margin-bottom: 1%;"><b>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_37" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_37" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_37" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" :disabled="!(otherInfo.other_37 === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_37 !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_37" value="No" @change="checkFields('other_37')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
                         <h2 style=" margin-bottom: 1%;"><b>Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" :disabled="!(otherInfo.other_38a === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_38a !== 'Yes'}" />
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="No" @change="checkFields('other_38a')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                         <h2 style="margin-bottom: 1%;"><b>Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38b" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38b" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38b" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" :disabled="!(otherInfo.other_38b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_38b !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38b" value="No" @change="checkFields('other_38b')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                     </div>
                     <span class="broken-line"></span>
                     <div>
                         <h2 style="margin-bottom: 1%;"><b>Have you acquired the status of an immigrant or permanent resident of another country?</b></h2>
                         <div class="form-group">
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" :disabled="!(otherInfo.other_39 === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_39 !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="No" @change="checkFields('other_39')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                         <span class="broken-line"></span>
                         <h2 style="margin-bottom: 1%;"><b>Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:</b></h2>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">a. Are you a member of any indigenous group?</label>
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" :disabled="!(otherInfo.other_40a === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40a !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="No" @change="checkFields('other_40a')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">b. Are you a person with disability?</label>
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40b" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40b" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40b" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" :disabled="!(otherInfo.other_40b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40b !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40b" value="No" @change="checkFields('other_40b')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">c. Are you a solo parent?</label>
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40c" value="Yes" /> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" />
-                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40c" value="No" /> No
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40c" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" :disabled="!(otherInfo.other_40c === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40c !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40c" value="No" @change="checkFields('other_40c')" :disabled="!isEditingOtherInfo"/> No
                         </div>
-                                <div class="flex justify-end gap-4 mt-6">
-                                    <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
+                            <div class="flex justify-end gap-4 mt-6">
+                                <button v-if="!isEditingOtherInfo" @click="toggleOtherInfoEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                                    <div v-if="isEditingOtherInfo" class="inline-flex space-x-4">
+                                        <button @click="cancelOtherInfoEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
+                                        <button @click="onConfirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -528,35 +532,49 @@ export default {
             philHealthId: ''
         },
         otherInfo: {
-            degree: '',
-            degreeFourth: '',
-            degreeFourthDetails: '',
-            adminOffense: '',
-            adminOffenseDetails: '',
-            criminalCharge: '',
-            criminalChargeDetails: '',
-            dateFiled: '',
-            statusOfCase: '',
-            convictedCrime: '',
-            convictedCrimeDetails: '',
-            separatedService: '',
-            separatedServiceDetails: '',
-            candidateElection: '',
-            candidateElectionDetails: '',
-            resignedGovtService: '',
+            other_34a: '',
+            other_34b: '',
+            other_34bif: '',
+            other_35a: '',
+            other_35aif: '',
+            other_35b: '',
+            other_35bif: '',
+            other_35bfiled: '',
+            other_35stat: '',
+            other_36: '',
+            other_36if: '',
+            other_37: '',
+            other_37if: '',
+            other_38a: '',
+            other_38aif: '',
+            other_38b: '',
             resignedGovtServiceDetails: '',
-            immigrantStatus: '',
-            immigrantStatusDetails: '',
-            indigenousGroup: '',
-            indigenousGroupDetails: '',
-            disability: '',
-            disabilityDetails: '',
-            soloParent: '',
-            soloParentDetails: '',
+            other_39: '',
+            other_39if: '',
+            other_40a: '',
+            other_40aif: '',
+            other_40b: '',
+            other_40bif: '',
+            other_40c: '',
+            other_40cif: ''
+        },
+        dependentFields: {
+            other_34b: ['other_34bif'],
+            other_35a: ['other_35aif'],
+            other_35b: ['other_35bif', 'other_35bfiled', 'other_35stat'],
+            other_36: ['other_36if'],
+            other_37: ['other_37if'],
+            other_38a: ['other_38aif'],
+            other_38b: ['resignedGovtServiceDetails'],
+            other_39: ['other_39if'],
+            other_40a: ['other_40aif'],
+            other_40b: ['other_40bif'],
+            other_40c: ['other_40cif']
         },
         currentPage: 1,
         totalPages: 5,
         activeTab: 0,
+        isEditingOtherInfo: false,
         isEditingProfile: false,
         originalProfileFields: {},
         cseligibilityData: [],
@@ -564,6 +582,7 @@ export default {
         learndevData: [],
         recogdistData: [],
         originalGovIdFields: {},
+        OtherInfoFields: {},
         newCSEligibility: {
             eli_service: '',
             eli_rating: '',
@@ -635,6 +654,12 @@ export default {
 
     methods: {
 
+    checkFields(field) {
+      // Clear dependent fields if the field's value is 'No'
+      (this.dependentFields[field] || []).forEach(dependentField => {
+        this.otherInfo[dependentField] = this.otherInfo[field] === 'No' ? '' : this.otherInfo[dependentField];
+      });
+    },
 
     validateAlphabetOnly(field, model) {
         this[model][field] = this[model][field].replace(/[^a-zA-Z\s]/g, '');
@@ -780,6 +805,7 @@ export default {
 
     // Function to proceed with the update after confirmation
     saveUpdate() {
+
         axios.post(this.updateUrl, this.editFields)
             .then(() => {
                 const index = this.updateDataArray.findIndex(item =>
@@ -836,26 +862,8 @@ export default {
             }
         },
 
-        updateData() {
-            const urlMap = {
-                0: '/emp_eligibility/UpdateCSEligibilityData',
-                1: '/emp_voluntary/UpdateVoluntaryWorkData',
-                2: '/emp_learning/UpdateLearnDevData',
-                3: '/emp_recog/UpdateRecogDistData'
-            };
 
-            axios.post(urlMap[this.activeTab], this.editFields)
-                .then(() => {
-                    this.showSuccessDialog = true;
-                    this.hideEditDialog();
-                    this.isEditingProfile = false;
-                })
-                .catch(error => {
-                    console.error('Error updating data:', error);
-                });
-        },
-
-        toggleFamilyEditing() {
+        toggleGovIdEditing() {
             if (!this.isEditingGovId) {
                 // Save the current state of fields to allow canceling
                 this.originalGovIdFields = JSON.parse(JSON.stringify(this.governmentIdFields));
@@ -938,27 +946,48 @@ export default {
             });
     },
 
-    confirmUpdate() {
-        this.showUpdateDialog = true; // Show the update confirmation modal
-    },
+
+    // Method to proceed with the update after confirmation
     updateData() {
+        this.showUpdateDialog = false; // Hide the update confirmation dialog
+        
         axios.put('/emp_otherinfo/other-info', this.otherInfo)
             .then(response => {
-                this.showUpdateDialog = false; // Hide the update confirmation dialog
-                this.showSuccessDialog = true; // Show success dialog
+                console.log('Update successful:', response.data);
+                this.showSuccessDialog = true; // Show success dialog after update
             })
             .catch(error => {
                 console.error('Error updating data:', error);
             });
+
+            location.reload();
     },
-    saveUpdate() {
-        this.updateData(); // Call the updateData method to proceed with the update
+
+    onConfirmUpdate() {
+        this.updateData();  // Proceed with the actual update after confirmation
     },
-    hideUpdateDialog() {
-        this.showUpdateDialog = false; // Hide the update confirmation dialog
-    },
+
     hideSuccessDialog() {
         this.showSuccessDialog = false; // Hide the success dialog
+    },
+
+    hideUpdateDialog() {
+        this.showUpdateDialog = false;  // Hide the update confirmation dialog
+    },
+
+    toggleOtherInfoEditing() {
+        if (!this.isEditingOtherInfo) {
+            // Save the current state of fields to allow canceling
+            this.OtherInfoFields = JSON.parse(JSON.stringify(this.otherInfo));
+        }
+        this.isEditingOtherInfo = !this.isEditingOtherInfo;
+    },
+
+
+    cancelOtherInfoEditing() {
+            // Revert changes by restoring original fields
+        this.otherInfo = JSON.parse(JSON.stringify(this.OtherInfoFields));
+        this.isEditingOtherInfo = false;
     },
 
     },

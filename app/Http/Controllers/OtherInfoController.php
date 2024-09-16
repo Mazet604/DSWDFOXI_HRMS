@@ -495,7 +495,7 @@ public function getOtherInfoData()
             // Fetch the "Other Information" data for the authenticated user
             $otherInfoData = emp_otherinfo::where('empid', $user->empid)
                 ->select(
-                    'other_34a', 'other_34b', 'other_34bif', 'other_35a', 'other_35aif', 
+                    'other_count','other_34a', 'other_34b', 'other_34bif', 'other_35a', 'other_35aif', 
                     'other_35b', 'other_35bif', 'other_35bfiled', 'other_35stat', 'other_36', 
                     'other_36if', 'other_37', 'other_37if', 'other_38a', 'other_38aif', 
                     'other_38b', 'other_39', 'other_39if', 'other_40a', 'other_40aif', 
