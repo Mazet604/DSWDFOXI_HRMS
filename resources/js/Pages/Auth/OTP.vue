@@ -141,7 +141,7 @@ const formattedTimer = computed(() => {
 <template>
     <Head title="OTP Verification" />
     <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/backgrounddswd.png');">
-        <div v-if="!otpExpired && !passwordChanged" class="w-full max-w-lg p-6 bg-white rounded-lg shadow-md sm:p-8 lg:p-10 sm:max-w-xl lg:max-w-2xl">
+        <div v-if="!otpExpired && !passwordChanged" class="w-full max-w-lg p-6 bg-white rounded-lg shadow-md sm:p-8 lg:p-10 sm:max-w-xl lg:max-w-2xl border border-gray-300">
             <div class="mb-6 text-2xl font-semibold text-center lg:text-3xl">AUTHENTICATION REQUIRED</div>
             <p class="mb-8 text-center font-semibold text-gray-500">Your OTP code was sent to your email <span class="text-black">&#9993;</span> </p>
 
@@ -181,7 +181,7 @@ const formattedTimer = computed(() => {
             </div>
 
                 <div class="flex justify-center mt-8">
-                    <PrimaryButton :class="{ 'opacity-50': form.processing }" :disabled="form.processing" class="py-3 px-8 text-center text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700">
+                    <PrimaryButton :class="{ 'opacity-50': form.processing }" :disabled="form.processing" class="py-3 px-8 text-center text-white bg-gradient-to-r from-blue-900 to-blue-900 rounded-full hover:from-blue-800 hover:to-blue-800">
                         <span class="w-full text-center">VERIFY OTP</span>
                     </PrimaryButton>
                 </div>
@@ -201,7 +201,7 @@ const formattedTimer = computed(() => {
             <div class="mb-6 text-2xl font-semibold text-center lg:text-3xl">OTP Expired</div>
             <p class="mb-8 text-center font-semibold text-gray-500">Your OTP has expired. Please click the button below to resend a new OTP.</p>
             <div class="flex justify-center">
-                <PrimaryButton @click="resendOtp" class="py-3 px-8 text-center text-white rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600">
+                <PrimaryButton @click="resendOtp" class="py-3 px-8 text-center text-white bg-gradient-to-r from-blue-900 to-blue-900 rounded-full hover:from-blue-800 hover:to-blue-800">
                     RESEND OTP
                 </PrimaryButton>
             </div>

@@ -39,10 +39,10 @@
                 </div>
 
                 <div class="flex items-center justify-between mt-8">
-                    <Link v-if="canResetPassword" :href="route('password.request')" class="text- text-blue-600 underline hover:no-underline">
+                    <Link v-if="canResetPassword" :href="route('password.request')" class="text- text-blue-700 underline hover:no-underline">
                         Forgot password?
                     </Link>
-                    <PrimaryButton class="py-2 px-12 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <PrimaryButton class="py-2 px-12 text-lg font-semibold text-white bg-gradient-to-r from-blue-900 to-blue-900 rounded-full hover:from-blue-800 hover:to-blue-800" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         SIGN IN
                     </PrimaryButton>
                 </div>
