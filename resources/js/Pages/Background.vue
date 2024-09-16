@@ -33,19 +33,19 @@
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseSurname" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.spouseSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseFirstName" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.spouseFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                            <select class="input-field" v-model="fields.spouseExtName" :disabled="!isEditingFamily">
+                            <select class="input-field" v-model="fields.spouseExtName" :disabled="!isEditingFamily":class="{ 'disabled-input': !isEditingFamily }">
                                 <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
                                     {{ suffix.label }}
                                 </option>
@@ -53,20 +53,20 @@
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
-                            <input class="input-field" type="text" v-model="fields.spouseOccupation" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.spouseOccupation" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <!-- Employer/Business Information -->
                         <div class="col-span-2">
                             <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYER'S/BUSINESS NAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseBusinessName" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.spouseBusinessName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-2">
                             <label class="block mb-2 text-sm font-bold text-gray-700">BUSINESS ADDRESS</label>
-                            <input class="input-field" type="text" v-model="fields.spouseBusinessAddress" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.spouseBusinessAddress" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
-                            <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <!-- Separator for Father's Information -->
                         <div class="col-span-5 text-blue-800 mb-4 pb-2 border-b border-yellow-200">
@@ -75,19 +75,19 @@
                         <!-- Father's Information -->
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.fatherSurname" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.fatherSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.fatherFirstName" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.fatherFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
-                            <select class="input-field" v-model="fields.fatherExtName" :disabled="!isEditingFamily">
+                            <select class="input-field" v-model="fields.fatherExtName" :disabled="!isEditingFamily":class="{ 'disabled-input': !isEditingFamily }">
                                 <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
                                     {{ suffix.label }}
                                 </option>
@@ -101,19 +101,19 @@
                         <!-- Mother's Information -->
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherSurname" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.motherSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherFirstName" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.motherFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherMiddleName" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.motherMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MAIDEN NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherMaidenName" :disabled="!isEditingFamily" />
+                            <input class="input-field" type="text" v-model="fields.motherMaidenName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
                         </div>
                     </div>
                     <div class="mt-6 text-right">
@@ -1415,6 +1415,11 @@ export default {
     padding: 8px;
     border: 1px solid #e2e8f0;
     border-radius: 4px;
+}
+
+.disabled-input {
+    color: #707A88;
+    background-color: #eeeeee;
 }
 
 .grid-cols-5 {

@@ -99,25 +99,25 @@
                     <div class="border-box">
                         <div>
                             <label class="label-field"><b>SSS ID:</b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                         <div>
                             <label class="label-field"><b>PAG-IBIG ID:</b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId":class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                         <div>
                             <label class="label-field">T<b>IN ID:</b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId":class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                     </div>
                     <div class="border-box">
                         <div>
                             <label class="label-field"><b>GSIS ID:</b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId":class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                         <div>
                             <label class="label-field"><b>PHILHEALTH ID:</b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId":class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
 
             <!-- Other Information Tab -->
             <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
-                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">OTHER INFORMATION</h2>
+                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200"></h2>
                 <div class="other-info">
                     <div class='columns'>
                         <h2 style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</b></h2>
@@ -1182,5 +1182,10 @@ export default {
   width: 100%;
   border-bottom: 1px dashed #000;
   margin: 20px 0;
+}
+
+.disabled-input {
+  color: #707A88;
+  background-color: #eeeeee;
 }
 </style>

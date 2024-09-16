@@ -53,19 +53,19 @@
             <div class="grid grid-cols-4 gap-4 mb-6">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">FIRST NAME <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.firstName" :disabled="!isEditing" @input="validateName('firstName')" />
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.firstName" :disabled="!isEditing" @input="validateName('firstName')" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">MIDDLE NAME <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')" />
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">LAST NAME <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.lastName" :disabled="!isEditing" @input="validateName('lastName')" />
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.lastName" :disabled="!isEditing" @input="validateName('lastName')" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">SUFFIX <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.suffix" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" :class="{ 'disabled-input': !isEditing }"v-model="fields.suffix" :disabled="!isEditing">
                   <option v-for="option in extOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                 </select>
               </div>
@@ -78,7 +78,7 @@
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">BIRTHDAY <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="fields.birthday" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="fields.birthday" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">PLACE OF BIRTH</label>
@@ -86,7 +86,7 @@
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">CIVIL STATUS <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.civilStatus" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" :class="{ 'disabled-input': !isEditing }"v-model="fields.civilStatus" :disabled="!isEditing">
                   <option v-for="option in civilStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                 </select>
               </div>
@@ -95,8 +95,8 @@
             <div class="grid grid-cols-5 gap-4 mb-6">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">SEX <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.sex" :disabled="!isEditing">
-                  <option v-for="option in sexOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+                <select class="w-full p-2 border border-gray-300 rounded-md" :class="{ 'disabled-input': !isEditing }"v-model="fields.sex" :disabled="!isEditing">
+                  <option v-for="option in sexOptions" :key="option.value" :value="option.value" >{{ option.label }}</option>
                 </select>
               </div>
               <div>
@@ -105,17 +105,17 @@
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">BLOOD TYPE</label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.bloodType" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" :class="{ 'disabled-input': !isEditing }"v-model="fields.bloodType" :disabled="!isEditing">
                   <option v-for="option in bloodTypeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                 </select>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">HEIGHT(M) <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" step="0.01" v-model="fields.height" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" step="0.01" v-model="fields.height" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">WEIGHT(KG) <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" v-model="fields.weight" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="number" v-model="fields.weight" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
             </div>
 
@@ -124,17 +124,17 @@
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">MOBILE NUMBER <span style="color: red;">*</span></label>
                 <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-700">+63 |</span>
-                <input class="w-full p-2 border border-gray-300 rounded-md number-field" type="text" v-model="fields.mobilenum" @input="validateMobileNumber" :disabled="!isEditing" />
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-700" style="color:#707A88">+63 |</span>
+                <input class="w-full p-2 border border-gray-300 rounded-md number-field" type="text" v-model="fields.mobilenum" @input="validateMobileNumber" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
                 </div>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">TELEPHONE NUMBER <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.telnum" @input="validateTelephoneNumber" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.telnum" @input="validateTelephoneNumber" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">EMAIL ADDRESS <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="email" v-model="fields.emailadd" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="email" v-model="fields.emailadd" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
             </div>
 
@@ -153,25 +153,25 @@
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">REGION <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region" :disabled="!isEditing":class="{ 'disabled-input': !isEditing }">
                   <option v-for="(region, index) in regions" :key="index" :value="region.reg_psgc">{{ region.col_region }}</option>
                 </select>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">PROVINCE <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province" :disabled="!isEditing":class="{ 'disabled-input': !isEditing }">
                   <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
                 </select>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">CITY <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City" :disabled="!isEditing":class="{ 'disabled-input': !isEditing }">
                   <option v-for="(city, index) in cities" :key="index" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
                 </select>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">BARANGAY <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay" :disabled="!isEditing":class="{ 'disabled-input': !isEditing }">
                   <option v-for="(barangay, index) in barangays" :key="index" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
                 </select>
               </div>
@@ -180,15 +180,15 @@
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">VILLAGE SUBDIVISION</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.villsub" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.villsub" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">BLOCK/STREET/PUROK</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.block" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.block" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
             </div>
 
@@ -205,25 +205,25 @@
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">REGION <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region2" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region2" :disabled="!isEditing":class="{ 'disabled-input': !isEditing }">
                   <option v-for="(region2, index) in regions2" :key="index" :value="region2.reg_psgc">{{ region2.col_region }}</option>
                 </select>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">PROVINCE <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province2" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province2" :disabled="!isEditing":class="{ 'disabled-input': !isEditing }">
                   <option v-for="(province2, index) in provinces2" :key="index" :value="province2.prv_psgc">{{ province2.col_province }}</option>
                 </select>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">CITY <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City2" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City2" :disabled="!isEditing":class="{ 'disabled-input': !isEditing }">
                   <option v-for="(city2, index) in cities2" :key="index" :value="city2.citmun_psgc">{{ city2.col_citymuni }}</option>
                 </select>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">BARANGAY <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay2" :disabled="!isEditing">
+                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay2" :disabled="!isEditing":class="{ 'disabled-input': !isEditing }">
                   <option v-for="(barangay2, index) in barangays2" :key="index" :value="barangay2.brgy_psgc">{{ barangay2.col_brgy }}</option>
                 </select>
               </div>
@@ -232,15 +232,15 @@
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode2" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.zipcode2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">VILLAGE SUBDIVISION</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.villsub2" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.villsub2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">BLOCK/STREET/PUROK</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.block2" :disabled="!isEditing" />
+                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.block2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
               </div>
             </div>
 
@@ -1004,6 +1004,7 @@ onCroppingComplete(croppedBlob) {
 
 .text-color {
     color: #707A88;
+    background-color: #eeeeee;
 }
 
 .text-color:hover {
@@ -1012,6 +1013,11 @@ onCroppingComplete(croppedBlob) {
 
 .bg-center {
     background-position: center;
+}
+
+.disabled-input {
+  color: #707A88;
+  background-color: #eeeeee;
 }
 
 .border-box {
