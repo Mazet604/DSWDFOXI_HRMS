@@ -37,7 +37,7 @@
           </div>
 
           <!-- Personal Info Tab -->
-          <div v-if="activeTab === 0" class="p-6 bg-white border border-blue-900 rounded-lg">
+          <div v-if="activeTab === 0" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
             <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">BASIC INFORMATION</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
@@ -156,7 +156,7 @@
     </div>
 
           <!-- Address Tab -->
-          <div v-if="activeTab === 1" class="p-6 bg-white border border-blue-900 rounded-lg">
+          <div v-if="activeTab === 1" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
             <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">PERMANENT ADDRESS</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>

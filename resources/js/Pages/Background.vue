@@ -25,7 +25,7 @@
                 </div>
 
                 <!-- Family Tab -->
-                <div v-if="activeTab === 0" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 0" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <!-- Spouse Information -->
                     <div class="grid grid-cols-5 gap-4">
                         <div class="col-span-5 text-blue-800 mb-1 pb-2 border-b border-yellow-200">
@@ -143,7 +143,7 @@
                 </div>
 
                 <!-- Education Tab -->
-                <div v-if="activeTab === 1" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 1" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">EDUCATION</h2>
                     <DataTable v-model:selection="selectedRow" :value="educationData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -166,7 +166,7 @@
                 </div>
 
                 <!-- Organization Tab -->
-                <div v-if="activeTab === 2" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 2" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">ORGANIZATIONS</h2>
                     <DataTable v-model:selection="selectedRow" :value="organizationData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -183,7 +183,7 @@
                 </div>
 
                 <!-- Work Experience Tab -->
-                <div v-if="activeTab === 3" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 3" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">WORK EXPERIENCE</h2>
                     <DataTable v-model:selection="selectedRow" :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -207,7 +207,7 @@
                 </div>
 
                 <!-- Skills Tab -->
-                <div v-if="activeTab === 4" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 4" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">SKILLS</h2>
                     <DataTable v-model:selection="selectedRow" :value="skillsData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -224,7 +224,7 @@
                 </div>
 
                 <!-- References Tab -->
-                <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 5" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">REFERENCES</h2>
                 <DataTable v-model:selection="selectedRow" :value="referencesData" class="mt-8" :paginator="true" :rows="5">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -304,8 +304,8 @@
                             />
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
-                        <button @click="hideEditDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
+                    <div class="mt-6 text-center">
+                        <button @click="hideEditDialog" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
                         <button @click="saveEdit" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
@@ -343,11 +343,11 @@
                         <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
                         <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                     </div>
-                    <div class="mt-6 text-right">
-                        <button @click="hideUpdateDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
+                    <div class="mt-6 text-center">
+                        <button @click="hideUpdateDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button @click="saveUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
+                        <button @click="saveUpdate" class="px-6 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Confirm
                         </button>
                     </div>
@@ -393,8 +393,8 @@
                             />
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
-                        <button @click="hideAddChildDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
+                    <div class="mt-6 text-center">
+                        <button @click="hideAddChildDialog" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
                         <button @click="addChild" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">

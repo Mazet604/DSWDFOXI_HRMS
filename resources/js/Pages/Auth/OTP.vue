@@ -181,7 +181,7 @@ const formattedTimer = computed(() => {
             </div>
 
                 <div class="flex justify-center mt-8">
-                    <PrimaryButton :class="{ 'opacity-50': form.processing }" :disabled="form.processing" class="py-2 px-8 text-center text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700">
+                    <PrimaryButton :class="{ 'opacity-50': form.processing }" :disabled="form.processing" class="py-3 px-8 text-center text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700">
                         <span class="w-full text-center">VERIFY OTP</span>
                     </PrimaryButton>
                 </div>
@@ -201,7 +201,7 @@ const formattedTimer = computed(() => {
             <div class="mb-6 text-2xl font-semibold text-center lg:text-3xl">OTP Expired</div>
             <p class="mb-8 text-center font-semibold text-gray-500">Your OTP has expired. Please click the button below to resend a new OTP.</p>
             <div class="flex justify-center">
-                <PrimaryButton @click="resendOtp" class="py-2 px-8 text-center text-white rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600">
+                <PrimaryButton @click="resendOtp" class="py-3 px-8 text-center text-white rounded-full bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600">
                     RESEND OTP
                 </PrimaryButton>
             </div>

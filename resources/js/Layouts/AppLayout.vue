@@ -94,12 +94,12 @@
                     <div class="text-center">
                         <h2 class="mb-4 text-xl font-semibold">Download Personal Data Sheet</h2>
                     </div>
-                    <div class="flex flex-col gap-1 justify-center">
-                        <button @click="downloadPDS(1)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 1</button>
-                        <button @click="downloadPDS(2)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 2</button>
-                        <button @click="downloadPDS(3)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 3</button>
-                        <button @click="downloadPDS(4)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download Page 4</button>
-                        <button @click="downloadPDS(5)" class="w-50 px-1 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Download All Pages</button>
+                    <div class="flex flex-col items-center gap-1">
+                        <button @click="downloadPDS(1)" class="w-64 px-1 py-2 text-white bg-blue-900 rounded hover:bg-blue-800">Download Page 1</button>
+                        <button @click="downloadPDS(2)" class="w-64 px-1 py-2 text-white bg-blue-900 rounded hover:bg-blue-800">Download Page 2</button>
+                        <button @click="downloadPDS(3)" class="w-64 px-1 py-2 text-white bg-blue-900 rounded hover:bg-blue-800">Download Page 3</button>
+                        <button @click="downloadPDS(4)" class="w-64 px-1 py-2 text-white bg-blue-900 rounded hover:bg-blue-800">Download Page 4</button>
+                        <button @click="downloadPDS(5)" class="w-64 px-1 py-2 text-white bg-blue-900 rounded hover:bg-blue-800">Download All Pages</button>
                     </div>
                     <div class="mt-4 flex justify-center">
                         <button @click="hidePdsDialog" class="w-32 px-4 py-2 text-white bg-red-700 rounded hover:bg-red-800">Cancel</button>
@@ -122,15 +122,15 @@
                     </div>
                 </div>
             </div>
-        </div> 
-        
+        </div>
+
         <!-- Download Result Modal -->
         <div v-if="showResultModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true" style="display: block;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="resultModalLabel">{{ downloadStatus === 'success' ? 'Download Failed' : 'Download Successful' }}</h5>
-                        <button type="button" class="close" @click="showResultModal = false" aria-label="Close">
+                        <button type="button" class="close " @click="showResultModal = false" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -138,7 +138,7 @@
                         {{ downloadStatus === 'success' ? 'There was an error downloading your file. Please try again.' : 'Your file has been downloaded successfully.' }}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="showResultModal = false">Close</button>
+                        <button type="button" class="px-3 py-2 font-semibold text-white bg-blue-900 rounded hover:bg-blue-800" @click="showResultModal = false">CLOSE</button>
                     </div>
                 </div>
             </div>
@@ -248,7 +248,7 @@ const choosePDS = () => {
 
 // Download PDS pages
 const downloadPDS = async (page) => {
-    
+
     hidePdsDialog(); // Hide the modal after download
     try {
         showPDSprogress();
