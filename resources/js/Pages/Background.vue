@@ -814,77 +814,77 @@ export default {
     let dataArray = null;
     let countField = '';
 
-    switch (this.activeTab) {
-        case 0:
-            url = '/emp_child/UpdateChildData';
-            dataArray = this.childData;
-            countField = 'child_count';
-            break;
-        case 1:
-            url = '/education/UpdateEducationData';
-            dataArray = this.educationData;
-            countField = 'educ_count';
-            break;
-        case 2:
-            url = '/emp_org/UpdateOrganizationData';
-            dataArray = this.organizationData;
-            countField = 'org_count';
-            break;
-        case 3:
-            url = '/emp_work/UpdateWorkExperienceData';
-            dataArray = this.workExperienceData;
-            countField = 'work_count';
-            break;
-        case 4:
-            url = '/emp_skills/UpdateSkillsData';
-            dataArray = this.skillsData;
-            countField = 'skill_count';
-            break;
-        case 5:
-            url = '/emp_reference/UpdateReferencesData';
-            dataArray = this.referencesData;
-            countField = 'ref_count';
-            break;
-        default:
-            console.error('Unknown tab selected');
-            return;
-    }
+        switch (this.activeTab) {
+            case 0:
+                url = '/emp_child/UpdateChildData';
+                dataArray = this.childData;
+                countField = 'child_count';
+                break;
+            case 1:
+                url = '/education/UpdateEducationData';
+                dataArray = this.educationData;
+                countField = 'educ_count';
+                break;
+            case 2:
+                url = '/emp_org/UpdateOrganizationData';
+                dataArray = this.organizationData;
+                countField = 'org_count';
+                break;
+            case 3:
+                url = '/emp_work/UpdateWorkExperienceData';
+                dataArray = this.workExperienceData;
+                countField = 'work_count';
+                break;
+            case 4:
+                url = '/emp_skills/UpdateSkillsData';
+                dataArray = this.skillsData;
+                countField = 'skill_count';
+                break;
+            case 5:
+                url = '/emp_reference/UpdateReferencesData';
+                dataArray = this.referencesData;
+                countField = 'ref_count';
+                break;
+            default:
+                console.error('Unknown tab selected');
+                return;
+        }
 
-    // Store the necessary information for updating
-    this.updateUrl = url;
-    this.updateDataArray = dataArray;
-    this.updateCountField = countField;
+        // Store the necessary information for updating
+        this.updateUrl = url;
+        this.updateDataArray = dataArray;
+        this.updateCountField = countField;
 
-    // Show the confirmation dialog
-    this.showUpdateDialog = true;
-},
+        // Show the confirmation dialog
+        this.showUpdateDialog = true;
+    },
 
-// Function to proceed with the update after confirmation
-saveUpdate() {
-    axios.post(this.updateUrl, this.editFields)
-        .then(() => {
-            const index = this.updateDataArray.findIndex(item =>
-                item.empid === this.editFields.empid &&
-                item[this.updateCountField] === this.editFields[this.updateCountField]
-            );
+    // Function to proceed with the update after confirmation
+    saveUpdate() {
+        axios.post(this.updateUrl, this.editFields)
+            .then(() => {
+                const index = this.updateDataArray.findIndex(item =>
+                    item.empid === this.editFields.empid &&
+                    item[this.updateCountField] === this.editFields[this.updateCountField]
+                );
 
-            if (index !== -1) {
-                this.updateDataArray[index] = { ...this.editFields };
-            } else {
-                console.error('Item not found');
-            }
+                if (index !== -1) {
+                    this.updateDataArray[index] = { ...this.editFields };
+                } else {
+                    console.error('Item not found');
+                }
 
-            this.showSuccessDialog = true;
-            this.hideEditDialog();
-            this.isEditingProfile = false;
-        })
-        .catch(error => {
-            console.error('Error updating data:', error);
-        });
+                this.showSuccessDialog = true;
+                this.hideEditDialog();
+                this.isEditingProfile = false;
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
 
-    // Hide the confirmation dialog
-    this.hideUpdateDialog();
-},
+        // Hide the confirmation dialog
+        this.hideUpdateDialog();
+    },
 
 
     isDate(value) {
@@ -955,58 +955,61 @@ saveUpdate() {
             this.isEditingFamily = false;
         },
 
-        async fetchFather() {
-            try {
-                const response = await axios.get('/emp_father/Father');
-                this.fields.fatherSurname = response.data.fatherSurname;
-                this.fields.fatherFirstName = response.data.fatherFirstName;
-                this.fields.fatherMiddleName = response.data.fatherMiddleName;
-                this.fields.fatherExtName = response.data.fatherExtName;
-            } catch (error) {
-                this.errorMessage = 'Failed to load father.';
-            }
+            fetchFather() {
+            axios.get('/emp_father/Father')
+                .then(response => {
+                    this.fields.fatherSurname = response.data.fatherSurname;
+                    this.fields.fatherFirstName = response.data.fatherFirstName;
+                    this.fields.fatherMiddleName = response.data.fatherMiddleName;
+                    this.fields.fatherExtName = response.data.fatherExtName;
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to load father.';
+                });
         },
 
-        async fetchMother() {
-            try {
-                const response = await axios.get('/emp_mother/Mother');
-                this.fields.motherMaidenName = response.data.motherMaidenName;
-                this.fields.motherSurname = response.data.motherSurname;
-                this.fields.motherFirstName = response.data.motherFirstName;
-                this.fields.motherMiddleName = response.data.motherMiddleName;
-            } catch (error) {
-                this.errorMessage = 'Failed to load mother.';
-            }
+        fetchMother() {
+            axios.get('/emp_mother/Mother')
+                .then(response => {
+                    this.fields.motherMaidenName = response.data.motherMaidenName;
+                    this.fields.motherSurname = response.data.motherSurname;
+                    this.fields.motherFirstName = response.data.motherFirstName;
+                    this.fields.motherMiddleName = response.data.motherMiddleName;
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to load mother.';
+                });
         },
 
-        async fetchSpouse() {
-            try {
-                const response = await axios.get('/emp_spouse/Spouse');
-                this.fields.spouseSurname = response.data.spouseSurname;
-                this.fields.spouseFirstName = response.data.spouseFirstName;
-                this.fields.spouseMiddleName = response.data.spouseMiddleName;
-                this.fields.spouseExtName = response.data.spouseExtName;
-                this.fields.spouseOccupation = response.data.spouseOccupation;
-                this.fields.spouseBusinessName = response.data.spouseBusinessName;
-                this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
-                this.fields.spouseTelNo = response.data.spouseTelNo;
-            } catch (error) {
-                this.errorMessage = 'Failed to load spouse.';
-            }
+        fetchSpouse() {
+            axios.get('/emp_spouse/Spouse')
+                .then(response => {
+                    this.fields.spouseSurname = response.data.spouseSurname;
+                    this.fields.spouseFirstName = response.data.spouseFirstName;
+                    this.fields.spouseMiddleName = response.data.spouseMiddleName;
+                    this.fields.spouseExtName = response.data.spouseExtName;
+                    this.fields.spouseOccupation = response.data.spouseOccupation;
+                    this.fields.spouseBusinessName = response.data.spouseBusinessName;
+                    this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
+                    this.fields.spouseTelNo = response.data.spouseTelNo;
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to load spouse.';
+                });
         },
 
-
-        async updateFamilyData() {
-            try {
-                await axios.patch('/EmpFamily/updateFamilyData', this.fields);
-                this.isEditing = false;
-                this.showUpdateDialog = false;
-                this.showSuccessDialog = true;
-                location.reload();
-                } catch (error) {
-                this.errorMessage = 'Failed to update Family. Please try again.';
-                this.showUpdateDialog = false;
-            }
+        updateFamilyData() {
+            axios.patch('/EmpFamily/updateFamilyData', this.fields)
+                .then(() => {
+                    this.isEditing = false;
+                    this.showUpdateDialog = false;
+                    this.showSuccessDialog = true;
+                    //location.reload();
+                })
+                .catch(error => {
+                    this.errorMessage = 'Failed to update Family. Please try again.';
+                    this.showUpdateDialog = false;
+                });
         }
     },
 
@@ -1302,6 +1305,7 @@ saveUpdate() {
 
         const hideSuccessDialog = () => {
             showSuccessDialog.value = false;
+            location.reload();
         };
 
         const confirmUpdate = () => {
