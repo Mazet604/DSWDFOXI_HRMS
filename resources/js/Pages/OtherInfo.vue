@@ -523,28 +523,33 @@ export default {
 
     data() {
         return {
+        formatFieldLabel: {
+            eli_service:'CAREER SERVICE/RA 1080',
+            eli_rating: 'RATING (IF APPLICABLE)',
+            eli_doe: 'DATE OF EXAMINATION/CONFERMENT',
+            eli_poe: 'PLACE OF EXAMINATION/CONFERMENT',
+            eli_license_no: 'LICENSE (IF APPLICABLE)',
+            eli_licen_valid: 'VALIDITY',
+            vol_name: 'NAME OF ORGANIZATION (WRITE IN FULL)',
+            vol_add: 'ADDRESS OF ORGANIZATION',
+            vol_fr: 'INCLUSIVE DATES (MM/DD/YYYY) FROM',
+            vol_to: 'INCLUSIVE DATES (MM/DD/YYYY) TO',
+            vol_hrs: 'NUMBER OF HOURS',
+            vol_pos: 'POSITION / NATURE OF WORK',
+            learn_title: 'TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)',
+            learn_fr: 'INCLUSIVE DATES (MM/DD/YYYY) FROM',
+            learn_to: 'INCLUSIVE DATES (MM/DD/YYYY) TO',
+            learn_hrs: 'NUMBER OF HOURS',
+            learn_type: 'TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)',
+            learn_con: 'CONDUCTED/SPONSORED BY (WRITE IN FULL)',
+            recog_name: 'NON-ACADEMIC DISTINCTIONS/RESTRICTIONS'
+        },
         governmentIdFields: {
             sssId: '',
             pagIbigId: '',
             tinId: '',
             gsisId: '',
             philHealthId: ''
-        },
-        formatFieldLabel: {
-            child_fname: 'Child First Name',
-            child_mname: 'Child Middle Name',
-            child_lname: 'Child Last Name',
-            child_xname: 'Child Suffix',
-            child_dob: 'Child Birth Date',
-            workfr: 'Work From',
-            workto: 'Work To',
-            work_pos: 'Work Position',
-            work_dept: 'Work Department',
-            work_salary: 'Work Salary',
-            work_salarygrade: 'Work Salary Grade',
-            work_stat: 'Work Status',
-            work_gov: 'Government Work',
-            // Add other fields as needed
         },
         otherInfo: {
             other_34a: '',
