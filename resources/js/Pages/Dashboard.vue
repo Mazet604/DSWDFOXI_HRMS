@@ -1003,6 +1003,9 @@ onCroppingComplete(croppedBlob) {
 </script>
 
 <style scoped>
+
+
+
 .bg-cover {
     background-size: cover;
 }
