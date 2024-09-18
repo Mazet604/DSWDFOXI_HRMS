@@ -26,7 +26,7 @@
             <div class="ml-4 text-left">
               <h2 class="text-4xl font-semibold text-blue-800">{{ fullName }}</h2>
               <hr class="my-2 border-2 border-yellow-200" />
-              <p class="text-lg text-gray-600">{{ empPosition }}</p>
+              <p class="text-lg text-gray-600 font-semibold">{{ empPosition }}</p>
             </div>
           </div>
 
@@ -1012,6 +1012,9 @@ onCroppingComplete(croppedBlob) {
 </script>
 
 <style scoped>
+
+
+
 .bg-cover {
     background-size: cover;
 }

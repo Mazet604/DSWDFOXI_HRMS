@@ -142,8 +142,8 @@ const formattedTimer = computed(() => {
     <Head title="OTP Verification" />
     <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/backgrounddswd.png');">
         <div v-if="!otpExpired && !passwordChanged" class="w-full max-w-lg p-6 bg-white rounded-lg shadow-md sm:p-8 lg:p-10 sm:max-w-xl lg:max-w-2xl border border-gray-300">
-            <div class="mb-6 text-2xl font-semibold text-center lg:text-3xl">AUTHENTICATION REQUIRED</div>
-            <p class="mb-8 text-center font-semibold text-gray-500">Your OTP code was sent to your email <span class="text-black">&#9993;</span> </p>
+            <div class="mb-6 text-2xl font-semibold text-center lg:text-3xl text-red-600">AUTHENTICATION REQUIRED</div>
+            <p class="mb-8 text-center text-gray-500 text-md">Your OTP code was sent to your email <span class="text-black text-2xl">&#9993;</span> </p>
 
             <hr class="mb-16 border-gray-300">
 

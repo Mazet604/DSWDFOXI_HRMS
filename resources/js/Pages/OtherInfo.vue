@@ -106,25 +106,25 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="border-box">
                         <div>
-                            <label class="label-field"><b>SSS ID:</b></label>
+                            <label class="label-field"><b>SSS ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                         <div>
-                            <label class="label-field"><b>PAG-IBIG ID:</b></label>
+                            <label class="label-field"><b>PAG-IBIG ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                         <div>
-                            <label class="label-field">T<b>IN ID:</b></label>
+                            <label class="label-field"><b>TIN ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                     </div>
                     <div class="border-box">
                         <div>
-                            <label class="label-field"><b>GSIS ID:</b></label>
+                            <label class="label-field"><b>GSIS ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                         <div>
-                            <label class="label-field"><b>PHILHEALTH ID:</b></label>
+                            <label class="label-field"><b>PHILHEALTH ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                 <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200"></h2>
                 <div class="other-info">
                     <div class='columns'>
-                        <p style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed</b></p>
+                        <p style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed <span style="color: red;">*</span></b></p>
                         <div class="form-group">
                             <label style="margin-left: 1%;">a. within the third degree?</label>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_34a" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
@@ -157,13 +157,13 @@
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <p style="margin-bottom: 1%;"><b>Have you ever been found guilty of any administrative offense?</b></p>
+                        <p style="margin-bottom: 1%;"><b>Have you ever been found guilty of any administrative offense? <span style="color: red;">*</span></b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" :disabled="!(otherInfo.other_35a === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35a !== 'Yes'}"/>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35a" value="No" @change="checkFields('other_35a')" :disabled="!isEditingOtherInfo"/> No
                         </div>
-                        <p style=" margin-bottom: 1%;"><b>Have you been criminally charged before any court?</b></p>
+                        <p style=" margin-bottom: 1%;"><b>Have you been criminally charged before any court? <span style="color: red;">*</span></b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_35b" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}"/>
@@ -174,13 +174,13 @@
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <p style="margin-bottom: 1%;"><b>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</b></p>
+                        <p style="margin-bottom: 1%;"><b>Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal? <span style="color: red;">*</span></b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" :disabled="!(otherInfo.other_36 === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_36 !== 'Yes'}"/>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_36" value="No" @change="checkFields('other_36')" :disabled="!isEditingOtherInfo"/> No
                         </div>
-                        <p style="margin-bottom: 1%;"><b>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</b></p>
+                        <p style="margin-bottom: 1%;"><b>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector? <span style="color: red;">*</span></b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_37" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_37if" placeholder="If YES, give details" :disabled="!(otherInfo.other_37 === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_37 !== 'Yes'}"/>
@@ -189,13 +189,13 @@
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <p style=" margin-bottom: 1%;"><b>Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</b></p>
+                        <p style=" margin-bottom: 1%;"><b>Have you ever been a candidate in a national or local election held within the last year (except Barangay election)? <span style="color: red;">*</span></b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_38aif" placeholder="If YES, give details" :disabled="!(otherInfo.other_38a === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_38a !== 'Yes'}" />
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38a" value="No" @change="checkFields('other_38a')" :disabled="!isEditingOtherInfo"/> No
                         </div>
-                        <p style="margin-bottom: 1%;"><b>Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</b></p>
+                        <p style="margin-bottom: 1%;"><b>Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate? <span style="color: red;">*</span></b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_38b" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.resignedGovtServiceDetails" placeholder="If YES, give details" :disabled="!(otherInfo.other_38b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_38b !== 'Yes'}"/>
@@ -204,7 +204,7 @@
                     </div>
                     <span class="broken-line"></span>
                     <div>
-                        <p style="margin-bottom: 1%;"><b>Have you acquired the status of an immigrant or permanent resident of another country?</b></p>
+                        <p style="margin-bottom: 1%;"><b>Have you acquired the status of an immigrant or permanent resident of another country? <span style="color: red;">*</span></b></p>
                         <div class="form-group">
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_39" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
                             <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_39if" placeholder="If YES, give details" :disabled="!(otherInfo.other_39 === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_39 !== 'Yes'}"/>
