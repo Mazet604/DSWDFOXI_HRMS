@@ -105,6 +105,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/dropdown/suffixes', [BackgroundController::class, 'suffix']);
+
+
     Route::get('/emp_father/Father', [BackgroundController::class, 'getFather']);
     Route::get('/emp_mother/Mother', [BackgroundController::class, 'getMother']);
     Route::get('/emp_spouse/Spouse', [BackgroundController::class, 'getSpouse']);

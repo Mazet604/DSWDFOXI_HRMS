@@ -161,7 +161,7 @@ class BackgroundController extends Controller
                     'ref_lname',
                     'ref_xname',
                     'ref_add',
-                    'ref_cnum'
+                    'ref_cnum',
                 )
                 ->get();
 
@@ -706,12 +706,6 @@ public function updateReferencesData(Request $request)
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()], 500);
     }
-}
-
-public function getRegions()
-{
-    $regions = lib_region::get();
-    return response()->json($regions);
 }
 
 public function getProvinces(Request $request)

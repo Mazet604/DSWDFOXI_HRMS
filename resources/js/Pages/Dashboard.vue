@@ -586,15 +586,17 @@ export default {
     },
 
     fetchFullName() {
-      axios.get('/employee/fullname')
+      return axios.get('/employee/fullname')
         .then(response => {
           this.fullName = response.data.fullName;
           this.empPosition = response.data.empPosition;
         })
         .catch(error => {
           this.errorMessage = 'Failed to load full name.';
+          throw error; // Rethrow the error to be handled by hideSuccessDialog
         });
     },
+
 
     fetchPersonalInfo() {
       axios.get('/employee/PersonalInfo')
@@ -952,10 +954,17 @@ onCroppingComplete(croppedBlob) {
     hideUpdateDialog() {
       this.showUpdateDialog = false;
     },
-    hideSuccessDialog() {
+    async hideSuccessDialog() {
       this.showSuccessDialog = false;
-      location.reload();
-    },
+      this.isEditing = false;
+
+      try {
+          await this.fetchFullName(); // Wait for fetchFullName to complete
+      } catch (error) {
+          console.error('Error during fetchFullName:', error);
+      }
+  },
+
 
     saveProfile() {
       axios.patch('/employee/updateProfile', this.fields)

@@ -789,22 +789,22 @@ export default {
     methods: {
 
         fetchSuffixes() {
-            fetch('/dropdown/suffixes')
-            .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch suffix options');
-            }
-            return response.json();
-            })
-            .then(data => {
-            this.suffixes = data;
-            })
-            .catch(error => {
-            console.error(error);
-        });
-    },
+                fetch('/dropdown/suffixes')
+                .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch suffix options');
+                }
+                return response.json();
+                })
+                .then(data => {
+                this.suffixes = data;
+                })
+                .catch(error => {
+                console.error(error);
+            });
+        },
 
-    tabButtonClass(tabName) {
+        tabButtonClass(tabName) {
             return {
                 'px-6 py-2 rounded-t-lg font-semibold border-t border-l border-r border-gray-200': true,
                 'bg-blue-900 text-white': this.activeTab === tabName,
@@ -1175,23 +1175,33 @@ export default {
             }
         };
 
-        const fetchReferencesData = async () => {
-            try {
-                const response = await axios.get('/emp_reference/ReferencesData');
-                referencesData.value = response.data;
-            } catch (error) {
-                console.error('Error fetching references data:', error);
-            }
+        const fetchReferencesData = () => {
+    return axios.get('/emp_reference/ReferencesData')
+        .then(response => {
+            referencesData.value = response.data;
+        })
+        .catch(error => {
+            // Handle error and optionally update error message or state
+            console.error('Error fetching references data:', error);
+            throw error; // Rethrow the error if needed for further handling
+        });
+};
+
+
+        const fetchChildData = () => {
+            return axios.get('/emp_child/ChildData')
+                .then(response => {
+                    // Assuming childData is a reactive reference or a state variable
+                    childData.value = response.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching child data:', error);
+                    // Optionally set an error message or state variable
+                    errorMessage.value = 'Failed to load child data.';
+                    throw error; // Rethrow the error if needed
+                });
         };
 
-        const fetchChildData = async () => {
-            try {
-                const response = await axios.get('/emp_child/ChildData');
-                childData.value = response.data;
-            } catch (error) {
-                console.error('Error fetching child data:', error);
-            }
-        };
 
         const addEducation = async () => {
             try {
@@ -1343,10 +1353,19 @@ export default {
             showAddReferencesDialog.value = false;
         };
 
-        const hideSuccessDialog = () => {
-            showSuccessDialog.value = false;
-            location.reload();
+        const hideSuccessDialog = async () => {
+            showSuccessDialog.value = false; // Hide the success modal
+
+            try {
+                await fetchChildData(); // Fetch child data
+                await fetchReferencesData(); // Fetch references data
+                isEditingFamily.value = false;
+            } catch (error) {
+                // Handle any errors from either fetch operation
+                console.error('Error during data fetching:', error);
+            }
         };
+
 
         const confirmUpdate = () => {
             showUpdateDialog.value = true;
