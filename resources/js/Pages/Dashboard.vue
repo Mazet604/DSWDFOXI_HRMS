@@ -121,7 +121,7 @@
 
             <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CONTACT INFORMATION</h2>
             <div class="grid grid-cols-3 gap-4 mb-6">
-              <div>
+                <div>
                   <label class="block mb-1 text-sm font-medium text-gray-700">
                     MOBILE NUMBER <span style="color: red;">*</span>
                   </label>
@@ -518,7 +518,7 @@ export default {
       this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
     },
     validateTelephoneNumber() {
-      this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
+      this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 8);
     },
 
     fetchSexOptions() {
