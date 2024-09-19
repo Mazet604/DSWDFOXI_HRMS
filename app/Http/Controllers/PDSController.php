@@ -141,14 +141,15 @@ class PDSController extends Controller
             default:
                 abort(404, 'Page not found');
         }
-
-        // Load the generated HTML into Dompdf
-        $pdf->loadHtml($html);
-        $pdf->setPaper('legal', 'portrait');
-        $pdf->render();
-
-        // Return the generated PDF
-        return $pdf->stream($page === '5' ? 'PDS_All_Pages.pdf' : "PDS_Page_{$page}.pdf");
+    
+    // Load the generated HTML into Dompdf
+    $pdf->loadHtml($html);
+    $pdf->setPaper('legal', 'portrait');
+    $pdf->render();
+    
+    // Return the generated PDF
+    return $pdf->stream($page === '5' ? 'PDS_All_Pages.pdf' : "PDS_Page_{$page}.pdf");
+    
 
     }
 }

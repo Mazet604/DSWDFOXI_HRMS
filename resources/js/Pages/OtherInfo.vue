@@ -511,6 +511,7 @@
 import axios from 'axios';
 import { ref, onMounted, h } from 'vue';
 import { Head } from '@inertiajs/vue3';
+import { Inertia } from '@inertiajs/inertia';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
