@@ -77,8 +77,8 @@
                 <input class="w-full p-2 border border-gray-300 rounded-md text-color" type="text" v-model="fields.citizenship" disabled />
               </div>
               <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">BIRTHDAY <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="fields.birthday" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }" :max="maxDate" />
+                <label class="block mb-1 text-sm font-medium text-gray-700">BIRTHDAY </label>
+                <input class="w-full p-2 border border-gray-300 rounded-md text-color" type="date" v-model="fields.birthday" disabled :class="{ 'disabled-input': !isEditing }" :max="maxDate" />
               </div>
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">PLACE OF BIRTH</label>
