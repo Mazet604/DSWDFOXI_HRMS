@@ -25,7 +25,7 @@
                 </div>
 
                 <!-- Family Tab -->
-                <div v-if="activeTab === 0" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 0" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <!-- Spouse Information -->
                     <div class="grid grid-cols-5 gap-4">
                         <div class="col-span-5 text-blue-800 mb-1 pb-2 border-b border-yellow-200">
@@ -143,7 +143,7 @@
                 </div>
 
                 <!-- Education Tab -->
-                <div v-if="activeTab === 1" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 1" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">EDUCATION</h2>
                     <DataTable v-model:selection="selectedRow" :value="educationData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -166,7 +166,7 @@
                 </div>
 
                 <!-- Organization Tab -->
-                <div v-if="activeTab === 2" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 2" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">ORGANIZATIONS</h2>
                     <DataTable v-model:selection="selectedRow" :value="organizationData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -183,7 +183,7 @@
                 </div>
 
                 <!-- Work Experience Tab -->
-                <div v-if="activeTab === 3" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 3" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">WORK EXPERIENCE</h2>
                     <DataTable v-model:selection="selectedRow" :value="workExperienceData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -207,7 +207,7 @@
                 </div>
 
                 <!-- Skills Tab -->
-                <div v-if="activeTab === 4" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 4" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">SKILLS</h2>
                     <DataTable v-model:selection="selectedRow" :value="skillsData" class="mt-8" :paginator="true" :rows="5">
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
@@ -224,12 +224,12 @@
                 </div>
 
                 <!-- References Tab -->
-                <div v-if="activeTab === 5" class="bg-white border border-blue-900 rounded-lg p-6">
+                <div v-if="activeTab === 5" class="bg-white border-2 border-blue-800 rounded-lg p-6">
                     <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200">REFERENCES</h2>
                 <DataTable v-model:selection="selectedRow" :value="referencesData" class="mt-8" :paginator="true" :rows="5">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="full_name" header="FULL NAME"></Column>
-                    <Column field="ref_add" header="ADDRESS"></Column>
+                    <Column field="ref_add" header="BLOCK/STREET/PUROK"></Column>
                     <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
@@ -256,24 +256,30 @@
                         <div v-for="(value, key) in filteredEditFields" :key="key">
                             <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
 
-                            <!-- Child Date of Birth (with validation) -->
-                            <template v-if="key === 'child_dob'">
-                                <input
+                            <template v-if="key === 'child_xname'">
+                                <select
                                     class="input-field"
-                                    :type="getInputType(key, value)"
                                     v-model="editFields[key]"
-                                    :max="maxDate"
-                                    :class="{'border-red-500': !isChildDobValid}"
-                                    @input="validateChildDob"
-                                />
-                                <!-- Error message for Child DOB -->
-                                <p v-if="!isChildDobValid" class="mt-1 text-xs text-red-500">
-                                    Date of birth must be at least 1 month ago and cannot be in the future.
-                                </p>
+                                >
+                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                        {{ suffix.label }}
+                                    </option>
+                                </select>
+                            </template>
+
+                            <template v-else-if="key === 'ref_xname'">
+                                <select
+                                    class="input-field"
+                                    v-model="editFields[key]"
+                                >
+                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                        {{ suffix.label }}
+                                    </option>
+                                </select>
                             </template>
 
                             <!-- Work Experience Date Fields (with validation) -->
-                            <template v-else-if="key === 'workfr' || key === 'workto'">
+                            <template v-else-if="key === 'workfr' || key === 'workto' || key === 'child_dob'">
                                 <input
                                     class="input-field"
                                     type="date"
@@ -300,8 +306,8 @@
                             />
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
-                        <button @click="hideEditDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
+                    <div class="mt-6 text-center">
+                        <button @click="hideEditDialog" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
                         <button @click="saveEdit" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
@@ -339,11 +345,11 @@
                         <h2 class="text-xl font-semibold mb-4">Are you sure you want to update?</h2>
                         <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                     </div>
-                    <div class="mt-6 text-right">
-                        <button @click="hideUpdateDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
+                    <div class="mt-6 text-center">
+                        <button @click="hideUpdateDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
-                        <button @click="saveUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
+                        <button @click="saveUpdate" class="px-6 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
                             Confirm
                         </button>
                     </div>
@@ -389,8 +395,8 @@
                             />
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
-                        <button @click="hideAddChildDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
+                    <div class="mt-6 text-center">
+                        <button @click="hideAddChildDialog" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
                         <button @click="addChild" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
@@ -582,7 +588,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">ADDRESS</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
                             <input class="input-field" type="text" v-model="newReference.ref_add" />
                         </div>
                         <div>
@@ -665,9 +671,8 @@ export default {
                 ref_mname: 'MIDDLE NAME',
                 ref_lname: 'LAST NAME',
                 ref_xname: 'SUFFIX',
-                ref_add: 'ADDRESS',
+                ref_add: 'BLOCK/STREET/PUROK',
                 ref_cnum: 'CONTACT NUMBER',
-                // Add other fields as needed
             },
             fullName: '',
             empPosition: '',
@@ -784,22 +789,22 @@ export default {
     methods: {
 
         fetchSuffixes() {
-            fetch('/dropdown/suffixes')
-            .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch suffix options');
-            }
-            return response.json();
-            })
-            .then(data => {
-            this.suffixes = data;
-            })
-            .catch(error => {
-            console.error(error);
-        });
-    },
+                fetch('/dropdown/suffixes')
+                .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch suffix options');
+                }
+                return response.json();
+                })
+                .then(data => {
+                this.suffixes = data;
+                })
+                .catch(error => {
+                console.error(error);
+            });
+        },
 
-    tabButtonClass(tabName) {
+        tabButtonClass(tabName) {
             return {
                 'px-6 py-2 rounded-t-lg font-semibold border-t border-l border-r border-gray-200': true,
                 'bg-blue-900 text-white': this.activeTab === tabName,
@@ -1170,23 +1175,33 @@ export default {
             }
         };
 
-        const fetchReferencesData = async () => {
-            try {
-                const response = await axios.get('/emp_reference/ReferencesData');
-                referencesData.value = response.data;
-            } catch (error) {
-                console.error('Error fetching references data:', error);
-            }
+        const fetchReferencesData = () => {
+    return axios.get('/emp_reference/ReferencesData')
+        .then(response => {
+            referencesData.value = response.data;
+        })
+        .catch(error => {
+            // Handle error and optionally update error message or state
+            console.error('Error fetching references data:', error);
+            throw error; // Rethrow the error if needed for further handling
+        });
+};
+
+
+        const fetchChildData = () => {
+            return axios.get('/emp_child/ChildData')
+                .then(response => {
+                    // Assuming childData is a reactive reference or a state variable
+                    childData.value = response.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching child data:', error);
+                    // Optionally set an error message or state variable
+                    errorMessage.value = 'Failed to load child data.';
+                    throw error; // Rethrow the error if needed
+                });
         };
 
-        const fetchChildData = async () => {
-            try {
-                const response = await axios.get('/emp_child/ChildData');
-                childData.value = response.data;
-            } catch (error) {
-                console.error('Error fetching child data:', error);
-            }
-        };
 
         const addEducation = async () => {
             try {
@@ -1338,10 +1353,19 @@ export default {
             showAddReferencesDialog.value = false;
         };
 
-        const hideSuccessDialog = () => {
-            showSuccessDialog.value = false;
-            location.reload();
+        const hideSuccessDialog = async () => {
+            showSuccessDialog.value = false; // Hide the success modal
+
+            try {
+                await fetchChildData(); // Fetch child data
+                await fetchReferencesData(); // Fetch references data
+                isEditingFamily.value = false;
+            } catch (error) {
+                // Handle any errors from either fetch operation
+                console.error('Error during data fetching:', error);
+            }
         };
+
 
         const confirmUpdate = () => {
             showUpdateDialog.value = true;

@@ -13,7 +13,7 @@
             <!-- Profile Image with Hover Effect -->
             <div class="relative object-cover w-24 h-24 rounded-full lg:w-36 lg:h-36 group">
               <!-- Profile Picture -->
-              <img :src="profilePictureUrl" alt="Profile Picture" class="object-cover w-full h-full rounded-full" />
+              <img :src="profilePictureUrl" alt="Profile Picture" class="object-cover w-full h-full rounded-full border" />
               <!-- Camera Icon Overlay -->
               <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 bg-black bg-opacity-50 rounded-full opacity-0 cursor-pointer group-hover:opacity-100" @click="triggerFileUpload">
                 <i class="text-3xl text-white fas fa-camera"></i>
@@ -26,7 +26,7 @@
             <div class="ml-4 text-left">
               <h2 class="text-4xl font-semibold text-blue-800">{{ fullName }}</h2>
               <hr class="my-2 border-2 border-yellow-200" />
-              <p class="text-lg text-gray-600">{{ empPosition }}</p>
+              <p class="text-lg text-gray-600 font-semibold">{{ empPosition }}</p>
             </div>
           </div>
 
@@ -37,7 +37,7 @@
           </div>
 
           <!-- Personal Info Tab -->
-          <div v-if="activeTab === 0" class="p-6 bg-white border border-blue-900 rounded-lg">
+          <div v-if="activeTab === 0" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
             <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">BASIC INFORMATION</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
@@ -121,7 +121,7 @@
 
             <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CONTACT INFORMATION</h2>
             <div class="grid grid-cols-3 gap-4 mb-6">
-              <div>
+                <div>
                   <label class="block mb-1 text-sm font-medium text-gray-700">
                     MOBILE NUMBER <span style="color: red;">*</span>
                   </label>
@@ -156,7 +156,7 @@
     </div>
 
           <!-- Address Tab -->
-          <div v-if="activeTab === 1" class="p-6 bg-white border border-blue-900 rounded-lg">
+          <div v-if="activeTab === 1" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
             <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">PERMANENT ADDRESS</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
@@ -518,7 +518,7 @@ export default {
       this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
     },
     validateTelephoneNumber() {
-      this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 7);
+      this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 8);
     },
 
     fetchSexOptions() {
@@ -586,15 +586,17 @@ export default {
     },
 
     fetchFullName() {
-      axios.get('/employee/fullname')
+      return axios.get('/employee/fullname')
         .then(response => {
           this.fullName = response.data.fullName;
           this.empPosition = response.data.empPosition;
         })
         .catch(error => {
           this.errorMessage = 'Failed to load full name.';
+          throw error; // Rethrow the error to be handled by hideSuccessDialog
         });
     },
+
 
     fetchPersonalInfo() {
       axios.get('/employee/PersonalInfo')
@@ -952,10 +954,17 @@ onCroppingComplete(croppedBlob) {
     hideUpdateDialog() {
       this.showUpdateDialog = false;
     },
-    hideSuccessDialog() {
+    async hideSuccessDialog() {
       this.showSuccessDialog = false;
-      location.reload();
-    },
+      this.isEditing = false;
+
+      try {
+          await this.fetchFullName(); // Wait for fetchFullName to complete
+      } catch (error) {
+          console.error('Error during fetchFullName:', error);
+      }
+  },
+
 
     saveProfile() {
       axios.patch('/employee/updateProfile', this.fields)
@@ -1003,6 +1012,9 @@ onCroppingComplete(croppedBlob) {
 </script>
 
 <style scoped>
+
+
+
 .bg-cover {
     background-size: cover;
 }

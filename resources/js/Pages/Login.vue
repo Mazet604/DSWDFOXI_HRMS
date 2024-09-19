@@ -2,7 +2,7 @@
     <Head title="Log in" />
 
     <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/backgrounddswd.png');">
-        <div class="w-full max-w-xs p-4 bg-white-700 rounded-lg shadow-md sm:p-6 lg:p-8 sm:max-w-md lg:max-w-lg">
+        <div class="w-full max-w-xs p-4 bg-white-700 rounded-lg shadow-md sm:p-6 lg:p-8 sm:max-w-md lg:max-w-lg border border-grey-400">
             <div class="flex justify-center mb-6 lg:mb-8">
                 <img src="/images/dswd-logo1.png" alt="DSWD Logo" class="h-20 lg:h-40" />
             </div>
@@ -39,10 +39,10 @@
                 </div>
 
                 <div class="flex items-center justify-between mt-8">
-                    <Link v-if="canResetPassword" :href="route('password.request')" class="text- text-blue-600 underline hover:no-underline">
+                    <Link v-if="canResetPassword" :href="route('password.request')" class="text- text-blue-700 underline hover:no-underline">
                         Forgot password?
                     </Link>
-                    <PrimaryButton class="py-2 px-12 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full hover:from-blue-600 hover:to-blue-700" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <PrimaryButton class="py-2 px-12 text-lg font-semibold text-white bg-gradient-to-r from-blue-900 to-blue-900 rounded-full hover:from-blue-800 hover:to-blue-800" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         SIGN IN
                     </PrimaryButton>
                 </div>

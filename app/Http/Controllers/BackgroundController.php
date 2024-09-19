@@ -14,6 +14,10 @@ use App\Models\emp_father;
 use App\Models\emp_mother;
 use App\Models\emp_spouse;
 use App\Models\employee;
+use App\Models\lib_region;
+use App\Models\lib_province;
+use App\Models\lib_city;
+use App\Models\lib_brgy;
 use App\Models\EmpFamily;
 use App\Models\lib_suffix;
 use Illuminate\Support\Facades\Log;
@@ -157,7 +161,7 @@ class BackgroundController extends Controller
                     'ref_lname',
                     'ref_xname',
                     'ref_add',
-                    'ref_cnum'
+                    'ref_cnum',
                 )
                 ->get();
 
@@ -702,6 +706,36 @@ public function updateReferencesData(Request $request)
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
+public function getProvinces(Request $request)
+{
+    $provinces = lib_province::where('reg_psgc', $request->reg_psgc)
+                            ->orderBy('col_province', 'asc')
+                            ->get();
+    return response()->json($provinces);
+}
+
+public function getCities(Request $request)
+{
+    $cities = lib_city::where('prv_psgc', $request->prv_psgc)
+                      ->orderBy('col_citymuni', 'asc')
+                      ->get();
+    return response()->json($cities);
+}
+
+public function getBarangays(Request $request)
+{
+    $barangays = lib_brgy::where('citmun_psgc', $request->citmun_psgc)
+                         ->orderBy('col_brgy', 'asc')
+                         ->get();
+    return response()->json($barangays);
+}
+
+public function getAllCities()
+{
+    $cities = lib_city::all();
+    return response()->json($cities);
 }
 
 
