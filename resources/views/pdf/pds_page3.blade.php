@@ -1,266 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Page 3</title>
-    <style>
-      .profile-picture {
-          width: 150px;
-          height: 150px;
-          object-fit: cover;
-      }
-      body {
-          font-family: Arial, sans-serif;
-          font-size: 8px; /* Smaller font size */
-          margin: 0;
-          padding: 10px;
-      }
-      /* Table Styling */
-      table {
-          width: 100%;
-        border-collapse: collapse; /* Remove spacing between table cells */
-      }
-
-      th, td {
-          border: 1px solid black;
-          padding: 5px;
-          text-align: left;
-      }
-
-      /* Column Styling */
-      td:first-child { /* Style the left column */
-        width: 25%; /* Adjust width as needed */
-      }
-
-      td:nth-child(2) { /* Style the right column */
-        width: 75%; /* Adjust width as needed */
-      }
-
-      /* Specific Field Styling */
-      #surname, #first_name, #middle_name, #name_extension, #place_of_birth, #gsis_no, #pgbg_no, #ph_no, #sss_no, #tin_no, #agemp_no, #country, #street, #village, #barangay, #city_municipality, #province, #zip_code, #permanent_address, #permanent_street, #permanent_village, #permanent_barangay, #permanent_city_municipality, #permanent_province, #permanent_zip_code, #tel_no, #mob_no, #email_add {
-        width: 100%; /* Make input fields fill the width of the cell */
-      }
-
-      /* Radio Button Styling */
-      input[type="radio"] {
-        margin-right: 5px; /* Add spacing between radio button and label */
-      }
-
-      /* Checkbox Styling */
-      input[type="checkbox"] {
-        margin-right: 5px; /* Add spacing between checkbox and label */
-      }
-
-      /* Additional Styling (Optional) */
-      h1 { /* Style the heading */
-          text-align: center;
-          font-size: 24px;
-          margin-bottom: 20px;
-      }
-
-      th {
-          background-color: #f2f2f2;
-      }
-      h1, h2 {
-          text-align: center;
-          font-size: 12px; /* Smaller header font size */
-          margin: 10px 0;
-      }
-      p {
-          margin: 0 0 5px;
-          font-size: 8px; /* Smaller font size for paragraphs */
-      }
-      label {
-          display: block;
-          font-size: 8px; /* Smaller font size for labels */
-      }
-      .first_part {
-          width: 95%;
-          margin: 0 auto;
-          padding: 20px;
-          border: 1px solid black;
-          border-collapse: collapse;
-      }
-      .first_part h5, .first_part h7, .first_part h2 {
-          text-align: center;
-          margin: 0;
-          padding: 5px 0;
-      }
-      .first_part h7 {
-          font-size: 12px;
-      }
-      .first_part h2 {
-          margin-bottom: 10px;
-      }
-      .container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 20px;
-          box-sizing: border-box;
-      }
-
-      .references-table, .id-table {
-          width: 100%;
-          border-collapse: collapse;
-          margin-bottom: 20px;
-      }
-
-      .references-table th, .references-table td,
-      .id-table th, .id-table td {
-          border: 1px solid black;
-          padding: 5px;
-          text-align: left;
-          vertical-align: top;
-      }
-
-      .references-table th {
-          text-align: center;
-      }
-
-      .declaration {
-          margin-bottom: 20px;
-      }
-
-      .id-table .photo-box {
-          width: 120px;
-          height: 150px;
-          text-align: center;
-          border: 1px solid black;
-          vertical-align: top;
-          padding: 20px;
-      }
-
-      .signature-box {
-          text-align: left;
-      }
-
-      .signature-area {
-          border: 1px solid black;
-          height: 40px;
-          margin-top: 5px;
-      }
-
-      .thumbmark-box {
-          display: flex;
-          align-items: center;
-          margin-bottom: 20px;
-      }
-
-      .thumbmark-label {
-          margin-right: 10px;
-      }
-
-      .thumbmark-area {
-          border: 1px solid black;
-          width: 120px;
-          height: 100px;
-      }
-
-      .oath-box {
-          text-align: left;
-      }
-
-      .oath-box p {
-          margin-bottom: 20px;
-      }
-
-      .administering-oath {
-          text-align: center;
-          border-top: 1px solid black;
-          margin-top: 40px;
-          padding-top: 10px;
-      }
-
-  </style>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 7.6.7.2 (Linux)"/>
+	<meta name="author" content="Mark00s Art"/>
+	<meta name="created" content="2024-09-18T06:50:57"/>
+	<meta name="changedby" content="Mark00s Art"/>
+	<meta name="changed" content="2024-09-18T06:51:06"/>
+	<meta name="AppVersion" content="16.0300"/>
+	
+    <style type="text/css">
+		
+		body {
+			font-family: "Calibri", sans-serif;
+			font-size: x-small;
+			margin: 0;
+			padding: 0;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid black;
+			padding: 2px;
+			text-align: center;
+			vertical-align: middle;
+			font-family: "Arial Narrow", sans-serif;
+		}
+		tr {
+			height: 20px;
+		}
+		thead th {
+			background-color: #C0C0C0;
+		}
+		.header {
+			background-color: #969696;
+			color: #FFFFFF;
+			border: 2px solid #000000;
+			font-weight: bold;
+			font-style: italic;
+			text-align: left;
+			padding: 5px;
+		}
+		.comment-indicator:hover + comment { 
+			background: #ffd; 
+			position: absolute; 
+			display: block; 
+			border: 1px solid black; 
+			padding: 0.5em;  
+		} 
+		.comment-indicator { 
+			background: red; 
+			display: inline-block; 
+			border: 1px solid black; 
+			width: 0.5em; 
+			height: 0.5em;  
+		} 
+		comment { display: none;  } 
+	</style>
 </head>
 <body>
-    <div class="container">
-        <table>
-            <tr><td>VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT / PEOPLE / VOLUNTARY ORGANIZATION/S</td></tr>
-            <tr>
-              <th> 29. NAME & ADDRESS OF ORGANIZATION (Write in full)</th>
-              <th colspan="2">INCLUSIVE DATES (mm/dd/yyyy)</th>
-              <th>NUMBER OF HOURS</th>
-              <th>POSITION / NATURE OF WORK</th>
-          </tr>
-          <tr>
-            <td></td> {{-- Empty cell to align with the LEVEL header --}}
-            <td>FROM</td> {{-- Empty cell to align with the NAME OF SCHOOL header --}}
-            <td>TO</td> {{-- Label for "FROM" --}}
-            <td></td>   {{-- Label for "TO" --}}
-            <td></td> {{-- Empty cell to align with YEAR GRADUATED header --}}
+    <table cellspacing="0">
+        <tr>
+            <th class="header" colspan="13" height="30"><i>VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT / PEOPLE / VOLUNTARY ORGANIZATION/S</i></th>
         </tr>
+        <tr>
+            <th colspan="5" rowspan="3" bgcolor="#C0C0C0">29. NAME & ADDRESS OF ORGANIZATION (Write in full)</th>
+            <th colspan="4" rowspan="2" bgcolor="#C0C0C0">INCLUSIVE DATES (mm/dd/yyyy)</th>
+            <th rowspan="3" bgcolor="#C0C0C0">NUMBER OF HOURS</th>
+            <th colspan="3" rowspan="3" bgcolor="#C0C0C0">POSITION / NATURE OF WORK</th>
+        </tr>
+        <tr></tr>
+        <tr>
+            <th colspan="2" bgcolor="#C0C0C0">From</th>
+            <th colspan="2" bgcolor="#C0C0C0">To</th>
+        </tr>
+        <tbody>
         @php
             $emp_vol = App\Models\emp_voluntary::where('empid', $employee->empid)->get();
         @endphp
             @foreach($emp_vol as $emp_voluntary)
-          <tr>
-              <td>{{ ($emp_voluntary->vol_name ?? 'N/A') }} <br> {{($emp_voluntary->vol_add ?? 'N/A') }}</td>
-              <td>{{$emp_voluntary->vol_fr ?? 'N/A'}}</td>
-              <td>{{$emp_voluntary->vol_to ?? 'N/A'}}</td>
-              <td>{{$emp_voluntary->vol_hrs ?? 'N/A'}}</td>
-              <td>{{$emp_voluntary->vol_pos  ?? 'N/A'}}</td>
-          </tr>
-          @endforeach
-          <p style="color: red">(Continue on separate sheet if necessary)</p>
-        </table>
-        <table>
-          <tr><td>VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING PROGRAMS ATTENDED</td></tr> 
-            <tr>
-              <th>30. TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAMS (Write in full)</th>
-              <th colspan="2">INCLUSIVE DATES (mm/dd/yyyy)</th>
-              <th>NUMBER OF HOURS</th>
-              <th>Type of LD (Managerial/ Supervisory/Technical/etc)</th>
-              <th>CONDUCTED/ SPONSORED BY (Write in full)</th>
-          </tr>
-          <tr>
-            
-            <td></td>
-            <td>From</td>
-            <td>To</td> 
-            <td></td>  
-            <td></td>
-            <td></td>
+        <tr>
+            <td colspan="5" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{ ($emp_voluntary->vol_name ?? 'N/A') }} <br> {{($emp_voluntary->vol_add ?? 'N/A') }}</td>
+            <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_voluntary->vol_fr ?? 'N/A'}}</td>
+            <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_voluntary->vol_to ?? 'N/A'}}</td>
+            <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_voluntary->vol_hrs ?? 'N/A'}}</td>
+            <td colspan="3" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_voluntary->vol_pos  ?? 'N/A'}}</td>
         </tr>
-        @php
+        @endforeach
+        <tr>
+            <td colspan="5" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td colspan="3" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+        </tr>
+        <tr>
+            <td colspan="5" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td colspan="3" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+        </tr>
+        <tr>
+            <td colspan="5" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+            <td colspan="3" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" colspan="13" height="13" align="center" valign="middle" bgcolor="#C0C0C0">
+                <b><i><font face="Arial Narrow" size="1" color="#FF0000">(Continue on separate sheet if necessary)</font></i></b>
+            </td>
+        </tr>
+        </tbody>
+        <tr>
+            <th class="header" colspan="13" height="30">VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING PROGRAMS ATTENDED</th>
+        </tr>
+        <tr>
+            <th colspan="4" rowspan="3" bgcolor="#C0C0C0">30. TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAMS (Write in full)</th>
+            <th colspan="4" rowspan="2" bgcolor="#C0C0C0">INCLUSIVE DATES OF ATTENDANCE (mm/dd/yyyy)</th>
+            <th rowspan="3" bgcolor="#C0C0C0">NUMBER OF HOURS</th>
+            <th rowspan="3" bgcolor="#C0C0C0">Type of LD (Managerial/ Supervisory/ Technical/etc)</th>
+            <th colspan="3" rowspan="3" bgcolor="#C0C0C0">CONDUCTED/ SPONSORED BY (Write in full)</th>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td colspan="2" height="18" bgcolor="#C0C0C0">From</td>
+            <td colspan="2" bgcolor="#C0C0C0">To</td>
+        </tr>
+        <tbody> 
+            @php
             $emp_learndev = App\Models\emp_learning::where('empid', $employee->empid)->get();
         @endphp
             @foreach($emp_learndev as $emp_learning)
           <tr>
-              <td>{{$emp_learning->learn_title ?? 'N/A'}}</td>
-              <td>{{$emp_learning->learn_fr ?? 'N/A'}}</td>
-              <td>{{$emp_learning->learn_to ?? 'N/A'}}</td>
-              <td>{{$emp_learning->learn_hrs ?? 'N/A'}}</td>
-              <td>{{$emp_learning->learn_type  ?? 'N/A'}}</td>
-              <td>{{$emp_learning->learn_con  ?? 'N/A'}}</td>
+              <td colspan="4" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_learning->learn_title ?? 'N/A'}}</td>
+              <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_learning->learn_fr ?? 'N/A'}}</td>
+              <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_learning->learn_to ?? 'N/A'}}</td>
+              <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_learning->learn_hrs ?? 'N/A'}}</td>
+              <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_learning->learn_type  ?? 'N/A'}}</td>
+              <td colspan="3" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">{{$emp_learning->learn_con  ?? 'N/A'}}</td>
           </tr>
           @endforeach
-          <tr><td>VIII.  OTHER INFORMATION</td></tr> 
-          <tr>
-            <th colspan="2"> 31. SPECIAL SKILLS and HOBBIES NON-ACADEMIC DISTINCTIONS / RECOGNITION                                                                                                                                              
-             (Write in full)</th>
-            <th>33. MEMBERSHIP IN ASSOCIATION/ORGANIZATION (Write in full)</th>
-        </tr>
-              @php
-              $emp_skill = App\Models\emp_skills::where('empid', $employee->empid)->get();
-              $emp_organization = App\Models\emp_org::where('empid', $employee->empid)->get();
-              $emp_recognition = App\Models\emp_recog::where('empid', $employee->empid)->get();
-              $max_count = max($emp_skill->count(), $emp_organization->count(), $emp_recognition->count());
-          @endphp
-          
-          @for ($i = 0; $i < $max_count; $i++)
-              <tr>
-                  <td>{{ $emp_skill[$i]->skill ?? 'N/A' }}</td>
-                  <td>{{ $emp_recognition[$i]->recog_name ?? 'N/A' }}</td>
-                  <td>{{ $emp_organization[$i]->org_name ?? 'N/A' }}</td>
-              </tr>
-          @endfor  
-        <p style="color: red">(Continue on separate sheet if necessary)</p>
-        <tr>
-          <td>SIGNATURE</td> <td></td>
-          <td>DATE</td> <td>{{ date('F d, Y') }}</td>
-        </tr>
-          </table>
-    </div>
-</body>
+            <tr>
+                <td colspan="4" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td colspan="3" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td colspan="3" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td colspan="2" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle"></td>
+                <td colspan="3" style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" align="left" valign="middle">
+                </td>
+            </tr>
+        </tbody>
+	<tr>
+		<td style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000" colspan=13 height="21" align="center" valign=middle bgcolor="#C0C0C0" sdnum="1033;0;@"><b><i><font face="Arial Narrow" size=1 color="#FF0000">(Continue on separate sheet if necessary)</font></i></b></td>
+		</tr>
+				<tr>
+                    <th class="header" colspan="13" height="30"><i>VIII. OTHER INFORMATION</i></th>
+				</tr>
+				<tr>
+					<th colspan="4" style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; background-color: #C0C0C0; text-align: center; vertical-align: middle;">
+						<font face="Arial Narrow" size="1">31. SPECIAL SKILLS and HOBBIES</font>
+					</th>
+					<th colspan="5" style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000; text-align: center; vertical-align: middle; background-color: #C0C0C0;">
+						<font face="Arial Narrow" size="1">32. NON-ACADEMIC DISTINCTIONS / RECOGNITION (Write in full)</font>
+					</th>
+					<th colspan="4"  style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-right: 2px solid #000000; text-align: center; vertical-align: middle; background-color: #C0C0C0;">
+						<font face="Arial Narrow" size="1">33. MEMBERSHIP IN ASSOCIATION/ORGANIZATION (Write in full)</font>
+					</th>
+				</tr>
+            <tbody>
+                @php
+                $emp_skill = App\Models\emp_skills::where('empid', $employee->empid)->get();
+                $emp_organization = App\Models\emp_org::where('empid', $employee->empid)->get();
+                $emp_recognition = App\Models\emp_recog::where('empid', $employee->empid)->get();
+                $max_count = max($emp_skill->count(), $emp_organization->count(), $emp_recognition->count());
+            @endphp
+            
+            @for ($i = 0; $i < $max_count; $i++)
+                <tr>
+                    <td colspan="4" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 2px solid #000000; border-right: 1px solid #000000; height: 33px; text-align: center; vertical-align: middle;">{{ $emp_skill[$i]->skill ?? 'N/A' }}</td>
+                    <td colspan="5" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; text-align: center; vertical-align: middle; font-size: 8px">{{ $emp_recognition[$i]->recog_name ?? 'N/A' }}</td>
+                    <td colspan="4" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; text-align: center; vertical-align: middle;">{{ $emp_organization[$i]->org_name ?? 'N/A' }}</td>
+                </tr>
+            @endfor  
+  
+				<tr>
+					<td colspan="4" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 2px solid #000000; border-right: 1px solid #000000; height: 33px; text-align: center; vertical-align: middle;">
+						<b><font face="Arial Narrow"></font></b>
+					</td>
+					<td colspan="5" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; text-align: center; vertical-align: middle;">
+						<b><font face="Arial Narrow"></font></b>
+					</td>
+					<td colspan="4" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 2px solid #000000; text-align: center; vertical-align: middle;">
+						<b><font face="Arial Narrow"></font></b>
+					</td>
+				</tr>
+            </tbody>
+				<tr>
+					<td colspan="13" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; height: 15px; background-color: #C0C0C0; text-align: center; vertical-align: middle;">
+						<b><i><font face="Arial Narrow" size="1" color="#FF0000">(Continue on separate sheet if necessary)</font></i></b>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; height: 38px; background-color: #C0C0C0; text-align: center; vertical-align: middle;">
+						<b><i><font face="Arial Narrow">SIGNATURE</font></i></b>
+					</td>
+					<td colspan="4" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; text-align: center; vertical-align: middle;">
+						<b><i><font face="Arial Narrow"></font></i></b>
+					</td>
+					<td colspan="2" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; background-color: #EAEAEA; text-align: center; vertical-align: middle;">
+						<b><i><font face="Arial Narrow">DATE</font></i></b>
+					</td>
+					<td colspan="3" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; text-align: center; vertical-align: middle;">
+						<b><i><font face="Arial Narrow"></font></i></b>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="11" style="height: 13px; text-align: right; vertical-align: bottom;">
+						<i><font face="Arial" size="1">CS FORM 212 (Revised 2017), Page 3 of 4</font></i>
+					</td>
+				</tr>
+			</table>
+		</body>
 </html>

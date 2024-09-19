@@ -511,6 +511,7 @@
 import axios from 'axios';
 import { ref, onMounted, h } from 'vue';
 import { Head } from '@inertiajs/vue3';
+import { Inertia } from '@inertiajs/inertia';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
@@ -969,18 +970,18 @@ export default {
 
     // Method to proceed with the update after confirmation
     updateData() {
-        this.showUpdateDialog = false; // Hide the update confirmation dialog
-        
-        axios.put('/emp_otherinfo/other-info', this.otherInfo)
-            .then(response => {
-                console.log('Update successful:', response.data);
-                this.showSuccessDialog = true; // Show success dialog after update
-            })
-            .catch(error => {
-                console.error('Error updating data:', error);
-            });
+    this.showUpdateDialog = false; // Hide the update confirmation dialog
 
-            location.reload();
+    axios.put('/emp_otherinfo/other-info', this.otherInfo)
+        .then(response => {
+            console.log('Update successful:', response.data);
+            this.showSuccessDialog = true; // Show success dialog after update
+
+            this.isEditingOtherInfo = false;
+        })
+        .catch(error => {
+            console.error('Error updating data:', error);
+        });
     },
 
     onConfirmUpdate() {

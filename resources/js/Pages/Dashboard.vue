@@ -924,7 +924,7 @@ onCroppingComplete(croppedBlob) {
 
     hidePhotoSuccessDialog() {
       this.showPhotoSuccessDialog = false; // Hide the success modal
-      location.reload();
+      // location.reload();
     },
 
     tabButtonClass(tabName) {
