@@ -52,16 +52,16 @@
 
             <div class="grid grid-cols-4 gap-4 mb-6">
               <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">SURNAME <span style="color: red;">*</span></label>
+                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.lastName" :disabled="!isEditing" @input="validateName('lastName')" :class="{ 'disabled-input': !isEditing }"/>
+              </div>
+              <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">FIRST NAME <span style="color: red;">*</span></label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.firstName" :disabled="!isEditing" @input="validateName('firstName')" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">MIDDLE NAME <span style="color: red;">*</span></label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.middleName" :disabled="!isEditing" @input="validateName('middleName')" :class="{ 'disabled-input': !isEditing }"/>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">LAST NAME <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="fields.lastName" :disabled="!isEditing" @input="validateName('lastName')" :class="{ 'disabled-input': !isEditing }"/>
               </div>
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">SUFFIX <span style="color: red;">*</span></label>

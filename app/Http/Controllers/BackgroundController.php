@@ -151,7 +151,7 @@ class BackgroundController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-
+    
             // Select the required columns
             $referencesData = emp_reference::where('empid', $user->empid)
                 ->select(
@@ -164,24 +164,30 @@ class BackgroundController extends Controller
                     'ref_cnum',
                 )
                 ->get();
-
+    
             if ($referencesData->isEmpty()) {
                 return response()->json(['error' => 'Data not found'], 404);
             }
-
+    
             // Format the full name
             $formattedReferences = $referencesData->map(function($reference) {
+                // Set ref_xname to 0 if it is null
+                if (is_null($reference->ref_xname)) {
+                    $reference->ref_xname = 0;
+                }
+    
                 // Fetch the suffix value based on the numerical value in ref_xname
                 $suffix = lib_suffix::where('lib1_count', $reference->ref_xname)->first();
                 $suffix_value = $suffix ? $suffix->lib1_suffix : '';
-
+    
+                // Format the full name without the suffix if it is None
                 $reference->full_name = trim($reference->ref_fname . ' ' .
                                             $reference->ref_mname . ' ' .
                                             $reference->ref_lname . ' ' .
-                                            $suffix_value);
+                                            ($suffix_value !== 'None' ? $suffix_value : ''));
                 return $reference;
             });
-
+    
             return response()->json($formattedReferences);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -524,7 +530,7 @@ public function getChildData()
             $fullName = trim($child->child_fname . ' ' .
                              $child_mname_initial . ' ' .
                              $child->child_lname . ' ' .
-                             $suffix_value);
+                             ($suffix_value !== 'None' ? $suffix_value : ''));
             $age = \Carbon\Carbon::parse($child->child_dob)->age;
         
 
