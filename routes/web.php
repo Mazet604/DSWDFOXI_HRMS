@@ -158,13 +158,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/download-pds/{page?}', [PDSController::class, 'downloadPDS']);
 
-
 });
 
 require __DIR__.'/auth.php';
-
-Route::get('/test-email', function () {
-    $otp = EmailHelper::generateOTP();
-    EmailHelper::sendOTPEmail('your-email@example.com', $otp);
-    return 'Test email sent';
-});
