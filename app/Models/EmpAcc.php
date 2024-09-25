@@ -23,6 +23,7 @@ class EmpAcc extends Authenticatable
         'empuser',
         'empmail',
         'emppass',
+        'user_type'
     ];
 
     // Specify the hidden fields

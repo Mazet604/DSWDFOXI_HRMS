@@ -171,6 +171,7 @@ class BackgroundController extends Controller
     
             // Format the full name
             $formattedReferences = $referencesData->map(function($reference) {
+                $ref_mname_initial = $reference->ref_mname ? substr($reference->ref_mname, 0, 1) . '.' : '';
                 // Set ref_xname to 0 if it is null
                 if (is_null($reference->ref_xname)) {
                     $reference->ref_xname = 0;
@@ -182,7 +183,7 @@ class BackgroundController extends Controller
     
                 // Format the full name without the suffix if it is None
                 $reference->full_name = trim($reference->ref_fname . ' ' .
-                                            $reference->ref_mname . ' ' .
+                                            $ref_mname_initial . ' ' .
                                             $reference->ref_lname . ' ' .
                                             ($suffix_value !== 'None' ? $suffix_value : ''));
                 return $reference;

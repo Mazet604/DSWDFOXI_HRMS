@@ -121,6 +121,14 @@ const onInput = (event, index) => {
     }
 };
 
+const handlePaste = (event) => {
+    const paste = (event.clipboardData || window.clipboardData).getData('text');
+    if (/^\d{6}$/.test(paste)) {
+        otpDigits.value = paste.split('');
+        event.preventDefault();
+    }
+};
+
 watch(savedContext, (newContext) => {
     form.context = newContext;
 });
@@ -147,8 +155,6 @@ const formattedTimer = computed(() => {
 
             <hr class="mb-16 border-gray-300">
 
-
-
             <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
                 {{ status }}
             </div>
@@ -169,6 +175,7 @@ const formattedTimer = computed(() => {
                             v-model="otpDigits[index]"
                             maxlength="1"
                             @input="(e) => onInput(e, index)"
+                            @paste="handlePaste"
                             required
                         />
                     </div>
@@ -187,8 +194,6 @@ const formattedTimer = computed(() => {
                 </div>
             </form>
         </div>
-
-
 
         <!-- Password Changed Success Message -->
         <div v-else-if="passwordChanged" class="w-full max-w-lg p-6 bg-white rounded-lg shadow-md sm:p-8 lg:p-10 sm:max-w-xl lg:max-w-2xl">

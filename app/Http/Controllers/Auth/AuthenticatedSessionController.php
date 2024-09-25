@@ -31,8 +31,9 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
         $request->session()->put('user_empmail', $user->empmail);
         $request->session()->put('user_id', (string) $user->empid);
+        $request->session()->put('user_type', $user->user_type); // Store user_type in session
 
-        Log::info('User logged in, email and ID stored in session: ' . $user->empmail . ', ' . $user->empid);
+        Log::info('User logged in, email, ID, and user_type stored in session: ' . $user->empmail . ', ' . $user->empid . ', ' . $user->user_type);
 
         try {
             $otp = EmailHelper::generateOTP();

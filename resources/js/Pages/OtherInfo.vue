@@ -107,15 +107,15 @@
                     <div class="border-box">
                         <div>
                             <label class="label-field"><b>SSS ID: <span style="color: red;">*</span></b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"  @input="validateNumber('sssId', 'governmentIdFields')"/>
                         </div>
                         <div>
                             <label class="label-field"><b>PAG-IBIG ID: <span style="color: red;">*</span></b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }" @input="validateNumber('pagIbigId', 'governmentIdFields')"/>
                         </div>
                         <div>
                             <label class="label-field"><b>TIN ID: <span style="color: red;">*</span></b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }" @input="validateNumber('tinId', 'governmentIdFields')"/>
                         </div>
                     </div>
                     <div class="border-box">
@@ -125,7 +125,7 @@
                         </div>
                         <div>
                             <label class="label-field"><b>PHILHEALTH ID: <span style="color: red;">*</span></b></label>
-                            <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
+                            <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }" @input="validateNumber('philHealthId', 'governmentIdFields')"/>
                         </div>
                     </div>
                 </div>
@@ -270,7 +270,7 @@
                                                 class="input-field"
                                                 :type="getInputType(key, value)"
                                                 v-model="editFields[key]"
-                                                @input="validateNumberOnly(key, 'editFields')"
+                                                @input="validateNumber(key, 'editFields')"
                                             />
                                         </template>
 
@@ -363,7 +363,7 @@
                                     <div class="grid grid-cols-1 gap-4">
                                         <div>
                                             <label class="label-field">NAME OF ORGANIZATION (WRITE IN FULL)</label>
-                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_name" @input="validateName('vol_name', 'newVoluntaryWork')"/>
+                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_name"/>
                                         </div>
                                         <div>
                                             <label class="label-field">ADDRESS OF ORGANIZATION</label>
@@ -698,9 +698,9 @@ export default {
       this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 7);
     },
 
-    validateNumberOnly(field, model) {
-        this[model][field] = this[model][field].replace(/\D/g, '');
-    },
+    validateNumber(field, model) {
+    this[model][field] = this[model][field].replace(/[a-zA-Z]/g, '');
+},
 
     validateDecimal(field, model) {
         const value = this[model][field];

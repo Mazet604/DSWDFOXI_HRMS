@@ -33,15 +33,15 @@
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.spouseSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('spouseSurname', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.spouseFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('spouseFirstName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.spouseMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('spouseMiddleName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
-                            <input class="input-field" type="text" v-model="fields.spouseOccupation" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.spouseOccupation" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('spouseOccupation', 'fields')"/>
                         </div>
                         <!-- Employer/Business Information -->
                         <div class="col-span-2">
@@ -66,7 +66,7 @@
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
-                            <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.spouseTelNo" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateTelephoneNumber('spouseTelNo', 'fields')"/>
                         </div>
                         <!-- Separator for Father's Information -->
                         <div class="col-span-5 text-blue-800 mt-2 mb-1 pb-2 border-b border-yellow-200">
@@ -75,15 +75,15 @@
                         <!-- Father's Information -->
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.fatherSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.fatherSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('fatherSurname', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.fatherFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.fatherFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('fatherFirstName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.fatherMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('fatherMiddleName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
@@ -101,19 +101,19 @@
                         <!-- Mother's Information -->
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.motherSurname" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('motherSurname', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.motherFirstName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('motherFirstName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.motherMiddleName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('motherMiddleName', 'fields')"/>
                         </div>
                         <div class="col-span-1">
                             <label class="block mb-2 text-sm font-bold text-gray-700">MAIDEN NAME</label>
-                            <input class="input-field" type="text" v-model="fields.motherMaidenName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }"/>
+                            <input class="input-field" type="text" v-model="fields.motherMaidenName" :disabled="!isEditingFamily" :class="{ 'disabled-input': !isEditingFamily }" @input="validateName('motherMaidenName', 'fields')"/>
                         </div>
                     </div>
                     <div class="mt-6 text-right">
@@ -267,6 +267,17 @@
                                 </select>
                             </template>
 
+                            <template v-else-if="key === 'child_fname' || key === 'child_mname' || key === 'child_lname' || key === 'educ_school' || key === 'educ_degree'
+                            || key === 'educ_hl_earned' || key === 'educ_academic_honor' || key === 'org_name' || key === 'work_dept' || key === 'work_pos' || key === 'work_stat'
+                            || key === 'skill' || key === 'ref_fname' || key === 'ref_mname' || key === 'ref_lname'">
+                                <input
+                                    class="input-field"
+                                    :type="getInputType(key, value)"
+                                    v-model="editFields[key]"
+                                    @input="validateAlphabetOnly(key, 'editFields')"
+                                />
+                            </template>
+
                             <template v-else-if="key === 'ref_xname'">
                                 <select
                                     class="input-field"
@@ -278,8 +289,18 @@
                                 </select>
                             </template>
 
+                            <template v-else-if="key === 'work_gov'">
+                                <select
+                                    class="input-field"
+                                    v-model="editFields[key]"
+                                >
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </template>
+
                             <!-- Work Experience Date Fields (with validation) -->
-                            <template v-else-if="key === 'workfr' || key === 'workto' || key === 'child_dob'">
+                            <template v-else-if="key === 'workfr' || key === 'child_dob'">
                                 <input
                                     class="input-field"
                                     type="date"
@@ -367,15 +388,15 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">CHILD FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="newChild.child_fname" />
+                            <input class="input-field" type="text" v-model="newChild.child_fname" @input="validateName('child_fname', 'newChild')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">CHILD MIDDLE NAME</label>
-                            <input class="input-field" type="text" v-model="newChild.child_mname" />
+                            <input class="input-field" type="text" v-model="newChild.child_mname" @input="validateName('child_mname', 'newChild')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">CHILD LAST NAME</label>
-                            <input class="input-field" type="text" v-model="newChild.child_lname" />
+                            <input class="input-field" type="text" v-model="newChild.child_lname"  @input="validateName('child_lname', 'newChild')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">CHILD SUFFIX</label>
@@ -421,27 +442,27 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">NAME OF SCHOOL</label>
-                            <input class="input-field" type="text" v-model="newEducation.educ_school" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_school"  @input="validateName('educ_school', 'newEducation')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">BASIC EDUCATION|DEGREE|COURSE</label>
-                            <input class="input-field" type="text" v-model="newEducation.educ_degree" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_degree" @input="validateName('educ_degree', 'newEducation')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">DATE ENROLLED</label>
-                            <input class="input-field" type="date" v-model="newEducation.educ_from" />
+                            <input class="input-field" type="date" v-model="newEducation.educ_from"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">HIGHEST LEVEL EARNED</label>
-                            <input class="input-field" type="text" v-model="newEducation.educ_hl_earned" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_hl_earned" @input="validateName('educ_hl_earned', 'newEducation')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">YEAR GRADUATED</label>
-                            <input class="input-field" type="text" v-model="newEducation.educ_year_grad" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_year_grad" @input="validateNumber('educ_year_grad', 'newEducation')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
-                            <input class="input-field" type="text" v-model="newEducation.educ_academic_honor" />
+                            <input class="input-field" type="text" v-model="newEducation.educ_academic_honor" @input="validateName('educ_academic_honor', 'newEducation')"/>
                         </div>
                     </div>
                     <div class="mt-6 text-right">
@@ -495,31 +516,34 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">WORK TO</label>
-                            <input class="input-field" type="date" v-model="newWorkExperience.workto" :max="maxDate"/>
+                            <input class="input-field" type="date" v-model="newWorkExperience.workto"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">POSITION</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.work_pos" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_pos" @input="validateName('work_pos', 'newWorkExperience')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">DEPARTMENT|AGENCY|OFFICE|COMPANY</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.work_dept" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_dept" @input="validateName('work_dept', 'newWorkExperience')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">MONTHLY SALARY</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.work_salary" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_salary" @input="validateNumber('work_salary', 'newWorkExperience')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">SALARY GRADE</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.work_salarygrade" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_salarygrade" @input="validateNumber('work_salarygrade', 'newWorkExperience')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">STATUS OF APPOINTMENT</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.work_stat" />
+                            <input class="input-field" type="text" v-model="newWorkExperience.work_stat" @input="validateName('work_stat', 'newWorkExperience')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">GOV'T SERVICE</label>
-                            <input class="input-field" type="text" v-model="newWorkExperience.work_gov" />
+                            <select class="input-field" v-model="newWorkExperience.work_gov">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
                         </div>
                     </div>
                     <div class="mt-6 text-right">
@@ -544,7 +568,7 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">SKILLS</label>
-                            <input class="input-field" type="text" v-model="newSkill.skill" />
+                            <input class="input-field" type="text" v-model="newSkill.skill" @input="validateName('skill', 'newSkill')"/>
                         </div>
                     </div>
                     <div class="mt-6 text-right">
@@ -569,15 +593,15 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
-                            <input class="input-field" type="text" v-model="newReference.ref_fname" />
+                            <input class="input-field" type="text" v-model="newReference.ref_fname" @input="validateName('ref_fname', 'newReference')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE INITIAL</label>
-                            <input class="input-field" type="text" v-model="newReference.ref_mname" />
+                            <input class="input-field" type="text" v-model="newReference.ref_mname" @input="validateName('ref_mname', 'newReference')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME</label>
-                            <input class="input-field" type="text" v-model="newReference.ref_lname" />
+                            <input class="input-field" type="text" v-model="newReference.ref_lname" @input="validateName('ref_lname', 'newReference')"/>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
@@ -593,7 +617,7 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER</label>
-                            <input class="input-field" type="text" v-model="newReference.ref_cnum" />
+                            <input class="input-field" type="text" v-model="newReference.ref_cnum" @input="validateTelephoneNumber('ref_cnum', 'newReference')"/>
                         </div>
                     </div>
                     <div class="mt-6 text-right">
@@ -787,6 +811,26 @@ export default {
 
 
     methods: {
+
+        validateAlphabetOnly(field, model) {
+        this[model][field] = this[model][field].replace(/[^a-zA-Z\s]/g, '');
+        },
+
+        validateName(field, model) {
+        this[model][field] = this[model][field].replace(/[0-9]/g, '');
+        },
+
+        validateNumber(field, model) {
+        this[model][field] = this[model][field].replace(/\D/g, '');
+        },
+
+        validateMobileNumber(field, model) {
+        this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 10);
+        },
+
+        validateTelephoneNumber(field, model) {
+        this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 7);
+        },
 
         fetchSuffixes() {
                 fetch('/dropdown/suffixes')
