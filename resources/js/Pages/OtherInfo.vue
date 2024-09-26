@@ -30,11 +30,11 @@
                     <Column field="eli_licen_valid" header="VALIDITY"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
-                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
-                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                        <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     </div>
                 </div>
             </div>
@@ -52,11 +52,11 @@
                     <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
-                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
-                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                        <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     </div>
                 </div>
             </div>
@@ -74,11 +74,11 @@
                     <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
-                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
-                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                        <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     </div>
                 </div>
             </div>
@@ -91,11 +91,11 @@
                     <Column field="recog_name" header=""></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
-                    <button v-if="!isEditingProfile" @click="openAddDialog" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold mr-4">ADD</button>
-                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
+                    <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                        <button @click="cancelProfileEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">EDIT</button>
+                        <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                        <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     </div>
                 </div>
             </div>
@@ -130,16 +130,16 @@
                     </div>
                 </div>
                 <div class="mt-6 text-right">
-                    <button v-if="!isEditingGovId" @click="toggleGovIdEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                    <button v-if="!isEditingGovId" @click="toggleGovIdEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     <div v-if="isEditingGovId" class="inline-flex space-x-4">
-                        <button @click="cancelGovIdEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                        <button @click="updateGovIdData" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
+                        <button @click="cancelGovIdEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                        <button @click="updateGovIdData" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">SAVE</button>
                     </div>
                 </div>
             </div>
             <!-- Other Information Tab -->
-            <div v-if="activeTab === 5" class="bg-white border-2 border-blue-800 rounded-lg p-6">
-                <h2 class="text-lg font-semibold text-blue-800 mb-4 pb-2 border-b border-yellow-200"></h2>
+            <div v-if="activeTab === 5" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
+                <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200"></h2>
                 <div class="other-info">
                     <div class='columns'>
                         <p style="margin-bottom: 1%;"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed <span style="color: red;">*</span></b></p>
@@ -230,10 +230,10 @@
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40c" value="No" @change="checkFields('other_40c')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                             <div class="flex justify-end gap-4 mt-6">
-                                <button v-if="!isEditingOtherInfo" @click="toggleOtherInfoEditing" class="bg-blue-900 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition duration-300 font-semibold">EDIT</button>
+                                <button v-if="!isEditingOtherInfo" @click="toggleOtherInfoEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                                     <div v-if="isEditingOtherInfo" class="inline-flex space-x-4">
-                                        <button @click="cancelOtherInfoEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                                        <button @click="onConfirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
+                                        <button @click="cancelOtherInfoEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                        <button @click="onConfirmUpdate" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">SAVE</button>
                                     </div>
                                 </div>
                             </div>
@@ -275,13 +275,21 @@
                                         </template>
 
                                         <!-- Date input fields  -->
-                                        <template v-else-if="key === 'eli_doe' || key === 'eli_licen_valid' || key === 'vol_fr'  || key === 'vol_to'
-                                        || key ===  'learn_fr'  || key === 'learn_to'">
+                                        <template v-else-if="key === 'eli_doe' || key === 'vol_fr'
+                                        || key ===  'learn_fr'  ">
                                             <input
                                                 class="input-field"
                                                 type="date"
                                                 v-model="editFields[key]"
                                                 :max="maxDate"
+                                            />
+                                        </template>
+                                        <template v-else-if="key === 'eli_licen_valid' || key === 'vol_to' || key === 'learn_to'" >
+                                            <input
+                                                class="input-field"
+                                                type="date"
+                                                v-model="editFields[key]"
+                                                :min="minDate"
                                             />
                                         </template>
 
@@ -296,10 +304,10 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-center gap-4 mt-4">
-                                    <button @click="hideEditDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
+                                    <button @click="hideEditDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                                         Cancel
                                     </button>
-                                    <button @click="saveEdit" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
+                                    <button @click="saveEdit" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
                                         Save
                                     </button>
                                 </div>
@@ -338,14 +346,14 @@
                                         </div>
                                         <div>
                                             <label class="label-field">VALIDITY</label>
-                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_licen_valid" :max="maxDate"/>
+                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_licen_valid" :min="minDate"/>
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddCSEligibilityDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
+                                        <button @click="hideAddCSEligibilityDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                                             Cancel
                                         </button>
-                                        <button @click="addCSEligibility" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
+                                        <button @click="addCSEligibility" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
                                             Add
                                         </button>
                                     </div>
@@ -375,7 +383,7 @@
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_to"/>
+                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_to" :min="minDate"/>
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
@@ -387,10 +395,10 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddVoluntaryWorkDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
+                                        <button @click="hideAddVoluntaryWorkDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                                             Cancel
                                         </button>
-                                        <button @click="addVoluntaryWork" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
+                                        <button @click="addVoluntaryWork" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
                                             Add
                                         </button>
                                     </div>
@@ -416,7 +424,7 @@
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="date" v-model="newLearndev.learn_to"/>
+                                            <input class="input-field" type="date" v-model="newLearndev.learn_to" :min="minDate"/>
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
@@ -432,10 +440,10 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddLearndevDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
+                                        <button @click="hideAddLearndevDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                                             Cancel
                                         </button>
-                                        <button @click="addLearndev" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
+                                        <button @click="addLearndev" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
                                             Add
                                         </button>
                                     </div>
@@ -457,10 +465,10 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddRecogdistDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
+                                        <button @click="hideAddRecogdistDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                                             Cancel
                                         </button>
-                                        <button @click="addRecogdist" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
+                                        <button @click="addRecogdist" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
                                             Add
                                         </button>
                                     </div>
@@ -475,10 +483,10 @@
                                 <h2 class="mb-4 text-xl font-semibold">Are you sure you want to update?</h2>
                                 <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                                 <div class="flex justify-center gap-4">
-                                    <button @click="hideUpdateDialog" class="px-6 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">
+                                    <button @click="hideUpdateDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                                         Cancel
                                     </button>
-                                    <button @click="saveUpdate" class="px-6 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
+                                    <button @click="saveUpdate" class="px-6 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
                                         Confirm
                                     </button>
                                 </div>
@@ -495,7 +503,7 @@
                                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                                     </div>
                                     <div class="flex justify-center">
-                                        <button @click="hideSuccessDialog" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">
+                                        <button @click="hideSuccessDialog" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
                                             Back
                                         </button>
                                     </div>
@@ -670,6 +678,13 @@ export default {
             const day = today.getDate().toString().padStart(2, '0');
             return `${year}-${month}-${day}`;
         },
+        minDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = (today.getMonth() + 1).toString().padStart(2, '0');
+            const day = today.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
     },
 
 
