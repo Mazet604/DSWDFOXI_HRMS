@@ -308,6 +308,15 @@
                                     :max="maxDate"
                                 />
                             </template>
+                            
+                            <template v-else-if="key === 'workto'">
+                                <input
+                                    class="input-field"
+                                    type="date"
+                                    v-model="editFields[key]"
+                                />
+                                <span v-if="dateError" class="error-message">"Worked To" date cannot be before "Worked From" date.</span>
+                            </template>
 
                             <template v-else-if="key === 'educ_year_grad'">
                                 <input
@@ -526,6 +535,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">WORK TO</label>
                             <input class="input-field" type="date" v-model="newWorkExperience.workto"/>
+                            <span v-if="dateError" class="error-message">"Worked To" date cannot be before "Worked From" date.</span>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">POSITION</label>
@@ -797,6 +807,21 @@ export default {
     };
     },
 
+    watch: {
+        'editFields.workfr'(newVal) {
+        this.validateDates();
+        },
+        'editFields.workto'(newVal) {
+        this.validateDates();
+        },
+        'newWorkExperience.workfr'(newVal) {
+        this.validateDates1();
+        },
+        'newWorkExperience.workto'(newVal) {
+        this.validateDates1();
+        }
+    },
+
     created() {
     this.fetchSuffixes();
     },
@@ -839,6 +864,28 @@ export default {
 
         validateTelephoneNumber(field, model) {
         this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 7);
+        },
+
+        validateDates() {
+        if (this.editFields.workfr && this.editFields.workto) {
+            if (new Date(this.editFields.workto) < new Date(this.editFields.workfr)) {
+            this.dateError = true;
+            this.editFields.workto = '';
+            } else {
+            this.dateError = false;
+            }
+        }
+        },
+
+        validateDates1() {
+        if (this.newWorkExperience.workfr && this.newWorkExperience.workto) {
+            if (new Date(this.newWorkExperience.workto) < new Date(this.newWorkExperience.workfr)) {
+            this.dateError = true;
+            this.newWorkExperience.workto = '';
+            } else {
+            this.dateError = false;
+            }
+        }
         },
 
         validateDecimal(field, model) {
@@ -1585,5 +1632,10 @@ export default {
 .custom-cancel-button:hover {
   background-color: #e57373 !important; /* Lighter red for hover state */
   border-color: #e57373 !important; /* Lighter red border for hover state */
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
 }
 </style>
