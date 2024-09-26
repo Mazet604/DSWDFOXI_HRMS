@@ -95,6 +95,7 @@ Route::middleware('auth',)->group(function () {
     // Statistics routes
     Route::get('/total-employees', [EmployeeController::class, 'getTotalEmployees']);
     Route::get('/gender-distribution', [EmployeeController::class, 'getGenderDistribution']);
+    Route::get('/civil-status-distribution', [EmployeeController::class, 'getCivilStatusDistribution']);
 
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
 
