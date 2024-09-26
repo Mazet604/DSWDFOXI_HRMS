@@ -157,7 +157,7 @@
 
           <!-- Address Tab -->
           <div v-if="activeTab === 1" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
-            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">PERMANENT ADDRESS</h2>
+            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">RESIDENTIAL ADDRESS</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">REGION <span style="color: red;">*</span></label>
@@ -201,15 +201,15 @@
             </div>
 
             <!-- Align Checkbox to the Right -->
-            <div class="flex justify-end mb-6">
+            <div class="flex justify-end mb-2">
               <div class="flex items-center">
                 <input type="checkbox" id="sameAddressCheckbox" v-model="copyPermanentToCurrent" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" :disabled="!isEditing" />
-                <label for="sameAddressCheckbox" class="block ml-2 text-sm font-medium text-gray-700">Same current address?</label>
+                <label for="sameAddressCheckbox" class="block ml-2 text-sm font-medium text-gray-700">Same Residential Address?</label>
               </div>
             </div>
 
             <!-- Current Address Section -->
-            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CURRENT ADDRESS</h2>
+            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">PERMANENT ADDRESS</h2>
             <div class="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">REGION <span style="color: red;">*</span></label>

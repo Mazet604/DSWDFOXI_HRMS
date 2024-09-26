@@ -12,7 +12,7 @@
                 <button @click="activeTab = 0" :class="tabButtonClass(0)">CS ELIGIBILITY</button>
                 <button @click="activeTab = 1" :class="tabButtonClass(1)">VOLUNTARY WORK</button>
                 <button @click="activeTab = 2" :class="tabButtonClass(2)">LEARNING & DEVELOPMENT</button>
-                <button @click="activeTab = 3" :class="tabButtonClass(3)">RECOGNITION AND DISTINCTIONS</button>
+                <button @click="activeTab = 3" :class="tabButtonClass(3)">RECOGNITION & DISTINCTIONS</button>
                 <button @click="activeTab = 4" :class="tabButtonClass(4)">GOVERNMENT ID</button>
                 <button @click="activeTab = 5" :class="tabButtonClass(5)">OTHER INFORMATION</button>
             </div>
@@ -85,7 +85,7 @@
 
             <!-- Recognition and Distinctions Tab -->
             <div v-if="activeTab === 3" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
-                <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">RECOGNITION AND DISTINCTIONS</h2>
+                <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">RECOGNITION & DISTINCTIONS</h2>
                 <DataTable v-model:selection="selectedRow" :value="recogdistData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="recog_name" header=""></Column>
@@ -878,7 +878,7 @@ export default {
                 case 0: return 'CS ELigibility';
                 case 1: return 'Voluntary Work';
                 case 2: return 'Learning & Development';
-                case 3: return 'Recognition and Distinctions';
+                case 3: return 'Recognition & Distinctions';
                 default: return '';
             }
         },

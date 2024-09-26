@@ -309,12 +309,21 @@
                                 />
                             </template>
 
-                            <!-- Other input fields for Work Experience (text inputs) -->
-                            <template v-else-if="key === 'work_pos' || key === 'work_dept' || key === 'work_salary' || key === 'work_salarygrade' || key === 'work_stat' || key === 'work_gov'">
+                            <template v-else-if="key === 'educ_year_grad'">
+                                <input
+                                    class="input-field"
+                                    v-model="editFields[key]"
+                                    @input="validateNumber(key, 'editFields')"
+                                />
+                            </template>
+
+                            <!-- Number validation  -->
+                            <template v-else-if=" key === 'work_salary' || key === 'work_salarygrade' ">
                                 <input
                                     class="input-field"
                                     :type="getInputType(key, value)"
                                     v-model="editFields[key]"
+                                    @input="validateDecimal(key, 'editFields')"
                                 />
                             </template>
 
@@ -832,6 +841,17 @@ export default {
         this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 7);
         },
 
+        validateDecimal(field, model) {
+            const value = this[model][field];
+            // Regex to allow only numbers and one decimal point
+            const regex = /^\d*\.?\d*$/;
+
+            if (!regex.test(value)) {
+                // If the value doesn't match the regex, strip non-numeric characters except for the first decimal
+                this[model][field] = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+            }
+        },
+
         fetchSuffixes() {
                 fetch('/dropdown/suffixes')
                 .then(response => {
@@ -981,8 +1001,6 @@ export default {
     getInputType(key, value) {
         if (this.isDate(value)) {
             return 'date';
-        } else if (this.isNumeric(value)) {
-            return 'number';
         } else {
             return 'text';
         }
@@ -1088,7 +1106,7 @@ export default {
                     this.isEditing = false;
                     this.showUpdateDialog = false;
                     this.showSuccessDialog = true;
-                    //location.reload();
+                    this.isEditingFamily = false;
                 })
                 .catch(error => {
                     this.errorMessage = 'Failed to update Family. Please try again.';

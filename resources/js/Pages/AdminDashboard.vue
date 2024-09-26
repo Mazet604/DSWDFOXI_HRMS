@@ -10,12 +10,12 @@
       </div>
 
       <!-- New card for gender distribution -->
-      <!-- <div class="card">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title">Gender Distribution</h5>
           <canvas id="genderChart"></canvas>
         </div>
-      </div> -->
+      </div>
     </div>
   </AppLayout>
 </template>
@@ -80,10 +80,6 @@ export default {
             backgroundColor: ['#36A2EB', '#FF6384']
           }]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
-        }
       });
     }
   }
