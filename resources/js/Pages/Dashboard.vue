@@ -430,6 +430,7 @@ export default {
       const day = today.getDate().toString().padStart(2, '0');
       return `${year}-${month}-${day}`;
     },
+    
     calculatedAge() {
       if (!this.fields.birthday) return '';
       const today = new Date();
