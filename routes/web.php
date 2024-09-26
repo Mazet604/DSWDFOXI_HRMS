@@ -92,6 +92,10 @@ Route::middleware('auth',)->group(function () {
     Route::post('/upload-profile-picture', [EmployeeController::class, 'uploadProfilePicture']);
     Route::get('/get-profile-picture', [EmployeeController::class, 'getProfilePicture']);
 
+    // Statistics routes
+    Route::get('/total-employees', [EmployeeController::class, 'getTotalEmployees']);
+    Route::get('/gender-distribution', [EmployeeController::class, 'getGenderDistribution']);
+
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
 
     Route::get('/api/regions', [AddressController::class, 'getRegions']);

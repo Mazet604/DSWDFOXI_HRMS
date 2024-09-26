@@ -48,6 +48,27 @@ class EmployeeController extends Controller
         }
     }
 
+    public function getTotalEmployees()
+    {
+        try {
+            $totalEmployees = Employee::count();
+            return response()->json(['totalEmployees' => $totalEmployees]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getGenderDistribution()
+    {
+        try {
+            $maleCount = Employee::where('emp_sex', 1)->count();
+            $femaleCount = Employee::where('emp_sex', 2)->count();
+            return response()->json(['male' => $maleCount, 'female' => $femaleCount]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function getPersonalInfo()
     {
         try {
