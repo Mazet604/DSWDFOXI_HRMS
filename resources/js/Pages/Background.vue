@@ -474,7 +474,7 @@
                             <input class="input-field" type="text" v-model="newEducation.educ_academic_honor" @input="validateName('educ_academic_honor', 'newEducation')"/>
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddEducationDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
@@ -499,7 +499,7 @@
                             <input class="input-field" type="text" v-model="newOrganization.org_name" />
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddOrganizationDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
@@ -555,7 +555,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddWorkExperienceDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
@@ -577,10 +577,10 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">SKILLS</label>
-                            <input class="input-field" type="text" v-model="newSkill.skill" @input="validateName('skill', 'newSkill')"/>
+                            <input class="input-field" type="text" v-model="newSkill.skill" @input="validateName('skill', 'newSkill')" required />
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddSkillsDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>
@@ -605,7 +605,7 @@
                             <input class="input-field" type="text" v-model="newReference.ref_fname" @input="validateName('ref_fname', 'newReference')"/>
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE INITIAL</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
                             <input class="input-field" type="text" v-model="newReference.ref_mname" @input="validateName('ref_mname', 'newReference')"/>
                         </div>
                         <div>
@@ -629,7 +629,7 @@
                             <input class="input-field" type="text" v-model="newReference.ref_cnum" @input="validateTelephoneNumber('ref_cnum', 'newReference')"/>
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddReferencesDialog" class="px-8 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold mr-4">
                             Cancel
                         </button>

@@ -1164,6 +1164,7 @@ export default {
                 const response = await axios.post('/emp_eligibility/AddCSEligibility', newCSEligibility.value);
                 cseligibilityData.value.push(response.data);
                 showAddCSEligibilityDialog.value = false;
+                showSuccessDialog.value = true;
             } catch (error) {
                 console.error('Error adding CS Eligibility:', error);
             }
@@ -1174,6 +1175,7 @@ export default {
                 const response = await axios.post('/emp_voluntary/AddVoluntaryWork', newVoluntaryWork.value);
                 voluntaryworkData.value.push(response.data);
                 showAddVoluntaryWorkDialog.value = false;
+                showSuccessDialog.value = true;
             } catch (error) {
                 console.error('Error adding Voluntary Work:', error);
             }
@@ -1184,6 +1186,7 @@ export default {
                 const response = await axios.post('/emp_learning/AddLearndev', newLearndev.value);
                 learndevData.value.push(response.data);
                 showAddLearndevDialog.value = false;
+                showSuccessDialog.value = true;
             } catch (error) {
                 console.error('Error adding Learning & Development:', error);
             }
@@ -1194,6 +1197,7 @@ export default {
                 const response = await axios.post('/emp_recog/AddRecogdist', newRecogdist.value);
                 recogdistData.value.push(response.data);
                 showAddRecogdistDialog.value = false;
+                showSuccessDialog.value = true;
             } catch (error) {
                 console.error('Error adding Recognition & Distinctions:', error);
             }
