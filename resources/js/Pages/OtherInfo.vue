@@ -677,9 +677,9 @@ export default {
 
     checkFields(field) {
       // Clear dependent fields if the field's value is 'No'
-      (this.dependentFields[field] || []).forEach(dependentField => {
-        this.otherInfo[dependentField] = this.otherInfo[field] === 'No' ? '' : this.otherInfo[dependentField];
-      });
+        (this.dependentFields[field] || []).forEach(dependentField => {
+            this.otherInfo[dependentField] = this.otherInfo[field] === 'No' ? '' : this.otherInfo[dependentField];
+        });
     },
 
     validateAlphabetOnly(field, model) {
@@ -687,20 +687,20 @@ export default {
     },
 
     validateName(field, model) {
-      this[model][field] = this[model][field].replace(/[0-9]/g, '');
+        this[model][field] = this[model][field].replace(/[0-9]/g, '');
     },
 
     validateMobileNumber(field, model) {
-      this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 10);
+        this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 10);
     },
 
     validateTelephoneNumber(field, model) {
-      this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 7);
+        this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 7);
     },
 
     validateNumber(field, model) {
-    this[model][field] = this[model][field].replace(/[a-zA-Z]/g, '');
-},
+        this[model][field] = this[model][field].replace(/[a-zA-Z]/g, '');
+    },
 
     validateDecimal(field, model) {
         const value = this[model][field];
