@@ -97,9 +97,9 @@ DROP TABLE IF EXISTS `education`;
 CREATE TABLE `education` (
   `educ_count` int unsigned NOT NULL AUTO_INCREMENT,
   `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `educ_level` int unsigned DEFAULT NULL,
-  `educ_school` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `educ_degree` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `educ_level` int unsigned NOT NULL,
+  `educ_school` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `educ_degree` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `educ_from` date DEFAULT NULL,
   `educ_year_grad` int DEFAULT NULL,
   `educ_academic_honor` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE `education` (
   KEY `education_educ_level_foreign` (`educ_level`),
   CONSTRAINT `education_educ_level_foreign` FOREIGN KEY (`educ_level`) REFERENCES `education_level` (`lvl_count`) ON UPDATE CASCADE,
   CONSTRAINT `education_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,7 +300,7 @@ CREATE TABLE `emp_eligibility` (
   PRIMARY KEY (`eli_count`),
   KEY `emp_eligibility_empid_foreign` (`empid`),
   CONSTRAINT `emp_eligibility_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +309,7 @@ CREATE TABLE `emp_eligibility` (
 
 LOCK TABLES `emp_eligibility` WRITE;
 /*!40000 ALTER TABLE `emp_eligibility` DISABLE KEYS */;
-INSERT INTO `emp_eligibility` VALUES (25,'11-0070','Professional Civil Service Exam',85.00,'2022-01-15','Manila','12345','2023-01-15','2024-08-03 20:19:19','2024-08-03 20:19:19'),(26,'11-0070','Sub-Professional Civil Service Exam',90.00,'2021-05-10','Quezon City','67890','2022-05-10','2024-08-03 20:19:19','2024-08-03 20:19:19'),(27,'11-0070','Civil Service Exam for Foreign Service Officer',88.00,'2020-03-20','Cebu City','11223','2021-03-20','2024-08-03 20:19:19','2024-08-03 20:19:19'),(28,'11-0071','Penology Officer Examination',92.00,'2019-07-30','Davao City','44556','2020-07-30','2024-08-03 20:19:19','2024-08-03 20:19:19'),(29,'11-0071','Basic Competency on Local Treasury Exam',89.00,'2017-04-15','Iloilo City','33445','2018-04-15','2024-08-03 20:19:19','2024-08-03 20:19:19'),(30,'11-0070','Career Service Examination for Environmental Planner',91.00,'2016-08-10','Zamboanga City','66778','2017-08-10','2024-08-03 20:19:19','2024-08-03 20:19:19'),(31,'11-0071','Civil Service Examination for Security Guard',87.00,'2015-12-05','Cagayan de Oro','99012','2016-12-05','2024-08-03 20:19:19','2024-08-03 20:19:19'),(32,'11-0070','Civil Service Exam for Medical Technologist',93.00,'2014-03-25','General Santos City','55667','2015-03-25','2024-08-03 20:19:19','2024-08-03 20:19:19'),(33,'11-0070','eferfrefg',99.00,'2020-06-05','dfvdfvdgvrt','22344','2030-08-08','2024-08-03 18:37:27','2024-08-03 18:37:27');
+INSERT INTO `emp_eligibility` VALUES (25,'11-0070','Professional Civil Service Exam',85.00,'2022-01-15','Manila','12345','2023-01-15','2024-08-03 20:19:19','2024-08-03 20:19:19'),(26,'11-0070','Sub-Professional Civil Service Exam',90.00,'2021-05-10','Quezon City','67890','2022-05-10','2024-08-03 20:19:19','2024-08-03 20:19:19'),(27,'11-0070','Civil Service Exam for Foreign Service Officer',88.00,'2020-03-20','Cebu Cityyt','11223','2021-03-20','2024-08-03 20:19:19','2024-09-25 22:21:54'),(28,'11-0071','Penology Officer Examination',92.00,'2019-07-30','Davao City','44556','2020-07-30','2024-08-03 20:19:19','2024-08-03 20:19:19'),(29,'11-0071','Basic Competency on Local Treasury Exam',89.00,'2017-04-15','Iloilo City','33445','2018-04-15','2024-08-03 20:19:19','2024-08-03 20:19:19'),(30,'11-0070','Career Service Examination for Environmental Planner',91.00,'2016-08-10','Zamboanga City','66778','2017-08-10','2024-08-03 20:19:19','2024-08-03 20:19:19'),(31,'11-0071','Civil Service Examination for Security Guard',87.00,'2015-12-05','Cagayan de Oro','99012','2016-12-05','2024-08-03 20:19:19','2024-08-03 20:19:19'),(32,'11-0070','Civil Service Exam for Medical Technologist',93.00,'2014-03-25','General Santos City','55667','2015-03-25','2024-08-03 20:19:19','2024-08-03 20:19:19'),(33,'11-0070','eferfrefg',99.00,'2020-06-05','dfvdfvdgvrt','22344','2030-08-08','2024-08-03 18:37:27','2024-08-03 18:37:27'),(34,'11-0070','yugyjfyuftyufs',1.00,'2024-09-18','asdasdas','2323','2024-09-26','2024-09-25 21:05:06','2024-09-25 21:05:06');
 /*!40000 ALTER TABLE `emp_eligibility` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,7 +372,7 @@ CREATE TABLE `emp_father` (
 
 LOCK TABLES `emp_father` WRITE;
 /*!40000 ALTER TABLE `emp_father` DISABLE KEYS */;
-INSERT INTO `emp_father` VALUES (1,'Vegetat','Vader','Omblero','2','2024-09-16 07:34:42','2024-09-16 19:04:39');
+INSERT INTO `emp_father` VALUES (1,'Vegeta','Vader','Omblero','2','2024-09-16 07:34:42','2024-09-25 21:11:40');
 /*!40000 ALTER TABLE `emp_father` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,10 +386,10 @@ DROP TABLE IF EXISTS `emp_learning`;
 CREATE TABLE `emp_learning` (
   `learn_count` int unsigned NOT NULL AUTO_INCREMENT,
   `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `learn_title` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `learn_fr` date DEFAULT NULL,
-  `learn_to` date DEFAULT NULL,
-  `learn_hrs` int DEFAULT NULL,
+  `learn_title` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `learn_fr` date NOT NULL,
+  `learn_to` date NOT NULL,
+  `learn_hrs` int NOT NULL,
   `learn_type` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `learn_con` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -397,7 +397,7 @@ CREATE TABLE `emp_learning` (
   PRIMARY KEY (`learn_count`),
   KEY `emp_learning_empid_foreign` (`empid`),
   CONSTRAINT `emp_learning_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -406,7 +406,7 @@ CREATE TABLE `emp_learning` (
 
 LOCK TABLES `emp_learning` WRITE;
 /*!40000 ALTER TABLE `emp_learning` DISABLE KEYS */;
-INSERT INTO `emp_learning` VALUES (1,'11-0070','KUMON Graduated','2022-02-09','2024-09-16',200,'Technical','Pag-Ibig','2024-09-15 18:12:14','2024-09-16 05:04:00');
+INSERT INTO `emp_learning` VALUES (1,'11-0070','KUMON Graduated','2022-02-09','2024-09-16',200,'Technical','Pag-Ibig','2024-09-15 18:12:14','2024-09-16 05:04:00'),(2,'11-0070','awdawdawd','2024-09-05','2024-09-28',200,'Managerial','USeP','2024-09-25 17:17:17','2024-09-25 17:17:17');
 /*!40000 ALTER TABLE `emp_learning` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -451,13 +451,13 @@ DROP TABLE IF EXISTS `emp_org`;
 CREATE TABLE `emp_org` (
   `org_count` int unsigned NOT NULL AUTO_INCREMENT,
   `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `org_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `org_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`org_count`),
   KEY `emp_org_empid_foreign` (`empid`),
   CONSTRAINT `emp_org_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -466,7 +466,7 @@ CREATE TABLE `emp_org` (
 
 LOCK TABLES `emp_org` WRITE;
 /*!40000 ALTER TABLE `emp_org` DISABLE KEYS */;
-INSERT INTO `emp_org` VALUES (1,'11-0070','PSITS','2024-08-01 21:49:22','2024-08-01 21:49:22'),(2,'11-0070','Samahan ng mga magsasaka (Davao Division)','2024-08-01 21:49:22','2024-08-01 21:49:22'),(3,'11-0071','PSITS','2024-08-01 21:49:22','2024-08-01 21:49:22'),(4,'11-0071','Kataastaasang Kagalanggalangang Katipunan ng mga Anak ng Bayan','2024-08-01 21:49:22','2024-08-01 21:49:22'),(5,'11-0070','La Solidaridad','2024-08-01 21:49:22','2024-08-01 21:49:22'),(6,'11-0071','Palaro','2024-08-03 15:55:14','2024-08-03 15:55:14'),(7,'11-0071','Kadayawan Marathoners','2024-08-03 17:33:20','2024-08-03 17:33:20'),(8,'11-0070','Samahan ni Bing','2024-08-03 18:57:19','2024-08-03 18:57:19');
+INSERT INTO `emp_org` VALUES (1,'11-0070','PSITS','2024-08-01 21:49:22','2024-08-01 21:49:22'),(2,'11-0070','Samahan ng mga magsasaka (Davao Division)','2024-08-01 21:49:22','2024-08-01 21:49:22'),(3,'11-0071','PSITS','2024-08-01 21:49:22','2024-08-01 21:49:22'),(4,'11-0071','Kataastaasang Kagalanggalangang Katipunan ng mga Anak ng Bayan','2024-08-01 21:49:22','2024-08-01 21:49:22'),(5,'11-0070','La Solidaridad','2024-08-01 21:49:22','2024-08-01 21:49:22'),(6,'11-0071','Palaro','2024-08-03 15:55:14','2024-08-03 15:55:14'),(7,'11-0071','Kadayawan Marathoners','2024-08-03 17:33:20','2024-08-03 17:33:20'),(8,'11-0070','Samahan ni Bing','2024-08-03 18:57:19','2024-08-03 18:57:19'),(9,'11-0070','Organization1','2024-09-25 21:00:52','2024-09-25 21:00:52'),(10,'11-0070','Organization2','2024-09-25 21:00:52','2024-09-25 21:00:52'),(11,'11-0070','Org3','2024-09-25 21:31:44','2024-09-25 21:31:44');
 /*!40000 ALTER TABLE `emp_org` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,7 +518,7 @@ CREATE TABLE `emp_otherinfo` (
 
 LOCK TABLES `emp_otherinfo` WRITE;
 /*!40000 ALTER TABLE `emp_otherinfo` DISABLE KEYS */;
-INSERT INTO `emp_otherinfo` VALUES (1,'11-0070','Yes','No',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Yes','liukiuikuliuliu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2024-09-18 17:39:25');
+INSERT INTO `emp_otherinfo` VALUES (1,'11-0070','Yes','No',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'No',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2024-09-25 17:17:52');
 /*!40000 ALTER TABLE `emp_otherinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -538,7 +538,7 @@ CREATE TABLE `emp_recog` (
   PRIMARY KEY (`recog_count`),
   KEY `emp_recog_empid_foreign` (`empid`),
   CONSTRAINT `emp_recog_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -547,7 +547,7 @@ CREATE TABLE `emp_recog` (
 
 LOCK TABLES `emp_recog` WRITE;
 /*!40000 ALTER TABLE `emp_recog` DISABLE KEYS */;
-INSERT INTO `emp_recog` VALUES (1,'11-0070','Binibining Marc Artiaga','2024-09-15 18:11:21','2024-09-16 05:04:22');
+INSERT INTO `emp_recog` VALUES (1,'11-0070','Binibining Marc Artiaga','2024-09-15 18:11:21','2024-09-16 05:04:22'),(2,'11-0070','Kupal ka ba','2024-09-25 17:17:33','2024-09-25 17:17:33'),(3,'11-0070','new recognition','2024-09-25 22:24:58','2024-09-25 22:24:58'),(4,'11-0070','sample one','2024-09-25 22:27:28','2024-09-25 22:27:28');
 /*!40000 ALTER TABLE `emp_recog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -577,7 +577,7 @@ CREATE TABLE `emp_reference` (
   PRIMARY KEY (`ref_count`),
   KEY `emp_reference_empid_foreign` (`empid`),
   CONSTRAINT `emp_reference_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -586,7 +586,7 @@ CREATE TABLE `emp_reference` (
 
 LOCK TABLES `emp_reference` WRITE;
 /*!40000 ALTER TABLE `emp_reference` DISABLE KEYS */;
-INSERT INTO `emp_reference` VALUES (1,'11-0070','Johnny','Aasda','Doe','1','123 Main St, Cityville',5551234,'2024-08-01 22:38:28','2024-09-25 04:50:49',NULL,NULL,NULL,NULL,NULL),(2,'11-0070','Janine','Bachelor','Smith','1','456 Elm St, Townsville',5555678,'2024-08-01 22:38:28','2024-09-25 04:45:30','070000000',NULL,NULL,NULL,NULL),(3,'11-0070','Emily','C.','Johnson','','789 Oak St, Villageville',5559101,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(4,'11-0071','Michael','D.','Williams','','321 Pine St, Hamletville',5551123,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(5,'11-0071','Sarah','E.','Brown','','654 Maple St, Boroughville',5551415,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(6,'11-0071','Robert','F.','Davis','','147 Birch St, Cityville',5551617,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(7,'11-0071','Linda','G.','Martinez','','258 Cedar St, Townsville',5551819,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(8,'11-0071','James','H.','Garcia','','369 Willow St, Villageville',5552021,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(9,'11-0071','Barbara','I.','Rodriguez','','471 Chestnut St, Hamletville',5552223,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(10,'11-0071','William','J.','Wilson','','582 Aspen St, Boroughville',5552425,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(11,'11-0071','Kean','H.','Madrigal','Jr.','Iligan City',2227778,'2024-08-03 16:25:34','2024-08-03 16:25:34',NULL,NULL,NULL,NULL,NULL),(12,'11-0071','Jane','R.','Doe','N/A','Davao City',1112220,'2024-08-03 17:37:19','2024-08-03 17:37:19',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `emp_reference` VALUES (1,'11-0070','Johnny','Aasda','Doe','1','123 Main St, Cityville',5551234,'2024-08-01 22:38:28','2024-09-25 04:50:49',NULL,NULL,NULL,NULL,NULL),(2,'11-0070','Janine','Bachelor','Smith','1','456 Elm St, Townsville',5555678,'2024-08-01 22:38:28','2024-09-25 04:45:30','070000000',NULL,NULL,NULL,NULL),(3,'11-0070','Emily','C.','Johnson','','789 Oak St, Villageville',5559101,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(4,'11-0071','Michael','D.','Williams','','321 Pine St, Hamletville',5551123,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(5,'11-0071','Sarah','E.','Brown','','654 Maple St, Boroughville',5551415,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(6,'11-0071','Robert','F.','Davis','','147 Birch St, Cityville',5551617,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(7,'11-0071','Linda','G.','Martinez','','258 Cedar St, Townsville',5551819,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(8,'11-0071','James','H.','Garcia','','369 Willow St, Villageville',5552021,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(9,'11-0071','Barbara','I.','Rodriguez','','471 Chestnut St, Hamletville',5552223,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(10,'11-0071','William','J.','Wilson','','582 Aspen St, Boroughville',5552425,'2024-08-01 22:38:28','2024-08-01 22:38:28',NULL,NULL,NULL,NULL,NULL),(11,'11-0071','Kean','H.','Madrigal','Jr.','Iligan City',2227778,'2024-08-03 16:25:34','2024-08-03 16:25:34',NULL,NULL,NULL,NULL,NULL),(12,'11-0071','Jane','R.','Doe','N/A','Davao City',1112220,'2024-08-03 17:37:19','2024-08-03 17:37:19',NULL,NULL,NULL,NULL,NULL),(15,'11-0070','Elmer','Lobete','Catalan',NULL,'asdasd',3434345,'2024-09-25 21:03:29','2024-09-25 21:03:29',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `emp_reference` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -600,13 +600,13 @@ DROP TABLE IF EXISTS `emp_skills`;
 CREATE TABLE `emp_skills` (
   `skill_count` int unsigned NOT NULL AUTO_INCREMENT,
   `empid` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `skill` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `skill` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`skill_count`),
   KEY `emp_skills_empid_foreign` (`empid`),
   CONSTRAINT `emp_skills_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -615,7 +615,7 @@ CREATE TABLE `emp_skills` (
 
 LOCK TABLES `emp_skills` WRITE;
 /*!40000 ALTER TABLE `emp_skills` DISABLE KEYS */;
-INSERT INTO `emp_skills` VALUES (1,'11-0070','Cooking','2024-08-01 22:29:11','2024-08-01 22:29:11'),(2,'11-0070','Image Editing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(3,'11-0070','Dancing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(4,'11-0070','Basic Swordsmanship','2024-08-01 22:29:11','2024-08-01 22:29:11'),(5,'11-0071','Python','2024-08-01 22:29:11','2024-08-01 22:29:11'),(6,'11-0071','JAVA','2024-08-01 22:29:11','2024-08-01 22:29:11'),(7,'11-0071','C++','2024-08-01 22:29:11','2024-08-01 22:29:11'),(8,'11-0071','HTML','2024-08-01 22:29:11','2024-08-01 22:29:11'),(9,'11-0071','Video Editing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(10,'11-0071','Django','2024-08-01 22:29:11','2024-08-01 22:29:11'),(11,'11-0071','Flask','2024-08-01 22:29:11','2024-08-01 22:29:11'),(12,'11-0071','JavaScript','2024-08-01 22:29:11','2024-08-01 22:29:11'),(13,'11-0071','SQL','2024-08-01 22:29:11','2024-08-01 22:29:11'),(14,'11-0071','Laravel','2024-08-01 22:29:11','2024-08-01 22:29:11'),(15,'11-0071','Docker','2024-08-01 22:29:11','2024-08-01 22:29:11'),(16,'11-0071','Juggling','2024-08-01 22:29:11','2024-08-01 22:29:11'),(17,'11-0071','Kubernetes','2024-08-01 22:29:11','2024-08-01 22:29:11'),(18,'11-0071','Baking','2024-08-03 16:21:54','2024-08-03 16:21:54'),(26,'11-0071','coding char','2024-08-13 17:33:06','2024-08-13 17:33:06'),(27,'11-0071','gwapo si kobe','2024-08-13 17:33:21','2024-08-13 17:33:21');
+INSERT INTO `emp_skills` VALUES (1,'11-0070','Cooking','2024-08-01 22:29:11','2024-08-01 22:29:11'),(2,'11-0070','Image Editing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(3,'11-0070','Dancing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(4,'11-0070','Basic Swordsmanship','2024-08-01 22:29:11','2024-08-01 22:29:11'),(5,'11-0071','Python','2024-08-01 22:29:11','2024-08-01 22:29:11'),(6,'11-0071','JAVA','2024-08-01 22:29:11','2024-08-01 22:29:11'),(7,'11-0071','C++','2024-08-01 22:29:11','2024-08-01 22:29:11'),(8,'11-0071','HTML','2024-08-01 22:29:11','2024-08-01 22:29:11'),(9,'11-0071','Video Editing','2024-08-01 22:29:11','2024-08-01 22:29:11'),(10,'11-0071','Django','2024-08-01 22:29:11','2024-08-01 22:29:11'),(11,'11-0071','Flask','2024-08-01 22:29:11','2024-08-01 22:29:11'),(12,'11-0071','JavaScript','2024-08-01 22:29:11','2024-08-01 22:29:11'),(13,'11-0071','SQL','2024-08-01 22:29:11','2024-08-01 22:29:11'),(14,'11-0071','Laravel','2024-08-01 22:29:11','2024-08-01 22:29:11'),(15,'11-0071','Docker','2024-08-01 22:29:11','2024-08-01 22:29:11'),(16,'11-0071','Juggling','2024-08-01 22:29:11','2024-08-01 22:29:11'),(17,'11-0071','Kubernetes','2024-08-01 22:29:11','2024-08-01 22:29:11'),(18,'11-0071','Baking','2024-08-03 16:21:54','2024-08-03 16:21:54'),(26,'11-0071','coding char','2024-08-13 17:33:06','2024-08-13 17:33:06'),(27,'11-0071','gwapo si kobe','2024-08-13 17:33:21','2024-08-13 17:33:21'),(28,'11-0070','sample skill','2024-09-25 21:02:13','2024-09-25 21:02:13');
 /*!40000 ALTER TABLE `emp_skills` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -650,7 +650,7 @@ CREATE TABLE `emp_spouse` (
 
 LOCK TABLES `emp_spouse` WRITE;
 /*!40000 ALTER TABLE `emp_spouse` DISABLE KEYS */;
-INSERT INTO `emp_spouse` VALUES (1,'Crist Mar','Luterte','De Asis','1','Penetration Tester','DSWD FO XI','Matina Aplaya',12345,'2024-09-16 07:34:48','2024-09-15 23:42:13');
+INSERT INTO `emp_spouse` VALUES (1,'Crist Mar','Luterte','De Asis','1','Penetration Tester','DSWD FO XI','Matina Aplaya',12345,'2024-09-16 07:34:48','2024-09-25 20:18:49');
 /*!40000 ALTER TABLE `emp_spouse` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -675,7 +675,7 @@ CREATE TABLE `emp_voluntary` (
   PRIMARY KEY (`vol_count`),
   KEY `emp_voluntary_empid_foreign` (`empid`),
   CONSTRAINT `emp_voluntary_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -684,7 +684,7 @@ CREATE TABLE `emp_voluntary` (
 
 LOCK TABLES `emp_voluntary` WRITE;
 /*!40000 ALTER TABLE `emp_voluntary` DISABLE KEYS */;
-INSERT INTO `emp_voluntary` VALUES (1,'11-0070','DISASTER EMERGENCY RESPONSE TEAM','Brgy. Pampanga, Davao City','2020-07-15','2033-07-23',500,'Emergency Response Volunteer','2024-09-15 18:13:45','2024-09-15 18:13:45'),(2,'11-0070','Experiment','1231 123','2019-12-30','2053-10-14',2000,'Fire Fighter','2024-09-16 00:55:17','2024-09-16 02:29:00');
+INSERT INTO `emp_voluntary` VALUES (1,'11-0070','DISASTER EMERGENCY RESPONSE TEAM','Brgy. Pampanga, Davao City','2020-07-15','2033-07-23',500,'Emergency Response Volunteer','2024-09-15 18:13:45','2024-09-15 18:13:45'),(2,'11-0070','Experiment','1231 123','2019-12-30','2053-10-14',2000,'Fire Fighter','2024-09-16 00:55:17','2024-09-16 02:29:00'),(3,'11-0070','asdasdasd','asddasdasd','2024-09-26','2024-10-19',123,'asdasdas','2024-09-25 21:05:52','2024-09-25 21:05:52'),(4,'11-0070','asdasdasd','asddasdasd','2024-09-26','2024-10-19',123,'asdasdas','2024-09-25 21:05:52','2024-09-25 21:05:52'),(5,'11-0070','12','12','2024-09-26','2024-09-26',1,'asasd','2024-09-25 21:06:32','2024-09-25 21:06:32');
 /*!40000 ALTER TABLE `emp_voluntary` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -833,7 +833,7 @@ CREATE TABLE `gsisinfo` (
 
 LOCK TABLES `gsisinfo` WRITE;
 /*!40000 ALTER TABLE `gsisinfo` DISABLE KEYS */;
-INSERT INTO `gsisinfo` VALUES (1,'11-0070','GS2021123456','2024-08-27 01:34:21','2024-08-27 01:34:21');
+INSERT INTO `gsisinfo` VALUES (1,'11-0070','GS2021123453','2024-08-27 01:34:21','2024-09-25 17:17:41');
 /*!40000 ALTER TABLE `gsisinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1314,7 +1314,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('8QreARpUpviMa5Wy7CZ2qQpAjEOoG4c5R3dEijlE','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36','YTo4OntzOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoieXJIQUtscG5CTjV0eWV3VXIzNHlieTZncGkzMnhJNTZ6OEhmOU5kSyI7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO3M6NzoiMTEtMDA3MCI7czoxMjoidXNlcl9lbXBtYWlsIjtzOjIyOiJqZ21hdHVnYXMxMTdAZ21haWwuY29tIjtzOjc6InVzZXJfaWQiO3M6NzoiMTEtMDA3MCI7czo5OiJ1c2VyX3R5cGUiO2k6MDtzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0MjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2Ryb3Bkb3duL2V4dC1vcHRpb25zIjt9czoxMjoib3RwX3ZlcmlmaWVkIjtiOjE7fQ==',1727270327),('HC8yOBO1AgjPjy2P2r5iTTDl1Gbc92zkCiP9FTPp',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36','YToyOntzOjY6Il90b2tlbiI7czo0MDoiQUN4SVhxdFhRTmI2QUZDbFVLMmtGVnY3emlwYzE2Nk05cXlvRjBZUSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1727264184),('QHp7l9RznC1V5NzSnatnJxOWQeZwwXqPtCtAX7gK',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36','YToyOntzOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoiaElnWG1QMHF2Y2hJM0JKbFVSbWg1VGUxcmpMaHZlWDhFTlI2YU9hNyI7fQ==',1727265101);
+INSERT INTO `sessions` VALUES ('d373NgAxzv26BSGyzBAO4IHhpHAQMDxgtZ7nAVpq','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36','YTo4OntzOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoiMGdDRXN2ejd1YjFmYnRuclhON0ZYekZFbmZwNWw5SjNURVNVRkRoZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6OToidXNlcl90eXBlIjtpOjA7czoxMjoib3RwX3ZlcmlmaWVkIjtiOjE7fQ==',1727332055),('dDp0L8buJqTluyrStQST1WyW08uqxjPpePxXjeUI','11-0070','192.168.0.122','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36','YTo4OntzOjY6Il90b2tlbiI7czo0MDoiTkhGVTlWbWszNWRaQ2RKbHVUSEpUTE02SHZ5Vm14VmZLTHNoYm5xbCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xOTIuMTY4LjAuMTA0OjgwODAvb3RoZXJpbmZvIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO3M6NzoiMTEtMDA3MCI7czoxMjoidXNlcl9lbXBtYWlsIjtzOjIyOiJqZ21hdHVnYXMxMTdAZ21haWwuY29tIjtzOjc6InVzZXJfaWQiO3M6NzoiMTEtMDA3MCI7czo5OiJ1c2VyX3R5cGUiO2k6MDtzOjEyOiJvdHBfdmVyaWZpZWQiO2I6MTt9',1727327198);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1389,4 +1389,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-25 21:21:03
+-- Dump completed on 2024-09-26 14:28:49
