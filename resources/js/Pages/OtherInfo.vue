@@ -284,13 +284,21 @@
                                                 :max="maxDate"
                                             />
                                         </template>
-                                        <template v-else-if="key === 'eli_licen_valid' || key === 'vol_to' || key === 'learn_to'" >
+                                        <template v-else-if="key === 'vol_to' || key === 'learn_to'" >
                                             <input
                                                 class="input-field"
                                                 type="date"
                                                 v-model="editFields[key]"
-                                                :min="minDate"
                                             />
+                                            <span v-if="dateError" class="error-message">"To" date cannot be before "From" date.</span>
+                                        </template>
+                                        <template v-else-if="key === 'eli_licen_valid'" >
+                                            <input
+                                                class="input-field"
+                                                type="date"
+                                                v-model="editFields[key]"
+                                            />
+                                            <span v-if="dateError" class="error-message">"Validity" date cannot be before "From" date.</span>
                                         </template>
 
                                         <!-- Default input (for any other fields) -->
@@ -346,7 +354,8 @@
                                         </div>
                                         <div>
                                             <label class="label-field">VALIDITY</label>
-                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_licen_valid" :min="minDate"/>
+                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_licen_valid"/>
+                                            <span v-if="dateError" class="error-message">"Validity" date cannot be before "From" date.</span>
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
@@ -383,7 +392,8 @@
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_to" :min="minDate"/>
+                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_to"/>
+                                            <span v-if="dateError" class="error-message">"To" date cannot be before "From" date.</span>
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
@@ -424,7 +434,8 @@
                                         </div>
                                         <div>
                                             <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="date" v-model="newLearndev.learn_to" :min="minDate"/>
+                                            <input class="input-field" type="date" v-model="newLearndev.learn_to"/>
+                                            <span v-if="dateError" class="error-message">"To" date cannot be before "From" date.</span>
                                         </div>
                                         <div>
                                             <label class="label-field">NUMBER OF HOURS</label>
@@ -655,6 +666,55 @@ export default {
         currentTabLabel: '',
     };
     },
+    watch: {
+            // CS Eligibility Date
+        'editFields.eli_doe'(newVal) {
+            this.validateDates('eli_doe', 'eli_licen_valid', 'editFields', 'eli_licen_valid');
+        },
+        'editFields.eli_licen_valid'(newVal) {
+            this.validateDates('eli_doe', 'eli_licen_valid', 'editFields', 'eli_licen_valid');
+        },
+
+        // Voluntary Work Dates
+        'editFields.vol_fr'(newVal) {
+            this.validateDates('vol_fr', 'vol_to', 'editFields', 'vol_to');
+        },
+        'editFields.vol_to'(newVal) {
+            this.validateDates('vol_fr', 'vol_to', 'editFields', 'vol_to');
+        },
+
+        // Learning & Development Dates
+        'editFields.learn_fr'(newVal) {
+            this.validateDates('learn_fr', 'learn_to', 'editFields', 'learn_to');
+        },
+        'editFields.learn_to'(newVal) {
+            this.validateDates('learn_fr', 'learn_to', 'editFields', 'learn_to');
+        },
+
+        // For new entry modals (CS Eligibility)
+        'newCSEligibility.eli_doe'(newVal) {
+            this.validateDates('eli_doe', 'eli_licen_valid', 'newCSEligibility', 'eli_licen_valid');
+        },
+        'newCSEligibility.eli_licen_valid'(newVal) {
+            this.validateDates('eli_doe', 'eli_licen_valid', 'newCSEligibility', 'eli_licen_valid');
+        },
+        // For new entry modals (Voluntary Work)
+    'newVoluntaryWork.vol_fr'(newVal) {
+        this.validateDates('vol_fr', 'vol_to', 'newVoluntaryWork', 'vol_to');
+    },
+    'newVoluntaryWork.vol_to'(newVal) {
+        this.validateDates('vol_fr', 'vol_to', 'newVoluntaryWork', 'vol_to');
+    },
+    // For new entry modals (Learning & Development)
+    'newLearndev.learn_fr'(newVal) {
+        this.validateDates('learn_fr', 'learn_to', 'newLearndev', 'learn_to');
+    },
+    'newLearndev.learn_to'(newVal) {
+        this.validateDates('learn_fr', 'learn_to', 'newLearndev', 'learn_to');
+    }
+    },
+
+
 
     computed: {
         maxDate() {
@@ -716,6 +776,22 @@ export default {
     validateNumber(field, model) {
         this[model][field] = this[model][field].replace(/[a-zA-Z]/g, '');
     },
+    validateDates(fieldFrom, fieldTo, model, fieldToKey) {
+        // Ensure both dates are provided before performing validation
+        if (this[model][fieldFrom] && this[model][fieldTo]) {
+            const fromDate = new Date(this[model][fieldFrom]);
+            const toDate = new Date(this[model][fieldTo]);
+
+            // Check if the "to" date is before the "from" date
+            if (toDate < fromDate) {
+                this.dateError = true;
+                this[model][fieldToKey] = ''; // Reset the 'to' field to ensure correct flow
+            } else {
+                 this.dateError = false;
+            }
+         }
+    },
+
 
     validateDecimal(field, model) {
         const value = this[model][field];
@@ -1179,6 +1255,7 @@ export default {
                 const response = await axios.post('/emp_eligibility/AddCSEligibility', newCSEligibility.value);
                 cseligibilityData.value.push(response.data);
                 showAddCSEligibilityDialog.value = false;
+                showSuccessDialog.value = true;
             } catch (error) {
                 console.error('Error adding CS Eligibility:', error);
             }
@@ -1189,6 +1266,7 @@ export default {
                 const response = await axios.post('/emp_voluntary/AddVoluntaryWork', newVoluntaryWork.value);
                 voluntaryworkData.value.push(response.data);
                 showAddVoluntaryWorkDialog.value = false;
+                showSuccessDialog.value = true;
             } catch (error) {
                 console.error('Error adding Voluntary Work:', error);
             }
@@ -1199,6 +1277,7 @@ export default {
                 const response = await axios.post('/emp_learning/AddLearndev', newLearndev.value);
                 learndevData.value.push(response.data);
                 showAddLearndevDialog.value = false;
+                showSuccessDialog.value = true;
             } catch (error) {
                 console.error('Error adding Learning & Development:', error);
             }
@@ -1209,6 +1288,7 @@ export default {
                 const response = await axios.post('/emp_recog/AddRecogdist', newRecogdist.value);
                 recogdistData.value.push(response.data);
                 showAddRecogdistDialog.value = false;
+                showSuccessDialog.value = true;
             } catch (error) {
                 console.error('Error adding Recognition & Distinctions:', error);
             }
@@ -1360,5 +1440,9 @@ export default {
 .disabled-input {
   color: #707A88;
   background-color: #eeeeee;
+}
+.error-message {
+    color: red;
+    font-size: 0.9em;
 }
 </style>

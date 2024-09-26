@@ -314,8 +314,8 @@
                                     class="input-field"
                                     type="date"
                                     v-model="editFields[key]"
-                                    :min="minDate"
                                 />
+                                <span v-if="dateError" class="error-message">"Worked To" date cannot be before "Worked From" date.</span>
                             </template>
 
                             <template v-else-if="key === 'educ_year_grad'">
@@ -483,7 +483,7 @@
                             <input class="input-field" type="text" v-model="newEducation.educ_academic_honor" @input="validateName('educ_academic_honor', 'newEducation')"/>
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddEducationDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                             Cancel
                         </button>
@@ -508,7 +508,7 @@
                             <input class="input-field" type="text" v-model="newOrganization.org_name" />
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddOrganizationDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                             Cancel
                         </button>
@@ -534,7 +534,8 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">WORK TO</label>
-                            <input class="input-field" type="date" v-model="newWorkExperience.workto" :min="minDate"/>
+                            <input class="input-field" type="date" v-model="newWorkExperience.workto"/>
+                            <span v-if="dateError" class="error-message">"Worked To" date cannot be before "Worked From" date.</span>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">POSITION</label>
@@ -564,7 +565,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddWorkExperienceDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                             Cancel
                         </button>
@@ -586,10 +587,10 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">SKILLS</label>
-                            <input class="input-field" type="text" v-model="newSkill.skill" @input="validateName('skill', 'newSkill')"/>
+                            <input class="input-field" type="text" v-model="newSkill.skill" @input="validateName('skill', 'newSkill')" required />
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddSkillsDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                             Cancel
                         </button>
@@ -614,7 +615,7 @@
                             <input class="input-field" type="text" v-model="newReference.ref_fname" @input="validateName('ref_fname', 'newReference')"/>
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE INITIAL</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
                             <input class="input-field" type="text" v-model="newReference.ref_mname" @input="validateName('ref_mname', 'newReference')"/>
                         </div>
                         <div>
@@ -638,7 +639,7 @@
                             <input class="input-field" type="text" v-model="newReference.ref_cnum" @input="validateTelephoneNumber('ref_cnum', 'newReference')"/>
                         </div>
                     </div>
-                    <div class="mt-6 text-right">
+                    <div class="mt-6 text-center">
                         <button @click="hideAddReferencesDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
                             Cancel
                         </button>
@@ -806,6 +807,21 @@ export default {
     };
     },
 
+    watch: {
+    'editFields.workfr'(newVal) {
+        this.validateDates(this.editFields.workfr, this.editFields.workto);
+    },
+    'editFields.workto'(newVal) {
+        this.validateDates(this.editFields.workfr, this.editFields.workto);
+    },
+    'newWorkExperience.workfr'(newVal) {
+        this.validateDates(this.newWorkExperience.workfr, this.newWorkExperience.workto);
+    },
+    'newWorkExperience.workto'(newVal) {
+        this.validateDates(this.newWorkExperience.workfr, this.newWorkExperience.workto);
+    }
+},
+
     created() {
     this.fetchSuffixes();
     },
@@ -856,6 +872,18 @@ export default {
         validateTelephoneNumber(field, model) {
         this[model][field] = this[model][field].replace(/\D/g, '').slice(0, 7);
         },
+
+        validateDates(fieldFrom, fieldTo) {
+            if (fieldFrom && fieldTo) {
+                if (new Date(fieldTo) < new Date(fieldFrom)) {
+                    this.dateError = true;
+                    fieldTo = ''; // Reset the 'to' field if the date is invalid
+                } else {
+                    this.dateError = false;
+                }
+            }
+        },
+
 
         validateDecimal(field, model) {
             const value = this[model][field];
@@ -1601,5 +1629,10 @@ export default {
 .custom-cancel-button:hover {
   background-color: #e57373 !important; /* Lighter red for hover state */
   border-color: #e57373 !important; /* Lighter red border for hover state */
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
 }
 </style>
