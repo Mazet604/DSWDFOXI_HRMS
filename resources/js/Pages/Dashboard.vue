@@ -120,7 +120,7 @@
             </div>
 
             <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CONTACT INFORMATION</h2>
-            <div class="grid grid-cols-3 gap-4 mb-6">
+            <div class="grid grid-cols-4 gap-4 mb-6">
                 <div>
                   <label class="block mb-1 text-sm font-medium text-gray-700">
                     MOBILE NUMBER <span style="color: red;">*</span>
@@ -143,6 +143,10 @@
               <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">EMAIL ADDRESS <span style="color: red;">*</span></label>
                 <input class="w-full p-2 border border-gray-300 rounded-md" type="email" v-model="fields.emailadd" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm font-medium text-white">.</label>
+                <button @click="otpModal"class="w-full p-2 bg-blue-900 text-white rounded-md hover:bg-blue-800">Change Password</button>
               </div>
             </div>
 
@@ -952,6 +956,11 @@ onCroppingComplete(croppedBlob) {
     confirmUpdate() {
       this.showUpdateDialog = true;
     },
+
+    otpModal() {
+      this.showOTPDialog = true;
+    },
+    
     hideUpdateDialog() {
       this.showUpdateDialog = false;
     },
