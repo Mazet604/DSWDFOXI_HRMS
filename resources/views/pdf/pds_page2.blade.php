@@ -26,7 +26,6 @@
 			border-collapse: collapse;
 		}
 		th, td {
-			border: 1px solid black;
 			padding: 2px;
 			text-align: center;
 			vertical-align: middle;
@@ -72,19 +71,19 @@
 				<th colspan="13" class="header">IV. CIVIL SERVICE ELIGIBILITY</th>
 			</tr>
 			<tr>
-				<th colspan="5" style="font-size: 9px">27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY / DRIVER'S LICENSE</th>
-				<th style="font-size: 9px">RATING<br>(If Applicable)</th>
-				<th colspan="2" style="font-size: 9px">DATE OF EXAMINATION / CONFERMENT</th>
-				<th colspan="3" style="font-size: 9px">PLACE OF EXAMINATION / CONFERMENT</th>
-				<th colspan="2" style="font-size: 9px">LICENSE (if applicable)</th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" colspan="5" >27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY / DRIVER'S LICENSE</th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" >RATING<br>(If Applicable)</th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" colspan="2">DATE OF EXAMINATION / CONFERMENT</th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" colspan="3" >PLACE OF EXAMINATION / CONFERMENT</th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" colspan="2" >LICENSE (if applicable)</th>
 			</tr>
 			<tr>
-				<th colspan="5"></th>
-				<th></th>
-				<th colspan="2"></th>
-				<th colspan="3"></th>
-				<th style="font-size: 8px">NUMBER</th>
-				<th style="font-size: 8px">Date of Validity</th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" colspan="5"></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;"></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" colspan="2"></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000;" colspan="3"></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 8px">NUMBER</th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 8px">Date of Validity</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -135,24 +134,24 @@
 				<th colspan="13" class="header">V. WORK EXPERIENCE</th>
 			</tr>
 			<tr>
-				<th colspan=2 style="font-size: 9px"><b>28. INCLUSIVE DATES 
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" colspan=2 ><b>28. INCLUSIVE DATES 
 					(mm/dd/yyyy)</b></th>
-				<th colspan=2 style="font-size: 9px"><b>POSITION TITLE (Write in full/Do not abbreviate)</b></th>
-				<th colspan=3 style="font-size: 9px"><b>DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in full/Do not abbreviate)</b></th>
-				<th style="font-size: 9px"><b>MONTHLY SALARY</b></th>
-				<th style="font-size: 9px"><b>SALARY/ JOB/  PAY GRADE (if applicable)& STEP (Format "00-0")/INCREMENT</b></th>
-				<th colspan=2 style="font-size: 7px"><b>STATUS OF  APPOINTMENT</b></th>
-				<th colspan=2 style="font-size: 9px"><b>GOV'T SERVICE (Yes/No)</b></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" colspan=2 ><b>POSITION TITLE (Write in full/Do not abbreviate)</b></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" colspan=3 ><b>DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in full/Do not abbreviate)</b></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" ><b>MONTHLY SALARY</b></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" ><b>SALARY/ JOB/  PAY GRADE (if applicable)& STEP (Format "00-0")/INCREMENT</b></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" colspan=2 ><b>STATUS OF  APPOINTMENT</b></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 9px" colspan=2 ><b>GOV'T SERVICE (Yes/No)</b></th>
 			</tr>
 			<tr>
-				<th style="font-size: 8px">NUMBER</th>
-				<th style="font-size: 8px">Date of Validity</th>
-				<th colspan="2"></th>
-				<th colspan="3"></th>
-				<th></th>
-				<th></th>
-				<th colspan="2"></th>
-				<th colspan="2"></th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 8px">FROM</th>
+				<th style="height: 20px; border-top: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; font-size: 8px">TO</th>
+				<th style="height: 20px; border-left: 2px solid #000000; border-right: 2px solid #000000;" colspan="2"></th>
+				<th style="height: 20px; border-left: 2px solid #000000; border-right: 2px solid #000000;" colspan="3"></th>
+				<th style="height: 20px; border-left: 2px solid #000000; border-right: 2px solid #000000;"></th>
+				<th style="height: 20px; border-left: 2px solid #000000; border-right: 2px solid #000000;"></th>
+				<th style="height: 20px; border-left: 2px solid #000000; border-right: 2px solid #000000;" colspan="2"></th>
+				<th style="height: 20px; border-left: 2px solid #000000; border-right: 2px solid #000000;" colspan="2"></th>
 				
 			</tr>
 		</thead>
@@ -219,20 +218,11 @@
         <td style="border: 2px solid #000000;" colspan="5" align="center" valign="middle">
             <b><i><font face="Arial Narrow"><br></font></i></b>
         </td>
-        <td style="border: 2px solid #000000;" align="center" valign="middle" bgcolor="#C0C0C0">
+        <td style="border: 2px solid #000000;" align="center" valign="middle" bgcolor="#C0C0C0" colspan="2">
             <b><i><font face="Arial Narrow">DATE</font></i></b>
         </td>
-        <td style=" align="left" valign="middle">
+        <td style=" border: 2px solid #000000;" align="left" valign="middle" colspan="3">
             <b><i><font face="Arial Narrow" size="1">{{ date('F d, Y') }}</font></i></b>
-        </td>
-        <td style=" align="left" valign="middle">
-            <b><i><font face="Arial Narrow" size="1"></font></i></b>
-        </td>
-        <td style="align="left" valign="middle">
-            <b><i><font face="Arial Narrow" size="1"></font></i></b>
-        </td>
-        <td style=" align="left" valign="middle">
-            <b><i><font face="Arial Narrow" size="1"></font></i></b>
         </td>
     </tr>
     

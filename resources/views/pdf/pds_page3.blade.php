@@ -22,8 +22,7 @@
 			width: 100%;
 			border-collapse: collapse;
 		}
-		th, td {
-			border: 1px solid black;
+		#head {
 			padding: 2px;
 			text-align: center;
 			vertical-align: middle;
@@ -67,15 +66,15 @@
             <th class="header" colspan="13" height="30"><i>VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT / PEOPLE / VOLUNTARY ORGANIZATION/S</i></th>
         </tr>
         <tr>
-            <th colspan="5" rowspan="3" bgcolor="#C0C0C0">29. NAME & ADDRESS OF ORGANIZATION (Write in full)</th>
-            <th colspan="4" rowspan="2" bgcolor="#C0C0C0">INCLUSIVE DATES (mm/dd/yyyy)</th>
-            <th rowspan="3" bgcolor="#C0C0C0">NUMBER OF HOURS</th>
-            <th colspan="3" rowspan="3" bgcolor="#C0C0C0">POSITION / NATURE OF WORK</th>
+            <th id="head" colspan="5" rowspan="3" bgcolor="#C0C0C0">29. NAME & ADDRESS OF ORGANIZATION (Write in full)</th>
+            <th id="head" colspan="4" rowspan="2" bgcolor="#C0C0C0">INCLUSIVE DATES (mm/dd/yyyy)</th>
+            <th id="head" rowspan="3" bgcolor="#C0C0C0">NUMBER OF HOURS</th>
+            <th id="head" colspan="3" rowspan="3" bgcolor="#C0C0C0">POSITION / NATURE OF WORK</th>
         </tr>
         <tr></tr>
         <tr>
-            <th colspan="2" bgcolor="#C0C0C0">From</th>
-            <th colspan="2" bgcolor="#C0C0C0">To</th>
+            <th id="head" colspan="2" bgcolor="#C0C0C0">From</th>
+            <th id="head" colspan="2" bgcolor="#C0C0C0">To</th>
         </tr>
         <tbody>
         @php
@@ -121,16 +120,16 @@
             <th class="header" colspan="13" height="30">VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING PROGRAMS ATTENDED</th>
         </tr>
         <tr>
-            <th colspan="4" rowspan="3" bgcolor="#C0C0C0">30. TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAMS (Write in full)</th>
-            <th colspan="4" rowspan="2" bgcolor="#C0C0C0">INCLUSIVE DATES OF ATTENDANCE (mm/dd/yyyy)</th>
-            <th rowspan="3" bgcolor="#C0C0C0">NUMBER OF HOURS</th>
-            <th rowspan="3" bgcolor="#C0C0C0">Type of LD (Managerial/ Supervisory/ Technical/etc)</th>
-            <th colspan="3" rowspan="3" bgcolor="#C0C0C0">CONDUCTED/ SPONSORED BY (Write in full)</th>
+            <th id="head" colspan="4" rowspan="3" bgcolor="#C0C0C0">30. TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAMS (Write in full)</th>
+            <th id="head" colspan="4" rowspan="2" bgcolor="#C0C0C0">INCLUSIVE DATES OF ATTENDANCE (mm/dd/yyyy)</th>
+            <th id="head" rowspan="3" bgcolor="#C0C0C0">NUMBER OF HOURS</th>
+            <th id="head" rowspan="3" bgcolor="#C0C0C0">Type of LD (Managerial/ Supervisory/ Technical/etc)</th>
+            <th id="head" colspan="3" rowspan="3" bgcolor="#C0C0C0">CONDUCTED/ SPONSORED BY (Write in full)</th>
         </tr>
         <tr></tr>
         <tr>
-            <td colspan="2" height="18" bgcolor="#C0C0C0">From</td>
-            <td colspan="2" bgcolor="#C0C0C0">To</td>
+            <td id="head" colspan="2" height="18" bgcolor="#C0C0C0">From</td>
+            <td id="head" colspan="2" bgcolor="#C0C0C0">To</td>
         </tr>
         <tbody> 
             @php
@@ -181,13 +180,13 @@
                     <th class="header" colspan="13" height="30"><i>VIII. OTHER INFORMATION</i></th>
 				</tr>
 				<tr>
-					<th colspan="4" style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; background-color: #C0C0C0; text-align: center; vertical-align: middle;">
+					<th id="head" colspan="4" style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; background-color: #C0C0C0; text-align: center; vertical-align: middle;">
 						<font face="Arial Narrow" size="1">31. SPECIAL SKILLS and HOBBIES</font>
 					</th>
-					<th colspan="5" style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000; text-align: center; vertical-align: middle; background-color: #C0C0C0;">
+					<th id="head" colspan="5" style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000; text-align: center; vertical-align: middle; background-color: #C0C0C0;">
 						<font face="Arial Narrow" size="1">32. NON-ACADEMIC DISTINCTIONS / RECOGNITION (Write in full)</font>
 					</th>
-					<th colspan="4"  style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-right: 2px solid #000000; text-align: center; vertical-align: middle; background-color: #C0C0C0;">
+					<th id="head" colspan="4"  style="border-top: 2px solid #000000; border-bottom: 1px solid #000000; border-right: 2px solid #000000; text-align: center; vertical-align: middle; background-color: #C0C0C0;">
 						<font face="Arial Narrow" size="1">33. MEMBERSHIP IN ASSOCIATION/ORGANIZATION (Write in full)</font>
 					</th>
 				</tr>
@@ -225,19 +224,19 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; height: 38px; background-color: #C0C0C0; text-align: center; vertical-align: middle;">
-						<b><i><font face="Arial Narrow">SIGNATURE</font></i></b>
-					</td>
-					<td colspan="4" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; text-align: center; vertical-align: middle;">
-						<b><i><font face="Arial Narrow"></font></i></b>
-					</td>
-					<td colspan="2" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; background-color: #EAEAEA; text-align: center; vertical-align: middle;">
-						<b><i><font face="Arial Narrow">DATE</font></i></b>
-					</td>
-					<td colspan="3" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; text-align: center; vertical-align: middle;">
-						<b><i><font face="Arial Narrow"></font></i></b>
-					</td>
-				</tr>
+                    <td style="border: 2px solid #000000;" colspan="3" height="37" align="center" valign="middle" bgcolor="#C0C0C0">
+                        <b><i><font face="Arial Narrow">SIGNATURE</font></i></b>
+                    </td>
+                    <td style="border: 2px solid #000000;" colspan="5" align="center" valign="middle">
+                        <b><i><font face="Arial Narrow"><br></font></i></b>
+                    </td>
+                    <td style="border: 2px solid #000000;" align="center" valign="middle" bgcolor="#C0C0C0">
+                        <b><i><font face="Arial Narrow">DATE</font></i></b>
+                    </td>
+                    <td colspan="4" style=" border-right: 1px solid #000000;" align="left" valign="middle">
+                        <b><i><font face="Arial Narrow" size="1">{{ date('F d, Y') }}</font></i></b>
+                    </td>
+                </tr>
 				<tr>
 					<td colspan="11" style="height: 13px; text-align: right; vertical-align: bottom;">
 						<i><font face="Arial" size="1">CS FORM 212 (Revised 2017), Page 3 of 4</font></i>

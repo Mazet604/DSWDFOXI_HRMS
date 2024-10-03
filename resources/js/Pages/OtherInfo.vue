@@ -214,19 +214,19 @@
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">a. Are you a member of any indigenous group?</label>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40aif" placeholder="If YES, give details" :disabled="!(otherInfo.other_40a === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40a !== 'Yes'}"/>
+                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40aif" placeholder="If YES, please specify" :disabled="!(otherInfo.other_40a === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40a !== 'Yes'}"/>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40a" value="No" @change="checkFields('other_40a')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">b. Are you a person with disability?</label>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40b" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40bif" placeholder="If YES, give details" :disabled="!(otherInfo.other_40b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40b !== 'Yes'}"/>
+                            <input style="margin-left: 1%; width: 21%;" type="text" v-model="otherInfo.other_40bif" placeholder="If YES, please specify ID No" :disabled="!(otherInfo.other_40b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40b !== 'Yes'}"/>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40b" value="No" @change="checkFields('other_40b')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                         <div class="form-group">
                             <label style="margin-left: 1%; margin-bottom: 1%;">c. Are you a solo parent?</label>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40c" value="Yes" :disabled="!isEditingOtherInfo"/> Yes
-                            <input style="margin-left: 1%;" type="text" v-model="otherInfo.other_40cif" placeholder="If YES, give details" :disabled="!(otherInfo.other_40c === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40c !== 'Yes'}"/>
+                            <input style="margin-left: 1%; width: 21%;" type="text" v-model="otherInfo.other_40cif" placeholder="If YES, please specify ID No" :disabled="!(otherInfo.other_40c === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40c !== 'Yes'}"/>
                             <input style="margin-left: 1%;" type="radio" v-model="otherInfo.other_40c" value="No" @change="checkFields('other_40c')" :disabled="!isEditingOtherInfo"/> No
                         </div>
                             <div class="flex justify-end gap-4 mt-6">
@@ -1416,7 +1416,7 @@ export default {
 
 @media (max-width: 640px) {
     .fixed {
-        position: static;
+        position: fixed;
     }
 }
 
