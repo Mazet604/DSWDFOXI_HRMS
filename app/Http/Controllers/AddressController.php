@@ -12,9 +12,11 @@ use App\Models\lib_province;
 use App\Models\lib_city;
 use App\Models\lib_brgy;
 use App\Models\Employee;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AddressController extends Controller
-{   
+{
 
     public function getAddress()
     {
@@ -66,7 +68,7 @@ class AddressController extends Controller
                                 ->get();
         return response()->json($provinces);
     }
-    
+
     public function getCities(Request $request)
     {
         $cities = lib_city::where('prv_psgc', $request->prv_psgc)
@@ -74,7 +76,7 @@ class AddressController extends Controller
                             ->get();
         return response()->json($cities);
     }
-    
+
     public function getBarangays(Request $request)
     {
         $barangays = lib_brgy::where('citmun_psgc', $request->citmun_psgc)
@@ -130,6 +132,55 @@ class AddressController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+
+
+    public function getEmployeeAddressStatistics()
+    {
+        // Group employees by city and count how many employees live in each city
+        $employeeData = Employee::select('emp_city', DB::raw('count(*) as count'))
+                                ->groupBy('emp_city')
+                                ->get();
+
+        // Alternatively, you can group by province:
+        // $employeeData = Employee::select('emp_prov', DB::raw('count(*) as count'))
+        //                         ->groupBy('emp_prov')
+        //                         ->get();
+
+        // Return the data as JSON
+        return response()->json($employeeData);
+    }
+
+    public function getEmployeeAddressData(Request $request)
+        {
+            try {
+                // Select PSGC and human-readable fields using JOINs
+                $employeeData = EmpAddress::select(
+                    'emp_brgy',
+                    'lib_brgies.col_brgy as barangay_name',
+                    'emp_city',
+                    'lib_cities.col_citymuni as city_name',
+                    'emp_prov',
+                    'lib_provinces.col_province as province_name',
+                    'emp_region',
+                    'lib_regions.col_region as region_name',
+                    DB::raw('count(*) as count')
+                )
+                ->leftJoin('lib_brgies', 'emp_address.emp_brgy', '=', 'lib_brgies.brgy_psgc')
+                ->leftJoin('lib_cities', 'emp_address.emp_city', '=', 'lib_cities.citmun_psgc')
+                ->leftJoin('lib_provinces', 'emp_address.emp_prov', '=', 'lib_provinces.prv_psgc')
+                ->leftJoin('lib_regions', 'emp_address.emp_region', '=', 'lib_regions.reg_psgc')
+                ->groupBy('emp_city', 'emp_brgy', 'emp_prov', 'emp_region', 'barangay_name', 'city_name', 'province_name', 'region_name')
+                ->get();
+
+                return response()->json($employeeData, 200);
+            } catch (\Exception $e) {
+                Log::error('Error fetching employee address data: ' . $e->getMessage());
+                return response()->json(['error' => 'Failed to fetch employee address data.'], 500);
+            }
+        }
+
+
 
 
 }

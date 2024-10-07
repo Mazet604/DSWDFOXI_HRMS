@@ -1,16 +1,25 @@
 <template>
     <AppLayout>
-        <h1>Admin Dashboard</h1>
-      <div class="dashboard-grid">
-        <!-- Left Column -->
-        <div class="left-column">
-          <!-- Total Employees Card -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Total number of Employees:</h5>
-              <h1 class="card-text">{{ totalEmployees }}</h1>
-            </div>
-          </div>
+      <div>
+        <!-- Custom Tabs for Admin Dashboard -->
+        <div class="flex justify-end -mb-px">
+          <button @click="activeTab = 'overview'" :class="tabButtonClass('overview')">OVERVIEW</button>
+          <button @click="activeTab = 'demographic'" :class="tabButtonClass('demographic')">DEMOGRAPHIC</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div v-if="activeTab === 'overview'">
+          <h1>Admin Dashboard - Overview</h1>
+          <div class="dashboard-grid-overview">
+            <!-- Left Column -->
+            <div class="left-column">
+              <!-- Total Employees Card -->
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Total number of Employees:</h5>
+                  <h1 class="card-text">{{ totalEmployees }}</h1>
+                </div>
+              </div>
 
               <!-- Gender Distribution Card -->
               <div class="card">
@@ -21,31 +30,58 @@
               </div>
             </div>
 
-        <!-- Right Column: Civil Status Distribution Card -->
-        <div class="card civil-status-card">
-          <div class="card-body">
-            <h5 class="card-title">Civil Status Distribution</h5>
-            <canvas id="civilStatusChart"></canvas>
+            <!-- Right Column: Civil Status Distribution Card -->
+            <div class="card civil-status-card">
+              <div class="card-body">
+                <h5 class="card-title">Civil Status Distribution</h5>
+                <canvas id="civilStatusChart"></canvas>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <!-- Demographic Tab -->
+        <div v-show="activeTab === 'demographic'" class="flex flex-col items-center">
+            <h1>Admin Dashboard - Demographic</h1>
+
+            <!-- Centered Card with Buttons -->
+            <div class="card centered-card">
+              <div class="card-body">
+                <div class="flex justify-between mb-4">
+                  <!-- Buttons to switch between Barangay, City, Province, and Region charts -->
+                  <button @click="activeDemographic = 'barangay'" :class="demographicButtonClass('barangay')">Barangay</button>
+                  <button @click="activeDemographic = 'city'" :class="demographicButtonClass('city')">City</button>
+                  <button @click="activeDemographic = 'province'" :class="demographicButtonClass('province')">Province</button>
+                  <button @click="activeDemographic = 'region'" :class="demographicButtonClass('region')">Region</button>
+                </div>
+
+                <!-- Chart Display: All charts are rendered but hidden except the active one -->
+                <canvas id="barangayChart" v-show="activeDemographic === 'barangay'"></canvas>
+                <canvas id="cityChart" v-show="activeDemographic === 'city'"></canvas>
+                <canvas id="provinceChart" v-show="activeDemographic === 'province'"></canvas>
+                <canvas id="regionChart" v-show="activeDemographic === 'region'"></canvas>
+              </div>
+            </div>
         </div>
       </div>
     </AppLayout>
-  </template>
+</template>
 
-  <script>
-  import { App } from '@inertiajs/inertia-vue3';
-  import axios from 'axios';
-  import { Chart, registerables } from 'chart.js';
-  import AdminLayout from '@/Layouts/AppLayout.vue';
+<script>
+import { App } from '@inertiajs/inertia-vue3';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import axios from 'axios';
+import { Chart, registerables } from 'chart.js';
+import { nextTick } from 'vue';
 
 Chart.register(...registerables);
 
 export default {
   name: 'AdminDashboard',
 
-    components: {
-      AppLayout
-    },
+  components: {
+    AppLayout
+  },
 
   data() {
     return {

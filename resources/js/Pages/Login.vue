@@ -2,7 +2,7 @@
     <Head title="Log in" />
 
     <div class="flex items-center justify-center min-h-screen bg-center bg-cover" style="background-image: url('/images/backgrounddswd.png');">
-        <div class="w-full max-w-xs p-4 bg-white rounded-lg shadow-md sm:p-6 lg:p-8 sm:max-w-md lg:max-w-lg border border-grey-400">
+        <div class="w-full max-w-xs p-4 bg-white border rounded-lg shadow-md sm:p-6 lg:p-8 sm:max-w-md lg:max-w-lg border-grey-400">
             <div class="flex justify-center mb-6 lg:mb-8">
                 <img src="/images/dswd-logo1.png" alt="DSWD Logo" class="h-20 lg:h-40" />
             </div>
@@ -21,7 +21,7 @@
                     <div class="relative mt-1">
                         <TextInput id="empuser" type="text" class="block w-full pl-4 pr-10 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" v-model="form.empuser" required autofocus autocomplete="username" />
                         <span class="absolute inset-y-0 right-0 flex items-center pr-3">
-                            <i class="fas fa-user text-gray-400"></i>
+                            <i class="text-gray-400 fas fa-user"></i>
                         </span>
                     </div>
                     <InputError class="mt-2" :message="form.errors.empuser" />
@@ -39,10 +39,10 @@
                 </div>
 
                 <div class="flex items-center justify-between mt-8">
-                    <Link v-if="canResetPassword" :href="route('password.request')" class="text- text-blue-700 underline hover:no-underline">
+                    <Link v-if="canResetPassword" :href="route('password.request')" class="text-blue-700 underline text- hover:no-underline">
                         Forgot password?
                     </Link>
-                    <PrimaryButton class="py-2 px-12 text-lg font-semibold text-white bg-gradient-to-r from-blue-900 to-blue-900 rounded-full hover:from-blue-800 hover:to-blue-800" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <PrimaryButton class="px-12 py-2 text-lg font-semibold text-white rounded-full bg-gradient-to-r from-blue-900 to-blue-900 hover:from-blue-800 hover:to-blue-800" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         SIGN IN
                     </PrimaryButton>
                 </div>

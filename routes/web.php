@@ -24,7 +24,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-})->name('login');
+})->name('home'); // <-- Renamed from 'login' to 'home'
 
 Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
@@ -96,6 +96,8 @@ Route::middleware('auth',)->group(function () {
     Route::get('/total-employees', [EmployeeController::class, 'getTotalEmployees']);
     Route::get('/gender-distribution', [EmployeeController::class, 'getGenderDistribution']);
     Route::get('/civil-status-distribution', [EmployeeController::class, 'getCivilStatusDistribution']);
+    Route::get('/employee-address-data', [AddressController::class, 'getEmployeeAddressData']);
+    Route::get('/employee-address-statistics', [AddressController::class, 'getEmployeeAddressStatistics']);
 
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
     Route::patch('/employee/updateAddress', [AddressController::class, 'updateAddress']);
