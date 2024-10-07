@@ -1,11 +1,6 @@
 <template>
     <AppLayout>
       <div class="flex flex-col lg:flex-row">
-        <!-- Sidebar -->
-        <div>
-          <Sidebar />
-        </div>
-
         <!-- Main Content -->
         <div class="relative w-full p-6">
           <!-- Profile Section -->
@@ -146,7 +141,8 @@
               </div>
               <div>
                 <label class="block mb-1 text-sm font-medium text-white">.</label>
-                <button @click="otpModal"class="w-full p-2 bg-blue-900 text-white rounded-md hover:bg-blue-800">Change Password</button>
+                <button @click="showChangePassModal" class="w-full p-2 bg-blue-900 text-white rounded-md hover:bg-blue-800">Change Password</button>
+                <ChangePass v-if="isChangePassModalVisible" @close="isChangePassModalVisible = false" />
               </div>
             </div>
 
@@ -158,112 +154,9 @@
             </div>
             </div>
     </div>
-
-          <!-- Address Tab -->
-          <div v-if="activeTab === 1" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
-            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">RESIDENTIAL ADDRESS</h2>
-            <div class="grid grid-cols-2 gap-4 mb-6">
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">REGION <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }">
-                  <option v-for="(region, index) in regions" :key="index" :value="region.reg_psgc">{{ region.col_region }}</option>
-                </select>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">PROVINCE <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }">
-                  <option v-for="(province, index) in provinces" :key="index" :value="province.prv_psgc">{{ province.col_province }}</option>
-                </select>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">CITY <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }">
-                  <option v-for="(city, index) in cities" :key="index" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
-                </select>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">BARANGAY <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }">
-                  <option v-for="(barangay, index) in barangays" :key="index" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
-                </select>
-              </div>
+            <div v-if="activeTab === 1" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
+              <Address />
             </div>
-
-            <div class="grid grid-cols-3 gap-4 mb-6">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid number-field" @input="validateNumber('zipcode', 'fields')" type="text" v-model="fields.zipcode" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">VILLAGE SUBDIVISION</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.villsub" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">BLOCK/STREET/PUROK</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.block" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
-              </div>
-            </div>
-
-            <!-- Align Checkbox to the Right -->
-            <div class="flex justify-end mb-2">
-              <div class="flex items-center">
-                <input type="checkbox" id="sameAddressCheckbox" v-model="copyPermanentToCurrent" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" :disabled="!isEditing" />
-                <label for="sameAddressCheckbox" class="block ml-2 text-sm font-medium text-gray-700">Same Residential Address?</label>
-              </div>
-            </div>
-
-            <!-- Current Address Section -->
-            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">PERMANENT ADDRESS</h2>
-            <div class="grid grid-cols-2 gap-4 mb-6">
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">REGION <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Region2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }">
-                  <option v-for="(region2, index) in regions2" :key="index" :value="region2.reg_psgc">{{ region2.col_region }}</option>
-                </select>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">PROVINCE <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Province2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }">
-                  <option v-for="(province2, index) in provinces2" :key="index" :value="province2.prv_psgc">{{ province2.col_province }}</option>
-                </select>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">CITY <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.City2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }">
-                  <option v-for="(city2, index) in cities2" :key="index" :value="city2.citmun_psgc">{{ city2.col_citymuni }}</option>
-                </select>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">BARANGAY <span style="color: red;">*</span></label>
-                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="fields.Barangay2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }">
-                  <option v-for="(barangay2, index) in barangays2" :key="index" :value="barangay2.brgy_psgc">{{ barangay2.col_brgy }}</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-4 mb-6">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">ZIP CODE <span style="color: red;">*</span></label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid number-field" @input="validateNumber('zipcode2', 'fields')" type="text" v-model="fields.zipcode2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">VILLAGE SUBDIVISION</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.villsub2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
-              </div>
-              <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">BLOCK/STREET/PUROK</label>
-                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.block2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
-              </div>
-            </div>
-
-            <div class="mt-6 text-right">
-            <button v-if="!isEditing" @click="toggleEditing" class="px-8 py-2 font-semibold text-white transition bg-blue-900 rounded-md hover:bg-blue-800 duration-30">EDIT</button>
-            <div v-if="isEditing" class="inline-flex space-x-4">
-                <button @click="cancelEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
-            </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -281,7 +174,7 @@
               <button @click="saveProfile" class="px-6 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">Confirm</button>
             </div>
         </div>
-      </div>
+        </div>
       </div>
 
       <!-- Update Success Modal -->
@@ -338,10 +231,18 @@ import 'cropperjs/dist/cropper.css';
 import { ref, watch } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
+import ChangePass from '@/Pages/Auth/ChangePass.vue';
+import Address from '@/Pages/Address.vue';
+
+const isChangePassModalVisible = ref(false);
+
+const showChangePassModal = () => {
+  isChangePassModalVisible.value = true;
+};
 
 export default {
   components: {
-    AppLayout, Button
+    AppLayout, Button, Address, ChangePass
   },
 
   mounted() {
@@ -369,24 +270,10 @@ export default {
         height: '',
         weight: '',
         bloodType: '',
-        zipcode: '',
-        block: '',
-        villsub: '',
         mobilenum: '',
         telnum: '',
         emailadd: '',
-        Region:'',
-        Province:'',
-        City:'',
         croppedBlob: null,
-        Barangay:'',
-        Region2:'',
-        Province2:'',
-        City2:'',
-        Barangay2:'',
-        zipcode2: '',
-        block2: '',
-        villsub2: '',
       },
       activeTab: 'personal-info',
       activeSubTab: '',
@@ -400,14 +287,6 @@ export default {
       civilStatusOptions: [],
       bloodTypeOptions: [],
       extOptions: [],
-      regions:[],
-      provinces:[],
-      cities:[],
-      barangays:[],
-      regions2:[],
-      provinces2:[],
-      cities2:[],
-      barangays2:[],
       activeTab: 0,
       activeSubTab: '',
       searchQuery: '',
@@ -463,50 +342,6 @@ export default {
       this.birthdayErrorMessage = '';
       return age;
     }
-  },
-
-
-  watch: {
-    copyPermanentToCurrent(newValue) {
-      if (newValue) {
-        this.copyPermanentAddress();
-      }
-    },
-
-    'fields.Region'(newVal) {
-      if (newVal) {
-        this.fetchProvinces();
-      }
-    },
-    'fields.Province'(newVal) {
-      if (newVal) {
-        this.fetchCities();
-      }
-    },
-    'fields.City'(newVal) {
-      if (newVal) {
-        this.fetchBarangays();
-      }
-    },
-
-    'fields.Region2'(newVal) {
-      if (newVal) {
-        this.fetchProvinces2();
-      }
-    },
-
-    'fields.Province2'(newVal) {
-      if (newVal) {
-        this.fetchCities2();
-      }
-    },
-
-    'fields.City2'(newVal) {
-      if (newVal) {
-        this.fetchBarangays2();
-      }
-    },
-
   },
 
   methods: {
@@ -626,145 +461,6 @@ export default {
         });
     },
 
-    fetchAddress() {
-      axios.get('/employee/Address')
-        .then(response => {
-          this.fields.zipcode = response.data.zipcode;
-          this.fields.block = response.data.block;
-          this.fields.villsub = response.data.villsub;
-          this.fields.Region = response.data.Region;
-          this.fields.Province = response.data.Province;
-          this.fields.City = response.data.City;
-          this.fields.Barangay = response.data.Barangay;
-
-          this.fetchProvinces();
-          this.fetchCities();
-          this.fetchBarangays();
-
-        })
-        .catch(error => {
-          this.errorMessage = 'Failed to load address.';
-        });
-    },
-
-    fetchAddress2() {
-      axios.get('/employee/Address2')
-        .then(response => {
-          this.fields.zipcode2 = response.data.zipcode2;
-          this.fields.block2 = response.data.block2;
-          this.fields.villsub2 = response.data.villsub2;
-          this.fields.Region2 = response.data.Region2;
-          this.fields.Province2 = response.data.Province2;
-          this.fields.City2 = response.data.City2;
-          this.fields.Barangay2 = response.data.Barangay2;
-
-          this.fetchProvinces2();
-          this.fetchCities2();
-          this.fetchBarangays2();
-
-        })
-        .catch(error => {
-          this.errorMessage = 'Failed to load address.';
-        });
-    },
-
-    fetchRegions() {
-      axios.get('/api/regions')
-        .then(response => {
-          this.regions = response.data;
-        })
-        .catch(error => {
-          console.error('Error fetching regions:', error);
-        });
-    },
-
-    fetchRegions2() {
-      axios.get('/api/regions2')
-        .then(response => {
-          this.regions2 = response.data;
-        })
-        .catch(error => {
-          console.error('Error fetching regions:', error);
-        });
-    },
-
-
-    fetchProvinces() {
-      axios.get('/api/provinces', {
-        params:{
-          reg_psgc:this.fields.Region
-        }
-      })
-        .then(function(response) {
-          this.provinces = response.data;
-        }.bind(this));
-    },
-
-    fetchProvinces2() {
-      axios.get('/api/provinces2', {
-        params:{
-          reg_psgc:this.fields.Region2
-        }
-      })
-        .then(function(response) {
-          this.provinces2 = response.data;
-        }.bind(this));
-    },
-
-    fetchCities() {
-      axios.get('/api/cities', {
-        params:{
-          prv_psgc:this.fields.Province
-        }
-      })
-        .then(function(response) {
-          this.cities = response.data;
-        }.bind(this));
-    },
-
-    fetchCities2() {
-      axios.get('/api/cities2', {
-        params:{
-          prv_psgc:this.fields.Province2
-        }
-      })
-        .then(function(response) {
-          this.cities2 = response.data;
-        }.bind(this));
-    },
-
-    fetchBarangays() {
-      axios.get('/api/barangays', {
-        params:{
-          citmun_psgc:this.fields.City
-        }
-      })
-        .then(function(response) {
-          this.barangays = response.data;
-        }.bind(this));
-    },
-
-    fetchBarangays2() {
-      axios.get('/api/barangays2', {
-        params:{
-          citmun_psgc:this.fields.City2
-        }
-      })
-        .then(function(response) {
-          this.barangays2 = response.data;
-        }.bind(this));
-    },
-
-    copyPermanentAddress() {
-      this.fields.Region2 = this.fields.Region;
-      this.fields.Province2 = this.fields.Province;
-      this.fields.City2 = this.fields.City;
-      this.fields.Barangay2 = this.fields.Barangay;
-      this.fields.zipcode2 = this.fields.zipcode;
-      this.fields.block2 = this.fields.block;
-      this.fields.villsub2 = this.fields.villsub;
-    },
-
     fetchSecurityandContact() {
       axios.get('/employee/SecurityandContact')
         .then(response => {
@@ -816,10 +512,10 @@ export default {
         };
 
         reader.readAsDataURL(originalFile);
-    }
-},
+      }
+    },
 
-onCroppingComplete(croppedBlob) {
+    onCroppingComplete(croppedBlob) {
       if (this.empid && croppedBlob) {
         this.uploadCroppedImage(croppedBlob, this.empid);
       } else {
@@ -956,10 +652,6 @@ onCroppingComplete(croppedBlob) {
     confirmUpdate() {
       this.showUpdateDialog = true;
     },
-
-    otpModal() {
-      this.showOTPDialog = true;
-    },
     
     hideUpdateDialog() {
       this.showUpdateDialog = false;
@@ -1004,8 +696,6 @@ onCroppingComplete(croppedBlob) {
     this.fetchFullName();
     this.fetchPersonalInfo();
     this.fetchSecurityandContact();
-    this.fetchAddress();
-    this.fetchAddress2();
     this.fetchProfilePicture();
   },
 
@@ -1014,8 +704,6 @@ onCroppingComplete(croppedBlob) {
     this.fetchCivilStatusOptions();
     this.fetchBloodTypeOptions();
     this.fetchExtOptions();
-    this.fetchRegions();
-    this.fetchRegions2();
   },
 
 };
@@ -1023,17 +711,8 @@ onCroppingComplete(croppedBlob) {
 
 <style scoped>
 
-
-
 .bg-cover {
     background-size: cover;
-}
-
-.broken-line {
-  display: block;
-  width: 100%;
-  border-bottom: 1px dashed #000;
-  margin: 20px 0;
 }
 
 .text-color {
@@ -1100,19 +779,6 @@ onCroppingComplete(croppedBlob) {
 .crop-container {
   max-width: 100%;
   height: auto;
-}
-
-.checkbox {
-  display: flex;
-  flex-direction: row;
-}
-
-.check {
-  cursor: pointer;
-}
-
-.addgrid {
-  text-align: center;
 }
 
 </style>

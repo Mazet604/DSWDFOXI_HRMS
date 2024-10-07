@@ -100,7 +100,7 @@ const resendOtp = () => {
         onSuccess: (response) => {
             otpExpired.value = false;  // Reset OTP expiration state
             passwordChanged.value = false;  // Ensure modal state is reset
-            timer.value = 5; // Reset the timer to 5 minutes
+            timer.value = 300; // Reset the timer to 5 minutes
             startTimer();  // Start the timer again
         },
         onError: (errors) => {

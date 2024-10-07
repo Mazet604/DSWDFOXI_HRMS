@@ -70,16 +70,16 @@ class AddressControllerII extends Controller
     public function getCities2(Request $request)
     {
         $cities = lib_city::where('prv_psgc', $request->prv_psgc)
-                          ->orderBy('col_citymuni', 'asc')
-                          ->get();
+                            ->orderBy('col_citymuni', 'asc')
+                            ->get();
         return response()->json($cities);
     }
     
     public function getBarangays2(Request $request)
     {
         $barangays = lib_brgy::where('citmun_psgc', $request->citmun_psgc)
-                             ->orderBy('col_brgy', 'asc')
-                             ->get();
+                                ->orderBy('col_brgy', 'asc')
+                                ->get();
         return response()->json($barangays);
     }
 }

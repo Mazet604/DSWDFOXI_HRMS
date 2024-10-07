@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <AdminLayout>
         <h1>Admin Dashboard</h1>
       <div class="dashboard-grid">
         <!-- Left Column -->
@@ -29,14 +29,14 @@
           </div>
         </div>
       </div>
-    </AppLayout>
+    </AdminLayout>
   </template>
 
   <script>
   import { App } from '@inertiajs/inertia-vue3';
-  import AppLayout from '@/Layouts/AppLayout.vue';
   import axios from 'axios';
   import { Chart, registerables } from 'chart.js';
+  import AdminLayout from '@/Layouts/AdminLayout.vue';
 
   Chart.register(...registerables);
 
@@ -44,7 +44,7 @@
     name: 'AdminDashboard',
 
     components: {
-      AppLayout
+      AdminLayout
     },
 
     data() {

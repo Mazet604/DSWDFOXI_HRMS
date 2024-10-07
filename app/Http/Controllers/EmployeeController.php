@@ -221,33 +221,12 @@ class EmployeeController extends Controller
             $employee->emp_cnum = $request->input('mobilenum');
             $employee->emp_telnum = $request->input('telnum');
 
-
-            //Update the address
-            $emp_address->emp_region = $request->input('Region');
-            $emp_address->emp_prov = $request->input('Province');
-            $emp_address->emp_city = $request->input('City');
-            $emp_address->emp_brgy = $request->input('Barangay');
-            $emp_address->emp_house = $request->input('block');
-            $emp_address->emp_subd = $request->input('villsub');
-            $emp_address->emp_zip = $request->input('zipcode');
-
-            //Update the address2
-            $emp_address2->emp_region2 = $request->input('Region2');
-            $emp_address2->emp_prov2 = $request->input('Province2');
-            $emp_address2->emp_city2 = $request->input('City2');
-            $emp_address2->emp_brgy2 = $request->input('Barangay2');
-            $emp_address2->emp_house2 = $request->input('block2');
-            $emp_address2->emp_subd2 = $request->input('villsub2');
-            $emp_address2->emp_zip2 = $request->input('zipcode2');
-
             // Update the emp_acc details
             $emp_acc->empmail = $request->input('emailadd');
 
             // Save the updated information
             $employee->save();
             $emp_acc->save();
-            $emp_address->save();
-            $emp_address2->save();
 
             return response()->json(['success' => 'Profile updated successfully']);
         } catch (\Exception $e) {

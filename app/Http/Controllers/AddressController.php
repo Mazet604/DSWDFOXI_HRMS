@@ -70,16 +70,16 @@ class AddressController extends Controller
     public function getCities(Request $request)
     {
         $cities = lib_city::where('prv_psgc', $request->prv_psgc)
-                          ->orderBy('col_citymuni', 'asc')
-                          ->get();
+                            ->orderBy('col_citymuni', 'asc')
+                            ->get();
         return response()->json($cities);
     }
     
     public function getBarangays(Request $request)
     {
         $barangays = lib_brgy::where('citmun_psgc', $request->citmun_psgc)
-                             ->orderBy('col_brgy', 'asc')
-                             ->get();
+                                ->orderBy('col_brgy', 'asc')
+                                ->get();
         return response()->json($barangays);
     }
 
@@ -88,4 +88,48 @@ class AddressController extends Controller
         $cities = lib_city::all();
         return response()->json($cities);
     }
+
+    public function updateAddress()
+    {
+
+        try {
+            $user = Auth::user(); // Get the currently authenticated user
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
+            $emp_acc = EmpAcc::where('empid', $user->empid)->first();
+            if (!$employee || !$emp_acc) {
+                return response()->json(['error' => 'Employee not found'], 404);
+            }
+    
+            $emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first(); // Fetch employee address using emp_count
+            if (!$emp_address) {
+                return response()->json(['error' => 'Employee address not found'], 404);
+            }
+
+            $emp_address2 = EmpAddress2::where('emp_count', $employee->emp_count)->first(); // Fetch employee address2 using emp_count
+            if (!$emp_address2) {
+                return response()->json(['error' => 'Employee address 2 not found'], 404);
+            }
+
+            //Update the address
+            $emp_address->emp_region = $request->input('Region');
+            $emp_address->emp_prov = $request->input('Province');
+            $emp_address->emp_city = $request->input('City');
+            $emp_address->emp_brgy = $request->input('Barangay');
+            $emp_address->emp_house = $request->input('block');
+            $emp_address->emp_subd = $request->input('villsub');
+            $emp_address->emp_zip = $request->input('zipcode');
+
+            $emp_address->save();
+            
+            return response()->json(['success' => 'Profile updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
 }

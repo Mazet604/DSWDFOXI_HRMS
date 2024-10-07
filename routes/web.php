@@ -98,6 +98,7 @@ Route::middleware('auth',)->group(function () {
     Route::get('/civil-status-distribution', [EmployeeController::class, 'getCivilStatusDistribution']);
 
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
+    Route::patch('/employee/updateAddress', [AddressController::class, 'updateAddress']);
 
     Route::get('/api/regions', [AddressController::class, 'getRegions']);
     Route::get('/api/provinces', [AddressController::class, 'getProvinces']);
