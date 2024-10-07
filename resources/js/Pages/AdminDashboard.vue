@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <AdminLayout>
       <div>
         <!-- Custom Tabs for Admin Dashboard -->
         <div class="flex justify-end -mb-px">
@@ -64,7 +64,7 @@
             </div>
         </div>
       </div>
-    </AppLayout>
+    </AdminLayout>
 </template>
 
 <script>
@@ -73,6 +73,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import axios from 'axios';
 import { Chart, registerables } from 'chart.js';
 import { nextTick } from 'vue';
+import AdminLayout from '@/Layouts/AdminLayout.vue';
 
 Chart.register(...registerables);
 
@@ -80,7 +81,7 @@ export default {
   name: 'AdminDashboard',
 
   components: {
-    AppLayout
+    AdminLayout
   },
 
   data() {
@@ -404,7 +405,4 @@ button:hover {
   cursor: pointer;
 }
 
-button.bg-blue-900 {
-  border-color: yellow;
-}
 </style>
