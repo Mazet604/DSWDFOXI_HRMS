@@ -100,7 +100,6 @@ Route::middleware('auth',)->group(function () {
     Route::get('/employee-address-statistics', [AddressController::class, 'getEmployeeAddressStatistics']);
 
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
-    Route::patch('/employee/updateAddress', [AddressController::class, 'updateAddress']);
 
     Route::get('/api/regions', [AddressController::class, 'getRegions']);
     Route::get('/api/provinces', [AddressController::class, 'getProvinces']);

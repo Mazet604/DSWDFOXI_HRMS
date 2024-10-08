@@ -94,47 +94,7 @@
                 <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="fields.block2" :disabled="!isEditing" :class="{ 'disabled-input': !isEditing }"/>
             </div>
         </div>
-
-        <div class="mt-6 text-right">
-            <button v-if="!isEditing" @click="toggleEditing" class="px-8 py-2 font-semibold text-white transition bg-blue-900 rounded-md hover:bg-blue-800 duration-30">EDIT</button>
-            <div v-if="isEditing" class="inline-flex space-x-4">
-                <button @click="cancelEditing" class="px-4 py-2 text-white rounded-md bg-red-700 hover:bg-red-800 font-semibold">CANCEL</button>
-                <button @click="confirmUpdate" class="px-8 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800 font-semibold">SAVE</button>
-            </div>
         </div>
-    </div>
-
-    <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-        <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-            <div class="p-4">
-                <div class="text-center">
-                <i class="mb-4 text-4xl fas fa-check-circle" style="color: green;"></i>
-                <h2 class="mb-4 text-xl font-semibold">Updated Successfully!</h2>
-                <p class="mb-4">Your profile has been updated successfully.</p>
-            </div>
-            <div class="flex justify-center gap-4">
-                <button @click="hideSuccessDialog" class="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-800">OKAY</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Update Confirmation Modal -->
-    <div v-if="showUpdateDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-        <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-            <div class="p-4">
-                <div class="text-center">
-                <i class="mt-4 mb-4 text-4xl fas fa-circle-question" style="color: red;"></i>
-                <h2 class="mb-4 text-xl font-semibold">Are you sure you want to update?</h2>
-                <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
-                </div>
-                    <div class="flex justify-center gap-4">
-                    <button @click="hideUpdateDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">Cancel</button>
-                    <button @click="saveProfile" class="px-6 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">Confirm</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 </template>
