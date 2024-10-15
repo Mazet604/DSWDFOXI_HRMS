@@ -244,118 +244,116 @@
         </div>
     </div>
 
-        <!-- Edit Modal -->
-        <div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-                <div class="p-4">
-                    <div class="text-center">
-                        <h2 class="mb-4 text-xl font-semibold">Edit {{ currentTabLabel }}</h2>
-                    </div>
-                    <div class="grid grid-cols-1 gap-4">
-                        <!-- Render fields -->
-                        <div v-for="(value, key) in filteredEditFields" :key="key">
-                            <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
+<!-- Edit Modal -->
+<div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+    <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
+        <div class="p-4">
+            <div class="text-center">
+                <h2 class="mb-4 text-xl font-semibold">Edit {{ currentTabLabel }}</h2>
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+                <!-- Render fields -->
+                <div v-for="(value, key) in filteredEditFields" :key="key">
+                    <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
 
-                            <template v-if="key === 'child_xname'">
-                                <select
-                                    class="input-field"
-                                    v-model="editFields[key]"
-                                >
-                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
-                                        {{ suffix.label }}
-                                    </option>
-                                </select>
-                            </template>
+                    <template v-if="key === 'child_xname'">
+                        <select
+                            class="input-field"
+                            v-model="editFields[key]"
+                        >
+                            <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                {{ suffix.label }}
+                            </option>
+                        </select>
+                    </template>
 
-                            <template v-else-if="key === 'child_fname' || key === 'child_mname' || key === 'child_lname' || key === 'educ_school' || key === 'educ_degree'
-                            || key === 'educ_hl_earned' || key === 'educ_academic_honor' || key === 'org_name' || key === 'work_dept' || key === 'work_pos' || key === 'work_stat'
-                            || key === 'skill' || key === 'ref_fname' || key === 'ref_mname' || key === 'ref_lname'">
-                                <input
-                                    class="input-field"
-                                    :type="getInputType(key, value)"
-                                    v-model="editFields[key]"
-                                    @input="validateAlphabetOnly(key, 'editFields')"
-                                />
-                            </template>
+                    <template v-else-if="['child_fname', 'child_mname', 'child_lname', 'educ_school', 'educ_degree', 'educ_hl_earned', 'educ_academic_honor', 'org_name', 'work_dept', 'work_pos', 'work_stat', 'skill', 'ref_fname', 'ref_mname', 'ref_lname'].includes(key)">
+                        <input
+                            class="input-field"
+                            :type="getInputType(key, value)"
+                            v-model="editFields[key]"
+                            @input="validateAlphabetOnly(key, 'editFields')"
+                        />
+                    </template>
 
-                            <template v-else-if="key === 'ref_xname'">
-                                <select
-                                    class="input-field"
-                                    v-model="editFields[key]"
-                                >
-                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
-                                        {{ suffix.label }}
-                                    </option>
-                                </select>
-                            </template>
+                    <template v-else-if="key === 'ref_xname'">
+                        <select
+                            class="input-field"
+                            v-model="editFields[key]"
+                        >
+                            <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                {{ suffix.label }}
+                            </option>
+                        </select>
+                    </template>
 
-                            <template v-else-if="key === 'work_gov'">
-                                <select
-                                    class="input-field"
-                                    v-model="editFields[key]"
-                                >
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </template>
+                    <template v-else-if="key === 'work_gov'">
+                        <select
+                            class="input-field"
+                            v-model="editFields[key]"
+                        >
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </template>
 
-                            <!-- Work Experience Date Fields (with validation) -->
-                            <template v-else-if="key === 'workfr' || key === 'child_dob'">
-                                <input
-                                    class="input-field"
-                                    type="date"
-                                    v-model="editFields[key]"
-                                    :max="maxDate"
-                                />
-                            </template>
+                    <!-- Work Experience Date Fields (with validation) -->
+                    <template v-else-if="key === 'workfr' || key === 'child_dob'">
+                        <input
+                            class="input-field"
+                            type="date"
+                            v-model="editFields[key]"
+                            :max="maxDate"
+                        />
+                    </template>
 
-                            <template v-else-if="key === 'workto'">
-                                <input
-                                    class="input-field"
-                                    type="date"
-                                    v-model="editFields[key]"
-                                />
-                                <span v-if="dateError" class="error-message">"Worked To" date cannot be before "Worked From" date.</span>
-                            </template>
+                    <template v-else-if="key === 'workto'">
+                        <input
+                            class="input-field"
+                            type="date"
+                            v-model="editFields[key]"
+                        />
+                        <span v-if="dateError" class="error-message">"Worked To" date cannot be before "Worked From" date.</span>
+                    </template>
 
-                            <template v-else-if="key === 'educ_year_grad'">
-                                <input
-                                    class="input-field"
-                                    v-model="editFields[key]"
-                                    @input="validateNumber(key, 'editFields')"
-                                />
-                            </template>
+                    <template v-else-if="key === 'educ_year_grad'">
+                        <input
+                            class="input-field"
+                            v-model="editFields[key]"
+                            @input="validateNumber(key, 'editFields')"
+                        />
+                    </template>
 
-                            <!-- Number validation  -->
-                            <template v-else-if=" key === 'work_salary' || key === 'work_salarygrade' ">
-                                <input
-                                    class="input-field"
-                                    :type="getInputType(key, value)"
-                                    v-model="editFields[key]"
-                                    @input="validateDecimal(key, 'editFields')"
-                                />
-                            </template>
+                    <!-- Number validation  -->
+                    <template v-else-if="['work_salary', 'work_salarygrade'].includes(key)">
+                        <input
+                            class="input-field"
+                            :type="getInputType(key, value)"
+                            v-model="editFields[key]"
+                            @input="validateDecimal(key, 'editFields')"
+                        />
+                    </template>
 
-                            <!-- Other input fields -->
-                            <input
-                                v-else
-                                class="input-field"
-                                :type="getInputType(key, value)"
-                                v-model="editFields[key]"
-                            />
-                        </div>
-                    </div>
-                    <div class="mt-6 text-center">
-                        <button @click="hideEditDialog" class="px-4 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                            Cancel
-                        </button>
-                        <button @click="saveEdit" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            Save
-                        </button>
-                    </div>
+                    <!-- Other input fields -->
+                    <input
+                        v-else
+                        class="input-field"
+                        :type="getInputType(key, value)"
+                        v-model="editFields[key]"
+                    />
                 </div>
             </div>
+            <div class="mt-6 text-center">
+                <button @click="hideEditDialog" class="px-4 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                    Cancel
+                </button>
+                <button @click="saveEdit" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                    Save
+                </button>
+            </div>
         </div>
+    </div>
+</div>
 
         <!-- Success Modal -->
         <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
@@ -687,36 +685,6 @@ export default {
 
     data() {
         return {
-            formatFieldLabel: {
-                child_fname: 'FIRST NAME',
-                child_mname: 'MIDDLE NAME',
-                child_lname: 'LAST NAME',
-                child_xname: 'SUFFIX',
-                child_dob: 'BIRTH DATE',
-                educ_level: 'LEVEL OF EDUCATION',
-                educ_school: 'NAME OF SCHOOL',
-                educ_degree: 'BASIC EDUCATION|DEGREE|COURSE',
-                educ_from: 'DATE ENROLLED',
-                educ_hl_earned: 'HIGHEST LEVEL EARNED',
-                educ_year_grad: 'YEAR GRADUATED',
-                educ_academic_honor: 'SCHOLARSHIPS & ACADEMIC EXCELLENCE',
-                org_name: 'ORGANIZATION NAME',
-                workfr: 'WORK FROM',
-                workto: 'WORK TO',
-                work_pos: 'WORK POSITION',
-                work_dept: 'WORK DEPARTMENT',
-                work_salary: 'WORK SALARY',
-                work_salarygrade: 'WORK SALARY GRADE',
-                work_stat: 'WORK STATUS',
-                work_gov: 'GOVERNMENT WORK',
-                skill: 'SKILL',
-                ref_fname: 'FIRST NAME',
-                ref_mname: 'MIDDLE NAME',
-                ref_lname: 'LAST NAME',
-                ref_xname: 'SUFFIX',
-                ref_add: 'BLOCK/STREET/PUROK',
-                ref_cnum: 'CONTACT NUMBER',
-            },
             fullName: '',
             empPosition: '',
             profilePictureUrl: '',
@@ -1517,6 +1485,36 @@ export default {
         });
 
         return {
+            formatFieldLabel: {
+                child_fname: 'FIRST NAME',
+                child_mname: 'MIDDLE NAME',
+                child_lname: 'LAST NAME',
+                child_xname: 'SUFFIX',
+                child_dob: 'BIRTH DATE',
+                educ_level: 'LEVEL OF EDUCATION',
+                educ_school: 'NAME OF SCHOOL',
+                educ_degree: 'BASIC EDUCATION|DEGREE|COURSE',
+                educ_from: 'DATE ENROLLED',
+                educ_hl_earned: 'HIGHEST LEVEL EARNED',
+                educ_year_grad: 'YEAR GRADUATED',
+                educ_academic_honor: 'SCHOLARSHIPS & ACADEMIC EXCELLENCE',
+                org_name: 'ORGANIZATION NAME',
+                workfr: 'WORK FROM',
+                workto: 'WORK TO',
+                work_pos: 'WORK POSITION',
+                work_dept: 'WORK DEPARTMENT',
+                work_salary: 'WORK SALARY',
+                work_salarygrade: 'WORK SALARY GRADE',
+                work_stat: 'WORK STATUS',
+                work_gov: 'GOVERNMENT WORK',
+                skill: 'SKILL',
+                ref_fname: 'FIRST NAME',
+                ref_mname: 'MIDDLE NAME',
+                ref_lname: 'LAST NAME',
+                ref_xname: 'SUFFIX',
+                ref_add: 'BLOCK/STREET/PUROK',
+                ref_cnum: 'CONTACT NUMBER',
+            },
             activeTab,
             educationData,
             organizationData,
