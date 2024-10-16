@@ -6,12 +6,6 @@ import { ref, watch } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Button from 'primevue/button';
 
-const isChangePassModalVisible = ref(false);
-
-const showChangePassModal = () => {
-  isChangePassModalVisible.value = true;
-};
-
 export default {
   components: {
     AppLayout, Button
