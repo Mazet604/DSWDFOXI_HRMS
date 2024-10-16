@@ -91,50 +91,59 @@ class AddressController extends Controller
         return response()->json($cities);
     }
 
-    public function getEmployeeAddressStatistics()
-    {
-        // Group employees by city and count how many employees live in each city
-        $employeeData = Employee::select('emp_city', DB::raw('count(*) as count'))
-                                ->groupBy('emp_city')
-                                ->get();
-
-        // Alternatively, you can group by province:
-        // $employeeData = Employee::select('emp_prov', DB::raw('count(*) as count'))
-        //                         ->groupBy('emp_prov')
-        //                         ->get();
-
-        // Return the data as JSON
-        return response()->json($employeeData);
-    }
-
     public function getEmployeeAddressData(Request $request)
-        {
-            try {
-                // Select PSGC and human-readable fields using JOINs
-                $employeeData = EmpAddress::select(
-                    'emp_brgy',
-                    'lib_brgies.col_brgy as barangay_name',
-                    'emp_city',
-                    'lib_cities.col_citymuni as city_name',
-                    'emp_prov',
-                    'lib_provinces.col_province as province_name',
-                    'emp_region',
-                    'lib_regions.col_region as region_name',
-                    DB::raw('count(*) as count')
-                )
-                ->leftJoin('lib_brgies', 'emp_address.emp_brgy', '=', 'lib_brgies.brgy_psgc')
-                ->leftJoin('lib_cities', 'emp_address.emp_city', '=', 'lib_cities.citmun_psgc')
-                ->leftJoin('lib_provinces', 'emp_address.emp_prov', '=', 'lib_provinces.prv_psgc')
-                ->leftJoin('lib_regions', 'emp_address.emp_region', '=', 'lib_regions.reg_psgc')
-                ->groupBy('emp_city', 'emp_brgy', 'emp_prov', 'emp_region', 'barangay_name', 'city_name', 'province_name', 'region_name')
-                ->get();
+{
+    try {
+        $demographic = $request->input('demographic');
 
-                return response()->json($employeeData, 200);
-            } catch (\Exception $e) {
-                Log::error('Error fetching employee address data: ' . $e->getMessage());
-                return response()->json(['error' => 'Failed to fetch employee address data.'], 500);
-            }
+        if ($demographic === 'region') {
+            // Fetch and group data by region
+            $employeeData = EmpAddress::select(
+                DB::raw('TRIM(emp_address.emp_region) as emp_region'),
+                DB::raw('TRIM(lib_regions.col_region) as region_name'),
+                DB::raw('COUNT(emp_address.emp_region) as count')
+            )
+            ->leftJoin('lib_regions', 'emp_address.emp_region', '=', 'lib_regions.reg_psgc')
+            ->groupBy(DB::raw('TRIM(emp_address.emp_region)'), DB::raw('TRIM(lib_regions.col_region)'))
+            ->get();
+        } elseif ($demographic === 'province') {
+            // Fetch and group data by province
+            $employeeData = EmpAddress::select(
+                DB::raw('TRIM(emp_address.emp_prov) as emp_prov'),
+                DB::raw('TRIM(lib_provinces.col_province) as province_name'),
+                DB::raw('COUNT(emp_address.emp_prov) as count')
+            )
+            ->leftJoin('lib_provinces', 'emp_address.emp_prov', '=', 'lib_provinces.prv_psgc')
+            ->groupBy(DB::raw('TRIM(emp_address.emp_prov)'), DB::raw('TRIM(lib_provinces.col_province)'))
+            ->get();
+        } elseif ($demographic === 'city') {
+            // Fetch and group data by city
+            $employeeData = EmpAddress::select(
+                DB::raw('TRIM(emp_address.emp_city) as emp_city'),
+                DB::raw('TRIM(lib_cities.col_citymuni) as city_name'),
+                DB::raw('COUNT(emp_address.emp_city) as count')
+            )
+            ->leftJoin('lib_cities', 'emp_address.emp_city', '=', 'lib_cities.citmun_psgc')
+            ->groupBy(DB::raw('TRIM(emp_address.emp_city)'), DB::raw('TRIM(lib_cities.col_citymuni)'))
+            ->get();
+        } else {
+            // Default to fetching and grouping data by barangay
+            $employeeData = EmpAddress::select(
+                DB::raw('TRIM(emp_address.emp_brgy) as emp_brgy'),
+                DB::raw('TRIM(lib_brgies.col_brgy) as barangay_name'),
+                DB::raw('COUNT(emp_address.emp_brgy) as count')
+            )
+            ->leftJoin('lib_brgies', 'emp_address.emp_brgy', '=', 'lib_brgies.brgy_psgc')
+            ->groupBy(DB::raw('TRIM(emp_address.emp_brgy)'), DB::raw('TRIM(lib_brgies.col_brgy)'))
+            ->get();
         }
+
+        return response()->json($employeeData, 200);
+    } catch (\Exception $e) {
+        Log::error('Error fetching employee address data: ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to fetch employee address data.'], 500);
+    }
+}
 
 
 

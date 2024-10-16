@@ -26,8 +26,11 @@ class AuthenticatedSessionController extends Controller
         'emppass' => ['required', 'string'],
     ]);
 
+    // Check if the credentials are valid
     if (Auth::attempt(['empuser' => $credentials['empuser'], 'password' => $credentials['emppass']])) {
+        // Regenerate session to prevent session fixation attacks
         $request->session()->regenerate();
+
         $user = Auth::user();
         $request->session()->put('user_empmail', $user->empmail);
         $request->session()->put('user_id', (string) $user->empid);
@@ -99,10 +102,10 @@ public function verifyOtp(Request $request)
     ]);
 
     $sessionOtp = Session::get('otp');
-    $otpGeneratedAt = Session::get('otp_generated_at'); // Store the OTP generation time
+    $otpGeneratedAt = Session::get('otp_generated_at');
 
     // Check if OTP has expired (assuming 5 minutes validity)
-    if ($otpGeneratedAt && now()->diffInSeconds($otpGeneratedAt) > 300) { // 300 seconds = 5 minutes
+    if ($otpGeneratedAt && now()->diffInSeconds($otpGeneratedAt) > 300) {
         // OTP expired, generate and send a new one
         $this->resendOtp();
 
@@ -116,7 +119,7 @@ public function verifyOtp(Request $request)
         if ($user) {
             if ($request->input('context') === 'forgot-password') {
                 // OTP verified, reset password to "12345"
-                $user->password = '12345';
+                $user->password = Hash::make('12345');
                 $user->save();
 
                 // Clear OTP session
@@ -126,12 +129,17 @@ public function verifyOtp(Request $request)
                 // Redirect to the success page
                 return redirect()->route('password.success');
             } elseif ($request->input('context') === 'login') {
-                // Handle regular login OTP
+                // OTP verified, mark OTP as verified in session
                 Session::put('otp_verified', true);
                 Session::forget('otp');
                 Session::forget('otp_generated_at');
 
-                return redirect()->route('dashboard');
+                // Redirect based on user_type after OTP verification
+                if ($user->user_type == 1) {
+                    return redirect()->route('admin.dashboard'); // Redirect to admin dashboard if user_type is admin
+                } else {
+                    return redirect()->route('dashboard'); // Redirect to regular dashboard if not admin
+                }
             } else {
                 return back()->withErrors(['context' => 'Invalid context provided.']);
             }

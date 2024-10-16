@@ -28,6 +28,7 @@ return array(
     'App\\Http\\Controllers\\PDSController' => $baseDir . '/app/Http/Controllers/PDSController.php',
     'App\\Http\\Controllers\\ProfileController' => $baseDir . '/app/Http/Controllers/ProfileController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
+    'App\\Http\\Middleware\\CheckAdmin' => $baseDir . '/app/Http/Middleware/CheckAdmin.php',
     'App\\Http\\Middleware\\CheckOtpVerified' => $baseDir . '/app/Http/Middleware/CheckOtpVerified.php',
     'App\\Http\\Middleware\\HandleInertiaRequests' => $baseDir . '/app/Http/Middleware/HandleInertiaRequests.php',
     'App\\Http\\Requests\\Auth\\LoginRequest' => $baseDir . '/app/Http/Requests/Auth/LoginRequest.php',

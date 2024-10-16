@@ -355,6 +355,19 @@ class EmployeeController extends Controller
         }
     }
 
+    public function searchByEmpId(Request $request)
+{
+    $empid = $request->input('empid');
+
+    // Search for the employee in the 'employee' table and include account details from 'emp_acc'
+    $employee = Employee::with('empAcc')->where('empid', $empid)->first();
+
+    if ($employee) {
+        return response()->json($employee);  // Return the employee with account details
+    } else {
+        return response()->json(['message' => 'Employee not found'], 404);  // Return error if not found
+    }
+}
 
 
 

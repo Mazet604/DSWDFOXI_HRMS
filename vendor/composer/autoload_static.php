@@ -586,6 +586,7 @@ class ComposerStaticInit73bb13e81ab84f98e67b2e1a9b23044e
         'App\\Http\\Controllers\\PDSController' => __DIR__ . '/../..' . '/app/Http/Controllers/PDSController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
+        'App\\Http\\Middleware\\CheckAdmin' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckAdmin.php',
         'App\\Http\\Middleware\\CheckOtpVerified' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckOtpVerified.php',
         'App\\Http\\Middleware\\HandleInertiaRequests' => __DIR__ . '/../..' . '/app/Http/Middleware/HandleInertiaRequests.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',

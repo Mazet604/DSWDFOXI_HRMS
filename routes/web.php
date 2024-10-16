@@ -46,7 +46,9 @@ Route::get('/password-success', function () {
     ]);
 })->name('password.success');
 
-Route::middleware('auth',)->group(function () {
+Route::middleware(['auth'])->group(function () {
+
+    // User dashboard route
     Route::get('/dashboard', function () {
         if (!Session::get('otp_verified')) {
             return redirect()->route('otp.form');
@@ -54,13 +56,21 @@ Route::middleware('auth',)->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/admin-dashboard', function () {
-        if (!Session::get('otp_verified')) {
-            return redirect()->route('otp.form');
-        }
-        return Inertia::render('AdminDashboard');
-    })->name('admin.dashboard');
+    // Admin dashboard route with CheckAdmin middleware applied
+    Route::middleware([\App\Http\Middleware\CheckAdmin::class])->group(function () {
+        Route::get('/admin-dashboard', function () {
+            if (!Session::get('otp_verified')) {
+                return redirect()->route('otp.form');
+            }
+            return Inertia::render('AdminDashboard');
+        })->name('admin.dashboard');
+    });
 
+    Route::get('/edit-profile', function () {
+        return Inertia::render('EditProfile');  // The name of your Vue component
+    })->name('edit-profile');
+
+    // Other routes...
     Route::get('/background', function () {
         if (!Session::get('otp_verified')) {
             return redirect()->route('otp.form');
@@ -100,27 +110,19 @@ Route::middleware('auth',)->group(function () {
     Route::get('/employee-address-statistics', [AddressController::class, 'getEmployeeAddressStatistics']);
 
     Route::get('/employee/Address', [AddressController::class, 'getAddress']);
-
     Route::get('/api/regions', [AddressController::class, 'getRegions']);
     Route::get('/api/provinces', [AddressController::class, 'getProvinces']);
     Route::get('/api/cities', [AddressController::class, 'getCities']);
     Route::get('/api/barangays', [AddressController::class, 'getBarangays']);
 
-
     Route::get('/employee/Address2', [AddressControllerII::class, 'getAddress2']);
-
     Route::get('/api/regions2', [AddressControllerII::class, 'getRegions2']);
     Route::get('/api/provinces2', [AddressControllerII::class, 'getProvinces2']);
     Route::get('/api/cities2', [AddressControllerII::class, 'getCities2']);
     Route::get('/api/barangays2', [AddressControllerII::class, 'getBarangays2']);
-
     Route::get('/all-cities', [AddressController::class, 'getAllCities']);
 
-
-
     Route::get('/dropdown/suffixes', [BackgroundController::class, 'suffix']);
-
-
     Route::get('/emp_father/Father', [BackgroundController::class, 'getFather']);
     Route::get('/emp_mother/Mother', [BackgroundController::class, 'getMother']);
     Route::get('/emp_spouse/Spouse', [BackgroundController::class, 'getSpouse']);
@@ -139,14 +141,12 @@ Route::middleware('auth',)->group(function () {
     Route::post('/emp_family/UpdateFamilyData', [BackgroundController::class, 'updateFamilyData']);
     Route::get('/emp_child/ChildData', [BackgroundController::class, 'getChildData']);
     Route::post('/emp_child/AddChildData', [BackgroundController::class, 'addChildData']);
-
     Route::post('/emp_child/UpdateChildData', [BackgroundController::class, 'updateChildData']);
     Route::post('/education/UpdateEducationData', [BackgroundController::class, 'updateEducationData']);
     Route::post('/emp_org/UpdateOrganizationData', [BackgroundController::class, 'updateOrganizationData']);
     Route::post('/emp_work/UpdateWorkExperienceData', [BackgroundController::class, 'updateWorkExperienceData']);
     Route::post('/emp_skills/UpdateSkillsData', [BackgroundController::class, 'updateSkillsData']);
     Route::post('/emp_reference/UpdateReferencesData', [BackgroundController::class, 'updateReferencesData']);
-
 
     Route::get('/emp_eligibility/CSEligibilityData', [OtherInfoController::class, 'getCSEligibilityData']);
     Route::get('/emp_voluntary/VoluntaryWorkData', [OtherInfoController::class, 'getVoluntaryWorkData']);
@@ -171,7 +171,7 @@ Route::middleware('auth',)->group(function () {
     Route::put('/emp_otherinfo/other-info', [OtherInfoController::class, 'updateOtherInfoData']);
 
     Route::get('/download-pds/{page?}', [PDSController::class, 'downloadPDS']);
-
+    Route::get('/api/search-employee', [EmployeeController::class, 'searchByEmpId']);
 });
 
 require __DIR__.'/auth.php';

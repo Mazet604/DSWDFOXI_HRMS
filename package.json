@@ -25,8 +25,12 @@
         "@primevue/themes": "^4.0.2",
         "chart.js": "^4.4.4",
         "cropperjs": "^1.6.2",
+        "highcharts": "^11.4.8",
+        "highcharts-vue": "^2.0.1",
         "primeicons": "^7.0.0",
         "primevue": "^4.0.4",
-        "vuetify": "^3.7.0-beta.1"
+        "vuetify": "^3.7.0-beta.1",
+        "zingchart": "^2.9.15-3",
+        "zingchart-vue": "^3.0.1"
     }
 }
