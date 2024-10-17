@@ -1,23 +1,27 @@
 <template>
-  <div class="modal">
-    <div class="modal-content">
-      <h2>Change Password</h2>
+  <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="relative p-8 text-center bg-white rounded-lg shadow-lg w-96">
+      <label class="text-lg font-semibold text-blue-900 ">CHANGE PASSWORD</label>
       <form @submit.prevent="changePassword">
-        <div class="form-group">
-          <label for="password">New Password:</label>
-          <input type="password" v-model="password" required />
+        <div class="mb-4 text-left">
+          <label for="password" class="block mb-1 text-sm font-bold text-gray-700">New Password:</label>
+          <input type="password" v-model="password" required class="input-field" />
         </div>
-        <div class="form-group">
-          <label for="password_confirmation">Confirm Password:</label>
-          <input type="password" v-model="password_confirmation" required />
+        <div class="mb-4 text-left">
+          <label for="password_confirmation" class="block mb-1 text-sm font-bold text-gray-700">Confirm Password:</label>
+          <input type="password" v-model="password_confirmation" required class="input-field" />
         </div>
-        <div class="form-actions">
-          <button type="button" class="cancel-btn" @click="$emit('close')">CANCEL</button>
-          <button type="submit" class="submit-btn">SUBMIT</button>
+        <div class="flex justify-center gap-4">
+          <button type="button" @click="$emit('close')" class="px-3 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+            CANCEL
+          </button>
+          <button type="submit" class="px-3 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+            CONFIRM
+          </button>
         </div>
         <transition name="fade">
-          <div v-if="errors.length" class="error-messages">
-            <ul>
+          <div v-if="errors.length" class="mt-4 text-left text-red-600 transition-opacity duration-1000">
+            <ul class="pl-0 list-none">
               <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
             </ul>
           </div>
@@ -68,101 +72,6 @@ export default {
 </script>
 
 <style scoped>
-.modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  width: 450px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  position: relative;
-}
-
-h2 {
-  margin-bottom: 20px;
-  color: #203c8c;
-}
-
-.form-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.submit-btn {
-  background-color: #203c8c;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.submit-btn:hover {
-  background-color: #2044ac;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.cancel-btn {
-  background-color: #e02424;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 2%;
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.cancel-btn:hover {
-  background-color: #c01c1c;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.error-messages {
-  margin-top: 15px;
-  color: red;
-  text-align: left;
-  transition: opacity 1s ease-out;
-}
-
-.error-messages ul {
-  padding-left: 0;
-  list-style-type: none;
-}
-
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1s;
 }
@@ -170,4 +79,13 @@ input[type="password"] {
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+}
+
 </style>

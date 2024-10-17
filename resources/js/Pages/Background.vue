@@ -119,7 +119,7 @@
                     <div class="mt-6 text-right">
                         <button v-if="!isEditingFamily" @click="toggleFamilyEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         <div v-if="isEditingFamily" class="inline-flex space-x-4">
-                            <button @click="cancelFamilyEditing" class="px-8 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                            <button @click="cancelFamilyEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
                             <button @click="updateFamilyData" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">SAVE</button>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
                         <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                            <button @click="cancelProfileEditing" class="px-8 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                            <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
                             <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
                         <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                            <button @click="cancelProfileEditing" class="px-8 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                            <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
                             <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
                         <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                            <button @click="cancelProfileEditing" class="px-8 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                            <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
                             <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         </div>
                     </div>
@@ -200,7 +200,7 @@
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
                         <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                            <button @click="cancelProfileEditing" class="px-8 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                            <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
                             <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         </div>
                     </div>
@@ -217,7 +217,7 @@
                         <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
                         <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                            <button @click="cancelProfileEditing" class="px-8 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                            <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
                             <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                         </div>
                     </div>
@@ -236,7 +236,7 @@
                     <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
                     <button v-if="!isEditingProfile" @click="toggleProfileEditing" class="px-8 py-2 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     <div v-if="isEditingProfile" class="inline-flex space-x-4">
-                        <button @click="cancelProfileEditing" class="px-8 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                        <button @click="cancelProfileEditing" class="px-4 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
                         <button v-if="selectedRow" @click="openEditDialog(selectedRow)" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">EDIT</button>
                     </div>
                 </div>
@@ -244,116 +244,131 @@
         </div>
     </div>
 
-<!-- Edit Modal -->
-<div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-    <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-        <div class="p-4">
-            <div class="text-center">
-                <h2 class="mb-4 text-xl font-semibold">Edit {{ currentTabLabel }}</h2>
-            </div>
-            <div class="grid grid-cols-1 gap-4">
-                <!-- Render fields -->
-                <div v-for="(value, key) in filteredEditFields" :key="key">
-                    <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
+        <!-- Edit Modal -->
+        <div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <!-- General Modal Container -->
+            <div
+                :class="(currentTabLabel === 'Work Experience' || currentTabLabel === 'Education' || currentTabLabel === 'References') ? 'w-full max-w-4xl' : 'w-full max-w-lg'"
+                class="mx-4 overflow-hidden transition-all transform bg-white rounded-lg sm:mx-auto"
+            >
+                <div class="p-4">
+                    <div class="text-center">
+                        <h2 class="mb-4 text-xl font-semibold uppercase">Edit {{ currentTabLabel }}</h2>
+                    </div>
 
-                    <template v-if="key === 'child_xname'">
-                        <select
-                            class="input-field"
-                            v-model="editFields[key]"
-                        >
-                            <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
-                                {{ suffix.label }}
-                            </option>
-                        </select>
-                    </template>
+                    <!-- Dynamic Form Layout (Grid Layout Changes for Specific Tabs) -->
+                    <div :class="(currentTabLabel === 'Work Experience' || currentTabLabel === 'Education' || currentTabLabel === 'References') ? 'grid grid-cols-2 gap-4' : 'grid grid-cols-1 gap-4'">
+                        <!-- Render fields -->
+                        <div v-for="(value, key) in filteredEditFields" :key="key">
+                            <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
 
-                    <template v-else-if="['child_fname', 'child_mname', 'child_lname', 'educ_school', 'educ_degree', 'educ_hl_earned', 'educ_academic_honor', 'org_name', 'work_dept', 'work_pos', 'work_stat', 'skill', 'ref_fname', 'ref_mname', 'ref_lname'].includes(key)">
-                        <input
-                            class="input-field"
-                            :type="getInputType(key, value)"
-                            v-model="editFields[key]"
-                            @input="validateAlphabetOnly(key, 'editFields')"
-                        />
-                    </template>
+                            <!-- Suffix dropdown for child_xname -->
+                            <template v-if="key === 'child_xname'">
+                                <select
+                                    class="input-field"
+                                    v-model="editFields[key]"
+                                >
+                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                        {{ suffix.label }}
+                                    </option>
+                                </select>
+                            </template>
 
-                    <template v-else-if="key === 'ref_xname'">
-                        <select
-                            class="input-field"
-                            v-model="editFields[key]"
-                        >
-                            <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
-                                {{ suffix.label }}
-                            </option>
-                        </select>
-                    </template>
+                            <!-- Input fields for various names, schools, positions, etc. -->
+                            <template v-else-if="['child_fname', 'child_mname', 'child_lname', 'educ_school', 'educ_degree', 'educ_hl_earned', 'educ_academic_honor', 'org_name', 'work_dept', 'work_pos', 'work_stat', 'skill', 'ref_fname', 'ref_mname', 'ref_lname'].includes(key)">
+                                <input
+                                    class="input-field"
+                                    :type="getInputType(key, value)"
+                                    v-model="editFields[key]"
+                                    @input="validateAlphabetOnly(key, 'editFields')"
+                                />
+                            </template>
 
-                    <template v-else-if="key === 'work_gov'">
-                        <select
-                            class="input-field"
-                            v-model="editFields[key]"
-                        >
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
-                    </template>
+                            <!-- Suffix dropdown for ref_xname -->
+                            <template v-else-if="key === 'ref_xname'">
+                                <select
+                                    class="input-field"
+                                    v-model="editFields[key]"
+                                >
+                                    <option v-for="suffix in suffixes" :key="suffix.value" :value="suffix.value">
+                                        {{ suffix.label }}
+                                    </option>
+                                </select>
+                            </template>
 
-                    <!-- Work Experience Date Fields (with validation) -->
-                    <template v-else-if="key === 'workfr' || key === 'child_dob'">
-                        <input
-                            class="input-field"
-                            type="date"
-                            v-model="editFields[key]"
-                            :max="maxDate"
-                        />
-                    </template>
+                            <!-- Dropdown for work_gov (Yes/No) -->
+                            <template v-else-if="key === 'work_gov'">
+                                <select
+                                    class="input-field"
+                                    v-model="editFields[key]"
+                                >
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </template>
 
-                    <template v-else-if="key === 'workto'">
-                        <input
-                            class="input-field"
-                            type="date"
-                            v-model="editFields[key]"
-                        />
-                        <span v-if="dateError" class="error-message">"Worked To" date cannot be before "Worked From" date.</span>
-                    </template>
+                            <!-- Date fields for workfr, child_dob, workto -->
+                            <template v-else-if="key === 'workfr' || key === 'child_dob'">
+                                <input
+                                    class="input-field"
+                                    type="date"
+                                    v-model="editFields[key]"
+                                    :max="maxDate"
+                                />
+                            </template>
 
-                    <template v-else-if="key === 'educ_year_grad'">
-                        <input
-                            class="input-field"
-                            v-model="editFields[key]"
-                            @input="validateNumber(key, 'editFields')"
-                        />
-                    </template>
+                            <template v-else-if="key === 'workto'">
+                                <input
+                                    class="input-field"
+                                    type="date"
+                                    v-model="editFields[key]"
+                                />
+                                <span v-if="dateError" class="error-message">"Worked To" date cannot be before "Worked From" date.</span>
+                            </template>
 
-                    <!-- Number validation  -->
-                    <template v-else-if="['work_salary', 'work_salarygrade'].includes(key)">
-                        <input
-                            class="input-field"
-                            :type="getInputType(key, value)"
-                            v-model="editFields[key]"
-                            @input="validateDecimal(key, 'editFields')"
-                        />
-                    </template>
+                            <!-- Input for educ_year_grad -->
+                            <template v-else-if="key === 'educ_year_grad'">
+                                <input
+                                    class="input-field"
+                                    v-model="editFields[key]"
+                                    @input="validateNumber(key, 'editFields')"
+                                />
+                            </template>
 
-                    <!-- Other input fields -->
-                    <input
-                        v-else
-                        class="input-field"
-                        :type="getInputType(key, value)"
-                        v-model="editFields[key]"
-                    />
+                            <!-- Input fields for work_salary, work_salarygrade -->
+                            <template v-else-if="['work_salary', 'work_salarygrade'].includes(key)">
+                                <input
+                                    class="input-field"
+                                    :type="getInputType(key, value)"
+                                    v-model="editFields[key]"
+                                    @input="validateDecimal(key, 'editFields')"
+                                />
+                            </template>
+
+                            <!-- Default input for other fields -->
+                            <input
+                                v-else
+                                class="input-field"
+                                :type="getInputType(key, value)"
+                                v-model="editFields[key]"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Buttons for saving or cancelling -->
+                    <div class="mt-6 text-center">
+                        <button @click="hideEditDialog" class="px-4 py-2 mr-4 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                            CANCEL
+                        </button>
+                        <button @click="saveEdit" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            SAVE
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="mt-6 text-center">
-                <button @click="hideEditDialog" class="px-4 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                    Cancel
-                </button>
-                <button @click="saveEdit" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                    Save
-                </button>
-            </div>
         </div>
-    </div>
-</div>
+
+
 
         <!-- Success Modal -->
         <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
@@ -365,8 +380,8 @@
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
                     <div class="text-center">
-                        <button @click="hideSuccessDialog" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            OK
+                        <button @click="hideSuccessDialog" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            BACK
                         </button>
                     </div>
                 </div>
@@ -383,11 +398,11 @@
                         <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                     </div>
                     <div class="mt-6 text-center">
-                        <button @click="hideUpdateDialog" class="px-6 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                            Cancel
+                        <button @click="hideUpdateDialog" class="px-6 py-2 mr-4 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                            CANCEL
                         </button>
-                        <button @click="saveUpdate" class="px-6 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            Confirm
+                        <button @click="saveUpdate" class="px-6 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            CONFIRM
                         </button>
                     </div>
                 </div>
@@ -399,7 +414,7 @@
             <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
                 <div class="p-4">
                     <div class="text-center">
-                        <h2 class="mb-4 text-xl font-semibold">Add Child</h2>
+                        <h2 class="mb-4 text-xl font-semibold">ADD CHILD</h2>
                     </div>
                     <div class="grid grid-cols-1 gap-4">
                         <div>
@@ -433,25 +448,25 @@
                         </div>
                     </div>
                     <div class="mt-6 text-center">
-                        <button @click="hideAddChildDialog" class="px-4 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                            Cancel
+                        <button @click="hideAddChildDialog" class="px-3 py-2 mr-4 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                            CANCEL
                         </button>
-                        <button @click="addChild" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            Add
+                        <button @click="addChild" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            ADD
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Add Education Modal -->
+        <!-- Add Education Modal (Landscape) -->
         <div v-if="showAddEducationDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
+            <div class="w-full max-w-4xl mx-4 overflow-hidden transition-all transform bg-white rounded-lg sm:mx-auto">
                 <div class="p-4">
                     <div class="text-center">
-                        <h2 class="mb-4 text-xl font-semibold">Add Education</h2>
+                        <h2 class="mb-4 text-xl font-semibold">ADD EDUCATION</h2>
                     </div>
-                    <div class="grid grid-cols-1 gap-4">
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">LEVEL OF EDUCATION</label>
                             <input class="input-field" type="text" v-model="newEducation.educ_level" />
@@ -482,23 +497,24 @@
                         </div>
                     </div>
                     <div class="mt-6 text-center">
-                        <button @click="hideAddEducationDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                            Cancel
+                        <button @click="hideAddEducationDialog" class="px-3 py-2 mr-4 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                            CANCEL
                         </button>
-                        <button @click="addEducation" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            Add
+                        <button @click="addEducation" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            ADD
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
+
         <!-- Add Organization Modal -->
         <div v-if="showAddOrganizationDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
                 <div class="p-4">
                     <div class="text-center">
-                        <h2 class="mb-4 text-xl font-semibold">Add Organization</h2>
+                        <h2 class="mb-4 text-xl font-semibold">ADD ORGANIZATION</h2>
                     </div>
                     <div class="grid grid-cols-1 gap-4">
                         <div>
@@ -507,25 +523,25 @@
                         </div>
                     </div>
                     <div class="mt-6 text-center">
-                        <button @click="hideAddOrganizationDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                            Cancel
+                        <button @click="hideAddOrganizationDialog" class="px-3 py-2 mr-4 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                            CANCEL
                         </button>
-                        <button @click="addOrganization" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            Add
+                        <button @click="addOrganization" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            ADD
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Add Work Experience Modal -->
+        <!-- Add Work Experience Modal (Landscape) -->
         <div v-if="showAddWorkExperienceDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
+            <div class="w-full max-w-4xl mx-4 overflow-hidden transition-all transform bg-white rounded-lg sm:mx-auto">
                 <div class="p-4">
                     <div class="text-center">
-                        <h2 class="mb-4 text-xl font-semibold">Add Work Experience</h2>
+                        <h2 class="mb-4 text-xl font-semibold">ADD WORK EXPERIENCE</h2>
                     </div>
-                    <div class="grid grid-cols-1 gap-4">
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">WORK FROM</label>
                             <input class="input-field" type="date" v-model="newWorkExperience.workfr" :max="maxDate" />
@@ -558,29 +574,31 @@
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">GOV'T SERVICE</label>
                             <select class="input-field" v-model="newWorkExperience.work_gov">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
+                                <option value="Yes">YES</option>
+                                <option value="No">NO</option>
                             </select>
                         </div>
                     </div>
                     <div class="mt-6 text-center">
-                        <button @click="hideAddWorkExperienceDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                            Cancel
+                        <button @click="hideAddWorkExperienceDialog" class="px-3 py-2 mr-4 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                            CANCEL
                         </button>
-                        <button @click="addWorkExperience" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            Add
+                        <button @click="addWorkExperience" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            ADD
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
+
+
         <!-- Add Skills Modal -->
         <div v-if="showAddSkillsDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
                 <div class="p-4">
                     <div class="text-center">
-                        <h2 class="mb-4 text-xl font-semibold">Add Skills</h2>
+                        <h2 class="mb-4 text-xl font-semibold">ADD SKILLS</h2>
                     </div>
                     <div class="grid grid-cols-1 gap-4">
                         <div>
@@ -589,25 +607,25 @@
                         </div>
                     </div>
                     <div class="mt-6 text-center">
-                        <button @click="hideAddSkillsDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                            Cancel
+                        <button @click="hideAddSkillsDialog" class="px-3 py-2 mr-4 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                            CANCEL
                         </button>
-                        <button @click="addSkill" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            Add
+                        <button @click="addSkill" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            ADD
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Add References Modal -->
+        <!-- Add References Modal (Landscape) -->
         <div v-if="showAddReferencesDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
+            <div class="w-full max-w-4xl mx-4 overflow-hidden transition-all transform bg-white rounded-lg sm:mx-auto">
                 <div class="p-4">
                     <div class="text-center">
-                        <h2 class="mb-4 text-xl font-semibold">Add Reference</h2>
+                        <h2 class="mb-4 text-xl font-semibold">ADD REFERENCE</h2>
                     </div>
-                    <div class="grid grid-cols-1 gap-4">
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
                             <input class="input-field" type="text" v-model="newReference.ref_fname" @input="validateName('ref_fname', 'newReference')"/>
@@ -638,16 +656,17 @@
                         </div>
                     </div>
                     <div class="mt-6 text-center">
-                        <button @click="hideAddReferencesDialog" class="px-8 py-2 mr-4 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                            Cancel
+                        <button @click="hideAddReferencesDialog" class="px-3 py-2 mr-4 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                            CANCEL
                         </button>
-                        <button @click="addReference" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            Add
+                        <button @click="addReference" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            ADD
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Success Modal -->
         <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
@@ -659,8 +678,8 @@
                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                     </div>
                     <div class="mt-6 text-center">
-                        <button @click="hideSuccessDialog" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                            OK
+                        <button @click="hideSuccessDialog" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                            BACK
                         </button>
                     </div>
                 </div>
@@ -1617,6 +1636,14 @@ export default {
 
 .font-semibold {
     font-weight: 600;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
 }
 
 .custom-cancel-button {
