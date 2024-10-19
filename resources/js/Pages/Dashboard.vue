@@ -330,9 +330,24 @@
 
 <script>
 import DashboardScripts from '@/Pages/Scripts/DashboardScripts.vue';
+import ChangePass from './Auth/ChangePass.vue';
 
   export default {
-      extends: DashboardScripts
+      extends: DashboardScripts,
+      components: {
+          ChangePass,
+      },
+
+      data(){
+        return{
+          isChangePassModalVisible: false,
+        }
+      },
+      methods: {
+        showChangePassModal(){
+          this.isChangePassModalVisible = true;
+        }
+      }
   };
 
 </script>

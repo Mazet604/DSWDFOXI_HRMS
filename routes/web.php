@@ -16,6 +16,9 @@ use App\Http\Controllers\DropDownControllers;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AddressControllerII;
 use App\Http\Controllers\PDSController;
+use App\Http\Controllers\Auth\PasswordController;
+
+Route::post('api/update-password', [PasswordController::class, 'updatePassword']);
 Route::patch('/employee/updateProfile', [EmployeeController::class, 'updateProfile']);
 
 Route::get('/', function () {
@@ -89,6 +92,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 
     // New employee routes
     Route::get('/employee/fullname', [EmployeeController::class, 'getEmployee']);

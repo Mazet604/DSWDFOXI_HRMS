@@ -106,25 +106,25 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="border-box">
                         <div>
-                            <label class="label-field"><b>SSS ID: <span style="color: red;">*</span></b></label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700"><b>SSS ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.sssId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"  @input="validateNumber('sssId', 'governmentIdFields')"/>
                         </div>
                         <div>
-                            <label class="label-field"><b>PAG-IBIG ID: <span style="color: red;">*</span></b></label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700"><b>PAG-IBIG ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.pagIbigId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }" @input="validateNumber('pagIbigId', 'governmentIdFields')"/>
                         </div>
                         <div>
-                            <label class="label-field"><b>TIN ID: <span style="color: red;">*</span></b></label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700"><b>TIN ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.tinId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }" @input="validateNumber('tinId', 'governmentIdFields')"/>
                         </div>
                     </div>
                     <div class="border-box">
                         <div>
-                            <label class="label-field"><b>GSIS ID: <span style="color: red;">*</span></b></label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700"><b>GSIS ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.gsisId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }"/>
                         </div>
                         <div>
-                            <label class="label-field"><b>PHILHEALTH ID: <span style="color: red;">*</span></b></label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700"><b>PHILHEALTH ID: <span style="color: red;">*</span></b></label>
                             <input class="input-field" type="text" v-model="governmentIdFields.philHealthId" :disabled="!isEditingGovId" :class="{ 'disabled-input': !isEditingGovId }" @input="validateNumber('philHealthId', 'governmentIdFields')"/>
                         </div>
                     </div>
@@ -241,226 +241,245 @@
                     </div>
                 </div>
 
-                    <!-- Edit Modal -->
-                    <div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                        <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg">
-                            <div class="p-4">
-                                <div class="text-center">
-                                    <h2 class="mb-4 text-xl font-semibold">Edit {{ currentTabLabel }}</h2>
-                                </div>
-                                <div class="grid grid-cols-1 gap-4">
-                                    <!-- Fields will be dynamically rendered here based on the selected row -->
-                                    <div v-for="(value, key) in filteredEditFields" :key="key">
-                                        <label class="block mb-2 text-sm font-bold text-gray-700">{{ formatFieldLabel[key] }}</label>
+<!-- Edit Modal -->
+<div v-if="showEditDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+    <!-- Conditional modal width based on currentTabLabel -->
+    <div
+        :class="currentTabLabel === 'Recognition & Distinctions' ? 'w-full max-w-lg' : 'w-full max-w-4xl'"
+        class="mx-4 overflow-hidden transition-all transform bg-white rounded-lg sm:mx-auto"
+    >
+        <div class="p-4">
+            <div class="text-center">
+                <h2 class="mb-4 text-xl font-semibold uppercase">Edit {{ currentTabLabel }}</h2>
+            </div>
 
-                                        <!-- Alphabet-only validation for names  -->
-                                        <template v-if="key === 'eli_service' || key === 'eli_poe' || key === 'vol_name' || key === 'vol_pos' || key === 'learn_title' || key === 'learn_type' || key === 'learn_con'
-                                        || key === 'recog_name'">
-                                            <input
-                                                class="input-field"
-                                                :type="getInputType(key, value)"
-                                                v-model="editFields[key]"
-                                                @input="validateAlphabetOnly(key, 'editFields')"
-                                            />
-                                        </template>
+            <!-- Conditional grid layout -->
+            <div :class="currentTabLabel === 'Recognition & Distinctions' ? 'grid grid-cols-1 gap-4' : 'grid grid-cols-2 gap-4'">
+                <!-- Fields will be dynamically rendered here based on the selected row -->
+                <div v-for="(value, key) in filteredEditFields" :key="key">
+                    <!-- Conditionally apply the label based on the key -->
+                    <label class="block mb-2 text-sm font-bold text-gray-700">
+                        <!-- Use a custom label only for the 'learn_title' field -->
+                        <template v-if="key === 'learn_title'">LEARNING AND DEVELOPMENT INTERVENTIONS</template>
+                        <template v-else>{{ formatFieldLabel[key] }}</template>
+                    </label>
 
-                                        <!-- Number-only validation for fields  -->
-                                        <template v-else-if="key === 'eli_rating' || key === 'eli_license_no' || key === 'vol_hrs' || key === 'learn_hrs'">
-                                            <input
-                                                class="input-field"
-                                                :type="getInputType(key, value)"
-                                                v-model="editFields[key]"
-                                                @input="validateNumber(key, 'editFields')"
-                                            />
-                                        </template>
+                    <!-- Alphabet-only validation for names -->
+                    <template v-if="['eli_service', 'eli_poe', 'vol_name', 'vol_pos', 'learn_title', 'learn_type', 'learn_con', 'recog_name'].includes(key)">
+                        <input
+                            class="input-field"
+                            :type="getInputType(key, value)"
+                            v-model="editFields[key]"
+                            @input="validateAlphabetOnly(key, 'editFields')"
+                        />
+                    </template>
 
-                                        <!-- Date input fields  -->
-                                        <template v-else-if="key === 'eli_doe' || key === 'vol_fr'
-                                        || key ===  'learn_fr'  ">
-                                            <input
-                                                class="input-field"
-                                                type="date"
-                                                v-model="editFields[key]"
-                                                :max="maxDate"
-                                            />
-                                        </template>
-                                        <template v-else-if="key === 'vol_to' || key === 'learn_to'" >
-                                            <input
-                                                class="input-field"
-                                                type="date"
-                                                v-model="editFields[key]"
-                                            />
-                                            <span v-if="dateError" class="error-message">"To" date cannot be before "From" date.</span>
-                                        </template>
-                                        <template v-else-if="key === 'eli_licen_valid'" >
-                                            <input
-                                                class="input-field"
-                                                type="date"
-                                                v-model="editFields[key]"
-                                            />
-                                            <span v-if="dateError" class="error-message">"Validity" date cannot be before "From" date.</span>
-                                        </template>
+                    <!-- Number-only validation for fields -->
+                    <template v-else-if="['eli_rating', 'eli_license_no', 'vol_hrs', 'learn_hrs'].includes(key)">
+                        <input
+                            class="input-field"
+                            :type="getInputType(key, value)"
+                            v-model="editFields[key]"
+                            @input="validateNumber(key, 'editFields')"
+                        />
+                    </template>
 
-                                        <!-- Default input (for any other fields) -->
-                                        <template v-else>
-                                            <input
-                                                class="input-field"
-                                                :type="getInputType(key, value)"
-                                                v-model="editFields[key]"
-                                            />
-                                        </template>
-                                    </div>
-                                </div>
-                                <div class="flex justify-center gap-4 mt-4">
-                                    <button @click="hideEditDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                                        Cancel
-                                    </button>
-                                    <button @click="saveEdit" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                                        Save
-                                    </button>
-                                </div>
+                    <!-- Date input fields -->
+                    <template v-else-if="['eli_doe', 'vol_fr', 'learn_fr'].includes(key)">
+                        <input
+                            class="input-field"
+                            type="date"
+                            v-model="editFields[key]"
+                            :max="maxDate"
+                        />
+                    </template>
+                    <template v-else-if="['vol_to', 'learn_to'].includes(key)">
+                        <input
+                            class="input-field"
+                            type="date"
+                            v-model="editFields[key]"
+                        />
+                        <span v-if="dateError" class="error-message">"To" date cannot be before "From" date.</span>
+                    </template>
+                    <template v-else-if="key === 'eli_licen_valid'">
+                        <input
+                            class="input-field"
+                            type="date"
+                            v-model="editFields[key]"
+                        />
+                        <span v-if="dateError" class="error-message">"Validity" date cannot be before "From" date.</span>
+                    </template>
+
+                    <!-- Default input (for any other fields) -->
+                    <template v-else>
+                        <input
+                            class="input-field"
+                            :type="getInputType(key, value)"
+                            v-model="editFields[key]"
+                        />
+                    </template>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-center gap-4 mt-4">
+                <button @click="hideEditDialog" class="px-3 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                    CANCEL
+                </button>
+                <button @click="saveEdit" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                    SAVE
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+            <!-- Add CS Eligibility Modal -->
+            <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                <div class="w-full max-w-4xl mx-4 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:mx-auto">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h2 class="mb-4 text-xl font-semibold uppercase">Add CS Eligibility</h2>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">CAREER SERVICE/RA 1080</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_service" @input="validateName('eli_service', 'newCSEligibility')"/>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">RATING (IF APPLICABLE)</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_rating" @input="validateDecimal('eli_rating', 'newCSEligibility')" />
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">DATE OF EXAMINATION/CONFERMENT</label>
+                                <input class="input-field" type="date" v-model="newCSEligibility.eli_doe" :max="maxDate"/>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF EXAMINATION/CONFERMENT</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_poe" @input="validateName('eli_poe', 'newCSEligibility')"/>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">LICENSE (IF APPLICABLE)</label>
+                                <input class="input-field" type="text" v-model="newCSEligibility.eli_license_no" />
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">VALIDITY</label>
+                                <input class="input-field" type="date" v-model="newCSEligibility.eli_licen_valid"/>
+                                <span v-if="dateError" class="error-message">"Validity" date cannot be before "From" date.</span>
                             </div>
                         </div>
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button @click="hideAddCSEligibilityDialog" class="px-3 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                                CANCEL
+                            </button>
+                            <button @click="addCSEligibility" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                                ADD
+                            </button>
+                        </div>
                     </div>
+                </div>
+            </div>
 
 
-                    <!-- Add CS Eligibility Modal -->
-                    <div v-if="showAddCSEligibilityDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
-                                <div class="p-4">
-                                    <div class="text-center">
-                                        <h2 class="mb-4 text-xl font-semibold">Add CS Eligibility</h2>
-                                    </div>
-                                    <div class="grid grid-cols-1 gap-4">
-                                        <div>
-                                            <label class="label-field">CAREER SERVICE/RA 1080</label>
-                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_service" @input="validateName('eli_service', 'newCSEligibility')"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">RATING (IF APPLICABLE)</label>
-                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_rating" @input="validateDecimal('eli_rating', 'newCSEligibility')" />
-                                        </div>
-                                        <div>
-                                            <label class="label-field">DATE OF EXAMINATION/CONFERMENT</label>
-                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_doe" :max="maxDate"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">PLACE OF EXAMINATION/CONFERMENT</label>
-                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_poe" @input="validateName('eli_poe', 'newCSEligibility')"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">LICENSE (IF APPLICABLE)</label>
-                                            <input class="input-field" type="text" v-model="newCSEligibility.eli_license_no" />
-                                        </div>
-                                        <div>
-                                            <label class="label-field">VALIDITY</label>
-                                            <input class="input-field" type="date" v-model="newCSEligibility.eli_licen_valid"/>
-                                            <span v-if="dateError" class="error-message">"Validity" date cannot be before "From" date.</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddCSEligibilityDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                                            Cancel
-                                        </button>
-                                        <button @click="addCSEligibility" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                                            Add
-                                        </button>
-                                    </div>
-                                </div>
+            <!-- Add Voluntary Work Modal -->
+            <div v-if="showAddVoluntaryWorkDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                <div class="w-full max-w-4xl mx-4 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:mx-auto">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h2 class="mb-4 text-xl font-semibold uppercase">Add Voluntary Work</h2>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">NAME OF ORGANIZATION (WRITE IN FULL)</label>
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.vol_name"/>
                             </div>
-                    </div>
-
-                    <!-- Add Voluntary Work Modal -->
-                    <div v-if="showAddVoluntaryWorkDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
-                                <div class="p-4">
-                                    <div class="text-center">
-                                        <h2 class="mb-4 text-xl font-semibold">Add Voluntary Work</h2>
-                                    </div>
-                                    <div class="grid grid-cols-1 gap-4">
-                                        <div>
-                                            <label class="label-field">NAME OF ORGANIZATION (WRITE IN FULL)</label>
-                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_name"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">ADDRESS OF ORGANIZATION</label>
-                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_add" />
-                                        </div>
-                                        <div>
-                                            <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
-                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_fr" :max="maxDate"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="date" v-model="newVoluntaryWork.vol_to"/>
-                                            <span v-if="dateError" class="error-message">"To" date cannot be before "From" date.</span>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">NUMBER OF HOURS</label>
-                                            <input class="input-field" type="number" v-model="newVoluntaryWork.vol_hrs" @input="validateNumber('vol_hrs', 'newVoluntaryWork')"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">POSITION / NATURE OF WORK</label>
-                                            <input class="input-field" type="text" v-model="newVoluntaryWork.vol_pos" @input="validateName('vol_pos', 'newVoluntaryWork')"/>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddVoluntaryWorkDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                                            Cancel
-                                        </button>
-                                        <button @click="addVoluntaryWork" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                                            Add
-                                        </button>
-                                    </div>
-                                </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">ADDRESS OF ORGANIZATION</label>
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.vol_add" />
                             </div>
-                    </div>
-
-                    <!-- Add Learning & Development Modal -->
-                    <div v-if="showAddLearndevDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-xl">
-                                <div class="p-4">
-                                    <div class="text-center">
-                                        <h2 class="mb-4 text-xl font-semibold">Add Learning & Development</h2>
-                                    </div>
-                                    <div class="grid grid-cols-1 gap-4">
-                                        <div>
-                                            <label class="label-field">TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)</label>
-                                            <input class="input-field" type="text" v-model="newLearndev.learn_title" @input="validateName('learn_title', 'newLearndev')"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
-                                            <input class="input-field" type="date" v-model="newLearndev.learn_fr" :max="maxDate"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                                            <input class="input-field" type="date" v-model="newLearndev.learn_to"/>
-                                            <span v-if="dateError" class="error-message">"To" date cannot be before "From" date.</span>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">NUMBER OF HOURS</label>
-                                            <input class="input-field" type="number" v-model="newLearndev.learn_hrs" @input="validateNumber('learn_hrs', 'newLearndevk')"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)</label>
-                                            <input class="input-field" type="text" v-model="newLearndev.learn_type" @input="validateName('learn_type', 'newLearndev')"/>
-                                        </div>
-                                        <div>
-                                            <label class="label-field">CONDUCTED/SPONSORED BY (WRITE IN FULL)</label>
-                                            <input class="input-field" type="text" v-model="newLearndev.learn_con" @input="validateName('learn_con', 'newLearndev')"/>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddLearndevDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                                            Cancel
-                                        </button>
-                                        <button @click="addLearndev" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                                            Add
-                                        </button>
-                                    </div>
-                                </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
+                                <input class="input-field" type="date" v-model="newVoluntaryWork.vol_fr" :max="maxDate"/>
                             </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
+                                <input class="input-field" type="date" v-model="newVoluntaryWork.vol_to"/>
+                                <span v-if="dateError" class="error-message">"To" date cannot be before "From" date.</span>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">NUMBER OF HOURS</label>
+                                <input class="input-field" type="number" v-model="newVoluntaryWork.vol_hrs" @input="validateNumber('vol_hrs', 'newVoluntaryWork')"/>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">POSITION / NATURE OF WORK</label>
+                                <input class="input-field" type="text" v-model="newVoluntaryWork.vol_pos" @input="validateName('vol_pos', 'newVoluntaryWork')"/>
+                            </div>
+                        </div>
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button @click="hideAddVoluntaryWorkDialog" class="px-3 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                                CANCEL
+                            </button>
+                            <button @click="addVoluntaryWork" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                                ADD
+                            </button>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+
+            <!-- Add Learning & Development Modal -->
+            <div v-if="showAddLearndevDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                <div class="w-full max-w-4xl mx-4 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:mx-auto">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h2 class="mb-4 text-xl font-semibold uppercase">Add Learning & Development</h2>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">LEARNING AND DEVELOPMENT INTERVENTIONS</label>
+                                <input class="input-field" type="text" v-model="newLearndev.learn_title" @input="validateName('learn_title', 'newLearndev')"/>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
+                                <input class="input-field" type="date" v-model="newLearndev.learn_fr" :max="maxDate"/>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
+                                <input class="input-field" type="date" v-model="newLearndev.learn_to"/>
+                                <span v-if="dateError" class="error-message">"To" date cannot be before "From" date.</span>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">NUMBER OF HOURS</label>
+                                <input class="input-field" type="number" v-model="newLearndev.learn_hrs" @input="validateNumber('learn_hrs', 'newLearndevk')"/>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)</label>
+                                <input class="input-field" type="text" v-model="newLearndev.learn_type" @input="validateName('learn_type', 'newLearndev')"/>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">CONDUCTED/SPONSORED BY (WRITE IN FULL)</label>
+                                <input class="input-field" type="text" v-model="newLearndev.learn_con" @input="validateName('learn_con', 'newLearndev')"/>
+                            </div>
+                        </div>
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button @click="hideAddLearndevDialog" class="px-3 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                                CANCEL
+                            </button>
+                            <button @click="addLearndev" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                                ADD
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
                     <!-- Add Recognition & Distinctions Modal -->
                     <div v-if="showAddRecogdistDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
@@ -471,16 +490,16 @@
                                     </div>
                                     <div class="grid grid-cols-1 gap-4">
                                         <div>
-                                            <label class="label-field">NON-ACADEMIC DISTINCTIONS/RESTRICTIONS</label>
+                                            <label class="block mb-2 text-sm font-bold text-gray-700">NON-ACADEMIC DISTINCTIONS/RESTRICTIONS</label>
                                             <input class="input-field" type="text" v-model="newRecogdist.recog_name" @input="validateName('recog_name', 'newRecogdist')"/>
                                         </div>
                                     </div>
                                     <div class="flex justify-center gap-4 mt-4">
-                                        <button @click="hideAddRecogdistDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                                            Cancel
+                                        <button @click="hideAddRecogdistDialog" class="px-3 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                                            CANCEL
                                         </button>
-                                        <button @click="addRecogdist" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                                            Add
+                                        <button @click="addRecogdist" class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                                            ADD
                                         </button>
                                     </div>
                                 </div>
@@ -494,11 +513,11 @@
                                 <h2 class="mb-4 text-xl font-semibold">Are you sure you want to update?</h2>
                                 <p class="mb-4">If you are certain, click 'Confirm' to proceed. Otherwise, click 'Cancel' to go back and review the information.</p>
                                 <div class="flex justify-center gap-4">
-                                    <button @click="hideUpdateDialog" class="px-6 py-2 font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
-                                        Cancel
+                                    <button @click="hideUpdateDialog" class="px-3 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">
+                                        CANCEL
                                     </button>
-                                    <button @click="saveUpdate" class="px-6 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                                        Confirm
+                                    <button @click="saveUpdate" class="px-3 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                                        CONFIRM
                                     </button>
                                 </div>
                             </div>
@@ -514,8 +533,8 @@
                                         <p class="mb-4">Details have been successfully updated. Press 'Back' to continue.</p>
                                     </div>
                                     <div class="flex justify-center">
-                                        <button @click="hideSuccessDialog" class="px-8 py-2 font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                                            Back
+                                        <button @click="hideSuccessDialog" class="px-3 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                                            BACK
                                         </button>
                                     </div>
                                     </div>
@@ -549,6 +568,9 @@ export default {
             tinId: '',
             gsisId: '',
             philHealthId: ''
+        },
+        formatFieldLabel: {
+            learn_title: 'LEARNING AND DEVELOPMENT INTERVENTIONS',
         },
         otherInfo: {
             other_34a: '',
@@ -643,6 +665,7 @@ export default {
         selectedRow: null,
         editFields: {},
         currentTabLabel: '',
+
     };
     },
     watch: {
@@ -1379,22 +1402,12 @@ export default {
     background-position: center;
 }
 
-.border-box {
-    padding: 1rem;
-}
-
 .input-field {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid #cbd5e0;
     border-radius: 0.375rem;
     box-sizing: border-box;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.label-field {
-    margin-bottom: 0.25rem;
 }
 
 .divider {
@@ -1412,12 +1425,6 @@ export default {
 
 .form-group {
     margin-bottom: 1rem;
-}
-
-@media (max-width: 640px) {
-    .fixed {
-        position: fixed;
-    }
 }
 
 .custom-cancel-button {

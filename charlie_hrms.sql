@@ -177,7 +177,7 @@ CREATE TABLE `emp_acc` (
 
 LOCK TABLES `emp_acc` WRITE;
 /*!40000 ALTER TABLE `emp_acc` DISABLE KEYS */;
-INSERT INTO `emp_acc` VALUES ('11-0070','jgmatugas117@gmail.com','jgmatugas','$2y$12$mZsw5uzUC68xnR.4xHlhP.LhkUNtI7mWhG7L2MyMVxA5fHaJF2giK',NULL,'2024-07-31 21:44:22','2024-08-16 05:12:39',0),('11-0071','loidandre30@gmail.com','tdadlawan','$2y$12$9WL35defMGo9IuURU6RLD.F35V7gJMHw7nF3syzwrUT4f.zK6Mv8q',NULL,'2024-07-31 21:44:22','2024-07-31 21:44:22',1),('11-0072','lacaringoy02577@usep.edu.ph','mnartiaga','$2y$12$2BH66yWlkTTxMh7P4j6JG.4J26VxkUFIA3v3LtrH1a10jldkM7p5u',NULL,'2024-08-12 22:51:41','2024-08-27 05:35:21',0);
+INSERT INTO `emp_acc` VALUES ('11-0070','jgmatugas117@gmail.com','jgmatugas','$2y$12$8k1yV/Wqo9MniwEHaV7QOuoF22weYYlOvPyrFu9QhSk.3K3lUAQAi',NULL,'2024-07-31 21:44:22','2024-10-15 23:59:34',0),('11-0071','loidandre30@gmail.com','tdadlawan','$2y$12$9WL35defMGo9IuURU6RLD.F35V7gJMHw7nF3syzwrUT4f.zK6Mv8q',NULL,'2024-07-31 21:44:22','2024-07-31 21:44:22',1),('11-0072','lacaringoy02577@usep.edu.ph','mnartiaga','$2y$12$2BH66yWlkTTxMh7P4j6JG.4J26VxkUFIA3v3LtrH1a10jldkM7p5u',NULL,'2024-08-12 22:51:41','2024-08-27 05:35:21',0);
 /*!40000 ALTER TABLE `emp_acc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +242,7 @@ CREATE TABLE `emp_address2` (
 
 LOCK TABLES `emp_address2` WRITE;
 /*!40000 ALTER TABLE `emp_address2` DISABLE KEYS */;
-INSERT INTO `emp_address2` VALUES (1,'#45, Sunset Blvd','Golden Village','050513013','050513000','050500000','050000000','9000',NULL,'2024-09-11 19:07:02'),(2,'asdas','asdasd','118202006','118202000','118200000','110000000','8000',NULL,'2024-08-25 03:08:18'),(3,'awdawds4','Sunone Village','060415014','060415000','060400000','060000000','8000',NULL,'2024-08-27 05:42:11');
+INSERT INTO `emp_address2` VALUES (1,'#45, Sunset Blvd','Golden Village','150713011','150713000','150700000','150000000','9000',NULL,'2024-10-15 21:26:16'),(2,'asdas','asdasd','118202006','118202000','118200000','110000000','8000',NULL,'2024-08-25 03:08:18'),(3,'awdawds4','Sunone Village','060415014','060415000','060400000','060000000','8000',NULL,'2024-08-27 05:42:11');
 /*!40000 ALTER TABLE `emp_address2` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -309,7 +309,7 @@ CREATE TABLE `emp_eligibility` (
 
 LOCK TABLES `emp_eligibility` WRITE;
 /*!40000 ALTER TABLE `emp_eligibility` DISABLE KEYS */;
-INSERT INTO `emp_eligibility` VALUES (25,'11-0070','Professional Civil Service Exam',85.00,'2022-01-15','Manila','12345','2023-01-15','2024-08-03 20:19:19','2024-08-03 20:19:19'),(26,'11-0070','Sub-Professional Civil Service Exam',90.00,'2021-05-10','Quezon City','67890','2022-05-10','2024-08-03 20:19:19','2024-08-03 20:19:19'),(27,'11-0070','Civil Service Exam for Foreign Service Officer',88.00,'2020-03-20','Cebu Cityyt','11223','2021-03-20','2024-08-03 20:19:19','2024-09-25 22:21:54'),(28,'11-0071','Penology Officer Examination',92.00,'2019-07-30','Davao City','44556','2020-07-30','2024-08-03 20:19:19','2024-08-03 20:19:19'),(29,'11-0071','Basic Competency on Local Treasury Exam',89.00,'2017-04-15','Iloilo City','33445','2018-04-15','2024-08-03 20:19:19','2024-08-03 20:19:19'),(30,'11-0070','Career Service Examination for Environmental Planner',91.00,'2016-08-10','Zamboanga City','66778','2017-08-10','2024-08-03 20:19:19','2024-08-03 20:19:19'),(31,'11-0071','Civil Service Examination for Security Guard',87.00,'2015-12-05','Cagayan de Oro','99012','2016-12-05','2024-08-03 20:19:19','2024-08-03 20:19:19'),(32,'11-0070','Civil Service Exam for Medical Technologist',93.00,'2014-03-25','General Santos City','55667','2015-03-25','2024-08-03 20:19:19','2024-08-03 20:19:19'),(33,'11-0070','eferfrefg',99.00,'2020-06-05','dfvdfvdgvrt','22344','2030-08-08','2024-08-03 18:37:27','2024-08-03 18:37:27'),(34,'11-0070','yugyjfyuftyufs',1.00,'2024-09-18','asdasdas','2323','2024-09-26','2024-09-25 21:05:06','2024-09-25 21:05:06');
+INSERT INTO `emp_eligibility` VALUES (25,'11-0070','Professional Civil Service Exam',85.00,'2022-01-15','Manila','12345','2023-01-15','2024-08-03 20:19:19','2024-08-03 20:19:19'),(26,'11-0070','Sub-Professional Civil Service Exam',90.00,'2021-05-10','Quezon City','67890','2022-05-10','2024-08-03 20:19:19','2024-08-03 20:19:19'),(27,'11-0070','Civil Service Exam for Foreign Service Officer',88.00,'2020-03-20','Cebu City','11223','2021-03-20','2024-08-03 20:19:19','2024-09-25 22:53:04'),(28,'11-0071','Penology Officer Examination',92.00,'2019-07-30','Davao City','44556','2020-07-30','2024-08-03 20:19:19','2024-08-03 20:19:19'),(29,'11-0071','Basic Competency on Local Treasury Exam',89.00,'2017-04-15','Iloilo City','33445','2018-04-15','2024-08-03 20:19:19','2024-08-03 20:19:19'),(30,'11-0070','Career Service Examination for Environmental Planner',91.00,'2016-08-10','Zamboanga City','66778','2017-08-10','2024-08-03 20:19:19','2024-08-03 20:19:19'),(31,'11-0071','Civil Service Examination for Security Guard',87.00,'2015-12-05','Cagayan de Oro','99012','2016-12-05','2024-08-03 20:19:19','2024-08-03 20:19:19'),(32,'11-0070','Civil Service Exam for Medical Technologist',93.00,'2014-03-25','General Santos City','55667','2015-03-25','2024-08-03 20:19:19','2024-08-03 20:19:19'),(33,'11-0070','eferfrefg',99.00,'2020-06-05','dfvdfvdgvrt','22344','2030-08-08','2024-08-03 18:37:27','2024-08-03 18:37:27'),(34,'11-0070','yugyjfyuftyufs',1.00,'2024-09-18','asdasdas','2323','2024-09-26','2024-09-25 21:05:06','2024-09-25 21:05:06');
 /*!40000 ALTER TABLE `emp_eligibility` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -538,7 +538,7 @@ CREATE TABLE `emp_recog` (
   PRIMARY KEY (`recog_count`),
   KEY `emp_recog_empid_foreign` (`empid`),
   CONSTRAINT `emp_recog_empid_foreign` FOREIGN KEY (`empid`) REFERENCES `emp_acc` (`empid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -547,7 +547,7 @@ CREATE TABLE `emp_recog` (
 
 LOCK TABLES `emp_recog` WRITE;
 /*!40000 ALTER TABLE `emp_recog` DISABLE KEYS */;
-INSERT INTO `emp_recog` VALUES (1,'11-0070','Binibining Marc Artiaga','2024-09-15 18:11:21','2024-09-16 05:04:22'),(2,'11-0070','Kupal ka ba','2024-09-25 17:17:33','2024-09-25 17:17:33'),(3,'11-0070','new recognition','2024-09-25 22:24:58','2024-09-25 22:24:58'),(4,'11-0070','sample one','2024-09-25 22:27:28','2024-09-25 22:27:28');
+INSERT INTO `emp_recog` VALUES (1,'11-0070','Binibining Marc Artiaga','2024-09-15 18:11:21','2024-09-16 05:04:22'),(2,'11-0070','Kupal ka ba','2024-09-25 17:17:33','2024-09-25 17:17:33'),(3,'11-0070','new recognition','2024-09-25 22:24:58','2024-09-25 22:24:58'),(4,'11-0070','sample one','2024-09-25 22:27:28','2024-09-25 22:27:28'),(5,'11-0070','new one','2024-09-25 22:53:12','2024-09-25 22:53:12');
 /*!40000 ALTER TABLE `emp_recog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -650,7 +650,7 @@ CREATE TABLE `emp_spouse` (
 
 LOCK TABLES `emp_spouse` WRITE;
 /*!40000 ALTER TABLE `emp_spouse` DISABLE KEYS */;
-INSERT INTO `emp_spouse` VALUES (1,'Crist Mar','Luterte','De Asis','1','Penetration Tester','DSWD FO XI','Matina Aplaya',12345,'2024-09-16 07:34:48','2024-09-25 20:18:49');
+INSERT INTO `emp_spouse` VALUES (1,'Crist Mar','Luterte','De Asis','1','Penetration Tester','DSWD FO XI','Matina Aplaya',12345,'2024-09-16 07:34:48','2024-09-25 22:52:54');
 /*!40000 ALTER TABLE `emp_spouse` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -775,7 +775,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'11-0070','Harimarc','Crisdre','De Omblero','2','1985-05-15',NULL,'Davao City','HRMDD Head','2','2',175,75,'1','Filipino',1234567891,'ID654321','City','Personal','2005-01-01',98765432,'Roman Catholic','signature1.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-09-18 22:11:24','11-0070_image.png'),(2,'11-0071','Teddygardo Jr.','Baugbog','Adlawan','0','1989-12-20',NULL,'Davao City','Administrative Assistant II','1','3',160,70,'1','Filipino',1234567890,'ID123456','City','Personal','2010-01-01',98765432,'Roman Catholic','signature.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-09-11 23:46:41','11-0071_image.png'),(3,'11-0072','Marc Neo','Perez','Artiaga',NULL,'2002-12-28',NULL,'Davao City','Manager','1','3',169,70,'6','American',1234567890,'A1234567','New York','Driver’s License','2024-01-01',1234567890,'Christian','signature_here','None','No','password_hash','Group1','2024-08-13 06:55:37','2024-08-27 05:38:54','undefined_image.png');
+INSERT INTO `employee` VALUES (1,'11-0070','Harimarc','Crisdre','De Omblero','2','2003-12-23',20,'Davao City','HRMDD Head','2','2',175,67,'1','Filipino',1234567891,'ID654321','City','Personal','2005-01-01',98765432,'Roman Catholic','signature1.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-10-07 23:46:19','11-0070_image.png'),(2,'11-0071','Teddygardo Jr.','Baugbog','Adlawan','0','1989-12-20',NULL,'Davao City','Administrative Assistant II','1','3',160,70,'1','Filipino',1234567890,'ID123456','City','Personal','2010-01-01',98765432,'Roman Catholic','signature.png','No','No','N/A','N/A','2024-07-31 21:44:22','2024-09-11 23:46:41','11-0071_image.png'),(3,'11-0072','Marc Neo','Perez','Artiaga',NULL,'2002-12-28',NULL,'Davao City','Manager','1','3',169,70,'6','American',1234567890,'A1234567','New York','Driver’s License','2024-01-01',1234567890,'Christian','signature_here','None','No','password_hash','Group1','2024-08-13 06:55:37','2024-08-27 05:38:54','undefined_image.png');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1314,7 +1314,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('d373NgAxzv26BSGyzBAO4IHhpHAQMDxgtZ7nAVpq','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36','YTo4OntzOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoiMGdDRXN2ejd1YjFmYnRuclhON0ZYekZFbmZwNWw5SjNURVNVRkRoZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kcm9wZG93bi9leHQtb3B0aW9ucyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjc6IjExLTAwNzAiO3M6MTI6InVzZXJfZW1wbWFpbCI7czoyMjoiamdtYXR1Z2FzMTE3QGdtYWlsLmNvbSI7czo3OiJ1c2VyX2lkIjtzOjc6IjExLTAwNzAiO3M6OToidXNlcl90eXBlIjtpOjA7czoxMjoib3RwX3ZlcmlmaWVkIjtiOjE7fQ==',1727332055),('dDp0L8buJqTluyrStQST1WyW08uqxjPpePxXjeUI','11-0070','192.168.0.122','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36','YTo4OntzOjY6Il90b2tlbiI7czo0MDoiTkhGVTlWbWszNWRaQ2RKbHVUSEpUTE02SHZ5Vm14VmZLTHNoYm5xbCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xOTIuMTY4LjAuMTA0OjgwODAvb3RoZXJpbmZvIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO3M6NzoiMTEtMDA3MCI7czoxMjoidXNlcl9lbXBtYWlsIjtzOjIyOiJqZ21hdHVnYXMxMTdAZ21haWwuY29tIjtzOjc6InVzZXJfaWQiO3M6NzoiMTEtMDA3MCI7czo5OiJ1c2VyX3R5cGUiO2k6MDtzOjEyOiJvdHBfdmVyaWZpZWQiO2I6MTt9',1727327198);
+INSERT INTO `sessions` VALUES ('8fUQgifwin8y5yFW9lF1DGvUYoFVmj4NW9pHq55b','11-0070','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36','YTo4OntzOjY6Il90b2tlbiI7czo0MDoiczFZREc1MFJrdEVycGRMSGtNRTduN204Ujd4RjVRRXBsdVpUMGhFVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTU6Imh0dHBzOi8vZHN3ZGZveGlfaHJtcy50ZXN0L2Ryb3Bkb3duL2Npdmlsc3RhdHVzLW9wdGlvbnMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7czo3OiIxMS0wMDcwIjtzOjEyOiJ1c2VyX2VtcG1haWwiO3M6MjI6ImpnbWF0dWdhczExN0BnbWFpbC5jb20iO3M6NzoidXNlcl9pZCI7czo3OiIxMS0wMDcwIjtzOjk6InVzZXJfdHlwZSI7aTowO3M6MTI6Im90cF92ZXJpZmllZCI7YjoxO30=',1729126800);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1389,4 +1389,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-26 14:28:49
+-- Dump completed on 2024-10-17  9:02:34
