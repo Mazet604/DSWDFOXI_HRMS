@@ -66,10 +66,10 @@
 
 <script>
 import { App } from '@inertiajs/inertia-vue3';
-import AdminLayout from '@/Layouts/AdminLayout.vue';
 import axios from 'axios';
 import { Chart, registerables } from 'chart.js';
 import { nextTick } from 'vue';
+import AdminLayout from '@/Layouts/AdminLayout.vue';
 
 Chart.register(...registerables);
 
@@ -359,7 +359,4 @@ button:hover {
   cursor: pointer;
 }
 
-button.bg-blue-900 {
-  border-color: yellow;
-}
 </style>

@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as e,c as r}from"./app-CcJmYwvh.js";const t={},n={class:"w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg"};function c(a,s){return e(),r("div",n)}const i=o(t,[["render",c]]);export{i as default};

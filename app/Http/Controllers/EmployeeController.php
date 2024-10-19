@@ -130,6 +130,7 @@ class EmployeeController extends Controller
             $birthday = $employee->emp_dob;
             $placeOfBirth = $employee->emp_pob;
             $sex = $employee->emp_sex;
+            $age = $employee->emp_age;
             $civilStatus = $employee->emp_civ_stat;
             $height = $employee->emp_height;
             $weight = $employee->emp_weight;
@@ -146,6 +147,7 @@ class EmployeeController extends Controller
                 'birthday' => $birthday,
                 'placeOfBirth' => $placeOfBirth,
                 'sex' => $sex,
+                'age'=> $age,
                 'civilStatus' => $civilStatus,
                 'height' => $height,
                 'weight' => $weight,
@@ -181,48 +183,43 @@ class EmployeeController extends Controller
         }
     }
 
-    public function updateProfile(Request $request)
-    {
-        try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
-            }
+    public function updateProfile(Request $request, $empid)
+{
+    // Log data for debugging purposes
+    Log::info('Received empid: ' . $empid);
+    Log::info('Request data: ' . json_encode($request->all()));
 
-            $employee = Employee::where('empid', $user->empid)->first(); // Fetch employee using empid
-            $emp_acc = EmpAcc::where('empid', $user->empid)->first();
-            if (!$employee || !$emp_acc) {
-                return response()->json(['error' => 'Employee not found'], 404);
-            }
+    try {
+        $user = Auth::user(); // Get authenticated user
 
-            $emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first(); // Fetch employee address using emp_count
-            if (!$emp_address) {
-                return response()->json(['error' => 'Employee address not found'], 404);
-            }
+        // Fetch employee and related account info
+        $employee = Employee::where('empid', $user->empid)->first();
+        $emp_acc = EmpAcc::where('empid', $user->empid)->first();
+        if (!$employee || !$emp_acc) {
+            return response()->json(['error' => 'Employee not found'], 404);
+        }
 
-            $emp_address2 = EmpAddress2::where('emp_count', $employee->emp_count)->first(); // Fetch employee address2 using emp_count
-            if (!$emp_address2) {
-                return response()->json(['error' => 'Employee address 2 not found'], 404);
-            }
+        // Update employee information
+        $employee->emp_fname = $request->input('firstName');
+        $employee->emp_mname = $request->input('middleName');
+        $employee->emp_lname = $request->input('lastName');
+        $employee->emp_ext = $request->input('suffix');
+        $employee->emp_citizen = $request->input('citizenship');
+        $employee->emp_dob = $request->input('birthday');
+        $employee->emp_pob = $request->input('placeOfBirth');
+        $employee->emp_sex = $request->input('sex');
+        $employee->emp_age = $request->input('age');
+        $employee->emp_civ_stat = $request->input('civilStatus');
+        $employee->emp_height = $request->input('height');
+        $employee->emp_weight = $request->input('weight');
+        $employee->emp_blood = $request->input('bloodType');
+        $employee->emp_cnum = $request->input('mobilenum');
+        $employee->emp_telnum = $request->input('telnum');
 
-            // Update the employee details
-            $employee->emp_fname = $request->input('firstName');
-            $employee->emp_mname = $request->input('middleName');
-            $employee->emp_lname = $request->input('lastName');
-            $employee->emp_ext = $request->input('suffix');
-            $employee->emp_citizen = $request->input('citizenship');
-            $employee->emp_dob = $request->input('birthday');
-            $employee->emp_pob = $request->input('placeOfBirth');
-            $employee->emp_sex = $request->input('sex');
-            $employee->emp_civ_stat = $request->input('civilStatus');
-            $employee->emp_height = $request->input('height');
-            $employee->emp_weight = $request->input('weight');
-            $employee->emp_blood = $request->input('bloodType');
-            $employee->emp_cnum = $request->input('mobilenum');
-            $employee->emp_telnum = $request->input('telnum');
-
-
-            //Update the address
+        // Update employee address (primary and secondary)
+        $emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first();
+        $emp_address2 = EmpAddress2::where('emp_count', $employee->emp_count)->first();
+        if ($emp_address) {
             $emp_address->emp_region = $request->input('Region');
             $emp_address->emp_prov = $request->input('Province');
             $emp_address->emp_city = $request->input('City');
@@ -230,8 +227,9 @@ class EmployeeController extends Controller
             $emp_address->emp_house = $request->input('block');
             $emp_address->emp_subd = $request->input('villsub');
             $emp_address->emp_zip = $request->input('zipcode');
+        }
 
-            //Update the address2
+        if ($emp_address2) {
             $emp_address2->emp_region2 = $request->input('Region2');
             $emp_address2->emp_prov2 = $request->input('Province2');
             $emp_address2->emp_city2 = $request->input('City2');
@@ -239,21 +237,20 @@ class EmployeeController extends Controller
             $emp_address2->emp_house2 = $request->input('block2');
             $emp_address2->emp_subd2 = $request->input('villsub2');
             $emp_address2->emp_zip2 = $request->input('zipcode2');
-
-            // Update the emp_acc details
-            $emp_acc->empmail = $request->input('emailadd');
-
-            // Save the updated information
-            $employee->save();
-            $emp_acc->save();
-            $emp_address->save();
-            $emp_address2->save();
-
-            return response()->json(['success' => 'Profile updated successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
         }
+
+        // Save updated records
+        $employee->save();
+        $emp_acc->save();
+        if ($emp_address) $emp_address->save();
+        if ($emp_address2) $emp_address2->save();
+
+        return response()->json(['success' => 'Profile updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
 
 
     public function getSexOptions()

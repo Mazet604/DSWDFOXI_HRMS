@@ -16,6 +16,7 @@ use App\Http\Controllers\DropDownControllers;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AddressControllerII;
 use App\Http\Controllers\PDSController;
+Route::patch('/employee/updateProfile', [EmployeeController::class, 'updateProfile']);
 
 Route::get('/', function () {
     return Inertia::render('Login', [
