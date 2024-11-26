@@ -33,10 +33,10 @@ class AddressControllerII extends Controller
             // Fetch the address using emp_count
             $address2 = EmpAddress2::where('emp_count', $employee->emp_count)->first();
             if (!$address2) {
-                return response()->json(['error' => 'Address not found'], 404);
+                return response()->json(['error' => 'Permanent address not found'], 404);
             }
 
-            // Return the region and province
+            // Return the permanent address data
             return response()->json([
                 'emp_count' => $address2->emp_count,
                 'zipcode2' => $address2->emp_zip2,
@@ -49,7 +49,7 @@ class AddressControllerII extends Controller
             ], 200);
 
         } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred while fetching the address'], 500);
+            return response()->json(['error' => 'An error occurred while fetching the permanent address'], 500);
         }
     }
 
@@ -66,7 +66,7 @@ class AddressControllerII extends Controller
                                 ->get();
         return response()->json($provinces);
     }
-    
+
     public function getCities2(Request $request)
     {
         $cities = lib_city::where('prv_psgc', $request->prv_psgc)
@@ -74,7 +74,7 @@ class AddressControllerII extends Controller
                             ->get();
         return response()->json($cities);
     }
-    
+
     public function getBarangays2(Request $request)
     {
         $barangays = lib_brgy::where('citmun_psgc', $request->citmun_psgc)

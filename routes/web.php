@@ -17,9 +17,12 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AddressControllerII;
 use App\Http\Controllers\PDSController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\EmpAdminController;
 
 Route::post('api/update-password', [PasswordController::class, 'updatePassword']);
 Route::patch('/employee/updateProfile', [EmployeeController::class, 'updateProfile']);
+Route::patch('/employee/updateEditProfile/{empid}', [EmployeeController::class, 'updateEditProfile']);
+
 
 Route::get('/', function () {
     return Inertia::render('Login', [
@@ -71,8 +74,16 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/edit-profile', function () {
-        return Inertia::render('EditProfile');  // The name of your Vue component
+        return Inertia::render('EditProfile');
     })->name('edit-profile');
+
+    Route::middleware([\App\Http\Middleware\CheckAdmin::class])->group(function () {
+        Route::get('/import-excel', function () {
+            return Inertia::render('ImportExcel');
+        })->name('import-excel');
+    });
+
+
 
     // Other routes...
     Route::get('/background', function () {
@@ -107,6 +118,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/upload-profile-picture', [EmployeeController::class, 'uploadProfilePicture']);
     Route::get('/get-profile-picture', [EmployeeController::class, 'getProfilePicture']);
 
+    // Admin side na gidungag nko
+    Route::get('/api/get-employee-address', [EmployeeController::class, 'getEmployeeAddress']);
+    //11/25
+    Route::get('/api/get-employee-address2', [AddressControllerII::class, 'getAddress2']);
+    Route::get('/api/get-spouse-details', [BackgroundController::class, 'getSpouse']);
+
     // Statistics routes
     Route::get('/total-employees', [EmployeeController::class, 'getTotalEmployees']);
     Route::get('/gender-distribution', [EmployeeController::class, 'getGenderDistribution']);
@@ -130,7 +147,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dropdown/suffixes', [BackgroundController::class, 'suffix']);
     Route::get('/emp_father/Father', [BackgroundController::class, 'getFather']);
     Route::get('/emp_mother/Mother', [BackgroundController::class, 'getMother']);
-    Route::get('/emp_spouse/Spouse', [BackgroundController::class, 'getSpouse']);
+    //Route::get('/emp_spouse/Spouse', [BackgroundController::class, 'getSpouse']);
     Route::patch('/EmpFamily/updateFamilyData', [BackgroundController::class, 'updateFamilyData']);
     Route::get('/education/EducationData', [BackgroundController::class, 'getEducationData']);
     Route::post('/education/AddEducationData', [BackgroundController::class, 'addEducationData']);
@@ -177,6 +194,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/download-pds/{page?}', [PDSController::class, 'downloadPDS']);
     Route::get('/api/search-employee', [EmployeeController::class, 'searchByEmpId']);
+
+
+    Route::post('/create-account', [EmpAdminController::class, 'createAccount']);
+    Route::post('/preview-excel', [EmpAdminController::class, 'previewExcel']);
+    Route::post('/confirm-upload', [EmpAdminController::class, 'confirmUpload']);
 });
 
 require __DIR__.'/auth.php';

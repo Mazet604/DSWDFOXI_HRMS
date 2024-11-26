@@ -352,6 +352,7 @@ class EmployeeController extends Controller
         }
     }
 
+    // ADMIN SIDE NA GIDUNGAG NKO
     public function searchByEmpId(Request $request)
 {
     $empid = $request->input('empid');
@@ -365,6 +366,36 @@ class EmployeeController extends Controller
         return response()->json(['message' => 'Employee not found'], 404);  // Return error if not found
     }
 }
+
+public function getEmployeeAddress(Request $request)
+{
+    $emp_count = $request->query('emp_count');
+
+    // Fetch address based on emp_count
+    $emp_address = EmpAddress::where('emp_count', $emp_count)->first();
+
+    if (!$emp_address) {
+        return response()->json(['error' => 'Address not found'], 404);
+    }
+
+    return response()->json($emp_address);
+}
+
+public function updateEditProfile(Request $request, $empid)
+{
+    // Fetch the employee using empid
+    $employee = Employee::where('empid', $empid)->first();
+
+    if (!$employee) {
+        return response()->json(['message' => 'Employee not found'], 404);
+    }
+
+    // Update the employee details with request data
+    $employee->update($request->all());
+
+    return response()->json(['message' => 'Profile updated successfully']);
+}
+
 
 
 

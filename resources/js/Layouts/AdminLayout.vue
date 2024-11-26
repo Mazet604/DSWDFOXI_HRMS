@@ -25,6 +25,15 @@
               >
                 <span>Edit Profile</span>
               </li>
+
+              <!--  navigation for import excel function -->
+              <li
+                :class="{ active: activeMenuItem === 'import-excel' }"
+                @click="navigateTo('import-excel', 'import-excel', 0)"
+                class="flex items-center py-2 space-x-2 text-lg font-bold menu-item"
+              >
+                <span>Add Employee</span>
+              </li>
             </ul>
           </nav>
           <button @click="confirmLogout" class="px-2 py-2 mt-0 text-white bg-red-600 rounded w-30 hover:bg-red-700" style="font-size: 16px;">

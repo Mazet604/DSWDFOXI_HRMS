@@ -116,35 +116,35 @@
               </div>
               <!-- Page 3 - Residential Address -->
             <div v-if="currentPage === 3">
-            <h2 class="mb-4 text-lg font-semibold">Residential Address</h2>
-            <div class="grid grid-cols-2 gap-4 mb-6">
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Region</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.residentialRegion" />
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Province</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.residentialProvince" />
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.residentialCity" />
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Barangay</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.residentialBarangay" />
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Zip Code</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.residentialZipcode" />
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Village/Subdivision</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.residentialVillage" />
-                </div>
-                <div class="col-span-2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Block/Street/Purok</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.residentialStreet" />
+                <h3 class="mb-4 text-lg font-semibold">Residential Address</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-700">Region</label>
+                        <input class="w-full p-2 border rounded" v-model="profileData.residentialRegion" />
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-700">Province</label>
+                         <input class="w-full p-2 border rounded" v-model="profileData.residentialProvince" />
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
+                        <input class="w-full p-2 border rounded" v-model="profileData.residentialCity" />
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-700">Barangay</label>
+                        <input class="w-full p-2 border rounded" v-model="profileData.residentialBarangay" />
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-700">Zip Code</label>
+                        <input class="w-full p-2 border rounded" v-model="profileData.residentialZipcode" />
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-700">Village/Subdivision</label>
+                        <input class="w-full p-2 border rounded" v-model="profileData.residentialVillage" />
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block mb-1 text-sm font-medium text-gray-700">Block/Street/Purok</label>
+                        <input class="w-full p-2 border rounded" v-model="profileData.residentialStreet" />
                 </div>
             </div>
             </div>
@@ -154,153 +154,105 @@
             <div class="gap-4 mb-6 ">
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Region</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentRegion" />
+                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentRegion2" />
                 </div>
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Province</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentProvince" />
+                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentProvince2" />
                 </div>
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentCity" />
+                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentCity2" />
                 </div>
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Barangay</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentBarangay" />
+                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentBarangay2" />
                 </div>
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Zip Code</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentZipcode" />
+                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentZipcode2" />
                 </div>
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Village/Subdivision</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentVillage" />
+                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentVillage2" />
                 </div>
                 <div class="col-span-2">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Block/Street/Purok</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentStreet" />
+                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentStreet2" />
                 </div>
             </div>
             </div>
-              <!-- Page 5 -->
-              <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Telephone NO.</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+            <!-- Page 5 - Background - Family -->
+            <div v-if="currentPage === 5">
+            <h2 class="mb-4 text-lg font-semibold">Spouse</h2>
+            <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.spouse_lname" />
               </div>
               <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Mobile NO.</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+                <label class="block mb-1 text-sm font-medium text-gray-700">First Name</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.spouse_fname" />
               </div>
               <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Email Address(if any)</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emailadd" />
+                <label class="block mb-1 text-sm font-medium text-gray-700">Middle Name</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.spouse_mname" />
               </div>
-              <!-- Page 6 -->
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Spouse's Surname</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Suffix</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.spouse_xname" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Spouse's First Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Spouse's Middle Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Name Extension</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <div v-if="currentPage === 6">
+              <div v-if="currentPage === 5">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Occupation</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+                <input class="w-full p-2 border rounded" v-model="profileData.spouse_occup" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Employer/Business Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Employer's/Business Name</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.spouse_office" />
               </div>
-              <div v-if="currentPage === 6">
+              <div v-if="currentPage === 5">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Business Address</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.spouse_busadd" />
+              </div>
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Tel No.</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.spouse_tel" />
+              </div>
+              <!-- <h2 class="mb-4 text-lg font-semibold">Father</h2>
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Telephone NO.</label>
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">First Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Father's Surname</label>
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Middle Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Father's First Name</label>
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Suffix</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Father's Middle Name</label>
+              <h2 class="mb-4 text-lg font-semibold">Mother</h2>
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Name Extension</label>
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">First Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Mother's Maiden Name</label>
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Middle Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Mother's Surname</label>
+              <div v-if="currentPage === 5">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Maiden Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Mother's First Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Mother's Middle Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <!-- Page 7 -->
-              <div v-if="currentPage === 7">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Name of Children(Write full name and list all)</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <div v-if="currentPage === 7">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Date of Birth</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <!-- Page 8 -->
-              <div v-if="currentPage === 8">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Educational Background</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <!-- Page 9 -->
-              <div v-if="currentPage === 9">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Civil Service Eligibility</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <!-- Page 10 -->
-              <div v-if="currentPage === 10">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Work Experience</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <!-- Page 11 -->
-              <div v-if="currentPage === 11">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Voluntary Work</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <!-- Page 12 -->
-              <div v-if="currentPage === 12">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Learning & Development</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
-              <!-- Page 13 -->
-              <div v-if="currentPage === 13">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Other Information</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
+              </div> -->
             </div>
-
+            </div>
             <!-- Pagination Buttons -->
             <div class="mt-6 text-right">
               <button v-if="currentPage > 1" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" @click="prevPage">Previous</button>
@@ -352,10 +304,13 @@ export default {
       showSuccessDialog: false
     };
   },
+
   methods: {
+
     validateInput() {
       this.searchQuery = this.searchQuery.replace(/\D/g, ''); // Replace non-digit characters
     },
+
     search(query) {
       if (!query.trim() || query.length !== 4) {
         this.errorMessage = 'Please enter a valid 4-digit Employee ID.';
@@ -371,6 +326,12 @@ export default {
           if (response.data && response.data.empid) {
             this.profileData = response.data; // Populate profile details
             this.errorMessage = ''; // Clear any previous error
+//new added 11/22
+            this.fetchEmployeeAddress(response.data.emp_count); // Pass emp_count for address fetching
+//new added 11/25
+            this.fetchEmployeeAddress2(response.data.emp_count); // Fetch permanent address
+// Fetch spouse details
+            this.fetchSpouseDetails(response.data.emp_count); // Spouse details
           } else {
             this.errorMessage = 'Employee not found.';
             this.profileData = null; // Clear previous data
@@ -382,9 +343,69 @@ export default {
           this.profileData = null; // Clear previous data
         });
     },
+
+    fetchEmployeeAddress(emp_count) {
+            axios
+                .get(`/api/get-employee-address?emp_count=${emp_count}`)
+                .then((response) => {
+                    if (response.data) {
+                        // Bind address data to profileData object
+                         this.profileData.residentialRegion = response.data.emp_region;
+                         this.profileData.residentialProvince = response.data.emp_prov;
+                         this.profileData.residentialCity = response.data.emp_city;
+                         this.profileData.residentialBarangay = response.data.emp_brgy;
+                         this.profileData.residentialZipcode = response.data.emp_zip;
+                         this.profileData.residentialVillage = response.data.emp_subd;
+                         this.profileData.residentialStreet = response.data.emp_house;
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error fetching employee address:', error);
+                });
+    },
+    fetchEmployeeAddress2(emp_count) {
+        axios
+            .get(`/api/get-employee-address2?emp_count=${emp_count}`) // Correct endpoint
+            .then((response) => {
+                if (response.data) {
+                    // Bind permanent address data to profileData object
+                    this.profileData.permanentRegion2 = response.data.Region2;
+                    this.profileData.permanentProvince2 = response.data.Province2;
+                    this.profileData.permanentCity2 = response.data.City2;
+                    this.profileData.permanentBarangay2 = response.data.Barangay2;
+                    this.profileData.permanentZipcode2 = response.data.zipcode2;
+                    this.profileData.permanentVillage2 = response.data.villsub2;
+                    this.profileData.permanentStreet2 = response.data.block2;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching permanent address:", error);
+            });
+    },
+
+    fetchSpouseDetails(emp_count) {
+        axios
+            .get(`/api/get-spouse-details?emp_count=${emp_count}`)
+            .then((response) => {
+                if (response.data) {
+                    this.profileData.spouse_lname = response.data.spouseSurname;
+                    this.profileData.spouse_fname = response.data.spouseFirstName;
+                    this.profileData.spouse_mname = response.data.spouseMiddleName;
+                    this.profileData.spouse_xname = response.data.spouseExtName;
+                    this.profileData.spouse_occup = response.data.spouseOccupation;
+                    this.profileData.spouse_office = response.data.spouseBusinessName;
+                    this.profileData.spouse_busadd = response.data.spouseBusinessAddress;
+                    this.profileData.spouse_tel = response.data.spouseTelNo;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching spouse details:", error);
+            });
+    },
+
     showEditModal() {
       this.isEditModalVisible = true;
-      this.currentPage = 1; // Reset to the first page when the modal is opened
+      this.currentPage = 1;
     },
     hideEditModal() {
       this.isEditModalVisible = false;
@@ -400,16 +421,18 @@ export default {
       }
     },
     saveProfile() {
-     axios.patch(`/employee/updateProfile/${this.profileData.empID}`, this.profileData)
+    axios
+        .patch(`/employee/updateEditProfile/${this.profileData.empid}`, this.profileData)
         .then(() => {
-        this.isEditing = false; // End editing mode
-        this.showUpdateDialog = false; // Close confirmation dialog
-        this.showSuccessDialog = true; // Show success message
-        this.fetchPersonalInfo(); // Re-fetch the updated employee data
+        this.isEditing = false;
+        this.showUpdateDialog = false;
+        this.showSuccessDialog = true;
+        this.hideEditModal(); // Close the modal on successful save
         })
-        .catch(error => {
-        console.error('Error updating profile:', error); // Handle error during the update
+        .catch((error) => {
+        console.error('Error updating profile:', error);
         });
+        // window.location.reload(); // Forces the page to reload
     },
   }
 };

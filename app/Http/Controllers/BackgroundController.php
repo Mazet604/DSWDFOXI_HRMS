@@ -151,7 +151,7 @@ class BackgroundController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
-    
+
             // Select the required columns
             $referencesData = emp_reference::where('empid', $user->empid)
                 ->select(
@@ -164,11 +164,11 @@ class BackgroundController extends Controller
                     'ref_cnum',
                 )
                 ->get();
-    
+
             if ($referencesData->isEmpty()) {
                 return response()->json(['error' => 'Data not found'], 404);
             }
-    
+
             // Format the full name
             $formattedReferences = $referencesData->map(function($reference) {
                 $ref_mname_initial = $reference->ref_mname ? substr($reference->ref_mname, 0, 1) . '.' : '';
@@ -176,11 +176,11 @@ class BackgroundController extends Controller
                 if (is_null($reference->ref_xname)) {
                     $reference->ref_xname = 0;
                 }
-    
+
                 // Fetch the suffix value based on the numerical value in ref_xname
                 $suffix = lib_suffix::where('lib1_count', $reference->ref_xname)->first();
                 $suffix_value = $suffix ? $suffix->lib1_suffix : '';
-    
+
                 // Format the full name without the suffix if it is None
                 $reference->full_name = trim($reference->ref_fname . ' ' .
                                             $ref_mname_initial . ' ' .
@@ -188,7 +188,7 @@ class BackgroundController extends Controller
                                             ($suffix_value !== 'None' ? $suffix_value : ''));
                 return $reference;
             });
-    
+
             return response()->json($formattedReferences);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -374,46 +374,53 @@ class BackgroundController extends Controller
         }
     }
 
-    public function getSpouse()
+    public function getSpouse(Request $request)
     {
         try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+            // Check for 'emp_count' query parameter
+            $emp_count = $request->query('emp_count');
+
+            if ($emp_count) {
+                // Admin-side: Fetch spouse details for the provided emp_count
+                $emp_spouse = emp_spouse::where('emp_count', $emp_count)->first();
+                if (!$emp_spouse) {
+                    return response()->json(['error' => 'Spouse details not found'], 404);
+                }
+            } else {
+                // User-side: Fetch spouse details for the currently authenticated user
+                $user = Auth::user();
+                if (!$user) {
+                    return response()->json(['error' => 'User not authenticated'], 401);
+                }
+
+                $employee = Employee::where('empid', $user->empid)->first();
+                if (!$employee) {
+                    return response()->json(['error' => 'Employee not found'], 404);
+                }
+
+                $emp_spouse = emp_spouse::where('emp_count', $employee->emp_count)->first();
+                if (!$emp_spouse) {
+                    return response()->json(['error' => 'Spouse details not found'], 404);
+                }
             }
 
-            $employee = Employee::where('empid', $user->empid)->first();
-            if (!$employee) {
-                return response()->json(['error' => 'Employee not found'], 404);
-            }
-
-            $emp_spouse = emp_spouse::where('emp_count', $employee->emp_count)->first();
-            if (!$emp_spouse) {
-                return response()->json(['error' => 'Mother not found'], 404);
-            }
-
-            $spouseSurname = $emp_spouse->spouse_lname;
-            $spouseFirstName = $emp_spouse->spouse_fname;
-            $spouseMiddleName = $emp_spouse->spouse_mname;
-            $spouseExtName = $emp_spouse->spouse_xname;
-            $spouseOccupation = $emp_spouse->spouse_occup;
-            $spouseBusinessName = $emp_spouse->spouse_office;
-            $spouseBusinessAddress = $emp_spouse->spouse_busadd;
-            $spouseTelNo = $emp_spouse->spouse_tel;
+            // Return spouse details
             return response()->json([
-                'spouseSurname' => $spouseSurname,
-                'spouseFirstName' => $spouseFirstName,
-                'spouseMiddleName' => $spouseMiddleName,
-                'spouseExtName' => $spouseExtName,
-                'spouseOccupation' => $spouseOccupation,
-                'spouseBusinessName' => $spouseBusinessName,
-                'spouseBusinessAddress' => $spouseBusinessAddress,
-                'spouseTelNo' => $spouseTelNo
-            ]);
+                'spouseSurname' => $emp_spouse->spouse_lname,
+                'spouseFirstName' => $emp_spouse->spouse_fname,
+                'spouseMiddleName' => $emp_spouse->spouse_mname,
+                'spouseExtName' => $emp_spouse->spouse_xname,
+                'spouseOccupation' => $emp_spouse->spouse_occup,
+                'spouseBusinessName' => $emp_spouse->spouse_office,
+                'spouseBusinessAddress' => $emp_spouse->spouse_busadd,
+                'spouseTelNo' => $emp_spouse->spouse_tel,
+            ], 200);
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
     public function updateFamilyData(Request $request)
 {
@@ -523,17 +530,17 @@ public function getChildData()
 
         $formattedChild = $childData->map(function($child) {
             $child_mname_initial = $child->child_mname ? substr($child->child_mname, 0, 1) . '.' : '';
-            
+
             // Fetch the suffix value based on the numerical value in child_xname
             $suffix = lib_suffix::where('lib1_count', $child->child_xname)->first();
             $suffix_value = $suffix ? $suffix->lib1_suffix : '';
-        
+
             $fullName = trim($child->child_fname . ' ' .
                              $child_mname_initial . ' ' .
                              $child->child_lname . ' ' .
                              ($suffix_value !== 'None' ? $suffix_value : ''));
             $age = \Carbon\Carbon::parse($child->child_dob)->age;
-        
+
 
             return [
                 'child_count' => $child->child_count,

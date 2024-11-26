@@ -1115,21 +1115,23 @@ export default {
         },
 
         fetchSpouse() {
-            axios.get('/emp_spouse/Spouse')
-                .then(response => {
-                    this.fields.spouseSurname = response.data.spouseSurname;
-                    this.fields.spouseFirstName = response.data.spouseFirstName;
-                    this.fields.spouseMiddleName = response.data.spouseMiddleName;
-                    this.fields.spouseExtName = response.data.spouseExtName;
-                    this.fields.spouseOccupation = response.data.spouseOccupation;
-                    this.fields.spouseBusinessName = response.data.spouseBusinessName;
-                    this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
-                    this.fields.spouseTelNo = response.data.spouseTelNo;
-                })
-                .catch(error => {
-                    this.errorMessage = 'Failed to load spouse.';
-                });
-        },
+        axios.get('/api/get-spouse-details')
+            .then(response => {
+                this.fields.spouseSurname = response.data.spouseSurname;
+                this.fields.spouseFirstName = response.data.spouseFirstName;
+                this.fields.spouseMiddleName = response.data.spouseMiddleName;
+                this.fields.spouseExtName = response.data.spouseExtName;
+                this.fields.spouseOccupation = response.data.spouseOccupation;
+                this.fields.spouseBusinessName = response.data.spouseBusinessName;
+                this.fields.spouseBusinessAddress = response.data.spouseBusinessAddress;
+                this.fields.spouseTelNo = response.data.spouseTelNo;
+            })
+            .catch(error => {
+                console.error('Error fetching spouse details:', error);
+                this.errorMessage = 'Failed to load spouse details.';
+            });
+    },
+
 
         updateFamilyData() {
             axios.patch('/EmpFamily/updateFamilyData', this.fields)
