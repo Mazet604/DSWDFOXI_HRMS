@@ -51,60 +51,6 @@ class EmployeeController extends Controller
         }
     }
 
-    public function getTotalEmployees()
-    {
-        try {
-            $totalEmployees = Employee::count();
-            return response()->json(['totalEmployees' => $totalEmployees]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
-    public function getGenderDistribution()
-    {
-        try {
-            $maleCount = Employee::where('emp_sex', 1)->count();
-            $femaleCount = Employee::where('emp_sex', 2)->count();
-            return response()->json(['male' => $maleCount, 'female' => $femaleCount]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
-    public function getCivilStatusDistribution()
-{
-    try {
-        // Step 1: Fetch civil status counts from the employees table
-        $civilStatusCounts = Employee::select('emp_civ_stat', DB::raw('count(*) as count'))
-            ->groupBy('emp_civ_stat')
-            ->pluck('count', 'emp_civ_stat');
-
-        // Step 2: Fetch civil status names from the `lib_civil_stat` table
-        // We use `whereIn` to match only the status keys that are in the employee counts
-        $civilStatusNames = lib_civil_stat::whereIn('lib3_count', $civilStatusCounts->keys())
-            ->pluck('lib3_civil_stat', 'lib3_count');
-
-        // Step 3: Combine the counts and names into one associative array
-        $statusDistribution = [];
-        foreach ($civilStatusCounts as $statusId => $count) {
-            if (isset($civilStatusNames[$statusId])) {
-                $statusDistribution[$civilStatusNames[$statusId]] = $count;
-            } else {
-                // Handle cases where there's no matching name for a given status ID
-                $statusDistribution["Unknown Status ($statusId)"] = $count;
-            }
-        }
-
-        return response()->json($statusDistribution);
-    } catch (\Exception $e) {
-        // Log the error for further inspection and return an error response
-        Log::error('Error fetching civil status distribution: '.$e->getMessage());
-        return response()->json(['error' => 'An error occurred while fetching civil status distribution'], 500);
-    }
-}
-
-
 
     public function getPersonalInfo()
     {
@@ -358,8 +304,4 @@ class EmployeeController extends Controller
             return response()->json(['url' => null, 'error' => 'No profile picture set']);
         }
     }
-
-
-
-
 }

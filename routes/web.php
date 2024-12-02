@@ -57,13 +57,6 @@ Route::middleware('auth',)->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/admin-dashboard', function () {
-        if (!Session::get('otp_verified')) {
-            return redirect()->route('otp.form');
-        }
-        return Inertia::render('AdminDashboard');
-    })->name('admin.dashboard');
-
     Route::get('/background', function () {
         if (!Session::get('otp_verified')) {
             return redirect()->route('otp.form');
