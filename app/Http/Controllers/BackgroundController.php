@@ -35,70 +35,129 @@ class BackgroundController extends Controller
         }
     }
 
-    public function getEducationData()
+    public function getEducationData(Request $request)
     {
         try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+            $educ_count = $request->query('educ_count');
+            $empid = $request->query('empid');
+
+            if ($educ_count) {
+                // Fetch specific education data by `educ_count`
+                $educationData = Education::where('educ_count', $educ_count)->first();
+
+                if (!$educationData) {
+                    return response()->json(['error' => 'Education data not found'], 404);
+                }
+
+                return response()->json($educationData, 200);
             }
 
-            // Select only the required columns
-            $educationData = Education::where('empid', $user->empid)
-                ->select(
-                    'educ_count',
-                    'educ_level',
-                    'educ_school',
-                    'educ_degree',
-                    'educ_from',
-                    'educ_year_grad',
-                    'educ_academic_honor',
-                    'educ_hl_earned')
-                ->get();
+            if ($empid) {
+                // Admin-side or custom request: Fetch education data by `empid`
+                $educationData = Education::where('empid', $empid)->get();
+
+                if ($educationData->isEmpty()) {
+                    return response()->json(['error' => 'Education data not found'], 404);
+                }
+
+                return response()->json($educationData, 200);
+            }
+
+            // User-side request (authenticated user)
+            $authenticatedEmpid = Auth::user()->empid; // For user-specific data
+            $educationData = Education::where('empid', $authenticatedEmpid)->get();
 
             if ($educationData->isEmpty()) {
-                return response()->json(['error' => 'Data not found'], 404);
+                return response()->json(['error' => 'Education data not found'], 404);
             }
 
-            return response()->json($educationData);
+            return response()->json($educationData, 200);
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function getOrganizationData()
+
+    public function getOrganizationData(Request $request)
     {
         try {
-            $user = Auth::user(); // Get the currently authenticated user
+            // Retrieve query parameters
+            $org_count = $request->query('org_count');
+            $empid = $request->query('empid');
+
+            if ($org_count) {
+                // Fetch specific organization data by `org_count`
+                $organizationData = emp_org::where('org_count', $org_count)
+                    ->select('org_count', 'org_name')
+                    ->first();
+
+                if (!$organizationData) {
+                    return response()->json(['error' => 'Organization data not found'], 404);
+                }
+
+                return response()->json($organizationData, 200);
+            }
+
+            if ($empid) {
+                // Admin-side request: Fetch organization data by `empid`
+                $organizationData = emp_org::where('empid', $empid)
+                    ->select('org_count', 'org_name')
+                    ->get();
+
+                if ($organizationData->isEmpty()) {
+                    return response()->json(['error' => 'Organization data not found'], 404);
+                }
+
+                return response()->json($organizationData, 200);
+            }
+
+            // User-side request: Fetch organization data for the authenticated user
+            $user = Auth::user();
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
 
-            // Select only the required columns
             $organizationData = emp_org::where('empid', $user->empid)
                 ->select('org_count', 'org_name')
                 ->get();
 
             if ($organizationData->isEmpty()) {
-                return response()->json(['error' => 'Data not found'], 404);
+                return response()->json(['error' => 'Organization data not found'], 404);
             }
 
-            return response()->json($organizationData);
+            return response()->json($organizationData, 200);
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function getWorkExperienceData()
+
+    public function getWorkExperienceData(Request $request)
     {
         try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
+            $work_count = $request->query('work_count');
+            $empid = $request->query('empid') ?? Auth::user()->empid; // Use empid from request or authenticated user
+
+            // Validate if the user is authenticated for user-side fetching
+            if (!$empid) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
 
-            // Select only the required columns
-            $workExperienceData = emp_work::where('empid', $user->empid)
+            if ($work_count) {
+                // Fetch specific work experience data by `work_count`
+                $workExperienceData = emp_work::where('work_count', $work_count)->first();
+
+                if (!$workExperienceData) {
+                    return response()->json(['error' => 'Work experience data not found'], 404);
+                }
+
+                return response()->json($workExperienceData, 200);
+            }
+
+            // Fetch work experience data by `empid`
+            $workExperienceData = emp_work::where('empid', $empid)
                 ->select(
                     'work_count',
                     'workfr',
@@ -108,52 +167,105 @@ class BackgroundController extends Controller
                     'work_salary',
                     'work_salarygrade',
                     'work_stat',
-                    'work_gov')
+                    'work_gov'
+                )
                 ->get();
 
             if ($workExperienceData->isEmpty()) {
-                return response()->json(['error' => 'Data not found'], 404);
+                return response()->json(['error' => 'Work experience data not found'], 404);
             }
 
-            return response()->json($workExperienceData);
+            return response()->json($workExperienceData, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function getSkillsData()
-    {
-        try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+
+    public function getSkillsData(Request $request)
+{
+    try {
+        $skill_count = $request->query('skill_count');
+        $empid = $request->query('empid') ?? Auth::user()->empid; // Use empid from request or authenticated user
+
+        // Check for skill_count parameter
+        if ($skill_count) {
+            // Fetch specific skill data by `skill_count`
+            $skillsData = emp_skills::where('skill_count', $skill_count)->first();
+
+            if (!$skillsData) {
+                return response()->json(['error' => 'Skill data not found'], 404);
             }
 
-            // Select only the required columns
-            $skillsData = emp_skills::where('empid', $user->empid)
-                ->select('skill_count','skill')
+            return response()->json($skillsData, 200);
+        }
+
+        // Check for empid parameter
+        if ($empid) {
+            // Fetch skills data by `empid`
+            $skillsData = emp_skills::where('empid', $empid)
+                ->select('skill_count', 'skill')
                 ->get();
 
             if ($skillsData->isEmpty()) {
-                return response()->json(['error' => 'Data not found'], 404);
+                return response()->json(['error' => 'Skills data not found'], 404);
             }
 
-            return response()->json($skillsData);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json($skillsData, 200);
         }
-    }
 
-    public function getReferencesData()
-    {
-        try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+        // Return error if no valid parameter is provided
+        return response()->json(['error' => 'No valid identifier provided'], 400);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
+
+public function getReferencesData(Request $request)
+{
+    try {
+        $ref_count = $request->query('ref_count');
+        $empid = $request->query('empid') ?? Auth::user()->empid; // Use empid from request or authenticated user
+
+        // Validate if the user is authenticated for user-side fetching
+        if (!$empid) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        // Check for ref_count parameter
+        if ($ref_count) {
+            // Fetch specific reference data by `ref_count`
+            $referenceData = emp_reference::where('ref_count', $ref_count)->first();
+
+            if (!$referenceData) {
+                return response()->json(['error' => 'Reference data not found'], 404);
             }
 
-            // Select the required columns
-            $referencesData = emp_reference::where('empid', $user->empid)
+            // Format the full name
+            $ref_mname_initial = $referenceData->ref_mname ? substr($referenceData->ref_mname, 0, 1) . '.' : '';
+            if (is_null($referenceData->ref_xname)) {
+                $referenceData->ref_xname = 0;
+            }
+
+            // Fetch the suffix value based on the numerical value in ref_xname
+            $suffix = lib_suffix::where('lib1_count', $referenceData->ref_xname)->first();
+            $suffix_value = $suffix ? $suffix->lib1_suffix : '';
+
+            // Format the full name without the suffix if it is None
+            $referenceData->full_name = trim($referenceData->ref_fname . ' ' .
+                $ref_mname_initial . ' ' .
+                $referenceData->ref_lname . ' ' .
+                ($suffix_value !== 'None' ? $suffix_value : ''));
+
+            return response()->json($referenceData, 200);
+        }
+
+        // Check for empid parameter
+        if ($empid) {
+            // Fetch all references data by `empid`
+            $referencesData = emp_reference::where('empid', $empid)
                 ->select(
                     'ref_count',
                     'ref_fname',
@@ -161,18 +273,17 @@ class BackgroundController extends Controller
                     'ref_lname',
                     'ref_xname',
                     'ref_add',
-                    'ref_cnum',
+                    'ref_cnum'
                 )
                 ->get();
 
             if ($referencesData->isEmpty()) {
-                return response()->json(['error' => 'Data not found'], 404);
+                return response()->json(['error' => 'References data not found'], 404);
             }
 
-            // Format the full name
-            $formattedReferences = $referencesData->map(function($reference) {
+            // Format the full names for each reference
+            $formattedReferences = $referencesData->map(function ($reference) {
                 $ref_mname_initial = $reference->ref_mname ? substr($reference->ref_mname, 0, 1) . '.' : '';
-                // Set ref_xname to 0 if it is null
                 if (is_null($reference->ref_xname)) {
                     $reference->ref_xname = 0;
                 }
@@ -183,17 +294,23 @@ class BackgroundController extends Controller
 
                 // Format the full name without the suffix if it is None
                 $reference->full_name = trim($reference->ref_fname . ' ' .
-                                            $ref_mname_initial . ' ' .
-                                            $reference->ref_lname . ' ' .
-                                            ($suffix_value !== 'None' ? $suffix_value : ''));
+                    $ref_mname_initial . ' ' .
+                    $reference->ref_lname . ' ' .
+                    ($suffix_value !== 'None' ? $suffix_value : ''));
+
                 return $reference;
             });
 
-            return response()->json($formattedReferences);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json($formattedReferences, 200);
         }
+
+        // Return error if no valid parameter is provided
+        return response()->json(['error' => 'No valid identifier provided'], 400);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
 
     public function addEducationData(Request $request)
     {
@@ -308,71 +425,93 @@ class BackgroundController extends Controller
         }
     }
 
-    public function getFather()
+    public function getFather(Request $request)
     {
         try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+            // Check for 'emp_count' query parameter
+            $emp_count = $request->query('emp_count');
+
+            if ($emp_count) {
+                // Admin-side: Fetch father details for the provided emp_count
+                $emp_father = emp_father::where('emp_count', $emp_count)->first();
+                if (!$emp_father) {
+                    return response()->json(['error' => 'Father details not found'], 404);
+                }
+            } else {
+                // User-side: Fetch father details for the currently authenticated user
+                $user = Auth::user();
+                if (!$user) {
+                    return response()->json(['error' => 'User not authenticated'], 401);
+                }
+
+                $employee = Employee::where('empid', $user->empid)->first();
+                if (!$employee) {
+                    return response()->json(['error' => 'Employee not found'], 404);
+                }
+
+                $emp_father = emp_father::where('emp_count', $employee->emp_count)->first();
+                if (!$emp_father) {
+                    return response()->json(['error' => 'Father details not found'], 404);
+                }
             }
 
-            $employee = Employee::where('empid', $user->empid)->first();
-            if (!$employee) {
-                return response()->json(['error' => 'Employee not found'], 404);
-            }
-
-            $emp_father = emp_father::where('emp_count', $employee->emp_count)->first();
-            if (!$emp_father) {
-                return response()->json(['error' => 'Father not found'], 404);
-            }
-
-            $fatherSurname = $emp_father->father_lname;
-            $fatherFirstName = $emp_father->father_fname;
-            $fatherMiddleName = $emp_father->father_mname;
-            $fatherExtName = $emp_father->father_xname;
+            // Return father details
             return response()->json([
-                'fatherSurname' => $fatherSurname,
-                'fatherFirstName' => $fatherFirstName,
-                'fatherMiddleName' => $fatherMiddleName,
-                'fatherExtName' => $fatherExtName
-            ]);
+                'fatherSurname' => $emp_father->father_lname,
+                'fatherFirstName' => $emp_father->father_fname,
+                'fatherMiddleName' => $emp_father->father_mname,
+                'fatherExtName' => $emp_father->father_xname,
+            ], 200);
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function getMother()
+
+    public function getMother(Request $request)
     {
         try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+            // Check for 'emp_count' query parameter
+            $emp_count = $request->query('emp_count');
+
+            if ($emp_count) {
+                // Admin-side: Fetch mother details for the provided emp_count
+                $emp_mother = emp_mother::where('emp_count', $emp_count)->first();
+                if (!$emp_mother) {
+                    return response()->json(['error' => 'Mother details not found'], 404);
+                }
+            } else {
+                // User-side: Fetch mother details for the currently authenticated user
+                $user = Auth::user();
+                if (!$user) {
+                    return response()->json(['error' => 'User not authenticated'], 401);
+                }
+
+                $employee = Employee::where('empid', $user->empid)->first();
+                if (!$employee) {
+                    return response()->json(['error' => 'Employee not found'], 404);
+                }
+
+                $emp_mother = emp_mother::where('emp_count', $employee->emp_count)->first();
+                if (!$emp_mother) {
+                    return response()->json(['error' => 'Mother details not found'], 404);
+                }
             }
 
-            $employee = Employee::where('empid', $user->empid)->first();
-            if (!$employee) {
-                return response()->json(['error' => 'Employee not found'], 404);
-            }
-
-            $emp_mother = emp_mother::where('emp_count', $employee->emp_count)->first();
-            if (!$emp_mother) {
-                return response()->json(['error' => 'Mother not found'], 404);
-            }
-
-            $motherSurname = $emp_mother->mother_lname;
-            $motherFirstName = $emp_mother->mother_fname;
-            $motherMiddleName = $emp_mother->mother_mname;
-            $motherMaidenName = $emp_mother->maidenname;
+            // Return mother details
             return response()->json([
-                'motherSurname' => $motherSurname,
-                'motherFirstName' => $motherFirstName,
-                'motherMiddleName' => $motherMiddleName,
-                'motherMaidenName' => $motherMaidenName
-            ]);
+                'motherSurname' => $emp_mother->mother_lname,
+                'motherFirstName' => $emp_mother->mother_fname,
+                'motherMiddleName' => $emp_mother->mother_mname,
+                'motherMaidenName' => $emp_mother->maidenname,
+            ], 200);
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
     public function getSpouse(Request $request)
     {

@@ -56,10 +56,10 @@ class AddressController extends Controller
     }
 
     public function getRegions()
-    {
-        $regions = lib_region::get();
-        return response()->json($regions);
-    }
+{
+    $regions = lib_region::select('reg_psgc', 'col_region')->get();
+    return response()->json($regions);
+}
 
     public function getProvinces(Request $request)
     {

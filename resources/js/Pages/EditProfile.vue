@@ -59,7 +59,11 @@
               </div>
               <div v-if="currentPage === 1">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Name Extension</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_ext" />
+                <select class="w-full p-2 border rounded" v-model="profileData.emp_ext">
+                <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
+                {{ ext.text }}
+                </option>
+            </select>
               </div>
               <div v-if="currentPage === 1">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Date of Birth</label>
@@ -71,11 +75,19 @@
               </div>
               <div v-if="currentPage === 1">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Sex</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_sex" />
+                <select class="w-full p-2 border rounded" v-model="profileData.emp_sex">
+                <option v-for="sex in sexOptions" :key="sex.value" :value="sex.value">
+                {{ sex.text }}
+                </option>
+            </select>
               </div>
               <div v-if="currentPage === 1">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Civil Status</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_civ_stat" />
+                <select class="w-full p-2 border rounded" v-model="profileData.emp_civ_stat">
+                <option v-for="status in civilStatusOptions" :key="status.value" :value="status.value">
+                {{ status.text }}
+                </option>
+            </select>
               </div>
               <div v-if="currentPage === 1">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Height</label>
@@ -88,7 +100,11 @@
               <!-- Page 2 -->
               <div v-if="currentPage === 2">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Blood Type</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_blood" />
+                <select class="w-full p-2 border rounded" v-model="profileData.emp_blood">
+                <option v-for="type in bloodTypeOptions" :key="type.value" :value="type.value">
+                {{ type.text }}
+                </option>
+            </select>
               </div>
               <div v-if="currentPage === 2">
                 <label class="block mb-1 text-sm font-medium text-gray-700">GSIS ID</label>
@@ -120,19 +136,35 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block mb-1 text-sm font-medium text-gray-700">Region</label>
-                        <input class="w-full p-2 border rounded" v-model="profileData.residentialRegion" />
+                        <select class="w-full p-2 border rounded"  v-model="profileData.residentialRegion">
+                        <option v-for="region in regions" :key="region.reg_psgc" :value="region.reg_psgc">
+                        {{ region.col_region }}
+                        </option>
+                    </select>
                     </div>
                     <div>
                         <label class="block mb-1 text-sm font-medium text-gray-700">Province</label>
-                         <input class="w-full p-2 border rounded" v-model="profileData.residentialProvince" />
+                        <select class="w-full p-2 border rounded" v-model="profileData.residentialProvince">
+                        <option v-for="province in provinces" :key="province.prv_psgc" :value="province.prv_psgc">
+                        {{ province.col_province }}
+                        </option>
+                    </select>
                     </div>
                     <div>
                         <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
-                        <input class="w-full p-2 border rounded" v-model="profileData.residentialCity" />
+                        <select class="w-full p-2 border rounded" v-model="profileData.residentialCity">
+                        <option v-for="city in cities" :key="city.citmun_psgc" :value="city.citmun_psgc">
+                        {{ city.col_citymuni }}
+                        </option>
+                    </select>
                     </div>
                     <div>
                         <label class="block mb-1 text-sm font-medium text-gray-700">Barangay</label>
-                        <input class="w-full p-2 border rounded" v-model="profileData.residentialBarangay" />
+                        <select class="w-full p-2 border rounded" v-model="profileData.residentialBarangay">
+                        <option v-for="barangay in barangays" :key="barangay.brgy_psgc" :value="barangay.brgy_psgc">
+                        {{ barangay.col_brgy }}
+                        </option>
+                    </select>
                     </div>
                     <div>
                         <label class="block mb-1 text-sm font-medium text-gray-700">Zip Code</label>
@@ -154,19 +186,35 @@
             <div class="gap-4 mb-6 ">
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Region</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentRegion2" />
+                <select class="w-full p-2 border rounded" v-model="profileData.permanentRegion2">
+                <option v-for="region in regions" :key="region.reg_psgc" :value="region.reg_psgc">
+                {{ region.col_region }}
+                </option>
+                </select>
                 </div>
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Province</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentProvince2" />
+                <select class="w-full p-2 border rounded" v-model="profileData.permanentProvince2">
+                <option v-for="province in permanentProvinces" :key="province.prv_psgc" :value="province.prv_psgc">
+                {{ province.col_province }}
+                </option>
+                </select>
                 </div>
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentCity2" />
+                <select class="w-full p-2 border rounded" v-model="profileData.permanentCity2">
+                <option v-for="city in permanentCities" :key="city.citmun_psgc" :value="city.citmun_psgc">
+                {{ city.col_citymuni }}
+                </option>
+                </select>
                 </div>
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Barangay</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentBarangay2" />
+                <select class="w-full p-2 border rounded" v-model="profileData.permanentBarangay2">
+                <option v-for="barangay in permanentBarangays" :key="barangay.brgy_psgc" :value="barangay.brgy_psgc">
+                {{ barangay.col_brgy }}
+                </option>
+                </select>
                 </div>
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Zip Code</label>
@@ -199,7 +247,11 @@
               </div>
               <div v-if="currentPage === 5">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Suffix</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.spouse_xname" />
+                <select class="w-full p-2 border rounded" v-model="profileData.spouse_xname">
+                <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
+                {{ ext.text }}
+                </option>
+            </select>
               </div>
               <div v-if="currentPage === 5">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Occupation</label>
@@ -217,40 +269,159 @@
                 <label class="block mb-1 text-sm font-medium text-gray-700">Tel No.</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.spouse_tel" />
               </div>
-              <!-- <h2 class="mb-4 text-lg font-semibold">Father</h2>
-              <div v-if="currentPage === 5">
+            </div>
+            <div v-if="currentPage === 6">
+            <h2 class="mb-4 text-lg font-semibold">Father</h2>
+              <div v-if="currentPage === 6">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+                <input class="w-full p-2 border rounded" v-model="profileData.father_lname" />
               </div>
-              <div v-if="currentPage === 5">
+              <div v-if="currentPage === 6">
                 <label class="block mb-1 text-sm font-medium text-gray-700">First Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+                <input class="w-full p-2 border rounded" v-model="profileData.father_fname" />
               </div>
-              <div v-if="currentPage === 5">
+              <div v-if="currentPage === 6">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Middle Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+                <input class="w-full p-2 border rounded" v-model="profileData.father_mname" />
               </div>
-              <div v-if="currentPage === 5">
+              <div v-if="currentPage === 6">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Suffix</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+                <select class="w-full p-2 border rounded" v-model="profileData.father_xname">
+                <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
+                {{ ext.text }}
+                </option>
+            </select>
               </div>
+            </div>
+            <div v-if="currentPage === 7">
               <h2 class="mb-4 text-lg font-semibold">Mother</h2>
-              <div v-if="currentPage === 5">
+              <div v-if="currentPage === 7">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+                <input class="w-full p-2 border rounded" v-model="profileData.mother_lname" />
               </div>
-              <div v-if="currentPage === 5">
+              <div v-if="currentPage === 7">
                 <label class="block mb-1 text-sm font-medium text-gray-700">First Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+                <input class="w-full p-2 border rounded" v-model="profileData.mother_fname" />
               </div>
-              <div v-if="currentPage === 5">
+              <div v-if="currentPage === 7">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Middle Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+                <input class="w-full p-2 border rounded" v-model="profileData.mother_mname" />
               </div>
-              <div v-if="currentPage === 5">
+              <div v-if="currentPage === 7">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Maiden Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div> -->
+                <input class="w-full p-2 border rounded" v-model="profileData.maidenname" />
+              </div>
+            </div>
+            <div v-if="currentPage === 8">
+              <h2 class="mb-4 text-lg font-semibold">Education</h2>
+              <div v-if="currentPage === 8">
+                <label class="block mb-1 text-sm font-medium text-gray-700">LEVEL OF EDUCATION</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.educ_level" />
+              </div>
+              <div v-if="currentPage === 8">
+                <label class="block mb-1 text-sm font-medium text-gray-700">NAME OF SCHOOL</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.educ_school" />
+              </div>
+              <div v-if="currentPage === 8">
+                <label class="block mb-1 text-sm font-medium text-gray-700">BASIC EDUCATION|DEGREE|COURSE</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.educ_degree" />
+              </div>
+              <div v-if="currentPage === 8">
+                <label class="block mb-1 text-sm font-medium text-gray-700">DATE ENROLLED</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.educ_from" />
+              </div>
+              <div v-if="currentPage === 8">
+                <label class="block mb-1 text-sm font-medium text-gray-700">HIGHEST LEVEL EARNED</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.educ_hl_earned" />
+              </div>
+              <div v-if="currentPage === 8">
+                <label class="block mb-1 text-sm font-medium text-gray-700">YEAR GRADUATED</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.educ_year_grad" />
+              </div>
+              <div v-if="currentPage === 8">
+                <label class="block mb-1 text-sm font-medium text-gray-700">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.educ_academic_honor" />
+              </div>
+            </div>
+            <div v-if="currentPage === 9">
+              <h2 class="mb-4 text-lg font-semibold">Organizations</h2>
+              <div v-if="currentPage === 9">
+                <label class="block mb-1 text-sm font-medium text-gray-700">ORGANIZATION NAME</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.org_name" />
+              </div>
+            </div>
+            <div v-if="currentPage === 10">
+              <h2 class="mb-4 text-lg font-semibold">Work Experience</h2>
+              <div v-if="currentPage === 10">
+                <label class="block mb-1 text-sm font-medium text-gray-700">WORK FROM</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.workfr" />
+              </div>
+              <div v-if="currentPage === 10">
+                <label class="block mb-1 text-sm font-medium text-gray-700">WORK TO</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.workto" />
+              </div>
+              <div v-if="currentPage === 10">
+                <label class="block mb-1 text-sm font-medium text-gray-700">POSITION</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.work_pos" />
+              </div>
+              <div v-if="currentPage === 10">
+                <label class="block mb-1 text-sm font-medium text-gray-700">DEPARTMENT|AGENCY|OFFICE|COMPANY</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.work_dept" />
+              </div>
+              <div v-if="currentPage === 10">
+                <label class="block mb-1 text-sm font-medium text-gray-700">MONTHLY SALARY</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.work_salary" />
+              </div>
+              <div v-if="currentPage === 10">
+                <label class="block mb-1 text-sm font-medium text-gray-700">SALARY GRADE</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.work_salarygrade" />
+              </div>
+              <div v-if="currentPage === 10">
+                <label class="block mb-1 text-sm font-medium text-gray-700">STATUS OF APPOINTMENT</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.work_stat" />
+              </div>
+              <div v-if="currentPage === 10">
+                <label class="block mb-1 text-sm font-medium text-gray-700">GOV'T SERVICE</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.work_gov" />
+              </div>
+            </div>
+            <div v-if="currentPage === 11">
+              <h2 class="mb-4 text-lg font-semibold">Skills</h2>
+              <div v-if="currentPage === 11">
+                <label class="block mb-1 text-sm font-medium text-gray-700">SKILLS</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.skill" />
+              </div>
+            </div>
+            <div v-if="currentPage === 12">
+              <h2 class="mb-4 text-lg font-semibold">References</h2>
+              <div v-if="currentPage === 12">
+                <label class="block mb-1 text-sm font-medium text-gray-700">FIRST NAME</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.ref_fname" />
+              </div>
+              <div v-if="currentPage === 12">
+                <label class="block mb-1 text-sm font-medium text-gray-700">MIDDLE NAME</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.ref_mname" />
+              </div>
+              <div v-if="currentPage === 12">
+                <label class="block mb-1 text-sm font-medium text-gray-700">LAST NAME</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.ref_lname" />
+              </div>
+              <div v-if="currentPage === 12">
+                <label class="block mb-1 text-sm font-medium text-gray-700">SUFFIX</label>
+                <select class="w-full p-2 border rounded" v-model="profileData.ref_xname">
+                <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
+                {{ ext.text }}
+                </option>
+            </select>
+              </div>
+              <div v-if="currentPage === 12">
+                <label class="block mb-1 text-sm font-medium text-gray-700">BLOCK/STREET/PUROK</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.ref_add" />
+              </div>
+              <div v-if="currentPage === 12">
+                <label class="block mb-1 text-sm font-medium text-gray-700">CONTACT NUMBER</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.ref_cnum" />
+              </div>
             </div>
             </div>
             <!-- Pagination Buttons -->
@@ -292,18 +463,58 @@ export default {
     OtherInfo
   },
   data() {
-    return {
-      searchQuery: '',
-      errorMessage: '',
-      profileData: null,
-      isEditModalVisible: false,
-      currentPage: 1,
-      totalPages: 13,
-      isEditing: false,
-      showUpdateDialog: false,
-      showSuccessDialog: false
-    };
+  return {
+    searchQuery: '',
+    errorMessage: '',
+    profileData: null,
+    residentialRegion: '',
+    isEditModalVisible: false,
+    currentPage: 1,
+    totalPages: 13,
+    isEditing: false,
+    showUpdateDialog: false,
+    showSuccessDialog: false,
+    sexOptions: [], // Sex for dropdown
+    civilStatusOptions: [], // Civil Status for dropdown
+    bloodTypeOptions: [], // Blood Type for dropdown
+    extOptions: [], // Extension for dropdown
+    regions: [], // Regions for dropdown
+    provinces: [], // Provinces for dropdown
+    cities: [], // Cities for dropdown
+    barangays: [], // Barangays for dropdown
+    permanentRegions: [], // For permanent address
+    permanentProvinces: [], // For permanent address
+    permanentCities: [], // For permanent address
+    permanentBarangays: [], // For permanent address
+  };
+},
+
+watch: {
+  'profileData.residentialRegion': function (newVal) {
+  if (newVal) {
+    this.fetchProvinces(newVal, 'residential');
+  }
+},
+  'profileData.residentialProvince': function (newVal) {
+    if (newVal) this.fetchCities(newVal, 'residential'); // Correct method
   },
+  'profileData.residentialCity': function (newVal) {
+    if (newVal) this.fetchBarangays(newVal, 'residential'); // Correct method
+  },
+  'profileData.permanentRegion2': function (newVal) {
+//   console.log(`Region changed to: ${newVal}`);
+  if (newVal) {
+    this.fetchProvinces(newVal, 'permanent');
+  }
+},
+  'profileData.permanentProvince2': function (newVal) {
+    if (newVal) this.fetchCities(newVal, 'permanent'); // Correct method
+  },
+  'profileData.permanentCity2': function (newVal) {
+    if (newVal) this.fetchBarangays(newVal, 'permanent'); // Correct method
+  },
+},
+
 
   methods: {
 
@@ -332,6 +543,41 @@ export default {
             this.fetchEmployeeAddress2(response.data.emp_count); // Fetch permanent address
 // Fetch spouse details
             this.fetchSpouseDetails(response.data.emp_count); // Spouse details
+// added 11/30
+            this.fetchFatherDetails(response.data.emp_count); // Fetch father details
+            this.fetchMotherDetails(response.data.emp_count); // Fetch mother details
+// added 12/01
+            if (response.data.educ_count) {
+                this.fetchEducation(response.data.educ_count, null); // Fetch by educ_count
+                 } else {
+                this.fetchEducation(null, response.data.empid); // Fallback to empid
+                }
+            if (response.data.org_count) {
+                    this.fetchOrganization(response.data.org_count, null); // Fetch by org_count
+                } else {
+                    this.fetchOrganization(null, response.data.empid); // Fallback to empid
+                }
+            if (response.data.work_count) {
+                    this.fetchWorkExperience(response.data.work_count, null); // Fetch by work_count
+                } else {
+                    this.fetchWorkExperience(null, response.data.empid); // Fallback to empid
+                }
+            if (response.data.skill_count) {
+                    this.fetchSkills(response.data.skill_count, null); // Fetch by skill_count
+                } else {
+                    this.fetchSkills(null, response.data.empid); // Fallback to empid
+                }
+// new added 12/02
+            if (response.data.ref_count) {
+                    this.fetchReference(response.data.ref_count, null); // Fetch by skill_count
+                } else {
+                    this.fetchReference(null, response.data.empid); // Fallback to empid
+                }
+
+            this.fetchExtOptions();
+            this.fetchSexOptions();
+            this.fetchCivilStatusOptions();
+            this.fetchBloodTypeOptions();
           } else {
             this.errorMessage = 'Employee not found.';
             this.profileData = null; // Clear previous data
@@ -363,6 +609,7 @@ export default {
                     console.error('Error fetching employee address:', error);
                 });
     },
+
     fetchEmployeeAddress2(emp_count) {
         axios
             .get(`/api/get-employee-address2?emp_count=${emp_count}`) // Correct endpoint
@@ -403,9 +650,267 @@ export default {
             });
     },
 
+    fetchFatherDetails(emp_count) {
+        axios
+            .get(`/api/get-father-details?emp_count=${emp_count}`)
+            .then((response) => {
+                this.profileData.father_lname = response.data.fatherSurname;
+                this.profileData.father_fname = response.data.fatherFirstName;
+                this.profileData.father_mname = response.data.fatherMiddleName;
+                this.profileData.father_xname = response.data.fatherExtName;
+            })
+            .catch((error) => {
+                console.error('Error fetching father details:', error);
+            });
+    },
+
+    fetchMotherDetails(emp_count) {
+        axios
+            .get(`/api/get-mother-details?emp_count=${emp_count}`)
+            .then((response) => {
+                if (response.data) {
+                    this.profileData.mother_lname = response.data.motherSurname;
+                    this.profileData.mother_fname = response.data.motherFirstName;
+                    this.profileData.mother_mname = response.data.motherMiddleName;
+                    this.profileData.maidenname = response.data.motherMaidenName;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching mother details:", error);
+            });
+    },
+
+    fetchEducation(educ_count, empid) {
+        const queryParam = educ_count ? `educ_count=${educ_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-education-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.educ_level = data.educ_level;
+                    this.profileData.educ_school = data.educ_school;
+                    this.profileData.educ_degree = data.educ_degree;
+                    this.profileData.educ_from = data.educ_from;
+                    this.profileData.educ_year_grad = data.educ_year_grad;
+                    this.profileData.educ_academic_honor = data.educ_academic_honor;
+                    this.profileData.educ_hl_earned = data.educ_hl_earned;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching education details:", error);
+            });
+    },
+
+    fetchOrganization(org_count, empid) {
+        const queryParam = org_count ? `org_count=${org_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-organization-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.org_name = data.org_name;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching organization name:", error);
+            });
+    },
+
+    fetchWorkExperience(work_count, empid) {
+        const queryParam = work_count ? `work_count=${work_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-workexperience-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.workfr = data.workfr;
+                    this.profileData.workto = data.workto;
+                    this.profileData.work_pos = data.work_pos;
+                    this.profileData.work_dept = data.work_dept;
+                    this.profileData.work_salary = data.work_salary;
+                    this.profileData.work_salarygrade = data.work_salarygrade;
+                    this.profileData.work_stat = data.work_stat;
+                    this.profileData.work_gov = data.work_gov;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching work experience details:", error);
+            });
+    },
+
+    fetchSkills(skill_count, empid) {
+        const queryParam = skill_count ? `skill_count=${skill_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-skill-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.skill = data.skill;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching skills:", error);
+            });
+    },
+
+    fetchReference(ref_count, empid) {
+        const queryParam = ref_count ? `ref_count=${ref_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-reference-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.ref_fname = data.ref_fname;
+                    this.profileData.ref_mname = data.ref_mname;
+                    this.profileData.ref_lname = data.ref_lname;
+                    this.profileData.ref_xname = data.ref_xname;
+                    this.profileData.ref_add = data.ref_add;
+                    this.profileData.ref_cnum = data.ref_cnum;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching reference details:", error);
+            });
+    },
+
+    //12/02
+    //libraries
+    fetchExtOptions() {
+      axios
+        .get('/api/ext-options')
+        .then((response) => {
+          this.extOptions = response.data.map((item) => ({
+            value: item.lib1_count,
+            text: item.lib1_suffix,
+          }));
+        })
+        .catch((error) => {
+          console.error('Error fetching name extensions:', error);
+        });
+    },
+
+    fetchSexOptions() {
+      axios
+        .get('/api/sex-options')
+        .then((response) => {
+          this.sexOptions = response.data.map((item) => ({
+            value: item.lib4_count,
+            text: item.lib4_sex,
+          }));
+        })
+        .catch((error) => {
+          console.error('Error fetching sexes:', error);
+        });
+    },
+
+    fetchCivilStatusOptions() {
+      axios
+        .get('/api/civilstatus-options')
+        .then((response) => {
+          this.civilStatusOptions = response.data.map((item) => ({
+            value: item.lib3_count,
+            text: item.lib3_civil_stat,
+          }));
+        })
+        .catch((error) => {
+          console.error('Error fetching civil statuses:', error);
+        });
+    },
+
+    fetchBloodTypeOptions() {
+      axios
+        .get('/api/bloodtype-options')
+        .then((response) => {
+          this.bloodTypeOptions = response.data.map((item) => ({
+            value: item.lib2_count,
+            text: item.lib2_blood_type,
+          }));
+        })
+        .catch((error) => {
+          console.error('Error fetching blood types:', error);
+        });
+    },
+
+    //fetching region not working
+    fetchRegions(type = 'residential') {
+    console.log(`Fetching regions for: ${type}`);
+    axios
+        .get('/api/regions')
+        .then((response) => {
+        console.log('Regions fetched:', response.data);
+        if (Array.isArray(response.data)) {
+            if (type === 'residential') {
+            this.regions = response.data; // Update regions for residential address
+            } else if (type === 'permanent') {
+            this.permanentRegions = response.data; // Update regions for permanent address
+            }
+        } else {
+            console.error('Unexpected response format for regions:', response.data);
+        }
+        })
+        .catch((error) => {
+        console.error(`Error fetching regions for ${type}:`, error);
+        });
+    },
+
+    fetchProvinces(reg_psgc, type) {
+    axios
+        .get('/api/provinces', { params: { reg_psgc } })
+        .then((response) => {
+        if (type === 'residential') {
+            this.provinces = response.data;
+        } else if (type === 'permanent') {
+            this.permanentProvinces = response.data;
+            // Check if the current selected province exists in the options
+            const currentProvince = this.permanentProvinces.find(
+            (province) => province.prov_psgc === this.profileData.permanentProvince2
+            );
+            if (!currentProvince) {
+            // Handle the case when the current province is not found (if needed)
+            }
+        }
+        })
+        .catch((error) => {
+        console.error('Error fetching provinces:', error);
+        });
+    },
+
+  fetchCities(provinceCode, type) {
+    axios
+      .get('/api/cities', { params: { prv_psgc: provinceCode } })
+      .then((response) => {
+        if (type === 'residential') {
+          this.cities = response.data;
+        } else if (type === 'permanent') {
+          this.permanentCities = response.data;
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching cities:', error);
+      });
+  },
+
+  fetchBarangays(cityCode, type) {
+    axios
+      .get('/api/barangays', { params: { citmun_psgc: cityCode } })
+      .then((response) => {
+        if (type === 'residential') {
+          this.barangays = response.data;
+        } else if (type === 'permanent') {
+          this.permanentBarangays = response.data;
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching barangays:', error);
+      });
+  },
+
     showEditModal() {
       this.isEditModalVisible = true;
       this.currentPage = 1;
+      //gibutang nko then ang region kay na fetch na
+      this.fetchRegions();
+
     },
     hideEditModal() {
       this.isEditModalVisible = false;
@@ -421,18 +926,31 @@ export default {
       }
     },
     saveProfile() {
+    this.isLoading = true;  // Show loading state
     axios
         .patch(`/employee/updateEditProfile/${this.profileData.empid}`, this.profileData)
-        .then(() => {
+        .then((response) => {
         this.isEditing = false;
         this.showUpdateDialog = false;
         this.showSuccessDialog = true;
-        this.hideEditModal(); // Close the modal on successful save
+        this.hideEditModal();  // Close the modal on successful save
+
+        // Optionally, you can display the success message returned from the backend, if any
+        console.log(response.data.message || 'Profile updated successfully');
         })
         .catch((error) => {
+        this.isLoading = false;  // Hide loading state on error
+
+        // Log the error and display a meaningful message
         console.error('Error updating profile:', error);
+
+        // Show an error dialog or message
+        this.showErrorDialog = true;
+        this.errorMessage = error.response?.data?.message || 'An error occurred while updating the profile.';
+        })
+        .finally(() => {
+        this.isLoading = false;  // Hide loading state after request is finished
         });
-        // window.location.reload(); // Forces the page to reload
     },
   }
 };

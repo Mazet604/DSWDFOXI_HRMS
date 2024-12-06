@@ -123,6 +123,22 @@ Route::middleware(['auth'])->group(function () {
     //11/25
     Route::get('/api/get-employee-address2', [AddressControllerII::class, 'getAddress2']);
     Route::get('/api/get-spouse-details', [BackgroundController::class, 'getSpouse']);
+    //11/30
+    Route::get('/api/get-father-details', [BackgroundController::class, 'getFather']);
+    Route::get('/api/get-mother-details', [BackgroundController::class, 'getMother']);
+    Route::get('/api/get-education-data', [BackgroundController::class, 'getEducationData']);
+    Route::get('/api/get-organization-data', [BackgroundController::class, 'getOrganizationData']);
+    Route::get('/api/get-workexperience-data', [BackgroundController::class, 'getWorkExperienceData']);
+    Route::get('/api/get-skill-data', [BackgroundController::class, 'getSkillsData']);
+    //12/02
+    Route::get('/api/get-reference-data', [BackgroundController::class, 'getReferencesData']);
+
+    Route::get('/api/ext-options', [EmployeeController::class, 'ExtOptions']);
+    Route::get('/api/sex-options', [EmployeeController::class, 'getSexOptions']);
+    Route::get('/api/civilstatus-options', [EmployeeController::class, 'getCivilStatusOptions']);
+    Route::get('/api/bloodtype-options', [EmployeeController::class, 'getBloodTypeOptions']);
+
+
 
     // Statistics routes
     Route::get('/total-employees', [EmployeeController::class, 'getTotalEmployees']);

@@ -11,11 +11,9 @@ class emp_father extends Model
 
     protected $table = 'emp_father';
     protected $primaryKey = 'emp_count';
-    
-    
 
     public function empFather()
     {
-        return $this->belongsTo(employee::class, 'emp_count', 'emp_count');
+        return $this->belongsTo(Employee::class, 'emp_count', 'emp_count');
     }
 }

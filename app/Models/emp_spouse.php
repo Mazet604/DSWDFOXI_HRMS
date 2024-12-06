@@ -9,9 +9,9 @@ class emp_spouse extends Model
 {
     use HasFactory;
 
-    protected $table = 'emp_spouse'; // Set the table name
-    protected $primaryKey = 'emp_count'; // Assuming the primary key is 'spouse_id'
-   
+    protected $table = 'emp_spouse';
+    protected $primaryKey = 'emp_count';
+
 
     public function empSpouse()
     {

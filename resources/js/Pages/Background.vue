@@ -1089,7 +1089,7 @@ export default {
         },
 
             fetchFather() {
-            axios.get('/emp_father/Father')
+            axios.get('/api/get-father-details')
                 .then(response => {
                     this.fields.fatherSurname = response.data.fatherSurname;
                     this.fields.fatherFirstName = response.data.fatherFirstName;
@@ -1102,7 +1102,7 @@ export default {
         },
 
         fetchMother() {
-            axios.get('/emp_mother/Mother')
+            axios.get('/api/get-mother-details')
                 .then(response => {
                     this.fields.motherMaidenName = response.data.motherMaidenName;
                     this.fields.motherSurname = response.data.motherSurname;
