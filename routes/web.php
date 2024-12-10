@@ -132,6 +132,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/get-skill-data', [BackgroundController::class, 'getSkillsData']);
     //12/02
     Route::get('/api/get-reference-data', [BackgroundController::class, 'getReferencesData']);
+    //12/06
+    Route::get('/api/get-cseligibility-data', [OtherInfoController::class, 'getCSEligibilityData']);
+    Route::get('/api/get-voluntarywork-data', [OtherInfoController::class, 'getVoluntaryWorkData']);
+    Route::get('/api/get-learndev-data', [OtherInfoController::class, 'getLearndevData']);
+    Route::get('/api/get-recogdist-data', [OtherInfoController::class, 'getRecogdistData']);
+    //12/07
+    Route::get('/api/get-sssid-data', [OtherInfoController::class, 'getSSSIdAdmin']);
+    Route::get('/api/get-pagibigid-data', [OtherInfoController::class, 'getPagIbigIdAdmin']);
+    Route::get('/api/get-gsisid-data', [OtherInfoController::class, 'getGSISIdAdmin']);
+    //12/09
+    Route::get('/api/get-philhealthid-data', [OtherInfoController::class, 'getPhilHealthIdAdmin']);
+    Route::get('/api/get-tinid-data', [OtherInfoController::class, 'getTINIdAdmin']);
 
     Route::get('/api/ext-options', [EmployeeController::class, 'ExtOptions']);
     Route::get('/api/sex-options', [EmployeeController::class, 'getSexOptions']);

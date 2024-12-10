@@ -15,126 +15,199 @@ use App\Models\gsisinfo;
 use App\Models\tininfo;
 use App\Models\philhealthinfo;
 use App\Models\employee;
+use Illuminate\Support\Facades\Log;
 
 class OtherInfoController extends Controller
 {
-    public function getCSEligibilityData()
-    {
-        try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+    public function getCSEligibilityData(Request $request)
+{
+    try {
+        $eli_count = $request->query('eli_count'); // If there is an eli_count parameter
+        $empid = $request->query('empid') ?? Auth::user()->empid; // Use empid from request or authenticated user
+
+        // Check for eli_count parameter
+        if ($eli_count) {
+            // Fetch specific eligibility data by `eli_count`
+            $cseligibilityData = emp_eligibility::where('eli_count', $eli_count)->first();
+
+            if (!$cseligibilityData) {
+                return response()->json(['error' => 'Eligibility data not found'], 404);
             }
-    
-            // Select only the required columns
-            $cseligibilityData = emp_eligibility::where('empid', $user->empid)
+
+            return response()->json($cseligibilityData, 200);
+        }
+
+        // Check for empid parameter
+        if ($empid) {
+            // Fetch eligibility data by `empid`
+            $cseligibilityData = emp_eligibility::where('empid', $empid)
                 ->select(
-                    'eli_count', 
-                    'eli_service', 
-                    'eli_rating', 
-                    'eli_doe', 
-                    'eli_poe', 
-                    'eli_license_no', 
+                    'eli_count',
+                    'eli_service',
+                    'eli_rating',
+                    'eli_doe',
+                    'eli_poe',
+                    'eli_license_no',
                     'eli_licen_valid'
                 )
                 ->get();
-    
-            if ($cseligibilityData->isEmpty()) {
-                return response()->json([]);
-            }
-    
-            return response()->json($cseligibilityData);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
 
-    public function getVoluntaryWorkData()
-    {
-        try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+            if ($cseligibilityData->isEmpty()) {
+                return response()->json([]); // Return empty array if no data found
             }
-    
-            // Select only the required columns
-            $voluntaryworkData = emp_voluntary::where('empid', $user->empid)
+
+            return response()->json($cseligibilityData, 200);
+        }
+
+        // Return error if no valid parameter is provided
+        return response()->json(['error' => 'No valid identifier provided'], 400);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
+public function getVoluntaryWorkData(Request $request)
+{
+    try {
+        $vol_count = $request->query('vol_count'); // If there is a vol_count parameter
+        $empid = $request->query('empid') ?? Auth::user()->empid; // Use empid from request or authenticated user
+
+        // Check for vol_count parameter
+        if ($vol_count) {
+            // Fetch specific voluntary work data by `vol_count`
+            $voluntaryworkData = emp_voluntary::where('vol_count', $vol_count)->first();
+
+            if (!$voluntaryworkData) {
+                return response()->json(['error' => 'Voluntary work data not found'], 404);
+            }
+
+            return response()->json($voluntaryworkData, 200);
+        }
+
+        // Check for empid parameter
+        if ($empid) {
+            // Fetch voluntary work data by `empid`
+            $voluntaryworkData = emp_voluntary::where('empid', $empid)
                 ->select(
                     'vol_count',
-                    'vol_name', 
-                    'vol_add', 
-                    'vol_fr', 
-                    'vol_to', 
-                    'vol_hrs', 
+                    'vol_name',
+                    'vol_add',
+                    'vol_fr',
+                    'vol_to',
+                    'vol_hrs',
                     'vol_pos'
                 )
                 ->get();
-    
-            if ($voluntaryworkData->isEmpty()) {
-                return response()->json([]);
-            }
-    
-            return response()->json($voluntaryworkData);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
 
-    public function getLearndevData()
-    {
-        try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+            if ($voluntaryworkData->isEmpty()) {
+                return response()->json([]); // Return empty array if no data found
             }
-    
-            // Select only the required columns
-            $learndevData = emp_learning::where('empid', $user->empid)
+
+            return response()->json($voluntaryworkData, 200);
+        }
+
+        // Return error if no valid parameter is provided
+        return response()->json(['error' => 'No valid identifier provided'], 400);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
+public function getLearndevData(Request $request)
+{
+    try {
+        $learn_count = $request->query('learn_count'); // If there is a learn_count parameter
+        $empid = $request->query('empid') ?? Auth::user()->empid; // Use empid from request or authenticated user
+
+        // Check for learn_count parameter
+        if ($learn_count) {
+            // Fetch specific learning and development data by `learn_count`
+            $learndevData = emp_learning::where('learn_count', $learn_count)->first();
+
+            if (!$learndevData) {
+                return response()->json(['error' => 'Learning and development data not found'], 404);
+            }
+
+            return response()->json($learndevData, 200);
+        }
+
+        // Check for empid parameter
+        if ($empid) {
+            // Fetch learning and development data by `empid`
+            $learndevData = emp_learning::where('empid', $empid)
                 ->select(
                     'learn_count',
-                    'learn_title', 
-                    'learn_fr', 
-                    'learn_to', 
-                    'learn_hrs', 
+                    'learn_title',
+                    'learn_fr',
+                    'learn_to',
+                    'learn_hrs',
                     'learn_type',
                     'learn_con'
                 )
                 ->get();
-    
+
             if ($learndevData->isEmpty()) {
-                return response()->json([]);
+                return response()->json([]); // Return empty array if no data found
             }
-    
-            return response()->json($learndevData);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
 
-    public function getRecogdistData()
-    {
-        try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
+            return response()->json($learndevData, 200);
+        }
+
+        // Return error if no valid parameter is provided
+        return response()->json(['error' => 'No valid identifier provided'], 400);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
+public function getRecogdistData(Request $request)
+{
+    try {
+        $recog_count = $request->query('recog_count'); // If there is a recog_count parameter
+        $empid = $request->query('empid') ?? Auth::user()->empid; // Use empid from request or authenticated user
+
+        // Check for recog_count parameter
+        if ($recog_count) {
+            // Fetch specific recognition and distribution data by `recog_count`
+            $recogdistData = emp_recog::where('recog_count', $recog_count)->first();
+
+            if (!$recogdistData) {
+                return response()->json(['error' => 'Recognition data not found'], 404);
             }
-    
-            // Select only the required columns
-            $recogdistData = emp_recog::where('empid', $user->empid)
-                ->select('recog_count','recog_name')
+
+            return response()->json($recogdistData, 200);
+        }
+
+        // Check for empid parameter
+        if ($empid) {
+            // Fetch recognition and distribution data by `empid`
+            $recogdistData = emp_recog::where('empid', $empid)
+                ->select('recog_count', 'recog_name')
                 ->get();
-    
-            if ($recogdistData->isEmpty()) {
-                return response()->json([]);
-            }
-    
-            return response()->json($recogdistData);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
 
-    public function getSSSId()
+            if ($recogdistData->isEmpty()) {
+                return response()->json([]); // Return empty array if no data found
+            }
+
+            return response()->json($recogdistData, 200);
+        }
+
+        // Return error if no valid parameter is provided
+        return response()->json(['error' => 'No valid identifier provided'], 400);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
+public function getSSSId()
     {
         try {
             $user = Auth::user(); // Get the currently authenticated user
@@ -146,13 +219,58 @@ class OtherInfoController extends Controller
             if (!$sssinfo) {
                 return response()->json(['error' => 'Mother not found'], 404);
             }
-    
+
             $sssId = $sssinfo->sss_num;
             return response()->json(['sssId' => $sssId]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getSSSIdAdmin(Request $request)
+{
+    try {
+        // Get the currently authenticated user
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        // Check if the request is from admin or user
+        $sss_count = $request->query('sss_count'); // Admin-specific parameter
+        $empid = $request->query('empid') ?? $user->empid; // Use empid from request or fallback to user's empid
+
+        // Admin: Fetch by sss_count if provided
+        if ($sss_count) {
+            $sssinfo = sssinfo::where('sss_count', $sss_count)->first();
+
+            if (!$sssinfo) {
+                return response()->json(['error' => 'SSS data not found'], 404);
+            }
+
+            return response()->json(['sss_num' => $sssinfo->sss_num], 200);
+        }
+
+        // User: Fetch by empid
+        if ($empid) {
+            $sssinfo = sssinfo::where('empid', $empid)->first();
+
+            if (!$sssinfo) {
+                return response()->json(['error' => 'SSS data not found'], 404);
+            }
+
+            return response()->json(['sss_num' => $sssinfo->sss_num], 200);
+        }
+
+        // Return error if no valid parameter is provided
+        return response()->json(['error' => 'No valid identifier provided'], 400);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
+
 
     public function getPagIbigId()
     {
@@ -166,13 +284,58 @@ class OtherInfoController extends Controller
             if (!$pagibiginfo) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
-    
+
             $pagIbigId = $pagibiginfo->pgbg_id;
             return response()->json([ 'pagIbigId' => $pagIbigId]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getPagIbigIdAdmin(Request $request)
+{
+    try {
+        // Get the currently authenticated user
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        // Check if the request is from admin or user
+        $pgbg_count = $request->query('pgbg_count'); // Admin-specific parameter
+        $empid = $request->query('empid') ?? $user->empid; // Use empid from request or fallback to user's empid
+
+        // Admin: Fetch by pgbg_count if provided
+        if ($pgbg_count) {
+            $pagibiginfo = pagibiginfo::where('pgbg_count', $pgbg_count)->first();
+
+            if (!$pagibiginfo) {
+                return response()->json(['error' => 'Pag-IBIG data not found'], 404);
+            }
+
+            return response()->json(['pgbg_id' => $pagibiginfo->pgbg_id], 200);
+        }
+
+        // User: Fetch by empid
+        if ($empid) {
+            $pagibiginfo = pagibiginfo::where('empid', $empid)->first();
+
+            if (!$pagibiginfo) {
+                return response()->json(['error' => 'Pag-IBIG data not found'], 404);
+            }
+
+            return response()->json(['pgbg_id' => $pagibiginfo->pgbg_id], 200);
+        }
+
+        // Return error if no valid parameter is provided
+        return response()->json(['error' => 'No valid identifier provided'], 400);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
+
+
 
     public function getGSISId()
     {
@@ -186,13 +349,52 @@ class OtherInfoController extends Controller
             if (!$gsisinfo) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
-    
+
             $gsisId  = $gsisinfo->pb_no;
             return response()->json([ 'gsisId' => $gsisId]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getGSISIdAdmin(Request $request)
+{
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $gsis_count = $request->query('gsis_count');
+        $empid = $request->query('empid') ?? $user->empid;
+
+        if ($gsis_count) {
+            $gsisinfo = gsisinfo::where('gsis_count', $gsis_count)->first();
+            if (!$gsisinfo) {
+                return response()->json(['error' => 'GSIS data not found'], 404);
+            }
+            return response()->json([
+                'gsis_id' => $gsisinfo->pb_no, // Return pb_no
+                'gsis_count' => $gsisinfo->gsis_count // Include count for debugging
+            ], 200);
+        }
+
+        if ($empid) {
+            $gsisinfo = gsisinfo::where('empid', $empid)->first();
+            if (!$gsisinfo) {
+                return response()->json(['error' => 'GSIS data not found'], 404);
+            }
+            return response()->json([
+                'gsis_id' => $gsisinfo->pb_no, // Return pb_no
+                'gsis_count' => $gsisinfo->gsis_count // Include count for debugging
+            ], 200);
+        }
+
+        return response()->json(['error' => 'No valid identifier provided'], 400);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
 
     public function getPhilHealthId()
     {
@@ -206,13 +408,57 @@ class OtherInfoController extends Controller
             if ( !$philhealthinfo) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
-    
+
             $philHealthId = $philhealthinfo->ph_lid;
             return response()->json(['philHealthId' => $philHealthId]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getPhilHealthIdAdmin(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            $phl_count = $request->query('phl_count'); // Admin-specific parameter
+            $empid = $request->query('empid') ?? $user->empid; // Use empid from request or fallback to user's empid
+
+            // Admin: Fetch by phl_count if provided
+            if ($phl_count) {
+                $philhealthinfo = philhealthinfo::where('phl_count', $phl_count)->first();
+                if (!$philhealthinfo) {
+                    return response()->json(['error' => 'PhilHealth data not found'], 404);
+                }
+                return response()->json([
+                    'ph_lid' => $philhealthinfo->ph_lid, // Return correct field name
+                    'phl_count' => $philhealthinfo->phl_count // Include count for debugging
+                ], 200);
+            }
+
+            // User: Fetch by empid
+            if ($empid) {
+                $philhealthinfo = philhealthinfo::where('empid', $empid)->first();
+                if (!$philhealthinfo) {
+                    return response()->json(['error' => 'PhilHealth data not found'], 404);
+                }
+                return response()->json([
+                    'ph_lid' => $philhealthinfo->ph_lid, // Return correct field name
+                    'phl_count' => $philhealthinfo->phl_count // Include count for debugging
+                ], 200);
+            }
+
+            return response()->json(['error' => 'No valid identifier provided'], 400);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
+
 
     public function getTINId()
     {
@@ -226,13 +472,59 @@ class OtherInfoController extends Controller
             if (!$tininfo) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
-    
+
             $tinId = $tininfo->tin_id;
             return response()->json(['tinId' => $tinId]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getTINIdAdmin(Request $request)
+    {
+        try {
+            // Get the currently authenticated user
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            // Check if the request is from admin or user
+            $tin_count = $request->query('tin_count'); // Admin-specific parameter
+            $empid = $request->query('empid') ?? $user->empid; // Use empid from request or fallback to user's empid
+
+            // Admin: Fetch by tin_count if provided
+            if ($tin_count) {
+                $tininfo = tininfo::where('tin_count', $tin_count)->first();
+                if (!$tininfo) {
+                    return response()->json(['error' => 'TIN data not found'], 404);
+                }
+                return response()->json([
+                    'tin_id' => $tininfo->tin_id, // Return tin_id
+                    'tin_count' => $tininfo->tin_count // Include count for debugging
+                ], 200);
+            }
+
+            // User: Fetch by empid
+            if ($empid) {
+                $tininfo = tininfo::where('empid', $empid)->first();
+                if (!$tininfo) {
+                    return response()->json(['error' => 'TIN data not found'], 404);
+                }
+                return response()->json([
+                    'tin_id' => $tininfo->tin_id, // Return tin_id
+                    'tin_count' => $tininfo->tin_count // Include count for debugging
+                ], 200);
+            }
+
+            // Return error if no valid parameter is provided
+            return response()->json(['error' => 'No valid identifier provided'], 400);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 
     public function updateGovIdData(Request $request)
 {
@@ -275,7 +567,7 @@ class OtherInfoController extends Controller
         }
 
         $philhealth = philhealthinfo::where('empid', $user->empid)->first();
-        
+
         if ($philhealth) {
             $philhealth->empid = $user->empid;
             $philhealth->ph_lid = $request->input('philHealthId');
@@ -495,10 +787,10 @@ public function getOtherInfoData()
             // Fetch the "Other Information" data for the authenticated user
             $otherInfoData = emp_otherinfo::where('empid', $user->empid)
                 ->select(
-                    'other_count','other_34a', 'other_34b', 'other_34bif', 'other_35a', 'other_35aif', 
-                    'other_35b', 'other_35bif', 'other_35bfiled', 'other_35stat', 'other_36', 
-                    'other_36if', 'other_37', 'other_37if', 'other_38a', 'other_38aif', 
-                    'other_38b', 'other_39', 'other_39if', 'other_40a', 'other_40aif', 
+                    'other_count','other_34a', 'other_34b', 'other_34bif', 'other_35a', 'other_35aif',
+                    'other_35b', 'other_35bif', 'other_35bfiled', 'other_35stat', 'other_36',
+                    'other_36if', 'other_37', 'other_37if', 'other_38a', 'other_38aif',
+                    'other_38b', 'other_39', 'other_39if', 'other_40a', 'other_40aif',
                     'other_40b', 'other_40bif', 'other_40c', 'other_40cif'
                 )
                 ->first();

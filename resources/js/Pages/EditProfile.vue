@@ -126,13 +126,13 @@
                 <label class="block mb-1 text-sm font-medium text-gray-700">TIN ID</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.tin_id" />
               </div>
-              <div v-if="currentPage === 2">
+              <!-- <div v-if="currentPage === 2">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Agency Employee NO.</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div>
+              </div> -->
               <!-- Page 3 - Residential Address -->
             <div v-if="currentPage === 3">
-                <h3 class="mb-4 text-lg font-semibold">Residential Address</h3>
+                <h3 class="mb-4 text-lg font-semibold">RESIDENTIAL ADDRESS</h3>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block mb-1 text-sm font-medium text-gray-700">Region</label>
@@ -182,7 +182,7 @@
             </div>
             <!-- Page 4 - Permanent Address -->
             <div v-if="currentPage === 4">
-            <h2 class="mb-4 text-lg font-semibold">Permanent Address</h2>
+            <h2 class="mb-4 text-lg font-semibold">PERMANENT ADDRESS</h2>
             <div class="gap-4 mb-6 ">
                 <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Region</label>
@@ -232,7 +232,7 @@
             </div>
             <!-- Page 5 - Background - Family -->
             <div v-if="currentPage === 5">
-            <h2 class="mb-4 text-lg font-semibold">Spouse</h2>
+            <h2 class="mb-4 text-lg font-semibold">SPOUSE</h2>
             <div v-if="currentPage === 5">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.spouse_lname" />
@@ -271,7 +271,7 @@
               </div>
             </div>
             <div v-if="currentPage === 6">
-            <h2 class="mb-4 text-lg font-semibold">Father</h2>
+            <h2 class="mb-4 text-lg font-semibold">FATHER</h2>
               <div v-if="currentPage === 6">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.father_lname" />
@@ -294,7 +294,7 @@
               </div>
             </div>
             <div v-if="currentPage === 7">
-              <h2 class="mb-4 text-lg font-semibold">Mother</h2>
+              <h2 class="mb-4 text-lg font-semibold">MOTHER</h2>
               <div v-if="currentPage === 7">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.mother_lname" />
@@ -313,7 +313,7 @@
               </div>
             </div>
             <div v-if="currentPage === 8">
-              <h2 class="mb-4 text-lg font-semibold">Education</h2>
+              <h2 class="mb-4 text-lg font-semibold">EDUCATION</h2>
               <div v-if="currentPage === 8">
                 <label class="block mb-1 text-sm font-medium text-gray-700">LEVEL OF EDUCATION</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.educ_level" />
@@ -344,14 +344,14 @@
               </div>
             </div>
             <div v-if="currentPage === 9">
-              <h2 class="mb-4 text-lg font-semibold">Organizations</h2>
+              <h2 class="mb-4 text-lg font-semibold">OORGANIZATIONS</h2>
               <div v-if="currentPage === 9">
                 <label class="block mb-1 text-sm font-medium text-gray-700">ORGANIZATION NAME</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.org_name" />
               </div>
             </div>
             <div v-if="currentPage === 10">
-              <h2 class="mb-4 text-lg font-semibold">Work Experience</h2>
+              <h2 class="mb-4 text-lg font-semibold">WORK EXPERIENCE</h2>
               <div v-if="currentPage === 10">
                 <label class="block mb-1 text-sm font-medium text-gray-700">WORK FROM</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.workfr" />
@@ -386,14 +386,14 @@
               </div>
             </div>
             <div v-if="currentPage === 11">
-              <h2 class="mb-4 text-lg font-semibold">Skills</h2>
+              <h2 class="mb-4 text-lg font-semibold">SKILLS</h2>
               <div v-if="currentPage === 11">
                 <label class="block mb-1 text-sm font-medium text-gray-700">SKILLS</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.skill" />
               </div>
             </div>
             <div v-if="currentPage === 12">
-              <h2 class="mb-4 text-lg font-semibold">References</h2>
+              <h2 class="mb-4 text-lg font-semibold">REFERENCES</h2>
               <div v-if="currentPage === 12">
                 <label class="block mb-1 text-sm font-medium text-gray-700">FIRST NAME</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.ref_fname" />
@@ -421,6 +421,94 @@
               <div v-if="currentPage === 12">
                 <label class="block mb-1 text-sm font-medium text-gray-700">CONTACT NUMBER</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.ref_cnum" />
+              </div>
+            </div>
+            <div v-if="currentPage === 13">
+              <h2 class="mb-4 text-lg font-semibold">CS ELIGIBILITY</h2>
+              <div v-if="currentPage === 13">
+                <label class="block mb-1 text-sm font-medium text-gray-700">CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.eli_service" />
+              </div>
+              <div v-if="currentPage === 13">
+                <label class="block mb-1 text-sm font-medium text-gray-700">RATING (IF APPLICABLE)</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.eli_rating" />
+              </div>
+              <div v-if="currentPage === 13">
+                <label class="block mb-1 text-sm font-medium text-gray-700">DATE OF EXAMINATION/CONFERMENT</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.eli_doe" />
+              </div>
+              <div v-if="currentPage === 13">
+                <label class="block mb-1 text-sm font-medium text-gray-700">PLACE OF EXAMINATION/CONFERMENT</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.eli_poe" />
+              </div>
+              <div v-if="currentPage === 13">
+                <label class="block mb-1 text-sm font-medium text-gray-700">LICENSE (IF APPLICABLE)</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.eli_license_no" />
+              </div>
+              <div v-if="currentPage === 13">
+                <label class="block mb-1 text-sm font-medium text-gray-700">VALIDITY</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.eli_licen_valid" />
+              </div>
+            </div>
+            <div v-if="currentPage === 14">
+              <h2 class="mb-4 text-lg font-semibold">VOLUNTARY WORK</h2>
+              <div v-if="currentPage === 14">
+                <label class="block mb-1 text-sm font-medium text-gray-700">NAME OF ORGANIZATION</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.vol_name" />
+              </div>
+              <div v-if="currentPage === 14">
+                <label class="block mb-1 text-sm font-medium text-gray-700">ADDRESS OF ORGANIZATION</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.vol_add" />
+              </div>
+              <div v-if="currentPage === 14">
+                <label class="block mb-1 text-sm font-medium text-gray-700">INCLUSIVE DATES FROM</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.vol_fr" />
+              </div>
+              <div v-if="currentPage === 14">
+                <label class="block mb-1 text-sm font-medium text-gray-700">INCLUSIVE DATES TO</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.vol_to" />
+              </div>
+              <div v-if="currentPage === 14">
+                <label class="block mb-1 text-sm font-medium text-gray-700">NUMBER OF HOURS</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.vol_hrs" />
+              </div>
+              <div v-if="currentPage === 14">
+                <label class="block mb-1 text-sm font-medium text-gray-700">POSITION / NATURE OF WORK</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.vol_pos" />
+              </div>
+            </div>
+            <div v-if="currentPage === 15">
+              <h2 class="mb-4 text-lg font-semibold">LEARNING & DEVELOPMENT</h2>
+              <div v-if="currentPage === 15">
+                <label class="block mb-1 text-sm font-medium text-gray-700">TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.learn_title" />
+              </div>
+              <div v-if="currentPage === 15">
+                <label class="block mb-1 text-sm font-medium text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.learn_fr" />
+              </div>
+              <div v-if="currentPage === 15">
+                <label class="block mb-1 text-sm font-medium text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.learn_to" />
+              </div>
+              <div v-if="currentPage === 15">
+                <label class="block mb-1 text-sm font-medium text-gray-700">NUMBER OF HOURS</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.learn_hrs" />
+              </div>
+              <div v-if="currentPage === 15">
+                <label class="block mb-1 text-sm font-medium text-gray-700">TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.learn_type" />
+              </div>
+              <div v-if="currentPage === 15">
+                <label class="block mb-1 text-sm font-medium text-gray-700">CONDUCTED/SPONSORED BY (WRITE IN FULL)</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.learn_con" />
+              </div>
+            </div>
+            <div v-if="currentPage === 16">
+              <h2 class="mb-4 text-lg font-semibold">RECOGNITION & DISTINCTIONS</h2>
+              <div v-if="currentPage === 16">
+                <label class="block mb-1 text-sm font-medium text-gray-700">RECOGNITION & DISTINCTIONS</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.recog_name" />
               </div>
             </div>
             </div>
@@ -470,7 +558,7 @@ export default {
     residentialRegion: '',
     isEditModalVisible: false,
     currentPage: 1,
-    totalPages: 13,
+    totalPages: 20,
     isEditing: false,
     showUpdateDialog: false,
     showSuccessDialog: false,
@@ -569,15 +657,62 @@ watch: {
                 }
 // new added 12/02
             if (response.data.ref_count) {
-                    this.fetchReference(response.data.ref_count, null); // Fetch by skill_count
+                    this.fetchReference(response.data.ref_count, null); // Fetch by reference_count
                 } else {
                     this.fetchReference(null, response.data.empid); // Fallback to empid
                 }
-
             this.fetchExtOptions();
             this.fetchSexOptions();
             this.fetchCivilStatusOptions();
             this.fetchBloodTypeOptions();
+// new added 12/06
+            if (response.data.eli_count) {
+                    this.fetchCSEligiblity(response.data.eli_count, null); // Fetch by eli_count
+                } else {
+                    this.fetchCSEligiblity(null, response.data.empid); // Fallback to empid
+                }
+            if (response.data.vol_count) {
+                    this.fetchVoluntaryWork(response.data.vol_count, null); // Fetch by vol_count
+                } else {
+                    this.fetchVoluntaryWork(null, response.data.empid); // Fallback to empid
+                }
+            if (response.data.learn_count) {
+                    this.fetchLearningDevelopment(response.data.learn_count, null); // Fetch by learn_count
+                } else {
+                    this.fetchLearningDevelopment(null, response.data.empid); // Fallback to empid
+                }
+            if (response.data.recog_count) {
+                    this.fetchRecognitionDistinction(response.data.recog_count, null); // Fetch by recog_count
+                } else {
+                    this.fetchRecognitionDistinction(null, response.data.empid); // Fallback to empid
+                }
+// new added 12/07
+            if (response.data.sss_count) {
+                    this.fetchSSSId(response.data.sss_count, null); // Fetch by sss_count
+                } else {
+                    this.fetchSSSId(null, response.data.empid); // Fallback to empid
+                }
+            if (response.data.pgbg_count) {
+                    this.fetchPagIbigId(response.data.pgbg_count, null); // Fetch by pgbg_count
+                } else {
+                    this.fetchPagIbigId(null, response.data.empid); // Fallback to empid
+                }
+            if (response.data.gsis_count) {
+                    this.fetchGSISId(response.data.gsis_count, null); // Fetch by gsis_count
+                } else {
+                    this.fetchGSISId(null, response.data.empid); // Fallback to empid
+                }
+// new added 12/09
+            if (response.data.phl_count) {
+                    this.fetchPhilhealthId(response.data.phl_count, null); // Fetch by phl_count
+                } else {
+                    this.fetchPhilhealthId(null, response.data.empid); // Fallback to empid
+                }
+            if (response.data.tin_count) {
+                    this.fetchTINId(response.data.tin_count, null); // Fetch by phl_count
+                } else {
+                    this.fetchTINId(null, response.data.empid); // Fallback to empid
+                }
           } else {
             this.errorMessage = 'Employee not found.';
             this.profileData = null; // Clear previous data
@@ -772,6 +907,154 @@ watch: {
                 console.error("Error fetching reference details:", error);
             });
     },
+
+    fetchCSEligiblity(eli_count, empid) {
+        const queryParam = eli_count ? `eli_count=${eli_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-cseligibility-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.eli_service = data.eli_service;
+                    this.profileData.eli_rating = data.eli_rating;
+                    this.profileData.eli_doe = data.eli_doe;
+                    this.profileData.eli_poe = data.eli_poe;
+                    this.profileData.eli_license_no = data.eli_license_no;
+                    this.profileData.eli_licen_valid = data.eli_licen_valid;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching cs eligibility details:", error);
+            });
+    },
+
+    fetchVoluntaryWork(vol_count, empid) {
+        const queryParam = vol_count ? `vol_count=${vol_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-voluntarywork-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.vol_name = data.vol_name;
+                    this.profileData.vol_add = data.vol_add;
+                    this.profileData.vol_fr = data.vol_fr;
+                    this.profileData.vol_to = data.vol_to;
+                    this.profileData.vol_hrs = data.vol_hrs;
+                    this.profileData.vol_pos = data.vol_pos;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching voluntary work details:", error);
+            });
+    },
+
+    fetchLearningDevelopment(learn_count, empid) {
+        const queryParam = learn_count ? `learn_count=${learn_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-learndev-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.learn_title = data.learn_title;
+                    this.profileData.learn_fr = data.learn_fr;
+                    this.profileData.learn_to = data.learn_to;
+                    this.profileData.learn_hrs = data.learn_hrs;
+                    this.profileData.learn_type = data.learn_type;
+                    this.profileData.learn_con = data.learn_con;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching learning and development details:", error);
+            });
+    },
+
+    fetchRecognitionDistinction(recog_count, empid) {
+        const queryParam = recog_count ? `recog_count=${recog_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-recogdist-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.recog_name = data.recog_name;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching recognition and distinction name:", error);
+            });
+    },
+
+    fetchSSSId(sss_count, empid) {
+        const queryParam = sss_count ? `sss_count=${sss_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-sssid-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.sss_num = data.sss_num;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching SSS ID:", error);
+            });
+    },
+
+    fetchPagIbigId(pgbg_count, empid) {
+        const queryParam = pgbg_count ? `pgbg_count=${pgbg_count}` : `empid=${empid}`;
+        axios
+            .get(`/api/get-pagibigid-data?${queryParam}`)
+            .then((response) => {
+                if (response.data) {
+                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
+                    this.profileData.pgbg_id = data.pgbg_id;
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching Pag-Ibig ID:", error);
+            });
+    },
+
+    fetchGSISId(gsis_count, empid) {
+    const queryParam = gsis_count ? `gsis_count=${gsis_count}` : `empid=${empid}`;
+    axios
+        .get(`/api/get-gsisid-data?${queryParam}`)
+        .then((response) => {
+            if (response.data) {
+                this.profileData.pb_no = response.data.gsis_id; // Use gsis_id
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching GSIS ID:", error);
+        });
+},
+
+    fetchPhilhealthId(phl_count, empid) {
+    const queryParam = phl_count ? `phl_count=${phl_count}` : `empid=${empid}`;
+    axios
+        .get(`/api/get-philhealthid-data?${queryParam}`)
+        .then((response) => {
+            if (response.data) {
+                this.profileData.ph_lid = response.data.ph_lid; // Use ph_lid
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching Philhealth ID:", error);
+        });
+},
+
+    fetchTINId(tin_count, empid) {
+    const queryParam = tin_count ? `tin_count=${tin_count}` : `empid=${empid}`;
+    axios
+        .get(`/api/get-tinid-data?${queryParam}`)
+        .then((response) => {
+            if (response.data) {
+                this.profileData.tin_id = response.data.tin_id; // Use ph_lid
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching TIN ID:", error);
+        });
+},
+
 
     //12/02
     //libraries
