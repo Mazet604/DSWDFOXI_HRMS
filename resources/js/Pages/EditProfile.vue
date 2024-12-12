@@ -39,26 +39,30 @@
             </button>
           </div>
         </div>
+
         <div v-if="isEditModalVisible" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div class="modal">
-            <h2 class="mb-4 text-xl font-bold">Edit Employee Details</h2>
+                <div class="pb-4 mb-4 border-b">
+                <h2 class="text-2xl font-bold text-gray-800">Edit Employee Details</h2>
+                </div>
 
-            <!-- Page 1 -->
-            <div class="grid grid-cols-2 gap-4">
+            <!-- Page 1 - Personal Info -->
+            <h3 v-if="currentPage === 1" class="col-span-2 text-lg font-semibold text-gray-700">Personal Information</h3>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
+                <label class="block text-sm font-medium text-gray-700">Surname</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp_lname" />
               </div>
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">First Name</label>
+                <label class="block text-sm font-medium text-gray-700">First Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp_fname" />
               </div>
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Middle Name</label>
+                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp_mname" />
               </div>
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Name Extension</label>
+                <label class="block text-sm font-medium text-gray-700">Name Extension</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.emp_ext">
                 <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
                 {{ ext.text }}
@@ -66,15 +70,15 @@
             </select>
               </div>
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Date of Birth</label>
+                <label class="block text-sm font-medium text-gray-700">Date of Birth</label>
                 <input type="date" class="w-full p-2 border rounded" v-model="profileData.emp_dob" />
              </div>
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Place of Birth</label>
+                <label class="block text-sm font-medium text-gray-700">Place of Birth</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp_pob" />
               </div>
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Sex</label>
+                <label class="block text-sm font-medium text-gray-700">Sex</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.emp_sex">
                 <option v-for="sex in sexOptions" :key="sex.value" :value="sex.value">
                 {{ sex.text }}
@@ -82,7 +86,7 @@
             </select>
               </div>
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Civil Status</label>
+                <label class="block text-sm font-medium text-gray-700">Civil Status</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.emp_civ_stat">
                 <option v-for="status in civilStatusOptions" :key="status.value" :value="status.value">
                 {{ status.text }}
@@ -90,442 +94,462 @@
             </select>
               </div>
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Height</label>
+                <label class="block text-sm font-medium text-gray-700">Height</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp_height" />
               </div>
               <div v-if="currentPage === 1">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Weight</label>
+                <label class="block text-sm font-medium text-gray-700">Weight</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.emp_weight" />
               </div>
-              <!-- Page 2 -->
-              <div v-if="currentPage === 2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Blood Type</label>
+              <div v-if="currentPage === 1">
+                <label class="block text-sm font-medium text-gray-700">Blood Type</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.emp_blood">
                 <option v-for="type in bloodTypeOptions" :key="type.value" :value="type.value">
                 {{ type.text }}
                 </option>
             </select>
               </div>
+
+              <!-- Page 2 - Residential Address -->
+              <h3 v-if="currentPage === 2" class="col-span-2 text-lg font-semibold text-gray-700">Residential Address</h3>
               <div v-if="currentPage === 2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">GSIS ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.pb_no" />
+                <label class="block text-sm font-medium text-gray-700">Region</label>
+                <select class="w-full p-2 border rounded" v-model="profileData.residentialRegion">
+                    <option v-for="region in regions" :key="region.reg_psgc" :value="region.reg_psgc">
+                    {{ region.col_region }}
+                    </option>
+                </select>
               </div>
               <div v-if="currentPage === 2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">PAG-IBIG ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.pgbg_id" />
-              </div>
-              <div v-if="currentPage === 2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">PhilHealth ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.ph_lid" />
-              </div>
-              <div v-if="currentPage === 2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">SSS ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.sss_num" />
-              </div>
-              <div v-if="currentPage === 2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">TIN ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.tin_id" />
-              </div>
-              <!-- <div v-if="currentPage === 2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Agency Employee NO.</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div> -->
-              <!-- Page 3 - Residential Address -->
-            <div v-if="currentPage === 3">
-                <h3 class="mb-4 text-lg font-semibold">RESIDENTIAL ADDRESS</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block mb-1 text-sm font-medium text-gray-700">Region</label>
-                        <select class="w-full p-2 border rounded"  v-model="profileData.residentialRegion">
-                        <option v-for="region in regions" :key="region.reg_psgc" :value="region.reg_psgc">
-                        {{ region.col_region }}
-                        </option>
-                    </select>
-                    </div>
-                    <div>
-                        <label class="block mb-1 text-sm font-medium text-gray-700">Province</label>
-                        <select class="w-full p-2 border rounded" v-model="profileData.residentialProvince">
-                        <option v-for="province in provinces" :key="province.prv_psgc" :value="province.prv_psgc">
-                        {{ province.col_province }}
-                        </option>
-                    </select>
-                    </div>
-                    <div>
-                        <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
-                        <select class="w-full p-2 border rounded" v-model="profileData.residentialCity">
-                        <option v-for="city in cities" :key="city.citmun_psgc" :value="city.citmun_psgc">
-                        {{ city.col_citymuni }}
-                        </option>
-                    </select>
-                    </div>
-                    <div>
-                        <label class="block mb-1 text-sm font-medium text-gray-700">Barangay</label>
-                        <select class="w-full p-2 border rounded" v-model="profileData.residentialBarangay">
-                        <option v-for="barangay in barangays" :key="barangay.brgy_psgc" :value="barangay.brgy_psgc">
-                        {{ barangay.col_brgy }}
-                        </option>
-                    </select>
-                    </div>
-                    <div>
-                        <label class="block mb-1 text-sm font-medium text-gray-700">Zip Code</label>
-                        <input class="w-full p-2 border rounded" v-model="profileData.residentialZipcode" />
-                    </div>
-                    <div>
-                        <label class="block mb-1 text-sm font-medium text-gray-700">Village/Subdivision</label>
-                        <input class="w-full p-2 border rounded" v-model="profileData.residentialVillage" />
-                    </div>
-                    <div class="col-span-2">
-                        <label class="block mb-1 text-sm font-medium text-gray-700">Block/Street/Purok</label>
-                        <input class="w-full p-2 border rounded" v-model="profileData.residentialStreet" />
+                <label class="block text-sm font-medium text-gray-700">Province</label>
+                <select class="w-full p-2 border rounded" v-model="profileData.residentialProvince">
+                    <option v-for="province in provinces" :key="province.prv_psgc" :value="province.prv_psgc">
+                    {{ province.col_province }}
+                    </option>
+                </select>
                 </div>
-            </div>
-            </div>
-            <!-- Page 4 - Permanent Address -->
-            <div v-if="currentPage === 4">
-            <h2 class="mb-4 text-lg font-semibold">PERMANENT ADDRESS</h2>
-            <div class="gap-4 mb-6 ">
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Region</label>
+              <div v-if="currentPage === 2">
+                <label class="block text-sm font-medium text-gray-700">City</label>
+                <select class="w-full p-2 border rounded" v-model="profileData.residentialCity">
+                    <option v-for="city in cities" :key="city.citmun_psgc" :value="city.citmun_psgc">
+                    {{ city.col_citymuni }}
+                    </option>
+                </select>
+                </div>
+                <div v-if="currentPage === 2">
+                <label class="block text-sm font-medium text-gray-700">Barangay</label>
+                <select class="w-full p-2 border rounded" v-model="profileData.residentialBarangay">
+                    <option v-for="barangay in barangays" :key="barangay.brgy_psgc" :value="barangay.brgy_psgc">
+                    {{ barangay.col_brgy }}
+                    </option>
+                </select>
+                </div>
+                <div v-if="currentPage === 2">
+                <label class="block text-sm font-medium text-gray-700">Zip Code</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.residentialZipcode" />
+                </div>
+                <div v-if="currentPage === 2">
+                <label class="block text-sm font-medium text-gray-700">Village/Subdivision</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.residentialVillage" />
+                </div>
+                <div v-if="currentPage === 2">
+                <label class="block text-sm font-medium text-gray-700">Block/Street/Purok</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.residentialStreet" />
+                </div>
+
+
+
+            <!-- Page 3 - Permanent Address -->
+            <h3 v-if="currentPage === 3" class="col-span-2 text-lg font-semibold text-gray-700">Permanent Address</h3>
+            <div v-if="currentPage === 3">
+                <label class="block text-sm font-medium text-gray-700">Region</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.permanentRegion2">
                 <option v-for="region in regions" :key="region.reg_psgc" :value="region.reg_psgc">
                 {{ region.col_region }}
                 </option>
                 </select>
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Province</label>
+            </div>
+            <div v-if="currentPage === 3">
+                <label class="block text-sm font-medium text-gray-700">Province</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.permanentProvince2">
                 <option v-for="province in permanentProvinces" :key="province.prv_psgc" :value="province.prv_psgc">
                 {{ province.col_province }}
                 </option>
                 </select>
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
+            </div>
+            <div v-if="currentPage === 3">
+                <label class="block text-sm font-medium text-gray-700">City</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.permanentCity2">
                 <option v-for="city in permanentCities" :key="city.citmun_psgc" :value="city.citmun_psgc">
                 {{ city.col_citymuni }}
                 </option>
                 </select>
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Barangay</label>
+            </div>
+            <div v-if="currentPage === 3">
+                <label class="block text-sm font-medium text-gray-700">Barangay</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.permanentBarangay2">
                 <option v-for="barangay in permanentBarangays" :key="barangay.brgy_psgc" :value="barangay.brgy_psgc">
                 {{ barangay.col_brgy }}
                 </option>
                 </select>
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Zip Code</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentZipcode2" />
-                </div>
-                <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Village/Subdivision</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentVillage2" />
-                </div>
-                <div class="col-span-2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Block/Street/Purok</label>
-                <input class="w-full p-4 border border-gray-300 rounded-md" v-model="profileData.permanentStreet2" />
-                </div>
             </div>
+            <div v-if="currentPage === 3">
+                <label class="block text-sm font-medium text-gray-700">Zip Code</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.permanentZipcode2" />
             </div>
-            <!-- Page 5 - Background - Family -->
-            <div v-if="currentPage === 5">
-            <h2 class="mb-4 text-lg font-semibold">SPOUSE</h2>
-            <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
+            <div v-if="currentPage === 3">
+                <label class="block text-sm font-medium text-gray-700">Village/Subdivision</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.permanentVillage2" />
+            </div>
+            <div v-if="currentPage === 3">
+                <label class="block text-sm font-medium text-gray-700">Block/Street/Purok</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.permanentStreet2" />
+            </div>
+
+
+            <!-- Page 4 - Background - Family -->
+            <h3 v-if="currentPage === 4" class="col-span-2 text-lg font-semibold text-gray-700">Spouse</h3>
+            <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Surname</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.spouse_lname" />
               </div>
-              <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">First Name</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">First Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.spouse_fname" />
               </div>
-              <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Middle Name</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.spouse_mname" />
               </div>
-              <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Suffix</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Suffix</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.spouse_xname">
                 <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
                 {{ ext.text }}
                 </option>
             </select>
               </div>
-              <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Occupation</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Occupation</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.spouse_occup" />
               </div>
-              <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Employer's/Business Name</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Employer's/Business Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.spouse_office" />
               </div>
-              <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Business Address</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Business Address</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.spouse_busadd" />
               </div>
-              <div v-if="currentPage === 5">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Tel No.</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Tel No.</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.spouse_tel" />
               </div>
-            </div>
-            <div v-if="currentPage === 6">
-            <h2 class="mb-4 text-lg font-semibold">FATHER</h2>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
+              <h3 v-if="currentPage === 4" class="col-span-2 text-lg font-semibold text-gray-700">Father</h3>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Surname</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.father_lname" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">First Name</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">First Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.father_fname" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Middle Name</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.father_mname" />
               </div>
-              <div v-if="currentPage === 6">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Suffix</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Suffix</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.father_xname">
                 <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
                 {{ ext.text }}
                 </option>
             </select>
               </div>
-            </div>
-            <div v-if="currentPage === 7">
-              <h2 class="mb-4 text-lg font-semibold">MOTHER</h2>
-              <div v-if="currentPage === 7">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Surname</label>
+              <h3 v-if="currentPage === 4" class="col-span-2 text-lg font-semibold text-gray-700">Mother</h3>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Surname</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.mother_lname" />
               </div>
-              <div v-if="currentPage === 7">
-                <label class="block mb-1 text-sm font-medium text-gray-700">First Name</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">First Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.mother_fname" />
               </div>
-              <div v-if="currentPage === 7">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Middle Name</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.mother_mname" />
               </div>
-              <div v-if="currentPage === 7">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Maiden Name</label>
+              <div v-if="currentPage === 4">
+                <label class="block text-sm font-medium text-gray-700">Maiden Name</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.maidenname" />
               </div>
-            </div>
-            <div v-if="currentPage === 8">
-              <h2 class="mb-4 text-lg font-semibold">EDUCATION</h2>
-              <div v-if="currentPage === 8">
-                <label class="block mb-1 text-sm font-medium text-gray-700">LEVEL OF EDUCATION</label>
+
+            <!-- Page 5 - Background - Education -->
+            <h3 v-if="currentPage === 5" class="col-span-2 text-lg font-semibold text-gray-700">Education</h3>
+              <div v-if="currentPage === 5">
+                <label class="block text-sm font-medium text-gray-700">LEVEL OF EDUCATION</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.educ_level" />
               </div>
-              <div v-if="currentPage === 8">
-                <label class="block mb-1 text-sm font-medium text-gray-700">NAME OF SCHOOL</label>
+              <div v-if="currentPage === 5">
+                <label class="block text-sm font-medium text-gray-700">NAME OF SCHOOL</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.educ_school" />
               </div>
-              <div v-if="currentPage === 8">
-                <label class="block mb-1 text-sm font-medium text-gray-700">BASIC EDUCATION|DEGREE|COURSE</label>
+              <div v-if="currentPage === 5">
+                <label class="block text-sm font-medium text-gray-700">BASIC EDUCATION|DEGREE|COURSE</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.educ_degree" />
               </div>
-              <div v-if="currentPage === 8">
-                <label class="block mb-1 text-sm font-medium text-gray-700">DATE ENROLLED</label>
+              <div v-if="currentPage === 5">
+                <label class="block text-sm font-medium text-gray-700">DATE ENROLLED</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.educ_from" />
               </div>
-              <div v-if="currentPage === 8">
-                <label class="block mb-1 text-sm font-medium text-gray-700">HIGHEST LEVEL EARNED</label>
+              <div v-if="currentPage === 5">
+                <label class="block text-sm font-medium text-gray-700">HIGHEST LEVEL EARNED</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.educ_hl_earned" />
               </div>
-              <div v-if="currentPage === 8">
-                <label class="block mb-1 text-sm font-medium text-gray-700">YEAR GRADUATED</label>
+              <div v-if="currentPage === 5">
+                <label class="block text-sm font-medium text-gray-700">YEAR GRADUATED</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.educ_year_grad" />
               </div>
-              <div v-if="currentPage === 8">
-                <label class="block mb-1 text-sm font-medium text-gray-700">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
+              <div v-if="currentPage === 5">
+                <label class="block text-sm font-medium text-gray-700">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.educ_academic_honor" />
               </div>
+
+
+            <!-- Page 6 - Background - Organization -->
+            <h3 v-if="currentPage === 6" class="col-span-2 text-lg font-semibold text-gray-700">Organization</h3>
+            <div v-if="currentPage === 6">
+            <div v-for="(org, index) in organizationList" :key="org.org_count" class="mb-4">
+                <label :for="'org_name_' + index" class="block text-sm font-medium text-gray-700">
+                ORGANIZATION {{ index + 1 }}
+                </label>
+                <input :id="'org_name_' + index" class="w-full p-2 border rounded" v-model="organizationList[index].org_name" placeholder="Enter Organization Name"/>
             </div>
-            <div v-if="currentPage === 9">
-              <h2 class="mb-4 text-lg font-semibold">OORGANIZATIONS</h2>
-              <div v-if="currentPage === 9">
-                <label class="block mb-1 text-sm font-medium text-gray-700">ORGANIZATION NAME</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.org_name" />
-              </div>
+            <div v-if="errorMessage" class="mt-2 text-red-500">{{ errorMessage }}</div>
             </div>
-            <div v-if="currentPage === 10">
-              <h2 class="mb-4 text-lg font-semibold">WORK EXPERIENCE</h2>
-              <div v-if="currentPage === 10">
-                <label class="block mb-1 text-sm font-medium text-gray-700">WORK FROM</label>
+
+            <!-- Page 7 - Background - Work Experience -->
+            <h3 v-if="currentPage === 7" class="col-span-2 text-lg font-semibold text-gray-700">Work Experience</h3>
+              <div v-if="currentPage === 7">
+                <label class="block text-sm font-medium text-gray-700">WORK FROM</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.workfr" />
               </div>
-              <div v-if="currentPage === 10">
-                <label class="block mb-1 text-sm font-medium text-gray-700">WORK TO</label>
+              <div v-if="currentPage === 7">
+                <label class="block text-sm font-medium text-gray-700">WORK TO</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.workto" />
               </div>
-              <div v-if="currentPage === 10">
-                <label class="block mb-1 text-sm font-medium text-gray-700">POSITION</label>
+              <div v-if="currentPage === 7">
+                <label class="block text-sm font-medium text-gray-700">POSITION</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.work_pos" />
               </div>
-              <div v-if="currentPage === 10">
-                <label class="block mb-1 text-sm font-medium text-gray-700">DEPARTMENT|AGENCY|OFFICE|COMPANY</label>
+              <div v-if="currentPage === 7">
+                <label class="block text-sm font-medium text-gray-700">DEPARTMENT|AGENCY|OFFICE|COMPANY</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.work_dept" />
               </div>
-              <div v-if="currentPage === 10">
-                <label class="block mb-1 text-sm font-medium text-gray-700">MONTHLY SALARY</label>
+              <div v-if="currentPage === 7">
+                <label class="block text-sm font-medium text-gray-700">MONTHLY SALARY</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.work_salary" />
               </div>
-              <div v-if="currentPage === 10">
-                <label class="block mb-1 text-sm font-medium text-gray-700">SALARY GRADE</label>
+              <div v-if="currentPage === 7">
+                <label class="block text-sm font-medium text-gray-700">SALARY GRADE</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.work_salarygrade" />
               </div>
-              <div v-if="currentPage === 10">
-                <label class="block mb-1 text-sm font-medium text-gray-700">STATUS OF APPOINTMENT</label>
+              <div v-if="currentPage === 7">
+                <label class="block text-sm font-medium text-gray-700">STATUS OF APPOINTMENT</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.work_stat" />
               </div>
-              <div v-if="currentPage === 10">
-                <label class="block mb-1 text-sm font-medium text-gray-700">GOV'T SERVICE</label>
+              <div v-if="currentPage === 7">
+                <label class="block text-sm font-medium text-gray-700">GOV'T SERVICE</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.work_gov" />
               </div>
+
+
+            <!-- Page 8- Background - Skills -->
+            <h3 v-if="currentPage === 8" class="col-span-2 text-lg font-semibold text-gray-700">Skills</h3>
+            <div v-if="currentPage === 8">
+            <div v-for="(skill, index) in skillsList" :key="skill.skill_count" class="mb-4">
+                <label :for="'skill_' + index" class="block text-sm font-medium text-gray-700">
+                Skill {{ index + 1 }}
+                </label>
+                <input :id="'skill_' + index" class="w-full p-2 border rounded" v-model="skillsList[index].skill" placeholder="Enter Skill"/>
             </div>
-            <div v-if="currentPage === 11">
-              <h2 class="mb-4 text-lg font-semibold">SKILLS</h2>
-              <div v-if="currentPage === 11">
-                <label class="block mb-1 text-sm font-medium text-gray-700">SKILLS</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.skill" />
-              </div>
+            <div v-if="errorMessage" class="mt-2 text-red-500">{{ errorMessage }}</div>
             </div>
-            <div v-if="currentPage === 12">
-              <h2 class="mb-4 text-lg font-semibold">REFERENCES</h2>
-              <div v-if="currentPage === 12">
-                <label class="block mb-1 text-sm font-medium text-gray-700">FIRST NAME</label>
+
+            <!-- Page 9 - Background - References -->
+            <h3 v-if="currentPage === 9" class="col-span-2 text-lg font-semibold text-gray-700">References</h3>
+              <div v-if="currentPage === 9">
+                <label class="block text-sm font-medium text-gray-700">FIRST NAME</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.ref_fname" />
               </div>
-              <div v-if="currentPage === 12">
-                <label class="block mb-1 text-sm font-medium text-gray-700">MIDDLE NAME</label>
+              <div v-if="currentPage === 9">
+                <label class="block text-sm font-medium text-gray-700">MIDDLE NAME</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.ref_mname" />
               </div>
-              <div v-if="currentPage === 12">
-                <label class="block mb-1 text-sm font-medium text-gray-700">LAST NAME</label>
+              <div v-if="currentPage === 9">
+                <label class="block text-sm font-medium text-gray-700">LAST NAME</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.ref_lname" />
               </div>
-              <div v-if="currentPage === 12">
-                <label class="block mb-1 text-sm font-medium text-gray-700">SUFFIX</label>
+              <div v-if="currentPage === 9">
+                <label class="block text-sm font-medium text-gray-700">SUFFIX</label>
                 <select class="w-full p-2 border rounded" v-model="profileData.ref_xname">
                 <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
                 {{ ext.text }}
                 </option>
             </select>
               </div>
-              <div v-if="currentPage === 12">
-                <label class="block mb-1 text-sm font-medium text-gray-700">BLOCK/STREET/PUROK</label>
+              <div v-if="currentPage === 9">
+                <label class="block text-sm font-medium text-gray-700">BLOCK/STREET/PUROK</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.ref_add" />
               </div>
-              <div v-if="currentPage === 12">
-                <label class="block mb-1 text-sm font-medium text-gray-700">CONTACT NUMBER</label>
+              <div v-if="currentPage === 9">
+                <label class="block text-sm font-medium text-gray-700">CONTACT NUMBER</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.ref_cnum" />
               </div>
-            </div>
-            <div v-if="currentPage === 13">
-              <h2 class="mb-4 text-lg font-semibold">CS ELIGIBILITY</h2>
-              <div v-if="currentPage === 13">
-                <label class="block mb-1 text-sm font-medium text-gray-700">CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE</label>
+
+
+            <!-- Page 10 - Other Info - CS Eligibility -->
+            <h3 v-if="currentPage === 10" class="col-span-2 text-lg font-semibold text-gray-700">CS Eligiibility</h3>
+            <div v-if="currentPage === 10">
+                <label class="block text-sm font-medium text-gray-700 truncate hover:overflow-visible hover:whitespace-normal"
+                    :title="'CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE'">
+                    CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS.....
+                </label>
                 <input class="w-full p-2 border rounded" v-model="profileData.eli_service" />
-              </div>
-              <div v-if="currentPage === 13">
-                <label class="block mb-1 text-sm font-medium text-gray-700">RATING (IF APPLICABLE)</label>
+            </div>
+              <div v-if="currentPage === 10">
+                <label class="block text-sm font-medium text-gray-700">RATING (IF APPLICABLE)</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.eli_rating" />
               </div>
-              <div v-if="currentPage === 13">
-                <label class="block mb-1 text-sm font-medium text-gray-700">DATE OF EXAMINATION/CONFERMENT</label>
+              <div v-if="currentPage === 10">
+                <label class="block text-sm font-medium text-gray-700">DATE OF EXAMINATION/CONFERMENT</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.eli_doe" />
               </div>
-              <div v-if="currentPage === 13">
-                <label class="block mb-1 text-sm font-medium text-gray-700">PLACE OF EXAMINATION/CONFERMENT</label>
+              <div v-if="currentPage === 10">
+                <label class="block text-sm font-medium text-gray-700">PLACE OF EXAMINATION/CONFERMENT</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.eli_poe" />
               </div>
-              <div v-if="currentPage === 13">
-                <label class="block mb-1 text-sm font-medium text-gray-700">LICENSE (IF APPLICABLE)</label>
+              <div v-if="currentPage === 10">
+                <label class="block text-sm font-medium text-gray-700">LICENSE (IF APPLICABLE)</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.eli_license_no" />
               </div>
-              <div v-if="currentPage === 13">
-                <label class="block mb-1 text-sm font-medium text-gray-700">VALIDITY</label>
+              <div v-if="currentPage === 10">
+                <label class="block text-sm font-medium text-gray-700">VALIDITY</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.eli_licen_valid" />
               </div>
-            </div>
-            <div v-if="currentPage === 14">
-              <h2 class="mb-4 text-lg font-semibold">VOLUNTARY WORK</h2>
-              <div v-if="currentPage === 14">
-                <label class="block mb-1 text-sm font-medium text-gray-700">NAME OF ORGANIZATION</label>
+
+            <!-- Page 11 - Other Info - Voluntary Work -->
+            <h3 v-if="currentPage === 11" class="col-span-2 text-lg font-semibold text-gray-700">Voluntary Work</h3>
+              <div v-if="currentPage === 11">
+                <label class="block text-sm font-medium text-gray-700">NAME OF ORGANIZATION</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.vol_name" />
               </div>
-              <div v-if="currentPage === 14">
-                <label class="block mb-1 text-sm font-medium text-gray-700">ADDRESS OF ORGANIZATION</label>
+              <div v-if="currentPage === 11">
+                <label class="block text-sm font-medium text-gray-700">ADDRESS OF ORGANIZATION</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.vol_add" />
               </div>
-              <div v-if="currentPage === 14">
-                <label class="block mb-1 text-sm font-medium text-gray-700">INCLUSIVE DATES FROM</label>
+              <div v-if="currentPage === 11">
+                <label class="block text-sm font-medium text-gray-700">INCLUSIVE DATES FROM</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.vol_fr" />
               </div>
-              <div v-if="currentPage === 14">
-                <label class="block mb-1 text-sm font-medium text-gray-700">INCLUSIVE DATES TO</label>
+              <div v-if="currentPage === 11">
+                <label class="block text-sm font-medium text-gray-700">INCLUSIVE DATES TO</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.vol_to" />
               </div>
-              <div v-if="currentPage === 14">
-                <label class="block mb-1 text-sm font-medium text-gray-700">NUMBER OF HOURS</label>
+              <div v-if="currentPage === 11">
+                <label class="block text-sm font-medium text-gray-700">NUMBER OF HOURS</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.vol_hrs" />
               </div>
-              <div v-if="currentPage === 14">
-                <label class="block mb-1 text-sm font-medium text-gray-700">POSITION / NATURE OF WORK</label>
+              <div v-if="currentPage === 11">
+                <label class="block text-sm font-medium text-gray-700">POSITION / NATURE OF WORK</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.vol_pos" />
               </div>
+
+            <!-- Page 12 - Other Info - Learning & Development -->
+            <h3 v-if="currentPage === 12" class="col-span-2 text-lg font-semibold text-gray-700">Learning & Development</h3>
+            <div v-if="currentPage === 12">
+            <label class="block text-sm font-medium text-gray-700 truncate hover:overflow-visible hover:whitespace-normal"
+                :title="'TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)'">
+                TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM.....
+            </label>
+            <input class="w-full p-2 border rounded" v-model="profileData.learn_title" />
             </div>
-            <div v-if="currentPage === 15">
-              <h2 class="mb-4 text-lg font-semibold">LEARNING & DEVELOPMENT</h2>
-              <div v-if="currentPage === 15">
-                <label class="block mb-1 text-sm font-medium text-gray-700">TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.learn_title" />
-              </div>
-              <div v-if="currentPage === 15">
-                <label class="block mb-1 text-sm font-medium text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
+              <div v-if="currentPage === 12">
+                <label class="block text-sm font-medium text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.learn_fr" />
               </div>
-              <div v-if="currentPage === 15">
-                <label class="block mb-1 text-sm font-medium text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
+              <div v-if="currentPage === 12">
+                <label class="block text-sm font-medium text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.learn_to" />
               </div>
-              <div v-if="currentPage === 15">
-                <label class="block mb-1 text-sm font-medium text-gray-700">NUMBER OF HOURS</label>
+              <div v-if="currentPage === 12">
+                <label class="block text-sm font-medium text-gray-700">NUMBER OF HOURS</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.learn_hrs" />
               </div>
-              <div v-if="currentPage === 15">
-                <label class="block mb-1 text-sm font-medium text-gray-700">TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)</label>
+              <div v-if="currentPage === 12">
+                <label class="block text-sm font-medium text-gray-700 truncate hover:overflow-visible hover:whitespace-normal"
+                    :title="'TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)'">
+                    TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/...)
+                </label>
                 <input class="w-full p-2 border rounded" v-model="profileData.learn_type" />
-              </div>
-              <div v-if="currentPage === 15">
-                <label class="block mb-1 text-sm font-medium text-gray-700">CONDUCTED/SPONSORED BY (WRITE IN FULL)</label>
+            </div>
+              <div v-if="currentPage === 12">
+                <label class="block text-sm font-medium text-gray-700">CONDUCTED/SPONSORED BY (WRITE IN FULL)</label>
                 <input class="w-full p-2 border rounded" v-model="profileData.learn_con" />
               </div>
+
+
+            <!-- Page 13 - Other Info - Recognition & Distinction -->
+            <h3 v-if="currentPage === 13" class="col-span-2 text-lg font-semibold text-gray-700">Recognition & Distinction </h3>
+            <div v-if="currentPage === 13">
+            <h2 class="mb-4 text-lg font-semibold">RECOGNITION & DISTINCTIONS</h2>
+            <div v-for="(recog, index) in recognitionList" :key="recog.recog_count" class="mb-4">
+                <label :for="'recog_name_' + index" class="block mb-1 text-sm font-medium text-gray-700">
+                Recognition & Distinction {{ index + 1 }}
+                </label>
+                <input :id="'recog_name_' + index" class="w-full p-2 border rounded" v-model="recognitionList[index].recog_name" placeholder="Enter Recognition or Distinction"/>
             </div>
-            <div v-if="currentPage === 16">
-              <h2 class="mb-4 text-lg font-semibold">RECOGNITION & DISTINCTIONS</h2>
-              <div v-if="currentPage === 16">
-                <label class="block mb-1 text-sm font-medium text-gray-700">RECOGNITION & DISTINCTIONS</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.recog_name" />
-              </div>
-            </div>
-            </div>
-            <!-- Pagination Buttons -->
-            <div class="mt-6 text-right">
-              <button v-if="currentPage > 1" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" @click="prevPage">Previous</button>
-              <button v-if="currentPage < totalPages" class="px-4 py-2 ml-4 text-white bg-blue-600 rounded hover:bg-blue-700" @click="nextPage">Next</button>
+            <div v-if="errorMessage" class="mt-2 text-red-500">{{ errorMessage }}</div>
             </div>
 
-            <!-- Modal Buttons -->
-            <div class="mt-6 text-right">
-              <button class="px-4 py-2 mr-4 text-white bg-red-600 rounded hover:bg-red-700" @click="hideEditModal">
-                CANCEL
-              </button>
-              <button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" @click="saveProfile">
-                SAVE
-             </button>
+            <!-- Page 14 - Other Info - Government IDs-->
+            <h3 v-if="currentPage === 14" class="col-span-2 text-lg font-semibold text-gray-700">Government IDs  </h3>
+              <div v-if="currentPage === 14">
+                <label class="block text-sm font-medium text-gray-700">GSIS ID</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.pb_no" />
+              </div>
+              <div v-if="currentPage === 14">
+                <label class="block text-sm font-medium text-gray-700">PAG-IBIG ID</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.pgbg_id" />
+              </div>
+              <div v-if="currentPage === 14">
+                <label class="block text-sm font-medium text-gray-700">PhilHealth ID</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.ph_lid" />
+              </div>
+              <div v-if="currentPage === 14">
+                <label class="block text-sm font-medium text-gray-700">SSS ID</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.sss_num" />
+              </div>
+              <div v-if="currentPage === 14">
+                <label class="block text-sm font-medium text-gray-700">TIN ID</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.tin_id" />
+              </div>
+              <!-- <div v-if="currentPage === 2">
+                <label class="block mb-1 text-sm font-medium text-gray-700">Agency Employee NO.</label>
+                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
+              </div> -->
+
+            </div>
+            <!-- Pagination and Modal Buttons -->
+            <div class="flex justify-between mt-6">
+                <div>
+                    <button v-if="currentPage > 1" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" @click="prevPage">Previous</button>
+                    <button v-if="currentPage < totalPages" class="px-4 py-2 ml-4 text-white bg-blue-600 rounded hover:bg-blue-700" @click="nextPage">Next</button>
+                </div>
+                <div>
+                    <button class="px-4 py-2 mr-4 text-white bg-red-600 rounded hover:bg-red-700" @click="hideEditModal">CANCEL</button>
+                    <button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" @click="saveProfile">SAVE</button>
+                </div>
             </div>
           </div>
         </div>
@@ -558,7 +582,7 @@ export default {
     residentialRegion: '',
     isEditModalVisible: false,
     currentPage: 1,
-    totalPages: 20,
+    totalPages: 14,
     isEditing: false,
     showUpdateDialog: false,
     showSuccessDialog: false,
@@ -574,6 +598,10 @@ export default {
     permanentProvinces: [], // For permanent address
     permanentCities: [], // For permanent address
     permanentBarangays: [], // For permanent address
+// new added 12/11
+    organizationList: [], // List of organizations dynamically populated
+    skillsList: [], // List to store skills dynamically
+    recognitionList: [], // List to store recognition & distinction data
   };
 },
 
@@ -837,19 +865,33 @@ watch: {
     },
 
     fetchOrganization(org_count, empid) {
-        const queryParam = org_count ? `org_count=${org_count}` : `empid=${empid}`;
-        axios
-            .get(`/api/get-organization-data?${queryParam}`)
-            .then((response) => {
-                if (response.data) {
-                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
-                    this.profileData.org_name = data.org_name;
+    const queryParam = org_count ? `org_count=${org_count}` : `empid=${empid}`;
+    axios
+        .get(`/api/get-organization-data?${queryParam}`)
+        .then((response) => {
+            if (response.data) {
+                // If the response is an array, populate the organization list
+                if (Array.isArray(response.data)) {
+                    this.organizationList = response.data.map((org) => ({
+                        org_count: org.org_count,
+                        org_name: org.org_name,
+                    }));
+                } else {
+                    // Handle a single organization response
+                    const data = response.data;
+                    this.organizationList = [
+                        {
+                            org_count: data.org_count,
+                            org_name: data.org_name,
+                        },
+                    ];
                 }
-            })
-            .catch((error) => {
-                console.error("Error fetching organization name:", error);
-            });
-    },
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching organization name:", error);
+        });
+},
 
     fetchWorkExperience(work_count, empid) {
         const queryParam = work_count ? `work_count=${work_count}` : `empid=${empid}`;
@@ -874,19 +916,34 @@ watch: {
     },
 
     fetchSkills(skill_count, empid) {
-        const queryParam = skill_count ? `skill_count=${skill_count}` : `empid=${empid}`;
-        axios
-            .get(`/api/get-skill-data?${queryParam}`)
-            .then((response) => {
-                if (response.data) {
-                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
-                    this.profileData.skill = data.skill;
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching skills:", error);
-            });
-    },
+    const queryParam = skill_count ? `skill_count=${skill_count}` : `empid=${empid}`;
+    axios
+      .get(`/api/get-skill-data?${queryParam}`)
+      .then((response) => {
+        if (response.data) {
+          // If the response is an array, populate the skills list
+          if (Array.isArray(response.data)) {
+            this.skillsList = response.data.map((skill) => ({
+              skill_count: skill.skill_count,
+              skill: skill.skill,
+            }));
+          } else {
+            // Handle a single skill response
+            const data = response.data;
+            this.skillsList = [
+              {
+                skill_count: data.skill_count,
+                skill: data.skill,
+              },
+            ];
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching skills:", error);
+        this.errorMessage = "Unable to fetch skills.";
+      });
+  },
 
     fetchReference(ref_count, empid) {
         const queryParam = ref_count ? `ref_count=${ref_count}` : `empid=${empid}`;
@@ -969,19 +1026,34 @@ watch: {
     },
 
     fetchRecognitionDistinction(recog_count, empid) {
-        const queryParam = recog_count ? `recog_count=${recog_count}` : `empid=${empid}`;
-        axios
-            .get(`/api/get-recogdist-data?${queryParam}`)
-            .then((response) => {
-                if (response.data) {
-                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
-                    this.profileData.recog_name = data.recog_name;
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching recognition and distinction name:", error);
-            });
-    },
+    const queryParam = recog_count ? `recog_count=${recog_count}` : `empid=${empid}`;
+    axios
+      .get(`/api/get-recogdist-data?${queryParam}`)
+      .then((response) => {
+        if (response.data) {
+          // If the response is an array, populate the recognition list
+          if (Array.isArray(response.data)) {
+            this.recognitionList = response.data.map((recog) => ({
+              recog_count: recog.recog_count,
+              recog_name: recog.recog_name,
+            }));
+          } else {
+            // Handle a single recognition response
+            const data = response.data;
+            this.recognitionList = [
+              {
+                recog_count: data.recog_count,
+                recog_name: data.recog_name,
+              },
+            ];
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching recognition and distinctions:", error);
+        this.errorMessage = "Unable to fetch recognition and distinctions.";
+      });
+  },
 
     fetchSSSId(sss_count, empid) {
         const queryParam = sss_count ? `sss_count=${sss_count}` : `empid=${empid}`;

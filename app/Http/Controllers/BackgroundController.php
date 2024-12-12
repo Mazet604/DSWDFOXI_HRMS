@@ -80,58 +80,67 @@ class BackgroundController extends Controller
 
 
     public function getOrganizationData(Request $request)
-    {
-        try {
-            // Retrieve query parameters
-            $org_count = $request->query('org_count');
-            $empid = $request->query('empid');
+{
+    try {
+        // Retrieve query parameters
+        $org_count = $request->query('org_count');
+        $empid = $request->query('empid');
 
-            if ($org_count) {
-                // Fetch specific organization data by `org_count`
-                $organizationData = emp_org::where('org_count', $org_count)
-                    ->select('org_count', 'org_name')
-                    ->first();
-
-                if (!$organizationData) {
-                    return response()->json(['error' => 'Organization data not found'], 404);
-                }
-
-                return response()->json($organizationData, 200);
-            }
-
-            if ($empid) {
-                // Admin-side request: Fetch organization data by `empid`
-                $organizationData = emp_org::where('empid', $empid)
-                    ->select('org_count', 'org_name')
-                    ->get();
-
-                if ($organizationData->isEmpty()) {
-                    return response()->json(['error' => 'Organization data not found'], 404);
-                }
-
-                return response()->json($organizationData, 200);
-            }
-
-            // User-side request: Fetch organization data for the authenticated user
-            $user = Auth::user();
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
-            }
-
-            $organizationData = emp_org::where('empid', $user->empid)
+        if ($org_count) {
+            // Fetch specific organization data by `org_count`
+            $organizationData = emp_org::where('org_count', $org_count)
                 ->select('org_count', 'org_name')
+                ->first();
+
+            if (!$organizationData) {
+                return response()->json(['error' => 'Organization data not found'], 404);
+            }
+
+            return response()->json($organizationData, 200);
+        }
+
+        if ($empid) {
+            // Fetch organization data by `empid`
+            $organizationData = emp_org::where('empid', $empid)
+                ->select('org_count', 'org_name')
+                ->orderBy('org_count', 'asc') // Ensure data is sorted
                 ->get();
 
             if ($organizationData->isEmpty()) {
                 return response()->json(['error' => 'Organization data not found'], 404);
             }
 
-            return response()->json($organizationData, 200);
+            // Add missing org_count logic for the frontend to display sequentially
+            $organizationData = $organizationData->map(function ($data, $index) {
+                $data->org_count = $index + 1; // Increment org_count starting from 1
+                return $data;
+            });
 
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json($organizationData, 200);
         }
+
+        // User-side request: Fetch organization data for the authenticated user
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        $organizationData = emp_org::where('empid', $user->empid)
+            ->select('org_count', 'org_name')
+            ->orderBy('org_count', 'asc') // Ensure data is sorted
+            ->get();
+
+        if ($organizationData->isEmpty()) {
+            return response()->json(['error' => 'Organization data not found'], 404);
+        }
+
+        return response()->json($organizationData, 200);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
 
 
     public function getWorkExperienceData(Request $request)
