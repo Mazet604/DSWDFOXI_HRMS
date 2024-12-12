@@ -121,7 +121,7 @@ Route::middleware(['auth'])->group(function () {
     // Admin side na gidungag nko
     Route::get('/api/get-employee-address', [EmployeeController::class, 'getEmployeeAddress']);
     //11/25
-    Route::get('/api/get-employee-address2', [AddressControllerII::class, 'getAddress2']);
+    Route::get('/api/get-employee-address2', [EmployeeController::class, 'getEmployeeAddress2']);
     Route::get('/api/get-spouse-details', [BackgroundController::class, 'getSpouse']);
     //11/30
     Route::get('/api/get-father-details', [BackgroundController::class, 'getFather']);
@@ -144,6 +144,8 @@ Route::middleware(['auth'])->group(function () {
     //12/09
     Route::get('/api/get-philhealthid-data', [OtherInfoController::class, 'getPhilHealthIdAdmin']);
     Route::get('/api/get-tinid-data', [OtherInfoController::class, 'getTINIdAdmin']);
+    //12/12
+    Route::get('/api/get-employee-other-info', [OtherInfoController::class, 'getOtherInfoData']);
 
     Route::get('/api/ext-options', [EmployeeController::class, 'ExtOptions']);
     Route::get('/api/sex-options', [EmployeeController::class, 'getSexOptions']);

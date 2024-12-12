@@ -539,6 +539,209 @@
                 <input class="w-full p-2 border rounded" v-model="profileData.emp" />
               </div> -->
 
+               <!-- OtherInfo Part -->
+            <div v-if="currentPage === 15" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
+    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
+    <div class="other-info">
+        <!-- First Section -->
+        <div class="columns">
+            <p class="mb-4"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed <span class="text-red-500">*</span></b></p>
+            <div class="form-group">
+                <label class="ml-2">a. within the third degree?</label>
+                <input class="ml-2" type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
+                <input class="ml-2" type="radio" v-model="otherInfo.other_34a" value="No" /> No
+            </div>
+            <div class="form-group">
+                <label class="ml-2">b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
+                <input class="ml-2" type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
+                <input class="ml-2" type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" :disabled="!(otherInfo.other_34b === 'Yes')" :class="{'bg-gray-200': otherInfo.other_34b !== 'Yes'}" />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_34b" value="No" @change="checkFields('other_34b')" /> No
+            </div>
+        </div>
+        <span class="block w-full h-px my-4 bg-gray-300"></span>
+        </div>
+      </div>
+      <div v-if="currentPage === 16" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
+    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
+    <div class="other-info">
+        <!-- Second Section -->
+        <div>
+            <p class="mb-4"><b>Have you ever been found guilty of any administrative offense? <span class="text-red-500">*</span></b></p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_35a" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input class="ml-2" type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" :disabled="!(otherInfo.other_35a === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35a !== 'Yes'}" />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_35a" value="No" @change="checkFields('other_35a')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+        </div>
+        <span class="block w-full h-px my-4 bg-gray-300"></span>
+
+        <!-- Third Section -->
+        <div>
+            <p class="mb-4"><b>Have you been criminally charged before any court? <span class="text-red-500">*</span></b></p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_35b" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input class="ml-2" type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}" />
+                <input class="ml-2" type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}" />
+                <input class="ml-2" type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}" />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_35b" value="No" @change="checkFields('other_35b')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+        </div>
+        <span class="block w-full h-px my-4 bg-gray-300"></span>
+    </div>
+    </div>
+    <div v-if="currentPage === 17" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
+    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
+    <div class="other-info"></div>
+
+        <!-- Section 36 -->
+        <div>
+            <p class="mb-4"><b>Have you ever been dismissed from the service for cause? <span class="text-red-500">*</span></b></p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_36" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input class="ml-2" type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" :disabled="!(otherInfo.other_36 === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_36 !== 'Yes'}" />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_36" value="No" @change="checkFields('other_36')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+        </div>
+                <!-- Section 37 -->
+                <div>
+            <p class="mb-4">
+                <b>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector? <span class="text-red-500">*</span></b>
+            </p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_37" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input
+                    class="ml-2"
+                    type="text"
+                    v-model="otherInfo.other_37if"
+                    placeholder="If YES, give details"
+                    :disabled="!(otherInfo.other_37 === 'Yes' && isEditingOtherInfo)"
+                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_37 !== 'Yes'}"
+                />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_37" value="No" @change="checkFields('other_37')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+        </div>
+        <span class="block w-full h-px my-4 bg-gray-300"></span>
+        </div>
+
+        <div v-if="currentPage === 18" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
+    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
+    <div class="other-info">
+        <!-- Section 38 -->
+        <div>
+            <p class="mb-4">
+                <b>Have you ever been a candidate in a national or local election held within the last year (except Barangay election)? <span class="text-red-500">*</span></b>
+            </p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_38a" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input
+                    class="ml-2"
+                    type="text"
+                    v-model="otherInfo.other_38aif"
+                    placeholder="If YES, give details"
+                    :disabled="!(otherInfo.other_38a === 'Yes' && isEditingOtherInfo)"
+                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_38a !== 'Yes'}"
+                />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_38a" value="No" @change="checkFields('other_38a')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+            <p class="mb-4">
+                <b>Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate? <span class="text-red-500">*</span></b>
+            </p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_38b" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input
+                    class="ml-2"
+                    type="text"
+                    v-model="otherInfo.resignedGovtServiceDetails"
+                    placeholder="If YES, give details"
+                    :disabled="!(otherInfo.other_38b === 'Yes' && isEditingOtherInfo)"
+                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_38b !== 'Yes'}"
+                />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_38b" value="No" @change="checkFields('other_38b')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+        </div>
+        <span class="block w-full h-px my-4 bg-gray-300"></span>
+    </div>
+    </div>
+
+    <div v-if="currentPage === 19" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
+    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
+    <div class="other-info">
+        <!-- Section 39 -->
+        <div>
+            <p class="mb-4">
+                <b>Have you acquired the status of an immigrant or permanent resident of another country? <span class="text-red-500">*</span></b>
+            </p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_39" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input
+                    class="ml-2"
+                    type="text"
+                    v-model="otherInfo.other_39if"
+                    placeholder="If YES, give details"
+                    :disabled="!(otherInfo.other_39 === 'Yes' && isEditingOtherInfo)"
+                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_39 !== 'Yes'}"
+                />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_39" value="No" @change="checkFields('other_39')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+        </div>
+        <span class="block w-full h-px my-4 bg-gray-300"></span>
+        </div>
+        </div>
+
+        <div v-if="currentPage === 20" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
+    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
+    <div class="other-info">
+        <!-- Section 40 -->
+        <div>
+            <p class="mb-4">
+                <b>a. Are you a member of any indigenous group?</b>
+            </p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_40a" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input
+                    class="ml-2"
+                    type="text"
+                    v-model="otherInfo.other_40aif"
+                    placeholder="If YES, please specify"
+                    :disabled="!(otherInfo.other_40a === 'Yes' && isEditingOtherInfo)"
+                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40a !== 'Yes'}"
+                />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_40a" value="No" @change="checkFields('other_40a')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+            <p class="mb-4">
+                <b>b. Are you a person with disability?</b>
+            </p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_40b" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input
+                    class="ml-2"
+                    type="text"
+                    v-model="otherInfo.other_40bif"
+                    placeholder="If YES, please specify ID No"
+                    :disabled="!(otherInfo.other_40b === 'Yes' && isEditingOtherInfo)"
+                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40b !== 'Yes'}"
+                />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_40b" value="No" @change="checkFields('other_40b')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+            <p class="mb-4">
+                <b>c. Are you a solo parent?</b>
+            </p>
+            <div class="form-group">
+                <input class="ml-2" type="radio" v-model="otherInfo.other_40c" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
+                <input
+                    class="ml-2"
+                    type="text"
+                    v-model="otherInfo.other_40cif"
+                    placeholder="If YES, please specify ID No"
+                    :disabled="!(otherInfo.other_40c === 'Yes' && isEditingOtherInfo)"
+                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40c !== 'Yes'}"
+                />
+                <input class="ml-2" type="radio" v-model="otherInfo.other_40c" value="No" @change="checkFields('other_40c')" :disabled="!isEditingOtherInfo" /> No
+            </div>
+        </div>
+
+    </div>
+            </div>
             </div>
             <!-- Pagination and Modal Buttons -->
             <div class="flex justify-between mt-6">
@@ -551,7 +754,7 @@
                     <button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" @click="saveProfile">SAVE</button>
                 </div>
             </div>
-          </div>
+            </div>
         </div>
       </div>
     </AdminLayout>
@@ -582,7 +785,7 @@ export default {
     residentialRegion: '',
     isEditModalVisible: false,
     currentPage: 1,
-    totalPages: 14,
+    totalPages: 20,
     isEditing: false,
     showUpdateDialog: false,
     showSuccessDialog: false,
@@ -602,6 +805,34 @@ export default {
     organizationList: [], // List of organizations dynamically populated
     skillsList: [], // List to store skills dynamically
     recognitionList: [], // List to store recognition & distinction data
+// new added 12/12
+otherInfo: {
+      other_34a: null,
+      other_34b: null,
+      other_34bif: '',
+      other_35a: null,
+      other_35aif: '',
+      other_35b: null,
+      other_35bif: '',
+      other_35bfiled: '',
+      other_35stat: '',
+      other_36: null,
+      other_36if: '',
+      other_37: null,
+      other_37if: '',
+      other_38a: null,
+      other_38aif: '',
+      other_38b: null,
+      other_38bif: '',
+      other_39: null,
+      other_39if: '',
+      other_40a: null,
+      other_40aif: '',
+      other_40b: null,
+      other_40bif: '',
+      other_40c: null,
+      other_40cif: ''
+      }
   };
 },
 
@@ -618,17 +849,27 @@ watch: {
     if (newVal) this.fetchBarangays(newVal, 'residential'); // Correct method
   },
   'profileData.permanentRegion2': function (newVal) {
-//   console.log(`Region changed to: ${newVal}`);
-  if (newVal) {
-    this.fetchProvinces(newVal, 'permanent');
-  }
+    if (newVal) {
+        this.fetchProvinces(newVal, 'permanent'); // Fetch provinces for the selected region
+    } else {
+        this.permanentProvinces = []; // Reset provinces if no region selected
+    }
 },
-  'profileData.permanentProvince2': function (newVal) {
-    if (newVal) this.fetchCities(newVal, 'permanent'); // Correct method
-  },
-  'profileData.permanentCity2': function (newVal) {
-    if (newVal) this.fetchBarangays(newVal, 'permanent'); // Correct method
-  },
+'profileData.permanentProvince2': function (newVal) {
+    if (newVal) {
+        this.fetchCities(newVal, 'permanent'); // Fetch cities for the selected province
+    } else {
+        this.permanentCities = []; // Reset cities if no province selected
+    }
+},
+'profileData.permanentCity2': function (newVal) {
+    if (newVal) {
+        this.fetchBarangays(newVal, 'permanent'); // Fetch barangays for the selected city
+    } else {
+        this.permanentBarangays = []; // Reset barangays if no city selected
+    }
+},
+
 },
 
 
@@ -774,24 +1015,37 @@ watch: {
     },
 
     fetchEmployeeAddress2(emp_count) {
-        axios
-            .get(`/api/get-employee-address2?emp_count=${emp_count}`) // Correct endpoint
-            .then((response) => {
-                if (response.data) {
-                    // Bind permanent address data to profileData object
-                    this.profileData.permanentRegion2 = response.data.Region2;
-                    this.profileData.permanentProvince2 = response.data.Province2;
-                    this.profileData.permanentCity2 = response.data.City2;
-                    this.profileData.permanentBarangay2 = response.data.Barangay2;
-                    this.profileData.permanentZipcode2 = response.data.zipcode2;
-                    this.profileData.permanentVillage2 = response.data.villsub2;
-                    this.profileData.permanentStreet2 = response.data.block2;
+    axios
+        .get(`/api/get-employee-address2?emp_count=${emp_count}`)
+        .then((response) => {
+            if (response.data) {
+                // Bind permanent address data to profileData object
+                this.profileData.permanentRegion2 = response.data.emp_region2;
+                this.profileData.permanentProvince2 = response.data.emp_prov2;
+                this.profileData.permanentCity2 = response.data.emp_city2;
+                this.profileData.permanentBarangay2 = response.data.emp_brgy2;
+                this.profileData.permanentZipcode2 = response.data.emp_zip2;
+                this.profileData.permanentVillage2 = response.data.emp_subd2;
+                this.profileData.permanentStreet2 = response.data.emp_house2;
+
+                // Fetch provinces, cities, and barangays based on fetched data
+                if (response.data.emp_region2) {
+                    this.fetchProvinces(response.data.emp_region2, 'permanent');
                 }
-            })
-            .catch((error) => {
-                console.error("Error fetching permanent address:", error);
-            });
-    },
+                if (response.data.emp_prov2) {
+                    this.fetchCities(response.data.emp_prov2, 'permanent');
+                }
+                if (response.data.emp_city2) {
+                    this.fetchBarangays(response.data.emp_city2, 'permanent');
+                }
+            } else {
+                console.error("No data received for the permanent address.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching permanent address:", error);
+        });
+},
 
     fetchSpouseDetails(emp_count) {
         axios
@@ -1055,6 +1309,8 @@ watch: {
       });
   },
 
+
+
     fetchSSSId(sss_count, empid) {
         const queryParam = sss_count ? `sss_count=${sss_count}` : `empid=${empid}`;
         axios
@@ -1124,6 +1380,43 @@ watch: {
         })
         .catch((error) => {
             console.error("Error fetching TIN ID:", error);
+        });
+},
+
+fetchOtherInfo(emp_count) {
+    axios
+        .get(`/api/get-employee-other-info?emp_count=${emp_count}`)
+        .then((response) => {
+            if (response.data) {
+                // Bind other information data to otherInfo object
+                this.otherInfo.other_34a = response.data.other_34a;
+                this.otherInfo.other_34b = response.data.other_34b;
+                this.otherInfo.other_34bif = response.data.other_34bif;
+                this.otherInfo.other_35a = response.data.other_35a;
+                this.otherInfo.other_35aif = response.data.other_35aif;
+                this.otherInfo.other_35b = response.data.other_35b;
+                this.otherInfo.other_35bif = response.data.other_35bif;
+                this.otherInfo.other_35bfiled = response.data.other_35bfiled;
+                this.otherInfo.other_35stat = response.data.other_35stat;
+                this.otherInfo.other_36 = response.data.other_36;
+                this.otherInfo.other_36if = response.data.other_36if;
+                this.otherInfo.other_37 = response.data.other_37;
+                this.otherInfo.other_37if = response.data.other_37if;
+                this.otherInfo.other_38a = response.data.other_38a;
+                this.otherInfo.other_38aif = response.data.other_38aif;
+                this.otherInfo.other_38b = response.data.other_38b;
+                this.otherInfo.other_39 = response.data.other_39;
+                this.otherInfo.other_39if = response.data.other_39if;
+                this.otherInfo.other_40a = response.data.other_40a;
+                this.otherInfo.other_40aif = response.data.other_40aif;
+                this.otherInfo.other_40b = response.data.other_40b;
+                this.otherInfo.other_40bif = response.data.other_40bif;
+                this.otherInfo.other_40c = response.data.other_40c;
+                this.otherInfo.other_40cif = response.data.other_40cif;
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching other information:', error);
         });
 },
 
@@ -1280,6 +1573,7 @@ watch: {
         this.currentPage--;
       }
     },
+
     saveProfile() {
     this.isLoading = true;  // Show loading state
     axios

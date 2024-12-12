@@ -16,6 +16,16 @@
           />
         </div>
         <div class="form-group">
+            <label for="position">Position:</label>
+            <input
+              v-model="newAccount.position"
+              type="text"
+              id="position"
+              placeholder="Enter Position"
+              required
+            />
+          </div>
+        <div class="form-group">
           <label for="empmail">Email:</label>
           <input
             v-model="newAccount.empmail"
@@ -96,6 +106,7 @@ export default {
         empmail: "",
         empuser: "",
         emppass: "",
+        position: "",
       },
     };
   },

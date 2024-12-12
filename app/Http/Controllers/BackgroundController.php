@@ -36,47 +36,64 @@ class BackgroundController extends Controller
     }
 
     public function getEducationData(Request $request)
-    {
-        try {
-            $educ_count = $request->query('educ_count');
-            $empid = $request->query('empid');
+{
+    try {
+        $educ_count = $request->query('educ_count');
+        $empid = $request->query('empid');
 
-            if ($educ_count) {
-                // Fetch specific education data by `educ_count`
-                $educationData = Education::where('educ_count', $educ_count)->first();
+        $fieldsToFetch = [
+            'educ_level',
+            'educ_school',
+            'educ_degree',
+            'educ_from',
+            'educ_year_grad',
+            'educ_academic_honor',
+            'educ_hl_earned'
+        ];
 
-                if (!$educationData) {
-                    return response()->json(['error' => 'Education data not found'], 404);
-                }
+        if ($educ_count) {
+            // Fetch specific education data by `educ_count`
+            $educationData = Education::select($fieldsToFetch)
+                ->where('educ_count', $educ_count)
+                ->first();
 
-                return response()->json($educationData, 200);
+            if (!$educationData) {
+                return response()->json(['error' => 'Education data not found'], 404);
             }
 
-            if ($empid) {
-                // Admin-side or custom request: Fetch education data by `empid`
-                $educationData = Education::where('empid', $empid)->get();
+            return response()->json($educationData, 200);
+        }
 
-                if ($educationData->isEmpty()) {
-                    return response()->json(['error' => 'Education data not found'], 404);
-                }
-
-                return response()->json($educationData, 200);
-            }
-
-            // User-side request (authenticated user)
-            $authenticatedEmpid = Auth::user()->empid; // For user-specific data
-            $educationData = Education::where('empid', $authenticatedEmpid)->get();
+        if ($empid) {
+            // Admin-side or custom request: Fetch education data by `empid`
+            $educationData = Education::select($fieldsToFetch)
+                ->where('empid', $empid)
+                ->get();
 
             if ($educationData->isEmpty()) {
                 return response()->json(['error' => 'Education data not found'], 404);
             }
 
             return response()->json($educationData, 200);
-
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
         }
+
+        // User-side request (authenticated user)
+        $authenticatedEmpid = Auth::user()->empid; // For user-specific data
+        $educationData = Education::select($fieldsToFetch)
+            ->where('empid', $authenticatedEmpid)
+            ->get();
+
+        if ($educationData->isEmpty()) {
+            return response()->json(['error' => 'Education data not found'], 404);
+        }
+
+        return response()->json($educationData, 200);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
 
 
     public function getOrganizationData(Request $request)

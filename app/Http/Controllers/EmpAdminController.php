@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class EmpAdminController extends Controller
 {
@@ -29,6 +30,18 @@ class EmpAdminController extends Controller
         'empuser' => $request->empuser,
         'emppass' => Hash::make($request->emppass),
         'user_type' => 0, // Default value for user_type
+    ]);
+
+    $lastEmpCount = DB::table('employee')->max('emp_count');
+    $newEmpCount = $lastEmpCount ? $lastEmpCount + 1 : 1;
+
+    // Save to employee table
+    DB::table('employee')->insert([
+        'emp_count' => $newEmpCount,
+        'empid' => $request->empid,
+        'emp_position' => $request->position,
+        'created_at' => now(),
+        'updated_at' => now(),
     ]);
 
     return response()->json(['message' => 'Account created successfully!']);

@@ -386,6 +386,20 @@ public function getEmployeeAddress(Request $request)
     return response()->json($emp_address);
 }
 
+public function getEmployeeAddress2(Request $request)
+{
+    $emp_count = $request->query('emp_count');
+
+    // Fetch address based on emp_count
+    $emp_address2 = EmpAddress2::where('emp_count', $emp_count)->first();
+
+    if (!$emp_address2) {
+        return response()->json(['error' => 'Address not found'], 404);
+    }
+
+    return response()->json($emp_address2);
+}
+
 //admin
 public function updateEditProfile(Request $request, $empid)
 {
