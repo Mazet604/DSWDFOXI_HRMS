@@ -1,63 +1,66 @@
 <template>
     <AdminLayout>
         <div>
-            <!-- Custom Tabs for Admin Dashboard -->
-            <div class="flex justify-end -mb-px">
-                <button @click="activeTab = 'overview'" :class="tabButtonClass('overview')">OVERVIEW</button>
-                <button @click="activeTab = 'demographic'" :class="tabButtonClass('demographic')">DEMOGRAPHIC</button>
-            </div>
+            <h1 class="pb-2 mb-4 text-3xl font-bold text-blue-800 border-b border-yellow-200">QUICK ANALYTICS</h1>
 
-            <!-- Overview Tab -->
-            <div v-if="activeTab === 'overview'">
-                <h1>Admin Dashboard - Overview</h1>
-                <div class="dashboard-grid-overview">
-                    <!-- Left Column -->
-                    <div class="left-column">
-                        <!-- Total Employees Card -->
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Total number of Employees:</h5>
-                                <h1 class="card-text">{{ totalEmployees }}</h1>
-                            </div>
-                        </div>
-
-                        <!-- Gender Distribution Card -->
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Gender Distribution</h5>
-                                <canvas id="genderChart"></canvas>
-                            </div>
-                        </div>
+            <!-- Overview Section -->
+            <div class="grid grid-cols-3 gap-8 mb-12">
+                <!-- Left Column -->
+                <div class="flex flex-col col-span-1">
+                    <!-- Total Employees Card -->
+                    <div class="p-6 mb-6 text-center bg-white border-2 rounded-lg shadow">
+                        <h5 class="mb-4 text-lg font-semibold">Total number of Employees:</h5>
+                        <h1 class="text-6xl font-bold text-blue-600">{{ totalEmployees }}</h1>
                     </div>
 
-                    <!-- Right Column: Civil Status Distribution Card -->
-                    <div class="card civil-status-card">
-                        <div class="card-body">
-                            <h5 class="card-title">Civil Status Distribution</h5>
-                            <canvas id="civilStatusChart"></canvas>
-                        </div>
+                    <!-- Gender Distribution Card -->
+                    <div class="p-6 bg-white border-2 rounded-lg shadow">
+                        <h5 class="mb-4 text-lg font-semibold">Gender Distribution</h5>
+                        <canvas id="genderChart" class="w-full h-80"></canvas>
                     </div>
+                </div>
+
+                <!-- Right Column: Civil Status Distribution Card -->
+                <div class="col-span-2 p-12 bg-white border-2 rounded-lg shadow"  style="height: 733px;">
+                    <h5 class="mb-4 text-lg font-semibold">Civil Status Distribution</h5>
+                    <canvas id="civilStatusChart" class="w-full h-full"></canvas>
                 </div>
             </div>
 
-            <!-- Demographic Tab -->
-            <div v-show="activeTab === 'demographic'" class="flex flex-col items-center">
-                <h1>Admin Dashboard - Demographic</h1>
+            <div>
 
-                <!-- Centered Card with Buttons -->
-                <div class="card centered-card">
-                    <div class="card-body">
-                        <div class="flex justify-between mb-4">
-                            <!-- Buttons to switch between Barangay, City, Province, and Region charts -->
-                            <button @click="fetchEmployeeAddressData('barangay')" :class="demographicButtonClass('barangay')">Barangay</button>
-                            <button @click="fetchEmployeeAddressData('city')" :class="demographicButtonClass('city')">City</button>
-                            <button @click="fetchEmployeeAddressData('province')" :class="demographicButtonClass('province')">Province</button>
-                            <button @click="fetchEmployeeAddressData('region')" :class="demographicButtonClass('region')">Region</button>
-                        </div>
+                <div class="p-12 bg-white border-2 rounded-lg shadow">
+                    <h2 class="mb-6 text-xl font-bold text-center">DEMOGRAPHICS</h2>
 
-                        <!-- Single Canvas for Demographic Chart -->
-                        <canvas id="demographicChart"></canvas>
-                    </div>
+                    <div class="flex justify-center mb-6">
+                    <!-- Buttons to switch between Barangay, City, Province, and Region charts -->
+                    <button
+                        @click="fetchEmployeeAddressData('barangay')"
+                        :class="demographicButtonClass('barangay')"
+                    >
+                        Barangay
+                    </button>
+                    <button
+                        @click="fetchEmployeeAddressData('city')"
+                        :class="demographicButtonClass('city')"
+                    >
+                        City
+                    </button>
+                    <button
+                        @click="fetchEmployeeAddressData('province')"
+                        :class="demographicButtonClass('province')"
+                    >
+                        Province
+                    </button>
+                    <button
+                        @click="fetchEmployeeAddressData('region')"
+                        :class="demographicButtonClass('region')"
+                    >
+                        Region
+                    </button>
+                </div>
+                    <!-- Single Canvas for Demographic Chart -->
+                    <canvas id="demographicChart" class="w-full h-96"></canvas>
                 </div>
             </div>
         </div>
@@ -156,7 +159,7 @@ export default {
                     labels: ['Male', 'Female'],
                     datasets: [{
                         data: [this.maleEmployees, this.femaleEmployees],
-                        backgroundColor: ['#36A2EB', '#FF6384'],
+                        backgroundColor: ['#007BFF', '#FF4081'],
                     }],
                 },
             });
@@ -171,12 +174,12 @@ export default {
             }
 
             const civilStatusColors = {
-                'Single': '#36A2EB',
-                'Married': '#FF6384',
-                'Separated': '#4CAF50',
-                'Widowed': '#000000',
-                'Divorced': '#A9A9A9',
-                'Unknown Status': '#CCCCCC'
+                'Single': '#007BFF',        // Deep Blue (Male color adapted for Single)
+                'Married': '#FF4081',       // Vivid Pink (Female color adapted for Married)
+                'Separated': '#36A2EB',     // Light Blue
+                'Widowed': '#FF6384',       // Soft Pink
+                'Divorced': '#4CAF50',      // Green
+                'Unknown Status': '#A9A9A9' // Grey
             };
 
             const backgroundColors = Object.keys(this.civilStatusData).map(status => civilStatusColors[status] || '#CCCCCC');
@@ -194,6 +197,9 @@ export default {
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Allow canvas to expand based on the container
+                    animation: false,
                     plugins: {
                         legend: {
                             display: true,
@@ -215,7 +221,10 @@ export default {
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: { display: false }
+                            ticks: { display: true } // Show y-axis ticks
+                        },
+                        x: {
+                            ticks: { display: true } // Show x-axis ticks
                         }
                     }
                 }
@@ -258,13 +267,14 @@ export default {
                     datasets: [{
                         label: 'Number of Employees',
                         data: data,
-                        backgroundColor: '#36A2EB',
-                        borderColor: '#36A2EB',
+                        backgroundColor: '#007BFF',
+                        borderColor: '#007BFF',
                         borderWidth: 1,
                     }],
                 },
                 options: {
                     indexAxis: 'y',
+                    animation: false,
                     scales: {
                         x: {
                             beginAtZero: true,
@@ -298,65 +308,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-/* Overview panel styling */
-.dashboard-grid-overview {
-  display: grid;
-  grid-template-columns: 1fr 2fr; /* Left column smaller than right */
-  gap: 20px; /* Space between the columns */
-}
-
-.left-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.card {
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.card-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.card-title {
-  font-size: 1.5em;
-  margin-bottom: 10px;
-}
-
-.card-text {
-  font-size: 40px;
-}
-
-.civil-status-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.centered-card {
-  margin-top: 40px;
-  width: 60%;
-  padding: 20px;
-  text-align: center;
-  border: 2px solid #000;
-  border-radius: 12px;
-}
-
-button {
-  border-bottom: 2px solid transparent;
-  margin-right: 4px;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-</style>

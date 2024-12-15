@@ -10,7 +10,12 @@ class emp_org extends Model
     use HasFactory;
 
     protected $table = 'emp_org';
-    protected $primaryKey = 'org_count'; 
+    protected $primaryKey = 'org_count';
+
+    protected $fillable = [
+        'empid',
+        'org_name',
+    ];
 
     public function emp_org()
     {

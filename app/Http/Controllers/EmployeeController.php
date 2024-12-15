@@ -416,4 +416,51 @@ public function updateEditProfile(Request $request, $empid)
     return response()->json(['message' => 'Profile updated successfully']);
 }
 
+//12/15
+public function updateEditAddress(Request $request, $empid)
+{
+    logger('Received empid: ' . $empid);
+    logger('Request Data: ' . json_encode($request->all()));
+
+    // Fetch the emp_count using the empid
+    $employee = Employee::where('empid', $empid)->first();
+
+    if (!$employee) {
+        logger('Employee not found for empid: ' . $empid);
+        return response()->json(['message' => 'Employee not found'], 404);
+    }
+
+    $emp_count = $employee->emp_count; // Get the corresponding emp_count
+    logger('Resolved emp_count: ' . $emp_count);
+
+    // Fetch the residential address using emp_count
+    $residentialAddress = EmpAddress::where('emp_count', $emp_count)->first();
+    if (!$residentialAddress) {
+        logger('Residential address not found for emp_count: ' . $emp_count);
+        return response()->json(['message' => 'Residential address not found'], 404);
+    }
+
+    // Update the residential address
+    $residentialAddress->update($request->only([
+        'emp_house', 'emp_subd', 'emp_brgy', 'emp_city', 'emp_prov', 'emp_region', 'emp_zip'
+    ]));
+
+    // Fetch the permanent address using emp_count
+    $permanentAddress = EmpAddress2::where('emp_count', $emp_count)->first();
+    if (!$permanentAddress) {
+        logger('Permanent address not found for emp_count: ' . $emp_count);
+        return response()->json(['message' => 'Permanent address not found'], 404);
+    }
+
+    // Update the permanent address
+    $permanentAddress->update($request->only([
+        'emp_house2', 'emp_subd2', 'emp_brgy2', 'emp_city2', 'emp_prov2', 'emp_region2', 'emp_zip2'
+    ]));
+
+    logger('Addresses updated successfully for empid: ' . $empid);
+    return response()->json(['message' => 'Addresses updated successfully']);
+}
+
+
+
 }

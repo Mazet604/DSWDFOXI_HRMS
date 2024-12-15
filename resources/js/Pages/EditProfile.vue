@@ -1,764 +1,815 @@
 <template>
     <AdminLayout>
-      <div class="relative z-10">
-        <!-- Profile Search Section -->
-        <div class="w-full p-8 bg-white rounded-lg shadow-lg">
-          <h1 class="mb-6 text-2xl font-bold">Employee Profile</h1>
+        <div class="relative z-10">
+            <!-- Profile Search Section -->
 
-          <div class="relative mb-4 search-bar">
-            <div class="flex items-center">
-              <span class="p-2 bg-gray-200 rounded-l">11-</span>
-              <input
-                type="text"
-                class="w-full p-2 border rounded-r"
-                placeholder="Enter 4-digit Employee ID..."
-                v-model="searchQuery"
-                @input="validateInput"
-                maxlength="4"
-              />
+                <div class="w-full p-8 bg-white rounded-lg shadow-lg">
+                <h1 class="pb-2 mb-4 text-3xl font-bold text-blue-800 border-b border-yellow-200">EMPLOYEE PROFILE</h1>
+                <!-- Search Bar -->
+                <div class="relative items-center w-1/4 mb-4 search-bar">
+                    <div class="flex items-center border border-gray-300 rounded">
+                        <!-- Prefix Section -->
+                        <div class="flex items-center p-3 text-sm font-semibold text-white bg-blue-800 rounded-l">
+                            11<span class="ml-1 text-gray-200 whitespace-nowrap"> — </span>
+                        </div>
+                        <!-- Input Field -->
+                        <input
+                            type="text"
+                            class="w-full p-2 rounded-r focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            placeholder="Enter 4-digit Employee ID..."
+                            v-model="searchQuery"
+                            @input="validateInput"
+                            maxlength="4"
+                        />
+                    </div>
+                </div>
+
+                <button
+                    class="p-4 py-2 font-semibold text-white bg-blue-800 rounded text-md hover:bg-blue-700"
+                    @click="search(searchQuery)"
+                >
+                    find ID
+                </button>
+
+                <!-- Error Message -->
+                <div v-if="errorMessage" class="mt-4 text-red-600">
+                    {{ errorMessage }}
+                </div>
+
+                <!-- Employee Data Table -->
+                <div v-if="profileData" class="mt-6">
+                <h2 class="text-xl font-bold">Search Result</h2>
+                <DataTable
+                    :value="[profileData]"
+                    selectionMode="single"
+                    dataKey="empid"
+                    @row-click="showEditModal"
+                    tableStyle="min-width: 100%;"
+                    class="mt-4 border border-gray-300"
+                >
+                    <Column
+                    field="empid"
+                    header="EMPLOYEE ID"
+                    headerStyle="background-color: #1E40AF; color: white; text-align: center;"
+                    ></Column>
+                    <!-- Combine First Name and Last Name into Full Name -->
+                    <Column
+                    header="EMPLOYEE NAME"
+                    headerStyle="background-color: #1E40AF; color: white; text-align: center;"
+                    >
+                    <template #body="slotProps">
+                        {{ slotProps.data.emp_fname }} {{ slotProps.data.emp_lname }}
+                    </template>
+                    </Column>
+                    <Column
+                    field="emp_position"
+                    header="POSITION"
+                    headerStyle="background-color: #1E40AF; color: white; text-align: center;"
+                    ></Column>
+                </DataTable>
+                </div>
             </div>
-          </div>
+            <div v-if="isEditModalVisible" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                        <div class="relative p-6 bg-white rounded-lg shadow-lg modal">
+                            <!-- Close Button -->
+                            <button
+                                class="absolute text-4xl font-bold text-gray-500 top-2 right-4 hover:text-gray-800"
+                                @click="handleCloseModal"
+                                aria-label="Close">
+                                &times;
+                            </button>
 
-          <button class="p-2 text-white bg-blue-600 rounded hover:bg-blue-700" @click="search(searchQuery)">
-            SEARCH
-          </button>
+                        <!-- Modal Header -->
+                        <div class="pb-4 mb-4 border-b">
+                            <h2 class="text-2xl font-bold text-gray-800">Edit Employee Details</h2>
+                        </div>
+                    <!-- Tabs Navigation -->
+                    <div class="mb-4">
+                        <button @click="activeMainTab = 0" :class="mainTabButtonClass(0)">PERSONAL</button>
+                        <button @click="activeMainTab = 1" :class="mainTabButtonClass(1)">BACKGROUND</button>
+                        <button @click="activeMainTab = 2" :class="mainTabButtonClass(2)">OTHER INFO</button>
+                    </div>
+                    <!-- PERSONAL Tab -->
+                    <div v-if="activeMainTab === 0">
+                        <div class="flex justify-end -mb-px">
+                            <button @click="activeSubTab = 0" :class="subTabButtonClass(0)">PERSONAL INFORMATION</button>
+                            <button @click="activeSubTab = 1" :class="subTabButtonClass(1)">ADDRESS</button>
+                        </div>
+                        <div v-if="activeSubTab === 0" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <!-- PERSONAL INFORMATION CONTENT-->
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">PERSONAL INFORMATION</h2>
 
-          <div v-if="errorMessage" class="mt-4 text-red-600">
-            {{ errorMessage }}
-          </div>
+                            <div class="grid grid-cols-4 gap-4 mb-6">
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">SURNAME <span style="color: red;">*</span></label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.emp_lname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">FIRST NAME <span style="color: red;">*</span></label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.emp_fname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.emp_mname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">SUFFIX</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.emp_ext">
+                                        <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">{{ ext.text }}</option>
+                                    </select>
+                                </div>
 
-          <div v-if="profileData" class="mt-6">
-            <h2 class="text-xl font-bold">Employee Details:</h2>
-            <p><strong>ID:</strong> {{ profileData.empid }}</p>
-            <p><strong>Name:</strong> {{ profileData.emp_fname }} {{ profileData.emp_lname }}</p>
-            <p><strong>Position:</strong> {{ profileData.emp_position }} </p>
+                            </div>
 
-            <!-- Edit Button -->
-            <button class="p-2 mt-4 text-white bg-blue-600 rounded hover:bg-blue-700" @click="showEditModal">
-              EDIT
-            </button>
-          </div>
+                            <div class="grid grid-cols-4 gap-4 mb-6">
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">DATE OF BIRTH <span style="color: red;">*</span></label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="date" v-model="profileData.emp_dob" />
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">PLACE OF BIRTH</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.emp_pob" />
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">SEX <span style="color: red;">*</span></label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.emp_sex">
+                                        <option v-for="sex in sexOptions" :key="sex.value" :value="sex.value">{{ sex.text }}</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">CIVIL STATUS <span style="color: red;">*</span></label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.emp_civ_stat">
+                                        <option v-for="status in civilStatusOptions" :key="status.value" :value="status.value">{{ status.text }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-4 gap-4 mb-6">
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">HEIGHT (CM) <span style="color: red;">*</span></label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.emp_height" />
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">WEIGHT (KG) <span style="color: red;">*</span></label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.emp_weight" />
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">BLOOD TYPE</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.emp_blood">
+                                        <option v-for="type in bloodTypeOptions" :key="type.value" :value="type.value">{{ type.text }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CONTACT INFORMATION</h2>
+                            <div class="grid grid-cols-4 gap-4 mb-6">
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">MOBILE NUMBER <span style="color: red;">*</span></label>
+                                    <div class="flex items-center">
+                                    <span class="p-2 bg-gray-200 border border-gray-300 rounded-l-md" style="color:#707A88;">+63</span>
+                                    <input class="w-5 p-2 border rounded" v-model="profileData.emp_cnum" />
+                                </div>
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-sm font-bold text-gray-700">TELEPHONE NUMBER <span style="color: red;">*</span></label>
+                                    <input class="w-full p-2 border rounded" v-model="profileData.emp_telnum" />
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end space-x-4">
+                                    <button @click="saveProfile" class="px-4 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">SAVE</button>
+                                </div>
+                        </div>
+                        <div v-if="activeSubTab === 1" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <!-- ADDRESS CONTENT-->
+                        <!-- Residential Address -->
+                        <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">RESIDENTIAL ADDRESS</h2>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">REGION <span style="color: red;">*</span></label>
+                                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.residentialRegion" @change="fetchProvinces(profileData.residentialRegion, 'residential')">
+                                    <option v-for="region in regions" :key="region.reg_psgc" :value="region.reg_psgc">{{ region.col_region }}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">PROVINCE <span style="color: red;">*</span></label>
+                                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.residentialProvince" @change="fetchCities(profileData.residentialProvince, 'residential')">
+                                    <option v-for="province in provinces" :key="province.prv_psgc" :value="province.prv_psgc">{{ province.col_province }}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">CITY <span style="color: red;">*</span></label>
+                                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.residentialCity" @change="fetchBarangays(profileData.residentialCity, 'residential')">
+                                    <option v-for="city in cities" :key="city.citmun_psgc" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">BARANGAY <span style="color: red;">*</span></label>
+                                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.residentialBarangay">
+                                    <option v-for="barangay in barangays" :key="barangay.brgy_psgc" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">ZIP CODE <span style="color: red;">*</span></label>
+                                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="profileData.residentialZipcode" />
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">VILLAGE/SUBDIVISION</label>
+                                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="profileData.residentialVillage" />
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
+                                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="profileData.residentialStreet" />
+                            </div>
+                        </div>
+
+                        <!-- Permanent Address -->
+                        <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">PERMANENT ADDRESS</h2>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">REGION <span style="color: red;">*</span></label>
+                                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.permanentRegion2" @change="fetchProvinces(profileData.permanentRegion2, 'permanent')">
+                                    <option v-for="region in regions" :key="region.reg_psgc" :value="region.reg_psgc">{{ region.col_region }}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">PROVINCE <span style="color: red;">*</span></label>
+                                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.permanentProvince2" @change="fetchCities(profileData.permanentProvince2, 'permanent')">
+                                    <option v-for="province in permanentProvinces" :key="province.prv_psgc" :value="province.prv_psgc">{{ province.col_province }}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">CITY <span style="color: red;">*</span></label>
+                                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.permanentCity2" @change="fetchBarangays(profileData.permanentCity2, 'permanent')">
+                                    <option v-for="city in permanentCities" :key="city.citmun_psgc" :value="city.citmun_psgc">{{ city.col_citymuni }}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">BARANGAY <span style="color: red;">*</span></label>
+                                <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.permanentBarangay2">
+                                    <option v-for="barangay in permanentBarangays" :key="barangay.brgy_psgc" :value="barangay.brgy_psgc">{{ barangay.col_brgy }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">ZIP CODE <span style="color: red;">*</span></label>
+                                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="profileData.permanentZipcode2" />
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">VILLAGE/SUBDIVISION</label>
+                                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="profileData.permanentVillage2" />
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
+                                <input class="w-full p-2 border border-gray-300 rounded-md addgrid" type="text" v-model="profileData.permanentStreet2" />
+                            </div>
+                        </div>
+                        <div class="flex justify-end space-x-4">
+                                    <button @click="saveProfile" class="px-4 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">SAVE</button>
+                                </div>
+                    </div>
+                </div>
+                    <!-- BACKGROUND Tab -->
+                    <div v-if="activeMainTab === 1">
+                        <div class="flex justify-end -mb-px">
+                            <button @click="activeSubTab = 0" :class="subTabButtonClass(0)">FAMILY</button>
+                            <button @click="activeSubTab = 1" :class="subTabButtonClass(1)">EDUCATION</button>
+                            <button @click="activeSubTab = 2" :class="subTabButtonClass(2)">ORGANIZATION</button>
+                            <button @click="activeSubTab = 3" :class="subTabButtonClass(3)">WORK EXPERIENCE</button>
+                            <button @click="activeSubTab = 4" :class="subTabButtonClass(4)">SKILLS</button>
+                            <button @click="activeSubTab = 5" :class="subTabButtonClass(5)">REFERENCES</button>
+                        </div>
+                        <!-- FAMILY Sub-Tab -->
+                        <div v-if="activeSubTab === 0" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
+                            <!-- SPOUSE SECTION -->
+                            <div class="grid grid-cols-5 gap-4">
+                                <div class="col-span-5 pb-2 mb-1 text-blue-800 border-b border-yellow-200">
+                                    <h1 class="text-lg font-bold">SPOUSE</h1>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.spouse_lname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.spouse_fname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.spouse_mname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.spouse_xname">
+                                        <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">{{ ext.text }}</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">OCCUPATION</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.spouse_occup" />
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">EMPLOYER'S/BUSINESS NAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.spouse_office" />
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">BUSINESS ADDRESS</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.spouse_busadd" />
+                                </div>
+                                <div class="col-span-1">
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">TEL. NO.</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.spouse_tel" />
+                                </div>
+                            </div>
+
+                            <!-- FATHER SECTION -->
+                            <div class="grid grid-cols-5 gap-4 mt-6">
+                                <div class="col-span-5 pb-2 mb-1 text-blue-800 border-b border-yellow-200">
+                                    <h1 class="text-lg font-bold">FATHER</h1>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.father_lname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.father_fname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.father_mname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-md" v-model="profileData.father_xname">
+                                        <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">{{ ext.text }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- MOTHER SECTION -->
+                            <div class="grid grid-cols-5 gap-4 mt-6">
+                                <div class="col-span-5 pb-2 mb-1 text-blue-800 border-b border-yellow-200">
+                                    <h1 class="text-lg font-bold">MOTHER</h1>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">SURNAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.mother_lname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.mother_fname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.mother_mname" />
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">MAIDEN NAME</label>
+                                    <input class="w-full p-2 border border-gray-300 rounded-md" type="text" v-model="profileData.maidenname" />
+                                </div>
+                            </div>
+                            <div class="flex justify-end space-x-4">
+                                    <button @click="saveProfile" class="px-4 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">SAVE</button>
+                                </div>
+                        </div>
+                        <!-- Education -->
+                        <div v-if="activeSubTab === 1" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">EDUCATION</h2>
+                            <DataTable :value="educationList" class="mt-8" @row-click="openEditModal('education', $event.data)" :paginator="true" :rows="5">
+                                <Column field="educ_count" header="EDUCATION ID" style="display: none;"></Column> <!-- Ensure educ_count is included in the table -->
+                                <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
+                                <Column field="educ_school" header="NAME OF SCHOOL"></Column>
+                                <Column field="educ_degree" header="BASIC EDUCATION | DEGREE | COURSE"></Column>
+                                <Column field="educ_from" header="DATE ENROLLED"></Column>
+                                <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED"></Column>
+                                <Column field="educ_year_grad" header="YEAR GRADUATED"></Column>
+                                <Column field="educ_academic_honor" header="SCHOLARSHIPS & ACADEMIC EXCELLENCE"></Column>
+                            </DataTable>
+                        </div>
+                        <!-- Organization -->
+                        <div v-if="activeSubTab === 2" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">ORGANIZATIONS</h2>
+                            <DataTable :value="organizationList" class="mt-8" @row-click="openEditModal('organization', $event.data)" :paginator="true" :rows="5">
+                                <Column field="org_count" header="ORGANIZATION ID" style="display: none;"></Column> <!-- Ensure org_count is included in the table -->
+                                <Column field="org_name"></Column>
+                            </DataTable>
+                        </div>
+                        <!-- Work Experience -->
+                        <div v-if="activeSubTab === 3" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">WORK EXPERIENCE</h2>
+                            <DataTable :value="workExperienceList" class="mt-8" @row-click="openEditModal('workExperience', $event.data)" :paginator="true" :rows="5">
+                                <Column field="work_count" header="WORK EXP ID" style="display: none;"></Column> <!-- Ensure work_count is included in the table -->
+                                <Column field="workfr" header="WORK FROM"></Column>
+                                <Column field="workto" header="WORK TO"></Column>
+                                <Column field="work_pos" header="POSITION"></Column>
+                                <Column field="work_dept" header="DEPARTMENT | AGENCY | OFFICE | COMPANY"></Column>
+                                <Column field="work_salary" header="MONTHLY SALARY"></Column>
+                                <Column field="work_salarygrade" header="SALARY GRADE"></Column>
+                                <Column field="work_stat" header="STATUS OF APPOINTMENT"></Column>
+                                <Column field="work_gov" header="GOV'T SERVICE"></Column>
+                            </DataTable>
+                        </div>
+                        <!-- Skills -->
+                        <div v-if="activeSubTab === 4" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">SKILLS</h2>
+                            <DataTable :value="skillsList" class="mt-8" @row-click="openEditModal('skills', $event.data)" :paginator="true" :rows="5">
+                                <Column field="skill"></Column>
+                            </DataTable>
+                        </div>
+                        <!-- References Tab -->
+                        <div v-if="activeSubTab === 5" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">REFERENCES</h2>
+                            <DataTable :value="referencesList" class="mt-8" @row-click="openEditModal('references', $event.data)" :paginator="true" :rows="5">
+                                <Column field="full_name" header="FULL NAME"></Column>
+                                <Column field="ref_add" header="BLOCK | STREET | PUROK"></Column>
+                                <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
+                            </DataTable>
+                        </div>
+                    </div>
+                    <!-- OTHER INFO Tab -->
+                    <div v-if="activeMainTab === 2">
+                        <div class="flex justify-end -mb-px">
+                            <button @click="activeSubTab = 0" :class="subTabButtonClass(0)">CS ELIGIBILITY</button>
+                            <button @click="activeSubTab = 1" :class="subTabButtonClass(1)">VOLUNTARY WORK</button>
+                            <button @click="activeSubTab = 2" :class="subTabButtonClass(2)">LEARNING & DEVELOPMENT</button>
+                            <button @click="activeSubTab = 3" :class="subTabButtonClass(3)">RECOGNITION & DISTINCTION</button>
+                            <button @click="activeSubTab = 4" :class="subTabButtonClass(4)">GOVERNMENT ID</button>
+                        </div>
+                    <!-- CS Eligibility -->
+                    <div v-if="activeSubTab === 0" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                        <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CS ELIGIBILITY</h2>
+                        <DataTable :value="csEligibilityList" class="mt-8" @row-click="openEditModal('csEligibility', $event.data)" :paginator="true" :rows="5">
+                            <Column field="eli_service" header="CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE"></Column>
+                            <Column field="eli_rating" header="RATING (IF APPLICABLE)"></Column>
+                            <Column field="eli_doe" header="DATE OF EXAMINATION/CONFERMENT"></Column>
+                            <Column field="eli_poe" header="PLACE OF EXAMINATION/CONFERMENT"></Column>
+                            <Column field="eli_license_no" header="LICENSE (IF APPLICABLE)"></Column>
+                            <Column field="eli_licen_valid" header="VALIDITY"></Column>
+                        </DataTable>
+                    </div>
+                        <!-- Voluntary Work -->
+                        <div v-if="activeSubTab === 1" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">VOLUNTARY WORK</h2>
+                            <DataTable :value="voluntaryWorkList" class="mt-8" @row-click="openEditModal('voluntaryWork', $event.data)" :paginator="true" :rows="5">
+                                <Column field="vol_name" header="NAME OF ORGANIZATION"></Column>
+                                <Column field="vol_add" header="ADDRESS OF ORGANIZATION"></Column>
+                                <Column field="vol_fr" header="INCLUSIVE DATES FROM"></Column>
+                                <Column field="vol_to" header="INCLUSIVE DATES TO"></Column>
+                                <Column field="vol_hrs" header="NUMBER OF HOURS"></Column>
+                                <Column field="vol_pos" header="POSITION | NATURE OF WORK"></Column>
+                            </DataTable>
+                        </div>
+                        <!-- Learning & Development -->
+                        <div v-if="activeSubTab === 2" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">LEARNING & DEVELOPMENT</h2>
+                            <DataTable :value="learningDevelopmentList" class="mt-8" @row-click="openEditModal('learningDevelopment', $event.data)" :paginator="true" :rows="5">
+                                <Column field="learn_title" header="TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS | TRAINING PROGRAM (WRITE IN FULL)"></Column>
+                                <Column field="learn_fr" header="INCLUSIVE DATES (MM/DD/YYYY) FROM"></Column>
+                                <Column field="learn_to" header="INCLUSIVE DATES (MM/DD/YYYY) TO"></Column>
+                                <Column field="learn_hrs" header="NUMBER OF HOURS"></Column>
+                                <Column field="learn_type" header="TYPE OF LD (MANAGERIAL | SUPERVISORY | TECHNICAL | ETC)"></Column>
+                                <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
+                            </DataTable>
+                        </div>
+                        <!-- Recognition & Distinctions -->
+                        <div v-if="activeSubTab === 3" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">RECOGNITION & DISTINCTION</h2>
+                            <DataTable :value="recognitionList" class="mt-8" @row-click="openEditModal('recognition', $event.data)" :paginator="true" :rows="5">
+                                <Column field="recog_name"></Column>
+                            </DataTable>
+                        </div>
+                        <!-- Government IDs -->
+                        <div v-if="activeSubTab === 4" class="p-6 bg-white border-2 border-blue-800 rounded-sm">
+                            <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">GOVERNMENT ID</h2>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block mb-2 font-bold text-gray-700 text-md">GSIS ID</label>
+                                    <input type="text" v-model="profileData.pb_no" class="w-full p-2 border rounded addgrid" placeholder="Enter GSIS ID">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-bold text-gray-700 text-md">Pag-IBIG ID</label>
+                                    <input type="text" v-model="profileData.pgbg_id" class="w-full p-2 border rounded addgrid" placeholder="Enter Pag-IBIG ID">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-bold text-gray-700 text-md">PhilHealth ID</label>
+                                    <input type="text" v-model="profileData.ph_lid" class="w-full p-2 border rounded addgrid" placeholder="Enter PhilHealth ID">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-bold text-gray-700 text-md">SSS ID</label>
+                                    <input type="text" v-model="profileData.sss_num" class="w-full p-2 border rounded addgrid" placeholder="Enter SSS ID">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 font-bold text-gray-700 text-md">TIN ID</label>
+                                    <input type="text" v-model="profileData.tin_id" class="w-full p-2 border rounded addgrid" placeholder="Enter TIN ID">
+                                </div>
+                            </div>
+                            <div class="flex justify-end space-x-4">
+                                    <button class="px-4 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800">SAVE</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div v-if="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center ">
+                    <div class="w-1/2 p-6 bg-white rounded shadow-lg">
+                        <h3 class="mb-4 text-lg font-bold">Edit {{ currentEditType }}</h3>
+                    <!-- Education Modal -->
+                    <div v-if="isModalOpen && currentEditType === 'education'" class="fixed inset-0 z-50 flex items-center justify-center ">
+                        <div class="w-1/2 p-6 bg-white rounded shadow-lg">
+                            <h3 class="mb-4 text-xl font-bold text-center">EDIT EDUCATION</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">LEVEL OF EDUCATION</label>
+                                    <input v-model="selectedRow.educ_level" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">NAME OF SCHOOL</label>
+                                    <input v-model="selectedRow.educ_school" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">BASIC EDUCATION | DEGREE | COURSE</label>
+                                    <input v-model="selectedRow.educ_degree" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">DATE ENROLLED</label>
+                                    <input v-model="selectedRow.educ_from" type="date" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">HIGHEST LEVEL EARNED</label>
+                                    <input v-model="selectedRow.educ_hl_earned" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">YEAR GRADUATED</label>
+                                    <input v-model="selectedRow.educ_year_grad" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
+                                    <input v-model="selectedRow.educ_academic_honor" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                            </div>
+                            <div class="mt-4 space-x-4 text-center">
+                                <button @click="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                <button @click="saveEducation" class="py-2 text-sm font-semibold text-white bg-blue-900 rounded-md px-7 hover:bg-blue-800">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Organization Modal -->
+                    <div v-if="isModalOpen && currentEditType === 'organization'" class="fixed inset-0 z-50 flex items-center justify-center">
+                        <div class="w-1/4 p-6 bg-white rounded shadow-lg">
+                            <h3 class="mb-4 text-xl font-bold text-center">EDIT ORGANIZATION</h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">ORGANIZATION NAME</label>
+                                    <input v-model="selectedRow.org_name" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                            </div>
+                            <div class="justify-end mt-4 space-x-4 text-center">
+                                <button @click="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                <button @click="saveOrganization" class="py-2 text-sm font-semibold text-white bg-blue-900 rounded-md px-7 hover:bg-blue-800">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Work Experience Modal -->
+                    <div v-if="isModalOpen && currentEditType === 'workExperience'" class="fixed inset-0 z-50 flex items-center justify-center ">
+                        <div class="w-1/2 p-6 bg-white rounded shadow-lg">
+                            <h3 class="mb-4 text-xl font-bold text-center">EDIT WORK EXPERIENCE</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">WORK FROM</label>
+                                    <input v-model="selectedRow.workfr" type="date" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">WORK TO</label>
+                                    <input v-model="selectedRow.workto" type="date" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">POSITION</label>
+                                    <input v-model="selectedRow.work_pos" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">DEPARTMENT | AGENCY | OFFICE | COMPANY</label>
+                                    <input v-model="selectedRow.work_dept" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">MONTHLY SALARY</label>
+                                    <input v-model="selectedRow.work_salary" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">SALARY GRADE</label>
+                                    <input v-model="selectedRow.work_salarygrade" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">STATUS OF APPOINTMENT</label>
+                                    <input v-model="selectedRow.work_stat" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">GOV'T SERVICE</label>
+                                    <input v-model="selectedRow.work_gov" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                            </div>
+                            <div class="mt-4 space-x-4 text-center">
+                                <button @click="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                <button @click="saveWork" class="py-2 text-sm font-semibold text-white bg-blue-900 rounded-md px-7 hover:bg-blue-800">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills Modal -->
+                    <div v-if="isModalOpen && currentEditType === 'skills'" class="fixed inset-0 z-50 flex items-center justify-center">
+                        <div class="w-1/4 p-6 bg-white rounded shadow-lg">
+                            <h3 class="mb-4 text-xl font-bold text-center">EDIT SKILLS</h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">SKILL</label>
+                                    <input v-model="selectedRow.skill" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                            </div>
+                            <div class="mt-4 space-x-4 text-center">
+                                <button @click="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                <button class="py-2 text-sm font-semibold text-white bg-blue-900 rounded-md px-7 hover:bg-blue-800">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- References Form Modal -->
+                    <div v-if="isModalOpen && currentEditType === 'references'" class="fixed inset-0 z-50 flex items-center justify-center ">
+                        <div class="w-1/2 p-6 bg-white rounded shadow-lg">
+                            <h3 class="mb-4 text-xl font-bold text-center">EDIT REFERENCES</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">FIRST NAME</label>
+                                    <input v-model="selectedRow.ref_fname" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">MIDDLE NAME</label>
+                                    <input v-model="selectedRow.ref_mname" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">LAST NAME</label>
+                                    <input v-model="selectedRow.ref_lname" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">SUFFIX</label>
+                                    <select v-model="selectedRow.ref_xname" class="w-full p-2 mb-4 border border-gray-300 rounded">
+                                        <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
+                                            {{ ext.text }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK | STREET | PUROK</label>
+                                    <input v-model="selectedRow.ref_add" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">TELEPHONE NUMBER</label>
+                                    <input v-model="selectedRow.ref_cnum" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                            </div>
+                            <div class="mt-4 space-x-4 text-center">
+                                <button @click="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                <button class="py-2 text-sm font-semibold text-white bg-blue-900 rounded-md px-7 hover:bg-blue-800">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                   <!-- CS Eligibility Modal -->
+                    <div v-if="isModalOpen && currentEditType === 'csEligibility'" class="fixed inset-0 z-50 flex items-center justify-center ">
+                        <div class="w-1/2 p-6 bg-white rounded shadow-lg">
+                            <h3 class="mb-4 text-xl font-bold text-center">EDIT CS ELIGIBILITY</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">CAREER SERVICE | RA 1080</label>
+                                    <input v-model="selectedRow.eli_service" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">RATING (IF APPLICABLE)</label>
+                                    <input v-model="selectedRow.eli_rating" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">DATE OF EXAMINATION | CONFERMENT</label>
+                                    <input type="date" v-model="selectedRow.eli_doe" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF EXAMINATION | CONFERMENT</label>
+                                    <input v-model="selectedRow.eli_poe" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">LICENSE (IF APPLICABLE)</label>
+                                    <input v-model="selectedRow.eli_license_no" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">VALIDITY</label>
+                                    <input v-model="selectedRow.eli_licen_valid" type="date" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                            </div>
+                            <div class="mt-4 space-x-4 text-center">
+                                <button @click="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                <button class="py-2 text-sm font-semibold text-white bg-blue-900 rounded-md px-7 hover:bg-blue-800">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Voluntary Work Modal -->
+                    <div v-if="isModalOpen && currentEditType === 'voluntaryWork'" class="fixed inset-0 z-50 flex items-center justify-center ">
+                        <div class="w-1/2 p-6 bg-white rounded shadow-lg">
+                            <h3 class="mb-4 text-xl font-bold text-center">EDIT VOLUNTARY WORK</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">NAME OF ORGANIZATION (WRITE IN FULL)</label>
+                                    <input v-model="selectedRow.vol_name" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">ADDRESS OF ORGANIZATION</label>
+                                    <input v-model="selectedRow.vol_add" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
+                                    <input type="date" v-model="selectedRow.vol_fr" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
+                                    <input type="date" v-model="selectedRow.vol_to" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">NUMBER OF HOURS</label>
+                                    <input v-model="selectedRow.vol_hrs" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">POSITION / NATURE OF WORK</label>
+                                    <input v-model="selectedRow.vol_pos" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                            </div>
+                            <div class="mt-4 space-x-4 text-center">
+                                <button @click="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                <button class="py-2 text-sm font-semibold text-white bg-blue-900 rounded-md px-7 hover:bg-blue-800">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Learning & Development Modal -->
+                    <div v-if="isModalOpen && currentEditType === 'learningDevelopment'" class="fixed inset-0 z-50 flex items-center justify-center ">
+                        <div class="w-1/2 p-6 bg-white rounded shadow-lg">
+                            <h3 class="mb-4 text-xl font-bold text-center">EDIT LEARNING & DEVELOPMENT</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">LEARNING AND DEVELOPMENT INTERVENTIONS</label>
+                                    <input v-model="selectedRow.learn_title" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
+                                    <input type="date" v-model="selectedRow.learn_fr" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
+                                    <input type="date" v-model="selectedRow.learn_to" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">NUMBER OF HOURS</label>
+                                    <input v-model="selectedRow.learn_hrs" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">TYPE OF LD (MANAGERIAL | SUPERVISORY | TECHNICAL | ETC)</label>
+                                    <input v-model="selectedRow.learn_type" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold text-gray-700">CONDUCTED | SPONSORED BY (WRITE IN FULL)</label>
+                                    <input v-model="selectedRow.learn_con" class="w-full p-2 mb-4 border rounded">
+                                </div>
+                            </div>
+                            <div class="mt-4 space-x-4 text-center">
+                                <button @click="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                <button class="py-2 text-sm font-semibold text-white bg-blue-900 rounded-md px-7 hover:bg-blue-800">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recognition & Distinction Modal -->
+                    <div v-if="isModalOpen && currentEditType === 'recognition'" class="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-75">
+                        <div class="w-1/4 p-6 bg-white rounded shadow-lg">
+                            <h3 class="mb-4 text-xl font-bold text-center uppercase">Edit Recognition & Distinction</h3>
+                            <div>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">NON-ACADEMIC DISTINCTIONS | RESTRICTIONS</label>
+                                <input v-model="selectedRow.recog_name" class="w-full p-2 mb-4 border rounded">
+                            </div>
+                            <div class="mt-4 space-x-4 text-center">
+                                <button @click="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-700 rounded-md hover:bg-red-800">CANCEL</button>
+                                <button class="py-2 text-sm font-semibold text-white bg-blue-900 rounded-md px-7 hover:bg-blue-800">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-        <div v-if="isEditModalVisible" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div class="modal">
-                <div class="pb-4 mb-4 border-b">
-                <h2 class="text-2xl font-bold text-gray-800">Edit Employee Details</h2>
-                </div>
-
-            <!-- Page 1 - Personal Info -->
-            <h3 v-if="currentPage === 1" class="col-span-2 text-lg font-semibold text-gray-700">Personal Information</h3>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Surname</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_lname" />
-              </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">First Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_fname" />
-              </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_mname" />
-              </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Name Extension</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.emp_ext">
-                <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
-                {{ ext.text }}
-                </option>
-            </select>
-              </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Date of Birth</label>
-                <input type="date" class="w-full p-2 border rounded" v-model="profileData.emp_dob" />
-             </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Place of Birth</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_pob" />
-              </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Sex</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.emp_sex">
-                <option v-for="sex in sexOptions" :key="sex.value" :value="sex.value">
-                {{ sex.text }}
-                </option>
-            </select>
-              </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Civil Status</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.emp_civ_stat">
-                <option v-for="status in civilStatusOptions" :key="status.value" :value="status.value">
-                {{ status.text }}
-                </option>
-            </select>
-              </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Height</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_height" />
-              </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Weight</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp_weight" />
-              </div>
-              <div v-if="currentPage === 1">
-                <label class="block text-sm font-medium text-gray-700">Blood Type</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.emp_blood">
-                <option v-for="type in bloodTypeOptions" :key="type.value" :value="type.value">
-                {{ type.text }}
-                </option>
-            </select>
-              </div>
-
-              <!-- Page 2 - Residential Address -->
-              <h3 v-if="currentPage === 2" class="col-span-2 text-lg font-semibold text-gray-700">Residential Address</h3>
-              <div v-if="currentPage === 2">
-                <label class="block text-sm font-medium text-gray-700">Region</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.residentialRegion">
-                    <option v-for="region in regions" :key="region.reg_psgc" :value="region.reg_psgc">
-                    {{ region.col_region }}
-                    </option>
-                </select>
-              </div>
-              <div v-if="currentPage === 2">
-                <label class="block text-sm font-medium text-gray-700">Province</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.residentialProvince">
-                    <option v-for="province in provinces" :key="province.prv_psgc" :value="province.prv_psgc">
-                    {{ province.col_province }}
-                    </option>
-                </select>
-                </div>
-              <div v-if="currentPage === 2">
-                <label class="block text-sm font-medium text-gray-700">City</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.residentialCity">
-                    <option v-for="city in cities" :key="city.citmun_psgc" :value="city.citmun_psgc">
-                    {{ city.col_citymuni }}
-                    </option>
-                </select>
-                </div>
-                <div v-if="currentPage === 2">
-                <label class="block text-sm font-medium text-gray-700">Barangay</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.residentialBarangay">
-                    <option v-for="barangay in barangays" :key="barangay.brgy_psgc" :value="barangay.brgy_psgc">
-                    {{ barangay.col_brgy }}
-                    </option>
-                </select>
-                </div>
-                <div v-if="currentPage === 2">
-                <label class="block text-sm font-medium text-gray-700">Zip Code</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.residentialZipcode" />
-                </div>
-                <div v-if="currentPage === 2">
-                <label class="block text-sm font-medium text-gray-700">Village/Subdivision</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.residentialVillage" />
-                </div>
-                <div v-if="currentPage === 2">
-                <label class="block text-sm font-medium text-gray-700">Block/Street/Purok</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.residentialStreet" />
-                </div>
-
-
-
-            <!-- Page 3 - Permanent Address -->
-            <h3 v-if="currentPage === 3" class="col-span-2 text-lg font-semibold text-gray-700">Permanent Address</h3>
-            <div v-if="currentPage === 3">
-                <label class="block text-sm font-medium text-gray-700">Region</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.permanentRegion2">
-                <option v-for="region in regions" :key="region.reg_psgc" :value="region.reg_psgc">
-                {{ region.col_region }}
-                </option>
-                </select>
-            </div>
-            <div v-if="currentPage === 3">
-                <label class="block text-sm font-medium text-gray-700">Province</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.permanentProvince2">
-                <option v-for="province in permanentProvinces" :key="province.prv_psgc" :value="province.prv_psgc">
-                {{ province.col_province }}
-                </option>
-                </select>
-            </div>
-            <div v-if="currentPage === 3">
-                <label class="block text-sm font-medium text-gray-700">City</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.permanentCity2">
-                <option v-for="city in permanentCities" :key="city.citmun_psgc" :value="city.citmun_psgc">
-                {{ city.col_citymuni }}
-                </option>
-                </select>
-            </div>
-            <div v-if="currentPage === 3">
-                <label class="block text-sm font-medium text-gray-700">Barangay</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.permanentBarangay2">
-                <option v-for="barangay in permanentBarangays" :key="barangay.brgy_psgc" :value="barangay.brgy_psgc">
-                {{ barangay.col_brgy }}
-                </option>
-                </select>
-            </div>
-            <div v-if="currentPage === 3">
-                <label class="block text-sm font-medium text-gray-700">Zip Code</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.permanentZipcode2" />
-            </div>
-            <div v-if="currentPage === 3">
-                <label class="block text-sm font-medium text-gray-700">Village/Subdivision</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.permanentVillage2" />
-            </div>
-            <div v-if="currentPage === 3">
-                <label class="block text-sm font-medium text-gray-700">Block/Street/Purok</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.permanentStreet2" />
-            </div>
-
-
-            <!-- Page 4 - Background - Family -->
-            <h3 v-if="currentPage === 4" class="col-span-2 text-lg font-semibold text-gray-700">Spouse</h3>
-            <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Surname</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.spouse_lname" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">First Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.spouse_fname" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.spouse_mname" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Suffix</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.spouse_xname">
-                <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
-                {{ ext.text }}
-                </option>
-            </select>
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Occupation</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.spouse_occup" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Employer's/Business Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.spouse_office" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Business Address</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.spouse_busadd" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Tel No.</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.spouse_tel" />
-              </div>
-              <h3 v-if="currentPage === 4" class="col-span-2 text-lg font-semibold text-gray-700">Father</h3>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Surname</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.father_lname" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">First Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.father_fname" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.father_mname" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Suffix</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.father_xname">
-                <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
-                {{ ext.text }}
-                </option>
-            </select>
-              </div>
-              <h3 v-if="currentPage === 4" class="col-span-2 text-lg font-semibold text-gray-700">Mother</h3>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Surname</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.mother_lname" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">First Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.mother_fname" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.mother_mname" />
-              </div>
-              <div v-if="currentPage === 4">
-                <label class="block text-sm font-medium text-gray-700">Maiden Name</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.maidenname" />
-              </div>
-
-            <!-- Page 5 - Background - Education -->
-            <h3 v-if="currentPage === 5" class="col-span-2 text-lg font-semibold text-gray-700">Education</h3>
-              <div v-if="currentPage === 5">
-                <label class="block text-sm font-medium text-gray-700">LEVEL OF EDUCATION</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.educ_level" />
-              </div>
-              <div v-if="currentPage === 5">
-                <label class="block text-sm font-medium text-gray-700">NAME OF SCHOOL</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.educ_school" />
-              </div>
-              <div v-if="currentPage === 5">
-                <label class="block text-sm font-medium text-gray-700">BASIC EDUCATION|DEGREE|COURSE</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.educ_degree" />
-              </div>
-              <div v-if="currentPage === 5">
-                <label class="block text-sm font-medium text-gray-700">DATE ENROLLED</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.educ_from" />
-              </div>
-              <div v-if="currentPage === 5">
-                <label class="block text-sm font-medium text-gray-700">HIGHEST LEVEL EARNED</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.educ_hl_earned" />
-              </div>
-              <div v-if="currentPage === 5">
-                <label class="block text-sm font-medium text-gray-700">YEAR GRADUATED</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.educ_year_grad" />
-              </div>
-              <div v-if="currentPage === 5">
-                <label class="block text-sm font-medium text-gray-700">SCHOLARSHIPS & ACADEMIC EXCELLENCE</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.educ_academic_honor" />
-              </div>
-
-
-            <!-- Page 6 - Background - Organization -->
-            <h3 v-if="currentPage === 6" class="col-span-2 text-lg font-semibold text-gray-700">Organization</h3>
-            <div v-if="currentPage === 6">
-            <div v-for="(org, index) in organizationList" :key="org.org_count" class="mb-4">
-                <label :for="'org_name_' + index" class="block text-sm font-medium text-gray-700">
-                ORGANIZATION {{ index + 1 }}
-                </label>
-                <input :id="'org_name_' + index" class="w-full p-2 border rounded" v-model="organizationList[index].org_name" placeholder="Enter Organization Name"/>
-            </div>
-            <div v-if="errorMessage" class="mt-2 text-red-500">{{ errorMessage }}</div>
-            </div>
-
-            <!-- Page 7 - Background - Work Experience -->
-            <h3 v-if="currentPage === 7" class="col-span-2 text-lg font-semibold text-gray-700">Work Experience</h3>
-              <div v-if="currentPage === 7">
-                <label class="block text-sm font-medium text-gray-700">WORK FROM</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.workfr" />
-              </div>
-              <div v-if="currentPage === 7">
-                <label class="block text-sm font-medium text-gray-700">WORK TO</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.workto" />
-              </div>
-              <div v-if="currentPage === 7">
-                <label class="block text-sm font-medium text-gray-700">POSITION</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.work_pos" />
-              </div>
-              <div v-if="currentPage === 7">
-                <label class="block text-sm font-medium text-gray-700">DEPARTMENT|AGENCY|OFFICE|COMPANY</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.work_dept" />
-              </div>
-              <div v-if="currentPage === 7">
-                <label class="block text-sm font-medium text-gray-700">MONTHLY SALARY</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.work_salary" />
-              </div>
-              <div v-if="currentPage === 7">
-                <label class="block text-sm font-medium text-gray-700">SALARY GRADE</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.work_salarygrade" />
-              </div>
-              <div v-if="currentPage === 7">
-                <label class="block text-sm font-medium text-gray-700">STATUS OF APPOINTMENT</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.work_stat" />
-              </div>
-              <div v-if="currentPage === 7">
-                <label class="block text-sm font-medium text-gray-700">GOV'T SERVICE</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.work_gov" />
-              </div>
-
-
-            <!-- Page 8- Background - Skills -->
-            <h3 v-if="currentPage === 8" class="col-span-2 text-lg font-semibold text-gray-700">Skills</h3>
-            <div v-if="currentPage === 8">
-            <div v-for="(skill, index) in skillsList" :key="skill.skill_count" class="mb-4">
-                <label :for="'skill_' + index" class="block text-sm font-medium text-gray-700">
-                Skill {{ index + 1 }}
-                </label>
-                <input :id="'skill_' + index" class="w-full p-2 border rounded" v-model="skillsList[index].skill" placeholder="Enter Skill"/>
-            </div>
-            <div v-if="errorMessage" class="mt-2 text-red-500">{{ errorMessage }}</div>
-            </div>
-
-            <!-- Page 9 - Background - References -->
-            <h3 v-if="currentPage === 9" class="col-span-2 text-lg font-semibold text-gray-700">References</h3>
-              <div v-if="currentPage === 9">
-                <label class="block text-sm font-medium text-gray-700">FIRST NAME</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.ref_fname" />
-              </div>
-              <div v-if="currentPage === 9">
-                <label class="block text-sm font-medium text-gray-700">MIDDLE NAME</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.ref_mname" />
-              </div>
-              <div v-if="currentPage === 9">
-                <label class="block text-sm font-medium text-gray-700">LAST NAME</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.ref_lname" />
-              </div>
-              <div v-if="currentPage === 9">
-                <label class="block text-sm font-medium text-gray-700">SUFFIX</label>
-                <select class="w-full p-2 border rounded" v-model="profileData.ref_xname">
-                <option v-for="ext in extOptions" :key="ext.value" :value="ext.value">
-                {{ ext.text }}
-                </option>
-            </select>
-              </div>
-              <div v-if="currentPage === 9">
-                <label class="block text-sm font-medium text-gray-700">BLOCK/STREET/PUROK</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.ref_add" />
-              </div>
-              <div v-if="currentPage === 9">
-                <label class="block text-sm font-medium text-gray-700">CONTACT NUMBER</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.ref_cnum" />
-              </div>
-
-
-            <!-- Page 10 - Other Info - CS Eligibility -->
-            <h3 v-if="currentPage === 10" class="col-span-2 text-lg font-semibold text-gray-700">CS Eligiibility</h3>
-            <div v-if="currentPage === 10">
-                <label class="block text-sm font-medium text-gray-700 truncate hover:overflow-visible hover:whitespace-normal"
-                    :title="'CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE'">
-                    CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS.....
-                </label>
-                <input class="w-full p-2 border rounded" v-model="profileData.eli_service" />
-            </div>
-              <div v-if="currentPage === 10">
-                <label class="block text-sm font-medium text-gray-700">RATING (IF APPLICABLE)</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.eli_rating" />
-              </div>
-              <div v-if="currentPage === 10">
-                <label class="block text-sm font-medium text-gray-700">DATE OF EXAMINATION/CONFERMENT</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.eli_doe" />
-              </div>
-              <div v-if="currentPage === 10">
-                <label class="block text-sm font-medium text-gray-700">PLACE OF EXAMINATION/CONFERMENT</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.eli_poe" />
-              </div>
-              <div v-if="currentPage === 10">
-                <label class="block text-sm font-medium text-gray-700">LICENSE (IF APPLICABLE)</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.eli_license_no" />
-              </div>
-              <div v-if="currentPage === 10">
-                <label class="block text-sm font-medium text-gray-700">VALIDITY</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.eli_licen_valid" />
-              </div>
-
-            <!-- Page 11 - Other Info - Voluntary Work -->
-            <h3 v-if="currentPage === 11" class="col-span-2 text-lg font-semibold text-gray-700">Voluntary Work</h3>
-              <div v-if="currentPage === 11">
-                <label class="block text-sm font-medium text-gray-700">NAME OF ORGANIZATION</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.vol_name" />
-              </div>
-              <div v-if="currentPage === 11">
-                <label class="block text-sm font-medium text-gray-700">ADDRESS OF ORGANIZATION</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.vol_add" />
-              </div>
-              <div v-if="currentPage === 11">
-                <label class="block text-sm font-medium text-gray-700">INCLUSIVE DATES FROM</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.vol_fr" />
-              </div>
-              <div v-if="currentPage === 11">
-                <label class="block text-sm font-medium text-gray-700">INCLUSIVE DATES TO</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.vol_to" />
-              </div>
-              <div v-if="currentPage === 11">
-                <label class="block text-sm font-medium text-gray-700">NUMBER OF HOURS</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.vol_hrs" />
-              </div>
-              <div v-if="currentPage === 11">
-                <label class="block text-sm font-medium text-gray-700">POSITION / NATURE OF WORK</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.vol_pos" />
-              </div>
-
-            <!-- Page 12 - Other Info - Learning & Development -->
-            <h3 v-if="currentPage === 12" class="col-span-2 text-lg font-semibold text-gray-700">Learning & Development</h3>
-            <div v-if="currentPage === 12">
-            <label class="block text-sm font-medium text-gray-700 truncate hover:overflow-visible hover:whitespace-normal"
-                :title="'TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM (WRITE IN FULL)'">
-                TITLE OF LEARNING AND DEVELOPMENT INTERVENTIONS/TRAINING PROGRAM.....
-            </label>
-            <input class="w-full p-2 border rounded" v-model="profileData.learn_title" />
-            </div>
-              <div v-if="currentPage === 12">
-                <label class="block text-sm font-medium text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) FROM</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.learn_fr" />
-              </div>
-              <div v-if="currentPage === 12">
-                <label class="block text-sm font-medium text-gray-700">INCLUSIVE DATES (MM/DD/YYYY) TO</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.learn_to" />
-              </div>
-              <div v-if="currentPage === 12">
-                <label class="block text-sm font-medium text-gray-700">NUMBER OF HOURS</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.learn_hrs" />
-              </div>
-              <div v-if="currentPage === 12">
-                <label class="block text-sm font-medium text-gray-700 truncate hover:overflow-visible hover:whitespace-normal"
-                    :title="'TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)'">
-                    TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/...)
-                </label>
-                <input class="w-full p-2 border rounded" v-model="profileData.learn_type" />
-            </div>
-              <div v-if="currentPage === 12">
-                <label class="block text-sm font-medium text-gray-700">CONDUCTED/SPONSORED BY (WRITE IN FULL)</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.learn_con" />
-              </div>
-
-
-            <!-- Page 13 - Other Info - Recognition & Distinction -->
-            <h3 v-if="currentPage === 13" class="col-span-2 text-lg font-semibold text-gray-700">Recognition & Distinction </h3>
-            <div v-if="currentPage === 13">
-            <h2 class="mb-4 text-lg font-semibold">RECOGNITION & DISTINCTIONS</h2>
-            <div v-for="(recog, index) in recognitionList" :key="recog.recog_count" class="mb-4">
-                <label :for="'recog_name_' + index" class="block mb-1 text-sm font-medium text-gray-700">
-                Recognition & Distinction {{ index + 1 }}
-                </label>
-                <input :id="'recog_name_' + index" class="w-full p-2 border rounded" v-model="recognitionList[index].recog_name" placeholder="Enter Recognition or Distinction"/>
-            </div>
-            <div v-if="errorMessage" class="mt-2 text-red-500">{{ errorMessage }}</div>
-            </div>
-
-            <!-- Page 14 - Other Info - Government IDs-->
-            <h3 v-if="currentPage === 14" class="col-span-2 text-lg font-semibold text-gray-700">Government IDs  </h3>
-              <div v-if="currentPage === 14">
-                <label class="block text-sm font-medium text-gray-700">GSIS ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.pb_no" />
-              </div>
-              <div v-if="currentPage === 14">
-                <label class="block text-sm font-medium text-gray-700">PAG-IBIG ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.pgbg_id" />
-              </div>
-              <div v-if="currentPage === 14">
-                <label class="block text-sm font-medium text-gray-700">PhilHealth ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.ph_lid" />
-              </div>
-              <div v-if="currentPage === 14">
-                <label class="block text-sm font-medium text-gray-700">SSS ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.sss_num" />
-              </div>
-              <div v-if="currentPage === 14">
-                <label class="block text-sm font-medium text-gray-700">TIN ID</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.tin_id" />
-              </div>
-              <!-- <div v-if="currentPage === 2">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Agency Employee NO.</label>
-                <input class="w-full p-2 border rounded" v-model="profileData.emp" />
-              </div> -->
-
-               <!-- OtherInfo Part -->
-            <div v-if="currentPage === 15" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
-    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
-    <div class="other-info">
-        <!-- First Section -->
-        <div class="columns">
-            <p class="mb-4"><b>Are you related by consanguinity or affinity to the appointing or recommending authority, or to the chief of bureau or office or to the person who has immediate supervision over you in the Office, Bureau or Department where you will be appointed <span class="text-red-500">*</span></b></p>
-            <div class="form-group">
-                <label class="ml-2">a. within the third degree?</label>
-                <input class="ml-2" type="radio" v-model="otherInfo.other_34a" value="Yes" /> Yes
-                <input class="ml-2" type="radio" v-model="otherInfo.other_34a" value="No" /> No
-            </div>
-            <div class="form-group">
-                <label class="ml-2">b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
-                <input class="ml-2" type="radio" v-model="otherInfo.other_34b" value="Yes" /> Yes
-                <input class="ml-2" type="text" v-model="otherInfo.other_34bif" placeholder="If YES, give details" :disabled="!(otherInfo.other_34b === 'Yes')" :class="{'bg-gray-200': otherInfo.other_34b !== 'Yes'}" />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_34b" value="No" @change="checkFields('other_34b')" /> No
-            </div>
-        </div>
-        <span class="block w-full h-px my-4 bg-gray-300"></span>
-        </div>
-      </div>
-      <div v-if="currentPage === 16" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
-    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
-    <div class="other-info">
-        <!-- Second Section -->
-        <div>
-            <p class="mb-4"><b>Have you ever been found guilty of any administrative offense? <span class="text-red-500">*</span></b></p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_35a" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input class="ml-2" type="text" v-model="otherInfo.other_35aif" placeholder="If YES, give details" :disabled="!(otherInfo.other_35a === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35a !== 'Yes'}" />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_35a" value="No" @change="checkFields('other_35a')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-        </div>
-        <span class="block w-full h-px my-4 bg-gray-300"></span>
-
-        <!-- Third Section -->
-        <div>
-            <p class="mb-4"><b>Have you been criminally charged before any court? <span class="text-red-500">*</span></b></p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_35b" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input class="ml-2" type="text" v-model="otherInfo.other_35bif" placeholder="If YES, give details" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}" />
-                <input class="ml-2" type="date" v-model="otherInfo.other_35bfiled" placeholder="Date Filed" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}" />
-                <input class="ml-2" type="text" v-model="otherInfo.other_35stat" placeholder="Status of Case/s" :disabled="!(otherInfo.other_35b === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_35b !== 'Yes'}" />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_35b" value="No" @change="checkFields('other_35b')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-        </div>
-        <span class="block w-full h-px my-4 bg-gray-300"></span>
     </div>
-    </div>
-    <div v-if="currentPage === 17" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
-    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
-    <div class="other-info"></div>
-
-        <!-- Section 36 -->
-        <div>
-            <p class="mb-4"><b>Have you ever been dismissed from the service for cause? <span class="text-red-500">*</span></b></p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_36" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input class="ml-2" type="text" v-model="otherInfo.other_36if" placeholder="If YES, give details" :disabled="!(otherInfo.other_36 === 'Yes' && isEditingOtherInfo)" :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_36 !== 'Yes'}" />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_36" value="No" @change="checkFields('other_36')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-        </div>
-                <!-- Section 37 -->
-                <div>
-            <p class="mb-4">
-                <b>Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector? <span class="text-red-500">*</span></b>
-            </p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_37" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input
-                    class="ml-2"
-                    type="text"
-                    v-model="otherInfo.other_37if"
-                    placeholder="If YES, give details"
-                    :disabled="!(otherInfo.other_37 === 'Yes' && isEditingOtherInfo)"
-                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_37 !== 'Yes'}"
-                />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_37" value="No" @change="checkFields('other_37')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-        </div>
-        <span class="block w-full h-px my-4 bg-gray-300"></span>
-        </div>
-
-        <div v-if="currentPage === 18" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
-    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
-    <div class="other-info">
-        <!-- Section 38 -->
-        <div>
-            <p class="mb-4">
-                <b>Have you ever been a candidate in a national or local election held within the last year (except Barangay election)? <span class="text-red-500">*</span></b>
-            </p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_38a" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input
-                    class="ml-2"
-                    type="text"
-                    v-model="otherInfo.other_38aif"
-                    placeholder="If YES, give details"
-                    :disabled="!(otherInfo.other_38a === 'Yes' && isEditingOtherInfo)"
-                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_38a !== 'Yes'}"
-                />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_38a" value="No" @change="checkFields('other_38a')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-            <p class="mb-4">
-                <b>Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate? <span class="text-red-500">*</span></b>
-            </p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_38b" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input
-                    class="ml-2"
-                    type="text"
-                    v-model="otherInfo.resignedGovtServiceDetails"
-                    placeholder="If YES, give details"
-                    :disabled="!(otherInfo.other_38b === 'Yes' && isEditingOtherInfo)"
-                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_38b !== 'Yes'}"
-                />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_38b" value="No" @change="checkFields('other_38b')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-        </div>
-        <span class="block w-full h-px my-4 bg-gray-300"></span>
-    </div>
-    </div>
-
-    <div v-if="currentPage === 19" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
-    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
-    <div class="other-info">
-        <!-- Section 39 -->
-        <div>
-            <p class="mb-4">
-                <b>Have you acquired the status of an immigrant or permanent resident of another country? <span class="text-red-500">*</span></b>
-            </p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_39" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input
-                    class="ml-2"
-                    type="text"
-                    v-model="otherInfo.other_39if"
-                    placeholder="If YES, give details"
-                    :disabled="!(otherInfo.other_39 === 'Yes' && isEditingOtherInfo)"
-                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_39 !== 'Yes'}"
-                />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_39" value="No" @change="checkFields('other_39')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-        </div>
-        <span class="block w-full h-px my-4 bg-gray-300"></span>
-        </div>
-        </div>
-
-        <div v-if="currentPage === 20" class="p-6 bg-white border-2 border-blue-800 rounded-lg">
-    <h2 class="mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">Other Information</h2>
-    <div class="other-info">
-        <!-- Section 40 -->
-        <div>
-            <p class="mb-4">
-                <b>a. Are you a member of any indigenous group?</b>
-            </p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_40a" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input
-                    class="ml-2"
-                    type="text"
-                    v-model="otherInfo.other_40aif"
-                    placeholder="If YES, please specify"
-                    :disabled="!(otherInfo.other_40a === 'Yes' && isEditingOtherInfo)"
-                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40a !== 'Yes'}"
-                />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_40a" value="No" @change="checkFields('other_40a')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-            <p class="mb-4">
-                <b>b. Are you a person with disability?</b>
-            </p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_40b" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input
-                    class="ml-2"
-                    type="text"
-                    v-model="otherInfo.other_40bif"
-                    placeholder="If YES, please specify ID No"
-                    :disabled="!(otherInfo.other_40b === 'Yes' && isEditingOtherInfo)"
-                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40b !== 'Yes'}"
-                />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_40b" value="No" @change="checkFields('other_40b')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-            <p class="mb-4">
-                <b>c. Are you a solo parent?</b>
-            </p>
-            <div class="form-group">
-                <input class="ml-2" type="radio" v-model="otherInfo.other_40c" value="Yes" :disabled="!isEditingOtherInfo" /> Yes
-                <input
-                    class="ml-2"
-                    type="text"
-                    v-model="otherInfo.other_40cif"
-                    placeholder="If YES, please specify ID No"
-                    :disabled="!(otherInfo.other_40c === 'Yes' && isEditingOtherInfo)"
-                    :class="{'bg-gray-200': !isEditingOtherInfo || otherInfo.other_40c !== 'Yes'}"
-                />
-                <input class="ml-2" type="radio" v-model="otherInfo.other_40c" value="No" @change="checkFields('other_40c')" :disabled="!isEditingOtherInfo" /> No
-            </div>
-        </div>
-
-    </div>
-            </div>
-            </div>
-            <!-- Pagination and Modal Buttons -->
-            <div class="flex justify-between mt-6">
-                <div>
-                    <button v-if="currentPage > 1" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" @click="prevPage">Previous</button>
-                    <button v-if="currentPage < totalPages" class="px-4 py-2 ml-4 text-white bg-blue-600 rounded hover:bg-blue-700" @click="nextPage">Next</button>
-                </div>
-                <div>
-                    <button class="px-4 py-2 mr-4 text-white bg-red-600 rounded hover:bg-red-700" @click="hideEditModal">CANCEL</button>
-                    <button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" @click="saveProfile">SAVE</button>
-                </div>
-            </div>
-            </div>
-        </div>
-      </div>
     </AdminLayout>
-  </template>
+</template>
 
 <script>
 import { ref } from 'vue';
@@ -768,6 +819,9 @@ import DashboardScripts from './Scripts/DashboardScripts.vue';
 import Dashboard from '@/Pages/Dashboard.vue';
 import Background from '@/Pages/Background.vue';
 import OtherInfo from '@/Pages/OtherInfo.vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+
 
 export default {
   components: {
@@ -775,7 +829,9 @@ export default {
     DashboardScripts,
     Dashboard,
     Background,
-    OtherInfo
+    OtherInfo,
+    DataTable,
+    Column,
   },
   data() {
   return {
@@ -784,8 +840,8 @@ export default {
     profileData: null,
     residentialRegion: '',
     isEditModalVisible: false,
-    currentPage: 1,
-    totalPages: 20,
+    activeMainTab: 0, // Tracks the main tab (Personal, Background, Other Info)
+    activeSubTab: 0, // Tracks the sub-tab for each main tab
     isEditing: false,
     showUpdateDialog: false,
     showSuccessDialog: false,
@@ -805,34 +861,16 @@ export default {
     organizationList: [], // List of organizations dynamically populated
     skillsList: [], // List to store skills dynamically
     recognitionList: [], // List to store recognition & distinction data
-// new added 12/12
-otherInfo: {
-      other_34a: null,
-      other_34b: null,
-      other_34bif: '',
-      other_35a: null,
-      other_35aif: '',
-      other_35b: null,
-      other_35bif: '',
-      other_35bfiled: '',
-      other_35stat: '',
-      other_36: null,
-      other_36if: '',
-      other_37: null,
-      other_37if: '',
-      other_38a: null,
-      other_38aif: '',
-      other_38b: null,
-      other_38bif: '',
-      other_39: null,
-      other_39if: '',
-      other_40a: null,
-      other_40aif: '',
-      other_40b: null,
-      other_40bif: '',
-      other_40c: null,
-      other_40cif: ''
-      }
+    referencesList: [],
+    educationList: [], // List to store education data
+    workExperienceList: [],
+    csEligibilityList: [],
+    voluntaryWorkList: [],
+    learningDevelopmentList: [],
+    isModalOpen: false,
+    currentEditType: '',
+    selectedRow: null,
+
   };
 },
 
@@ -849,31 +887,54 @@ watch: {
     if (newVal) this.fetchBarangays(newVal, 'residential'); // Correct method
   },
   'profileData.permanentRegion2': function (newVal) {
-    if (newVal) {
-        this.fetchProvinces(newVal, 'permanent'); // Fetch provinces for the selected region
-    } else {
-        this.permanentProvinces = []; // Reset provinces if no region selected
-    }
+//   console.log(`Region changed to: ${newVal}`);
+  if (newVal) {
+    this.fetchProvinces(newVal, 'permanent');
+  }
 },
-'profileData.permanentProvince2': function (newVal) {
-    if (newVal) {
-        this.fetchCities(newVal, 'permanent'); // Fetch cities for the selected province
-    } else {
-        this.permanentCities = []; // Reset cities if no province selected
-    }
-},
-'profileData.permanentCity2': function (newVal) {
-    if (newVal) {
-        this.fetchBarangays(newVal, 'permanent'); // Fetch barangays for the selected city
-    } else {
-        this.permanentBarangays = []; // Reset barangays if no city selected
-    }
-},
-
+  'profileData.permanentProvince2': function (newVal) {
+    if (newVal) this.fetchCities(newVal, 'permanent'); // Correct method
+  },
+  'profileData.permanentCity2': function (newVal) {
+    if (newVal) this.fetchBarangays(newVal, 'permanent'); // Correct method
+  },
 },
 
 
   methods: {
+
+    mainTabButtonClass(tabIndex) {
+      return {
+        'px-6 py-2 rounded-t-lg font-semibold border-t border-l border-r border-gray-200': true,
+        'bg-blue-900 text-white': this.activeMainTab === tabIndex,
+        'bg-gray-300 text-gray-700': this.activeMainTab !== tabIndex,
+      };
+    },
+    subTabButtonClass(tabIndex) {
+      return {
+        'px-4 py-2 rounded-t-lg font-semibold border-t border-l border-r border-gray-200': true,
+        'bg-blue-800 text-white': this.activeSubTab === tabIndex,
+        'bg-gray-200 text-gray-600': this.activeSubTab !== tabIndex,
+      };
+    },
+
+    openEditModal(type, row) {
+      this.currentEditType = type;
+      this.selectedRow = { ...row }; // Avoid direct mutation
+      this.isModalOpen = true;
+      console.log('Selected Row for Editing:', this.selectedRow); // Log to verify data
+    },
+    closeModal() {
+      this.isModalOpen = false;
+      this.selectedRow = null;
+    },
+
+    handleCloseModal() {
+        // Add any additional logic if needed
+        console.log("Closing modal...");
+        this.isEditModalVisible = false; // Hide the modal
+    },
+
 
     validateInput() {
       this.searchQuery = this.searchQuery.replace(/\D/g, ''); // Replace non-digit characters
@@ -1098,25 +1159,45 @@ watch: {
     },
 
     fetchEducation(educ_count, empid) {
-        const queryParam = educ_count ? `educ_count=${educ_count}` : `empid=${empid}`;
-        axios
-            .get(`/api/get-education-data?${queryParam}`)
-            .then((response) => {
-                if (response.data) {
-                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
-                    this.profileData.educ_level = data.educ_level;
-                    this.profileData.educ_school = data.educ_school;
-                    this.profileData.educ_degree = data.educ_degree;
-                    this.profileData.educ_from = data.educ_from;
-                    this.profileData.educ_year_grad = data.educ_year_grad;
-                    this.profileData.educ_academic_honor = data.educ_academic_honor;
-                    this.profileData.educ_hl_earned = data.educ_hl_earned;
+    const queryParam = educ_count ? `educ_count=${educ_count}` : `empid=${empid}`;
+    axios
+        .get(`/api/get-education-data?${queryParam}`)
+        .then((response) => {
+            if (response.data) {
+                // Populate the education list
+                if (Array.isArray(response.data)) {
+                    this.educationList = response.data.map((educ) => ({
+                        educ_count: educ.educ_count,
+                        educ_level: educ.educ_level,
+                        educ_school: educ.educ_school,
+                        educ_degree: educ.educ_degree,
+                        educ_from: educ.educ_from,
+                        educ_year_grad: educ.educ_year_grad,
+                        educ_academic_honor: educ.educ_academic_honor,
+                        educ_hl_earned: educ.educ_hl_earned,
+                    }));
+                } else {
+                    // Handle single education entry response
+                    const data = response.data;
+                    this.educationList = [
+                        {
+                            educ_count: data.educ_count,
+                            educ_level: data.educ_level,
+                            educ_school: data.educ_school,
+                            educ_degree: data.educ_degree,
+                            educ_from: data.educ_from,
+                            educ_year_grad: data.educ_year_grad,
+                            educ_academic_honor: data.educ_academic_honor,
+                            educ_hl_earned: data.educ_hl_earned,
+                        },
+                    ];
                 }
-            })
-            .catch((error) => {
-                console.error("Error fetching education details:", error);
-            });
-    },
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching education details:", error);
+        });
+},
 
     fetchOrganization(org_count, empid) {
     const queryParam = org_count ? `org_count=${org_count}` : `empid=${empid}`;
@@ -1153,15 +1234,36 @@ watch: {
             .get(`/api/get-workexperience-data?${queryParam}`)
             .then((response) => {
                 if (response.data) {
-                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
-                    this.profileData.workfr = data.workfr;
-                    this.profileData.workto = data.workto;
-                    this.profileData.work_pos = data.work_pos;
-                    this.profileData.work_dept = data.work_dept;
-                    this.profileData.work_salary = data.work_salary;
-                    this.profileData.work_salarygrade = data.work_salarygrade;
-                    this.profileData.work_stat = data.work_stat;
-                    this.profileData.work_gov = data.work_gov;
+                    // Populate the work experience list
+                    if (Array.isArray(response.data)) {
+                        this.workExperienceList = response.data.map((work) => ({
+                            work_count: work.work_count,
+                            workfr: work.workfr,
+                            workto: work.workto,
+                            work_pos: work.work_pos,
+                            work_dept: work.work_dept,
+                            work_salary: work.work_salary,
+                            work_salarygrade: work.work_salarygrade,
+                            work_stat: work.work_stat,
+                            work_gov: work.work_gov,
+                        }));
+                    } else {
+                        // Handle single work experience entry response
+                        const data = response.data;
+                        this.workExperienceList = [
+                            {
+                                work_count: data.work_count,
+                                workfr: data.workfr,
+                                workto: data.workto,
+                                work_pos: data.work_pos,
+                                work_dept: data.work_dept,
+                                work_salary: data.work_salary,
+                                work_salarygrade: data.work_salarygrade,
+                                work_stat: data.work_stat,
+                                work_gov: data.work_gov,
+                            },
+                        ];
+                    }
                 }
             })
             .catch((error) => {
@@ -1205,13 +1307,33 @@ watch: {
             .get(`/api/get-reference-data?${queryParam}`)
             .then((response) => {
                 if (response.data) {
-                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
-                    this.profileData.ref_fname = data.ref_fname;
-                    this.profileData.ref_mname = data.ref_mname;
-                    this.profileData.ref_lname = data.ref_lname;
-                    this.profileData.ref_xname = data.ref_xname;
-                    this.profileData.ref_add = data.ref_add;
-                    this.profileData.ref_cnum = data.ref_cnum;
+                    // If the response is an array, populate the references list
+                    if (Array.isArray(response.data)) {
+                        this.referencesList = response.data.map((ref) => ({
+                            ref_count: ref.ref_count,
+                            ref_fname: ref.ref_fname,
+                            ref_mname: ref.ref_mname,
+                            ref_lname: ref.ref_lname,
+                            ref_xname: ref.ref_xname,
+                            full_name: ref.full_name,
+                            ref_add: ref.ref_add,
+                            ref_cnum: ref.ref_cnum,
+                        }));
+                    } else {
+                        // Handle a single reference response
+                        const data = response.data;
+                        this.referencesList = [
+                            {
+                                ref_count: data.ref_count,
+                                ref_fname: data.ref_fname,
+                                ref_mname: data.ref_mname,
+                                ref_lname: data.ref_lname,
+                                ref_xname: data.ref_xname,
+                                ref_add: data.ref_add,
+                                ref_cnum: data.ref_cnum,
+                            },
+                        ];
+                    }
                 }
             })
             .catch((error) => {
@@ -1221,63 +1343,120 @@ watch: {
 
     fetchCSEligiblity(eli_count, empid) {
         const queryParam = eli_count ? `eli_count=${eli_count}` : `empid=${empid}`;
-        axios
-            .get(`/api/get-cseligibility-data?${queryParam}`)
-            .then((response) => {
-                if (response.data) {
-                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
-                    this.profileData.eli_service = data.eli_service;
-                    this.profileData.eli_rating = data.eli_rating;
-                    this.profileData.eli_doe = data.eli_doe;
-                    this.profileData.eli_poe = data.eli_poe;
-                    this.profileData.eli_license_no = data.eli_license_no;
-                    this.profileData.eli_licen_valid = data.eli_licen_valid;
+    axios
+        .get(`/api/get-cseligibility-data?${queryParam}`)
+        .then((response) => {
+            if (response.data) {
+                // Populate the CS Eligibility list
+                if (Array.isArray(response.data)) {
+                    this.csEligibilityList = response.data.map((eligibility) => ({
+                        eli_count: eligibility.eli_count,
+                        eli_service: eligibility.eli_service,
+                        eli_rating: eligibility.eli_rating,
+                        eli_doe: eligibility.eli_doe,
+                        eli_poe: eligibility.eli_poe,
+                        eli_license_no: eligibility.eli_license_no,
+                        eli_licen_valid: eligibility.eli_licen_valid,
+                    }));
+                } else {
+                    // Handle single eligibility entry response
+                    const data = response.data;
+                    this.csEligibilityList = [
+                        {
+                            eli_count: data.eli_count,
+                            eli_service: data.eli_service,
+                            eli_rating: data.eli_rating,
+                            eli_doe: data.eli_doe,
+                            eli_poe: data.eli_poe,
+                            eli_license_no: data.eli_license_no,
+                            eli_licen_valid: data.eli_licen_valid,
+                        },
+                    ];
                 }
-            })
-            .catch((error) => {
-                console.error("Error fetching cs eligibility details:", error);
-            });
-    },
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching CS eligibility details:", error);
+        });
+},
 
-    fetchVoluntaryWork(vol_count, empid) {
-        const queryParam = vol_count ? `vol_count=${vol_count}` : `empid=${empid}`;
-        axios
-            .get(`/api/get-voluntarywork-data?${queryParam}`)
-            .then((response) => {
-                if (response.data) {
-                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
-                    this.profileData.vol_name = data.vol_name;
-                    this.profileData.vol_add = data.vol_add;
-                    this.profileData.vol_fr = data.vol_fr;
-                    this.profileData.vol_to = data.vol_to;
-                    this.profileData.vol_hrs = data.vol_hrs;
-                    this.profileData.vol_pos = data.vol_pos;
+fetchVoluntaryWork(vol_count, empid) {
+    const queryParam = vol_count ? `vol_count=${vol_count}` : `empid=${empid}`;
+    axios
+        .get(`/api/get-voluntarywork-data?${queryParam}`)
+        .then((response) => {
+            if (response.data) {
+                if (Array.isArray(response.data)) {
+                    // Populate Voluntary Work list if response is an array
+                    this.voluntaryWorkList = response.data.map((work) => ({
+                        vol_count: work.vol_count, // Include count
+                        vol_name: work.vol_name,
+                        vol_add: work.vol_add,
+                        vol_fr: work.vol_fr,
+                        vol_to: work.vol_to,
+                        vol_hrs: work.vol_hrs,
+                        vol_pos: work.vol_pos,
+                    }));
+                } else {
+                    // Handle a single Voluntary Work response
+                    const data = response.data;
+                    this.voluntaryWorkList = [
+                        {
+                            vol_count: data.vol_count, // Include count
+                            vol_name: data.vol_name,
+                            vol_add: data.vol_add,
+                            vol_fr: data.vol_fr,
+                            vol_to: data.vol_to,
+                            vol_hrs: data.vol_hrs,
+                            vol_pos: data.vol_pos,
+                        },
+                    ];
                 }
-            })
-            .catch((error) => {
-                console.error("Error fetching voluntary work details:", error);
-            });
-    },
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching Voluntary Work details:", error);
+        });
+},
 
-    fetchLearningDevelopment(learn_count, empid) {
-        const queryParam = learn_count ? `learn_count=${learn_count}` : `empid=${empid}`;
-        axios
-            .get(`/api/get-learndev-data?${queryParam}`)
-            .then((response) => {
-                if (response.data) {
-                    const data = Array.isArray(response.data) ? response.data[0] : response.data; // Handle both array and object response
-                    this.profileData.learn_title = data.learn_title;
-                    this.profileData.learn_fr = data.learn_fr;
-                    this.profileData.learn_to = data.learn_to;
-                    this.profileData.learn_hrs = data.learn_hrs;
-                    this.profileData.learn_type = data.learn_type;
-                    this.profileData.learn_con = data.learn_con;
+fetchLearningDevelopment(learn_count, empid) {
+    const queryParam = learn_count ? `learn_count=${learn_count}` : `empid=${empid}`;
+    axios
+        .get(`/api/get-learndev-data?${queryParam}`)
+        .then((response) => {
+            if (response.data) {
+                if (Array.isArray(response.data)) {
+                    // Populate Learning & Development list if response is an array
+                    this.learningDevelopmentList = response.data.map((learn) => ({
+                        learn_count: learn.learn_count, // Include count
+                        learn_title: learn.learn_title,
+                        learn_fr: learn.learn_fr,
+                        learn_to: learn.learn_to,
+                        learn_hrs: learn.learn_hrs,
+                        learn_type: learn.learn_type,
+                        learn_con: learn.learn_con,
+                    }));
+                } else {
+                    // Handle a single Learning & Development response
+                    const data = response.data;
+                    this.learningDevelopmentList = [
+                        {
+                            learn_count: data.learn_count, // Include count
+                            learn_title: data.learn_title,
+                            learn_fr: data.learn_fr,
+                            learn_to: data.learn_to,
+                            learn_hrs: data.learn_hrs,
+                            learn_type: data.learn_type,
+                            learn_con: data.learn_con,
+                        },
+                    ];
                 }
-            })
-            .catch((error) => {
-                console.error("Error fetching learning and development details:", error);
-            });
-    },
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching Learning & Development details:", error);
+        });
+},
 
     fetchRecognitionDistinction(recog_count, empid) {
     const queryParam = recog_count ? `recog_count=${recog_count}` : `empid=${empid}`;
@@ -1308,8 +1487,6 @@ watch: {
         this.errorMessage = "Unable to fetch recognition and distinctions.";
       });
   },
-
-
 
     fetchSSSId(sss_count, empid) {
         const queryParam = sss_count ? `sss_count=${sss_count}` : `empid=${empid}`;
@@ -1380,43 +1557,6 @@ watch: {
         })
         .catch((error) => {
             console.error("Error fetching TIN ID:", error);
-        });
-},
-
-fetchOtherInfo(emp_count) {
-    axios
-        .get(`/api/get-employee-other-info?emp_count=${emp_count}`)
-        .then((response) => {
-            if (response.data) {
-                // Bind other information data to otherInfo object
-                this.otherInfo.other_34a = response.data.other_34a;
-                this.otherInfo.other_34b = response.data.other_34b;
-                this.otherInfo.other_34bif = response.data.other_34bif;
-                this.otherInfo.other_35a = response.data.other_35a;
-                this.otherInfo.other_35aif = response.data.other_35aif;
-                this.otherInfo.other_35b = response.data.other_35b;
-                this.otherInfo.other_35bif = response.data.other_35bif;
-                this.otherInfo.other_35bfiled = response.data.other_35bfiled;
-                this.otherInfo.other_35stat = response.data.other_35stat;
-                this.otherInfo.other_36 = response.data.other_36;
-                this.otherInfo.other_36if = response.data.other_36if;
-                this.otherInfo.other_37 = response.data.other_37;
-                this.otherInfo.other_37if = response.data.other_37if;
-                this.otherInfo.other_38a = response.data.other_38a;
-                this.otherInfo.other_38aif = response.data.other_38aif;
-                this.otherInfo.other_38b = response.data.other_38b;
-                this.otherInfo.other_39 = response.data.other_39;
-                this.otherInfo.other_39if = response.data.other_39if;
-                this.otherInfo.other_40a = response.data.other_40a;
-                this.otherInfo.other_40aif = response.data.other_40aif;
-                this.otherInfo.other_40b = response.data.other_40b;
-                this.otherInfo.other_40bif = response.data.other_40bif;
-                this.otherInfo.other_40c = response.data.other_40c;
-                this.otherInfo.other_40cif = response.data.other_40cif;
-            }
-        })
-        .catch((error) => {
-            console.error('Error fetching other information:', error);
         });
 },
 
@@ -1573,34 +1713,251 @@ fetchOtherInfo(emp_count) {
         this.currentPage--;
       }
     },
-
     saveProfile() {
-    this.isLoading = true;  // Show loading state
-    axios
-        .patch(`/employee/updateEditProfile/${this.profileData.empid}`, this.profileData)
-        .then((response) => {
-        this.isEditing = false;
-        this.showUpdateDialog = false;
-        this.showSuccessDialog = true;
-        this.hideEditModal();  // Close the modal on successful save
+    this.isLoading = true; // Show loading state
 
-        // Optionally, you can display the success message returned from the backend, if any
-        console.log(response.data.message || 'Profile updated successfully');
+    // Profile data payload
+    const profilePayload = { ...this.profileData };
+
+    // Address data payload
+    const addressPayload = {
+        emp_house: this.profileData.residentialStreet,
+        emp_subd: this.profileData.residentialVillage,
+        emp_brgy: this.profileData.residentialBarangay,
+        emp_city: this.profileData.residentialCity,
+        emp_prov: this.profileData.residentialProvince,
+        emp_region: this.profileData.residentialRegion,
+        emp_zip: this.profileData.residentialZipcode,
+        emp_house2: this.profileData.permanentStreet2,
+        emp_subd2: this.profileData.permanentVillage2,
+        emp_brgy2: this.profileData.permanentBarangay2,
+        emp_city2: this.profileData.permanentCity2,
+        emp_prov2: this.profileData.permanentProvince2,
+        emp_region2: this.profileData.permanentRegion2,
+        emp_zip2: this.profileData.permanentZipcode2,
+    };
+
+    // Family data payload
+    const familyPayload = {
+        father_lname: this.profileData.father_lname,
+        father_fname: this.profileData.father_fname,
+        father_mname: this.profileData.father_mname,
+        father_xname: this.profileData.father_xname,
+        mother_lname: this.profileData.mother_lname,
+        mother_fname: this.profileData.mother_fname,
+        mother_mname: this.profileData.mother_mname,
+        maidenname: this.profileData.maidenname,
+        spouse_lname: this.profileData.spouse_lname,
+        spouse_fname: this.profileData.spouse_fname,
+        spouse_mname: this.profileData.spouse_mname,
+        spouse_xname: this.profileData.spouse_xname,
+        spouse_occup: this.profileData.spouse_occup,
+        spouse_office: this.profileData.spouse_office,
+        spouse_busadd: this.profileData.spouse_busadd,
+        spouse_tel: this.profileData.spouse_tel,
+    };
+
+
+    // Flags to track success of each update
+    let profileUpdateSuccess = false;
+    let addressUpdateSuccess = false;
+    let familyUpdateSuccess = false;
+
+    // Perform profile update
+    const updateProfile = axios
+        .patch(`/employee/updateEditProfile/${this.profileData.empid}`, profilePayload)
+        .then((response) => {
+            console.log(response.data.message || 'Profile updated successfully');
+            profileUpdateSuccess = true;
         })
         .catch((error) => {
-        this.isLoading = false;  // Hide loading state on error
+            console.error('Error updating profile:', error);
+            this.showErrorDialog = true;
+            this.errorMessage = error.response?.data?.message || 'An error occurred while updating the profile.';
+        });
 
-        // Log the error and display a meaningful message
-        console.error('Error updating profile:', error);
-
-        // Show an error dialog or message
+    // Perform address update
+    const updateEditAddress = axios
+    .patch(`/employee/updateEditAddress/${this.profileData.empid}`, addressPayload)
+    .then((response) => {
+        console.log(response.data.message || 'Address updated successfully');
+        addressUpdateSuccess = true;
+    })
+    .catch((error) => {
+        console.error('Error updating address:', error.response || error.message);
         this.showErrorDialog = true;
-        this.errorMessage = error.response?.data?.message || 'An error occurred while updating the profile.';
+        this.errorMessage = error.response?.data?.message || 'An error occurred while updating the address.';
+    });
+
+    // Perform family data update
+    const updateEditFamily = axios
+        .patch(`/employee/updateEditFamily/${this.profileData.empid}`, familyPayload)
+        .then((response) => {
+            console.log(response.data.message || 'Family data updated successfully');
+            familyUpdateSuccess = true;
+        })
+        .catch((error) => {
+            console.error('Error updating family data:', error.response || error.message);
+            this.showErrorDialog = true;
+            this.errorMessage = error.response?.data?.message || 'An error occurred while updating the family data.';
+        });
+
+
+    // Wait for both updates to complete
+    Promise.allSettled([updateProfile, updateEditAddress, updateEditFamily])
+        .then(() => {
+            // Handle success cases
+            if (profileUpdateSuccess || addressUpdateSuccess || familyUpdateSuccess) {
+                this.isEditing = false;
+                this.showUpdateDialog = false;
+                this.showSuccessDialog = true;
+                this.hideEditModal(); // Close the modal if either update succeeds
+            } else {
+                console.error('Both updates failed.');
+            }
         })
         .finally(() => {
-        this.isLoading = false;  // Hide loading state after request is finished
+            this.isLoading = false; // Hide loading state after all requests finish
         });
-    },
+},
+
+saveEducation() {
+    this.isLoading = true; // Show loading state
+
+    // Log the selected row for debugging
+    console.log('Selected Row:', this.selectedRow);
+
+    // Check if educ_count is present
+    if (!this.selectedRow.educ_count) {
+        console.error('educ_count is missing in the selected row.');
+        this.showErrorDialog = true;
+        this.errorMessage = 'Educ_count is missing in the selected row.';
+        this.isLoading = false;
+        return;
+    }
+
+    // Prepare payload with educ_count
+    const educationPayload = {
+        educ_count: this.selectedRow.educ_count, // Ensure educ_count is included
+        educ_level: this.selectedRow.educ_level,
+        educ_school: this.selectedRow.educ_school,
+        educ_degree: this.selectedRow.educ_degree,
+        educ_from: this.selectedRow.educ_from,
+        educ_year_grad: this.selectedRow.educ_year_grad,
+        educ_hl_earned: this.selectedRow.educ_hl_earned,
+        educ_academic_honor: this.selectedRow.educ_academic_honor,
+    };
+
+    // Send the PATCH request
+    axios
+        .patch(`/employee/updateEducation/${this.profileData.empid}`, educationPayload)
+        .then((response) => {
+            console.log(response.data.message || 'Education updated successfully');
+            this.showSuccessDialog = true; // Show success message
+            this.fetchEducation(); // Reload education list
+            this.closeModal(); // Close the modal
+        })
+        .catch((error) => {
+            console.error('Error updating education:', error.response || error.message);
+            this.showErrorDialog = true; // Show error dialog
+            this.errorMessage = error.response?.data?.message || 'An error occurred while updating education.';
+        })
+        .finally(() => {
+            this.isLoading = false; // Hide loading state
+        });
+},
+
+saveOrganization() {
+    this.isLoading = true; // Show loading state
+
+    // Log the selected row for debugging
+    console.log('Selected Row:', this.selectedRow);
+
+    // Check if org_count is present
+    if (!this.selectedRow.org_count) {
+        console.error('org_count is missing in the selected row.');
+        this.showErrorDialog = true;
+        this.errorMessage = 'org_count is missing in the selected row.';
+        this.isLoading = false;
+        return;
+    }
+
+    // Prepare payload with educ_count
+    const organizationPayload = {
+        org_count: this.selectedRow.org_count, // Ensure org_count is included
+        org_name: this.selectedRow.org_name,
+    };
+
+    // Send the PATCH request
+    axios
+        .patch(`/employee/updateOrganization/${this.profileData.empid}`, organizationPayload)
+        .then((response) => {
+            console.log(response.data.message || 'Organization updated successfully');
+            this.showSuccessDialog = true; // Show success message
+            this.fetchOrganization(); // Reload education list
+            this.closeModal(); // Close the modal
+        })
+        .catch((error) => {
+            console.error('Error updating organization:', error.response || error.message);
+            this.showErrorDialog = true; // Show error dialog
+            this.errorMessage = error.response?.data?.message || 'An error occurred while updating education.';
+        })
+        .finally(() => {
+            this.isLoading = false; // Hide loading state
+        });
+},
+
+saveWork() {
+    this.isLoading = true; // Show loading state
+
+    // Log the selected row for debugging
+    console.log('Selected Row:', this.selectedRow);
+
+    // Check if org_count is present
+    if (!this.selectedRow.work_count) {
+        console.error('work_count is missing in the selected row.');
+        this.showErrorDialog = true;
+        this.errorMessage = 'work_count is missing in the selected row.';
+        this.isLoading = false;
+        return;
+    }
+
+    // Prepare payload with work_count
+    const workPayload = {
+        work_count: this.selectedRow.work_count, // Ensure work_count is included
+        workfr: this.selectedRow.workfr,
+        workto: this.selectedRow.workto,
+        work_pos: this.selectedRow.work_pos,
+        work_dept: this.selectedRow.work_dept,
+        work_salary: this.selectedRow.work_salary,
+        work_salarygrade: this.selectedRow.work_salarygrade,
+        work_stat: this.selectedRow.work_stat,
+        work_gov: this.selectedRow.work_gov,
+    };
+
+    // Send the PATCH request
+    axios
+        .patch(`/employee/updateWork/${this.profileData.empid}`, workPayload)
+        .then((response) => {
+            console.log(response.data.message || 'Work Experience updated successfully');
+            this.showSuccessDialog = true; // Show success message
+            this.fetchWorkExperience(); // Reload education list
+            this.closeModal(); // Close the modal
+        })
+        .catch((error) => {
+            console.error('Error updating work:', error.response || error.message);
+            this.showErrorDialog = true; // Show error dialog
+            this.errorMessage = error.response?.data?.message || 'An error occurred while updating work.';
+        })
+        .finally(() => {
+            this.isLoading = false; // Hide loading state
+        });
+}
+
+
+
+
+
   }
 };
 </script>
@@ -1619,34 +1976,47 @@ fetchOtherInfo(emp_count) {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(95, 93, 93, 0.7);
   }
 
 
   .modal {
-    width: 95%;
-    max-width: 810px;
-    height: auto;
-    padding: 2.3rem;
-    background-color: white;
-    border-radius: 0.5rem;
-  }
-
-  /* Keep buttons responsive */
-  button {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border-radius: 0.375rem;
-  }
-
-  /* Adjust input field size for larger modal */
-  input {
-    font-size: 1rem;
-    padding: 0.8rem;
+    position: absolute;
+    top: 20px;
+    margin: 0 auto; /* Center the modal horizontally */
     width: 100%;
+    max-width: 1500px;
+    margin-left: 250px;
+    border-radius: 0.5rem;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Allow vertical scrolling */
+    max-height: 90vh; /* Ensure the modal doesn't exceed screen height */
+}
+
+  input {
+    width: 100%; /* Full width of the container */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: left; /* Ensure text is left-aligned */
   }
 
-  .grid-cols-2 input {
-    padding: 0.9rem;
-  }
+  .addgrid {
+    text-align: center;
+}
+
+.grid-cols-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.col-span-1 {
+    grid-column: span 1 / span 1;
+}
+
+.col-span-2 {
+    grid-column: span 2 / span 2;
+}
 </style>

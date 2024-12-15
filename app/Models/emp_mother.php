@@ -12,7 +12,13 @@ class emp_mother extends Model
     protected $table = 'emp_mother';
     protected $primaryKey = 'emp_count';
 
-
+    // Add fillable property
+    protected $fillable = [
+        'mother_lname',
+        'mother_fname',
+        'mother_mname',
+        'maidenname'
+    ];
 
 
     public function empMother()

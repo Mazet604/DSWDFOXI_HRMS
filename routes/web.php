@@ -18,10 +18,18 @@ use App\Http\Controllers\AddressControllerII;
 use App\Http\Controllers\PDSController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\EmpAdminController;
+//12/15
+Route::patch('/employee/updateEditAddress/{empid}', [EmployeeController::class, 'updateEditAddress']);
+Route::patch('/employee/updateEditFamily/{empid}', [BackgroundController::class, 'updateEditFamily']);
+Route::patch('/employee/updateEducation/{empid}', [BackgroundController::class, 'updateEducation']);
+Route::patch('/employee/updateOrganization/{empid}', [BackgroundController::class, 'updateOrganization']);
+Route::patch('/employee/updateWork/{empid}', [BackgroundController::class, 'updateWork']);
 
 Route::post('api/update-password', [PasswordController::class, 'updatePassword']);
 Route::patch('/employee/updateProfile', [EmployeeController::class, 'updateProfile']);
 Route::patch('/employee/updateEditProfile/{empid}', [EmployeeController::class, 'updateEditProfile']);
+
+
 
 
 Route::get('/', function () {

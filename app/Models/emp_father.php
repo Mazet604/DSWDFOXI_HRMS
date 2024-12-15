@@ -12,6 +12,14 @@ class emp_father extends Model
     protected $table = 'emp_father';
     protected $primaryKey = 'emp_count';
 
+    // Add fillable property
+    protected $fillable = [
+        'father_lname',
+        'father_fname',
+        'father_mname',
+        'father_xname'
+    ];
+
     public function empFather()
     {
         return $this->belongsTo(Employee::class, 'emp_count', 'emp_count');
