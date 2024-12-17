@@ -191,7 +191,6 @@ export default {
                 data: {
                     labels: Object.keys(this.civilStatusData), // Data-driven labels
                     datasets: [{
-                        label: 'Number of Employees',
                         data: Object.values(this.civilStatusData),
                         backgroundColor: backgroundColors,
                         borderColor: backgroundColors,
