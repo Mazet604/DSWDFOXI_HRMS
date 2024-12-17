@@ -16,6 +16,7 @@ use App\Models\tininfo;
 use App\Models\philhealthinfo;
 use App\Models\employee;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class OtherInfoController extends Controller
 {
@@ -527,59 +528,58 @@ public function getSSSId()
 
 
     public function updateGovIdData(Request $request)
-{
-    try {
-        $user = Auth::user(); // Get the currently authenticated user
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated'], 401);
-        }
+    {
+        // Start a transaction to ensure consistency
+        DB::beginTransaction();
 
-        $employee = Employee::where('empid', $user->empid)->first();
+        try {
+            $user = Auth::user(); // Get the currently authenticated user
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            $employee = Employee::where('empid', $user->empid)->first();
             if (!$employee) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-        // Update Father details
-        $SSS = sssinfo::where('empid', $user->empid)->first();
-        if ($SSS) {
+            // Update or Create SSS details
+            $SSS = sssinfo::firstOrNew(['empid' => $user->empid]);
             $SSS->sss_num = $request->input('sssId');
             $SSS->save();
-        }
 
-        // Update Mother details
-        $pagibig = pagibiginfo::where('empid', $user->empid)->first();
-        if ($pagibig) {
+            // Update or Create PagIbig details
+            $pagibig = pagibiginfo::firstOrNew(['empid' => $user->empid]);
             $pagibig->pgbg_id = $request->input('pagIbigId');
             $pagibig->save();
-        }
 
-        // Update Spouse details
-        $tin = tininfo::where('empid', $user->empid)->first();
-        if ($tin) {
+            // Update or Create TIN details
+            $tin = tininfo::firstOrNew(['empid' => $user->empid]);
             $tin->tin_id = $request->input('tinId');
             $tin->save();
-        }
 
-        $gsis = gsisinfo::where('empid', $user->empid)->first();
-        if ($gsis) {
+            // Update or Create GSIS details
+            $gsis = gsisinfo::firstOrNew(['empid' => $user->empid]);
             $gsis->pb_no = $request->input('gsisId');
             $gsis->save();
-        }
 
-        $philhealth = philhealthinfo::where('empid', $user->empid)->first();
-
-        if ($philhealth) {
-            $philhealth->empid = $user->empid;
+            // Update or Create PhilHealth details
+            $philhealth = philhealthinfo::firstOrNew(['empid' => $user->empid]);
             $philhealth->ph_lid = $request->input('philHealthId');
             $philhealth->save();
-            return response()->json($philhealth);
-        }
 
-        return response()->json(['success' => 'Data updated successfully']);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
+            // Commit the transaction if all updates/creates succeed
+            DB::commit();
+
+            return response()->json(['success' => 'Data updated successfully']);
+
+        } catch (\Exception $e) {
+            // Roll back any changes on error
+            DB::rollBack();
+
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-}
 
     public function addCSEligibility(Request $request)
     {
@@ -807,51 +807,58 @@ public function getOtherInfoData()
 
     // Update the "Other Information" data
     public function updateOtherInfoData(Request $request)
-    {
-        try {
-            $user = Auth::user(); // Get the currently authenticated user
-            if (!$user) {
-                return response()->json(['error' => 'User not authenticated'], 401);
-            }
-
-            $otherInfo = emp_otherinfo::where('empid', $user->empid)->first();
-            if (!$otherInfo) {
-                return response()->json(['error' => 'Other Information data not found'], 404);
-            }
-
-            // Update the columns with the new data from the request
-            $otherInfo->other_34a = $request->input('other_34a');
-            $otherInfo->other_34b = $request->input('other_34b');
-            $otherInfo->other_34bif = $request->input('other_34bif');
-            $otherInfo->other_35a = $request->input('other_35a');
-            $otherInfo->other_35aif = $request->input('other_35aif');
-            $otherInfo->other_35b = $request->input('other_35b');
-            $otherInfo->other_35bif = $request->input('other_35bif');
-            $otherInfo->other_35bfiled = $request->input('other_35bfiled');
-            $otherInfo->other_35stat = $request->input('other_35stat');
-            $otherInfo->other_36 = $request->input('other_36');
-            $otherInfo->other_36if = $request->input('other_36if');
-            $otherInfo->other_37 = $request->input('other_37');
-            $otherInfo->other_37if = $request->input('other_37if');
-            $otherInfo->other_38a = $request->input('other_38a');
-            $otherInfo->other_38aif = $request->input('other_38aif');
-            $otherInfo->other_38b = $request->input('other_38b');
-            $otherInfo->other_39 = $request->input('other_39');
-            $otherInfo->other_39if = $request->input('other_39if');
-            $otherInfo->other_40a = $request->input('other_40a');
-            $otherInfo->other_40aif = $request->input('other_40aif');
-            $otherInfo->other_40b = $request->input('other_40b');
-            $otherInfo->other_40bif = $request->input('other_40bif');
-            $otherInfo->other_40c = $request->input('other_40c');
-            $otherInfo->other_40cif = $request->input('other_40cif');
-
-            $otherInfo->save();
-
-            return response()->json(['success' => 'Other Information data updated successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+{
+    try {
+        $user = Auth::user(); // Get the currently authenticated user
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
         }
+
+        // Find the existing otherInfo record
+        $otherInfo = emp_otherinfo::where('empid', $user->empid)->first();
+
+        if (!$otherInfo) {
+            // If no otherInfo is found, create a new one and set other_count to 1
+            $otherInfo = new emp_otherinfo();
+            $otherInfo->empid = $user->empid;
+        }
+
+        // Update the columns with the new data from the request
+        $otherInfo->other_34a = $request->input('other_34a');
+        $otherInfo->other_34b = $request->input('other_34b');
+        $otherInfo->other_34bif = $request->input('other_34bif');
+        $otherInfo->other_35a = $request->input('other_35a');
+        $otherInfo->other_35aif = $request->input('other_35aif');
+        $otherInfo->other_35b = $request->input('other_35b');
+        $otherInfo->other_35bif = $request->input('other_35bif');
+        $otherInfo->other_35bfiled = $request->input('other_35bfiled');
+        $otherInfo->other_35stat = $request->input('other_35stat');
+        $otherInfo->other_36 = $request->input('other_36');
+        $otherInfo->other_36if = $request->input('other_36if');
+        $otherInfo->other_37 = $request->input('other_37');
+        $otherInfo->other_37if = $request->input('other_37if');
+        $otherInfo->other_38a = $request->input('other_38a');
+        $otherInfo->other_38aif = $request->input('other_38aif');
+        $otherInfo->other_38b = $request->input('other_38b');
+        $otherInfo->other_39 = $request->input('other_39');
+        $otherInfo->other_39if = $request->input('other_39if');
+        $otherInfo->other_40a = $request->input('other_40a');
+        $otherInfo->other_40aif = $request->input('other_40aif');
+        $otherInfo->other_40b = $request->input('other_40b');
+        $otherInfo->other_40bif = $request->input('other_40bif');
+        $otherInfo->other_40c = $request->input('other_40c');
+        $otherInfo->other_40cif = $request->input('other_40cif');
+
+        // Save the updated otherInfo object
+        $otherInfo->save();
+
+        return response()->json(['success' => 'Other Information data updated successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
+
 
 }
 

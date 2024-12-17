@@ -10,6 +10,12 @@ class gsisinfo extends Model
     use HasFactory;
     protected $table = 'gsisinfo';
     protected $primaryKey = 'gsis_count';
+
+    protected $fillable = [
+        'empid',      // Add this field
+        'pb_no',    // Assuming this is another field in the table
+    ];
+
     public function gsis()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');

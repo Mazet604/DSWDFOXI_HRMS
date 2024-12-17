@@ -10,6 +10,12 @@ class pagibiginfo extends Model
     use HasFactory;
     protected $table = 'pagibiginfo';
     protected $primaryKey = 'pgbg_count';
+
+    protected $fillable = [
+        'empid',      // Add this field
+        'pgbg_id',    // Assuming this is another field in the table
+    ];
+
     public function pagibiginfo()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');

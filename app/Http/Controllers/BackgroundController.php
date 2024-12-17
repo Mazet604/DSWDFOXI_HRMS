@@ -36,50 +36,68 @@ class BackgroundController extends Controller
     }
 
     public function getEducationData(Request $request)
-    {
-        try {
-            $educ_count = $request->query('educ_count');
-            $empid = $request->query('empid');
+{
+    try {
+        $educ_count = $request->query('educ_count');
+        $empid = $request->query('empid');
 
-            if ($educ_count) {
-                // Fetch specific education data by `educ_count`
-                $educationData = Education::where('educ_count', $educ_count)->first();
+        $fieldsToFetch = [
+            'educ_count',
+            'educ_level',
+            'educ_school',
+            'educ_degree',
+            'educ_from',
+            'educ_year_grad',
+            'educ_academic_honor',
+            'educ_hl_earned'
+        ];
 
-                if (!$educationData) {
-                    return response()->json(['error' => 'Education data not found'], 404);
-                }
+        if ($educ_count) {
+            // Fetch specific education data by educ_count
+            $educationData = Education::select($fieldsToFetch)
+                ->where('educ_count', $educ_count)
+                ->first();
 
-                return response()->json($educationData, 200);
+            if (!$educationData) {
+                return response()->json(['error' => 'Education data not found'], 404);
             }
 
-            if ($empid) {
-                // Admin-side or custom request: Fetch education data by `empid`
-                $educationData = Education::where('empid', $empid)->get();
+            return response()->json($educationData, 200);
+        }
 
-                if ($educationData->isEmpty()) {
-                    return response()->json(['error' => 'Education data not found'], 404);
-                }
-
-                return response()->json($educationData, 200);
-            }
-
-            // User-side request (authenticated user)
-            $authenticatedEmpid = Auth::user()->empid; // For user-specific data
-            $educationData = Education::where('empid', $authenticatedEmpid)->get();
+        if ($empid) {
+            // Admin-side or custom request: Fetch education data by empid
+            $educationData = Education::select($fieldsToFetch)
+                ->where('empid', $empid)
+                ->get();
 
             if ($educationData->isEmpty()) {
                 return response()->json(['error' => 'Education data not found'], 404);
             }
 
             return response()->json($educationData, 200);
-
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
         }
+
+        // User-side request (authenticated user)
+        $authenticatedEmpid = Auth::user()->empid; // For user-specific data
+        $educationData = Education::select($fieldsToFetch)
+            ->where('empid', $authenticatedEmpid)
+            ->get();
+
+        if ($educationData->isEmpty()) {
+            return response()->json(['error' => 'Education data not found'], 404);
+        }
+
+        return response()->json($educationData, 200);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
 
 
-    public function getOrganizationData(Request $request)
+
+public function getOrganizationData(Request $request)
 {
     try {
         // Retrieve query parameters
@@ -87,7 +105,7 @@ class BackgroundController extends Controller
         $empid = $request->query('empid');
 
         if ($org_count) {
-            // Fetch specific organization data by `org_count`
+            // Fetch specific organization data by org_count
             $organizationData = emp_org::where('org_count', $org_count)
                 ->select('org_count', 'org_name')
                 ->first();
@@ -100,7 +118,7 @@ class BackgroundController extends Controller
         }
 
         if ($empid) {
-            // Fetch organization data by `empid`
+            // Fetch organization data by empid
             $organizationData = emp_org::where('empid', $empid)
                 ->select('org_count', 'org_name')
                 ->orderBy('org_count', 'asc') // Ensure data is sorted
@@ -142,8 +160,7 @@ class BackgroundController extends Controller
 }
 
 
-
-    public function getWorkExperienceData(Request $request)
+public function getWorkExperienceData(Request $request)
     {
         try {
             $work_count = $request->query('work_count');
@@ -155,7 +172,7 @@ class BackgroundController extends Controller
             }
 
             if ($work_count) {
-                // Fetch specific work experience data by `work_count`
+                // Fetch specific work experience data by work_count
                 $workExperienceData = emp_work::where('work_count', $work_count)->first();
 
                 if (!$workExperienceData) {
@@ -165,7 +182,7 @@ class BackgroundController extends Controller
                 return response()->json($workExperienceData, 200);
             }
 
-            // Fetch work experience data by `empid`
+            // Fetch work experience data by empid
             $workExperienceData = emp_work::where('empid', $empid)
                 ->select(
                     'work_count',
@@ -190,47 +207,44 @@ class BackgroundController extends Controller
         }
     }
 
-
     public function getSkillsData(Request $request)
-{
-    try {
-        $skill_count = $request->query('skill_count');
-        $empid = $request->query('empid') ?? Auth::user()->empid; // Use empid from request or authenticated user
+    {
+        try {
+            $skill_count = $request->query('skill_count');
+            $empid = $request->query('empid') ?? Auth::user()->empid; // Use empid from request or authenticated user
 
-        // Check for skill_count parameter
-        if ($skill_count) {
-            // Fetch specific skill data by `skill_count`
-            $skillsData = emp_skills::where('skill_count', $skill_count)->first();
+            // Check for skill_count parameter
+            if ($skill_count) {
+                // Fetch specific skill data by skill_count
+                $skillsData = emp_skills::where('skill_count', $skill_count)->first();
 
-            if (!$skillsData) {
-                return response()->json(['error' => 'Skill data not found'], 404);
+                if (!$skillsData) {
+                    return response()->json(['error' => 'Skill data not found'], 404);
+                }
+
+                return response()->json($skillsData, 200);
             }
 
-            return response()->json($skillsData, 200);
-        }
+            // Check for empid parameter
+            if ($empid) {
+                // Fetch skills data by empid
+                $skillsData = emp_skills::where('empid', $empid)
+                    ->select('skill_count', 'skill')
+                    ->get();
 
-        // Check for empid parameter
-        if ($empid) {
-            // Fetch skills data by `empid`
-            $skillsData = emp_skills::where('empid', $empid)
-                ->select('skill_count', 'skill')
-                ->get();
+                if ($skillsData->isEmpty()) {
+                    return response()->json(['error' => 'Skills data not found'], 404);
+                }
 
-            if ($skillsData->isEmpty()) {
-                return response()->json(['error' => 'Skills data not found'], 404);
+                return response()->json($skillsData, 200);
             }
 
-            return response()->json($skillsData, 200);
+            // Return error if no valid parameter is provided
+            return response()->json(['error' => 'No valid identifier provided'], 400);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        // Return error if no valid parameter is provided
-        return response()->json(['error' => 'No valid identifier provided'], 400);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
     }
-}
-
-
 
 public function getReferencesData(Request $request)
 {
@@ -571,57 +585,99 @@ public function getReferencesData(Request $request)
 
 
     public function updateFamilyData(Request $request)
-{
-    try {
-        $user = Auth::user(); // Get the currently authenticated user
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated'], 401);
-        }
+    {
+        try {
+            $user = Auth::user(); // Get the currently authenticated user
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
 
-        $employee = Employee::where('empid', $user->empid)->first();
+            $employee = Employee::where('empid', $user->empid)->first();
             if (!$employee) {
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-        // Update Father details
-        $father = emp_father::where('emp_count', $employee->emp_count)->first();
-        if ($father) {
-            $father->father_lname = $request->input('fatherSurname');
-            $father->father_fname = $request->input('fatherFirstName');
-            $father->father_mname = $request->input('fatherMiddleName');
-            $father->father_xname = $request->input('fatherExtName');
-            $father->save();
-        }
+            // Update Father details
+            $familyFather = emp_father::where('emp_count', $employee->emp_count)->first();
+            if (!$familyFather) {
+                // If no father is found, create a new one
+                $familyFather = new emp_father();
+                $familyFather->emp_count = $employee->emp_count;
+                $familyFather->father_lname = $request->input('fatherSurname');
+                $familyFather->father_fname = $request->input('fatherFirstName');
+                $familyFather->father_mname = $request->input('fatherMiddleName');
+                $familyFather->father_xname = $request->input('fatherExtName');
+                $familyFather->updated_at = now();
 
-        // Update Mother details
-        $mother = emp_mother::where('emp_count', $employee->emp_count)->first();
-        if ($mother) {
-            $mother->maidenname = $request->input('motherMaidenName');
-            $mother->mother_lname = $request->input('motherSurname');
-            $mother->mother_fname = $request->input('motherFirstName');
-            $mother->mother_mname = $request->input('motherMiddleName');
-            $mother->save();
-        }
+                $familyFather->save();
+            } else {
+                // Update Father details
+                $familyFather->father_lname = $request->input('fatherSurname');
+                $familyFather->father_fname = $request->input('fatherFirstName');
+                $familyFather->father_mname = $request->input('fatherMiddleName');
+                $familyFather->father_xname = $request->input('fatherExtName');
+                $familyFather->save();
+            }
 
-        // Update Spouse details
-        $spouse = emp_spouse::where('emp_count', $employee->emp_count)->first();
-        if ($spouse) {
-            $spouse->spouse_lname = $request->input('spouseSurname');
-            $spouse->spouse_fname = $request->input('spouseFirstName');
-            $spouse->spouse_mname = $request->input('spouseMiddleName');
-            $spouse->spouse_xname = $request->input('spouseExtName');
-            $spouse->spouse_occup = $request->input('spouseOccupation');
-            $spouse->spouse_office = $request->input('spouseBusinessName');
-            $spouse->spouse_busadd = $request->input('spouseBusinessAddress');
-            $spouse->spouse_tel = $request->input('spouseTelNo');
-            $spouse->save();
-        }
+            // Update Mother details
+            $familyMother = emp_mother::where('emp_count', $employee->emp_count)->first();
+            if (!$familyMother) {
+                // If no mother is found, create a new one
+                $familyMother = new emp_mother();
+                $familyMother->emp_count = $employee->emp_count;
+                $familyMother->maidenname = $request->input('motherMaidenName'); // This line should be in emp_mother class
+                $familyMother->mother_lname = $request->input('motherSurname');
+                $familyMother->mother_fname = $request->input('motherFirstName');
+                $familyMother->mother_mname = $request->input('motherMiddleName');
+                $familyMother->updated_at = now();
 
-        return response()->json(['success' => 'Family data updated successfully']);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
+                $familyMother->save();
+            } else {
+                // Update Mother details
+                $familyMother->maidenname = $request->input('motherMaidenName');
+                $familyMother->mother_lname = $request->input('motherSurname');
+                $familyMother->mother_fname = $request->input('motherFirstName');
+                $familyMother->mother_mname = $request->input('motherMiddleName');
+                $familyMother->save();
+            }
+
+            // Update Spouse details
+            $spouse = emp_spouse::where('emp_count', $employee->emp_count)->first();
+            if (!$spouse) {
+                // If no spouse is found, create a new one
+                $spouse = new emp_spouse();
+                $spouse->emp_count = $employee->emp_count;
+                $spouse->spouse_lname = $request->input('spouseSurname');
+                $spouse->spouse_fname = $request->input('spouseFirstName');
+                $spouse->spouse_mname = $request->input('spouseMiddleName');
+                $spouse->spouse_xname = $request->input('spouseExtName');
+                $spouse->spouse_occup = $request->input('spouseOccupation');
+                $spouse->spouse_office = $request->input('spouseBusinessName');
+                $spouse->spouse_busadd = $request->input('spouseBusinessAddress');
+                $spouse->spouse_tel = $request->input('spouseTelNo');
+                $spouse->updated_at = now();
+
+                $spouse->save();
+            } else {
+                // Update Spouse details
+                $spouse->spouse_lname = $request->input('spouseSurname');
+                $spouse->spouse_fname = $request->input('spouseFirstName');
+                $spouse->spouse_mname = $request->input('spouseMiddleName');
+                $spouse->spouse_xname = $request->input('spouseExtName');
+                $spouse->spouse_occup = $request->input('spouseOccupation');
+                $spouse->spouse_office = $request->input('spouseBusinessName');
+                $spouse->spouse_busadd = $request->input('spouseBusinessAddress');
+                $spouse->spouse_tel = $request->input('spouseTelNo');
+                $spouse->save();
+            }
+
+            return response()->json(['success' => 'Family data updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-}
+
+
 
     public function addChildData(Request $request)
 {
@@ -898,6 +954,229 @@ public function getAllCities()
 {
     $cities = lib_city::all();
     return response()->json($cities);
+}
+
+//12/15
+public function updateEditFamily(Request $request, $empid)
+{
+    logger('Received empid: ' . $empid);
+    logger('Request Data: ' . json_encode($request->all()));
+
+    // Fetch the emp_count using the empid
+    $employee = Employee::where('empid', $empid)->first();
+
+    if (!$employee) {
+        logger('Employee not found for empid: ' . $empid);
+        return response()->json(['message' => 'Employee not found'], 404);
+    }
+
+    $emp_count = $employee->emp_count; // Get the corresponding emp_count
+    logger('Resolved emp_count: ' . $emp_count);
+
+    // Check if the emp_count exists
+    if (!$emp_count) {
+        // Fetch the emp_count from the employee table using empid
+        $employeeData = Employee::where('empid', $empid)->first();
+
+        if (!$employeeData) {
+            logger('Employee not found for empid: ' . $empid);
+            return response()->json(['message' => 'Employee not found'], 404);
+        }
+
+        $emp_count = $employeeData->emp_count; // Get the emp_count
+    }
+
+// Check if Father details exist
+$father = emp_father::where('emp_count', $emp_count)->first();
+if ($father) {
+    // Update existing Father details
+    $father->update($request->only(['father_lname', 'father_fname', 'father_mname', 'father_xname']));
+} else {
+    // Create new Father details
+    emp_father::create($request->only(['father_lname', 'father_fname', 'father_mname', 'father_xname']) + ['emp_count' => $emp_count]);
+}
+
+// Check if Mother details exist
+$mother = emp_mother::where('emp_count', $emp_count)->first();
+if ($mother) {
+    // Update existing Mother details
+    $mother->update($request->only(['mother_lname', 'mother_fname', 'mother_mname', 'maidenname']));
+} else {
+    // Create new Mother details
+    emp_mother::create($request->only(['mother_lname', 'mother_fname', 'mother_mname', 'maidenname']) + ['emp_count' => $emp_count]);
+}
+
+// Check if Spouse details exist
+$spouse = emp_spouse::where('emp_count', $emp_count)->first();
+if ($spouse) {
+    // Update existing Spouse details
+    $spouse->update($request->only([
+        'spouse_lname', 'spouse_fname', 'spouse_mname', 'spouse_xname',
+        'spouse_occup', 'spouse_office', 'spouse_busadd', 'spouse_tel'
+    ]));
+} else {
+    // Create new Spouse details
+    emp_spouse::create($request->only([
+        'spouse_lname', 'spouse_fname', 'spouse_mname', 'spouse_xname',
+        'spouse_occup', 'spouse_office', 'spouse_busadd', 'spouse_tel'
+    ]) + ['emp_count' => $emp_count]);
+}
+
+
+    logger('Family data updated/created successfully for empid: ' . $empid);
+    return response()->json(['message' => 'Family data updated/created successfully']);
+}
+
+
+
+public function updateEducation(Request $request, $empid)
+{
+    logger('Received empid: ' . $empid);
+    logger('Request Data: ' . json_encode($request->all()));
+
+    // Fetch the employee using the empid
+    $employee = Employee::where('empid', $empid)->first();
+
+    if (!$employee) {
+        logger('Employee not found for empid: ' . $empid);
+        return response()->json(['message' => 'Employee not found'], 404);
+    }
+
+    $emp_count = $employee->emp_count; // Get the corresponding emp_count
+    logger('Resolved emp_count: ' . $emp_count);
+
+    // Ensure educ_count is present
+    if (!$request->has('educ_count')) {
+        logger('Missing educ_count in request.');
+        return response()->json(['message' => 'Missing educ_count'], 400);
+    }
+
+    // Log the educ_count
+    $educ_count = $request->input('educ_count');
+    logger('Received educ_count: ' . $educ_count);
+
+    // Find the specific education record to update using educ_count
+    $education = Education::where('empid', $empid)
+        ->where('educ_count', $educ_count)
+        ->first();
+
+    if (!$education) {
+        logger('Education record not found for educ_count: ' . $educ_count);
+        return response()->json(['message' => 'Education record not found'], 404);
+    }
+
+    // Update the education record with new values
+    $education->update([
+        'educ_level' => $request->educ_level,
+        'educ_school' => $request->educ_school,
+        'educ_degree' => $request->educ_degree,
+        'educ_from' => $request->educ_from,
+        'educ_year_grad' => $request->educ_year_grad,
+        'educ_hl_earned' => $request->educ_hl_earned,
+        'educ_academic_honor' => $request->educ_academic_honor,
+    ]);
+
+    logger('Education data updated successfully for educ_count: ' . $educ_count);
+    return response()->json(['message' => 'Education data updated successfully']);
+}
+
+public function updateOrganization(Request $request, $empid)
+{
+    logger('Received empid: ' . $empid);
+    logger('Request Data: ' . json_encode($request->all()));
+
+    // Fetch the employee using the empid
+    $employee = Employee::where('empid', $empid)->first();
+
+    if (!$employee) {
+        logger('Employee not found for empid: ' . $empid);
+        return response()->json(['message' => 'Employee not found'], 404);
+    }
+
+    $emp_count = $employee->emp_count; // Get the corresponding emp_count
+    logger('Resolved emp_count: ' . $emp_count);
+
+    // Ensure org_count is present
+    if (!$request->has('org_count')) {
+        logger('Missing org_count in request.');
+        return response()->json(['message' => 'Missing org_count'], 400);
+    }
+
+    // Log the educ_count
+    $org_count = $request->input('org_count');
+    logger('Received org_count: ' . $org_count);
+
+    // Find the specific education record to update using educ_count
+    $emp_org = emp_org::where('empid', $empid)
+        ->where('org_count', $org_count)
+        ->first();
+
+    if (!$emp_org) {
+        logger('Education record not found for org_count: ' . $org_count);
+        return response()->json(['message' => 'Education record not found'], 404);
+    }
+
+    // Update the education record with new values
+    $emp_org->update([
+        'org_name' => $request->org_name,
+
+    ]);
+
+    logger('Organization data updated successfully for org_count: ' . $org_count);
+    return response()->json(['message' => 'Organization data updated successfully']);
+}
+
+public function updateWork(Request $request, $empid)
+{
+    logger('Received empid: ' . $empid);
+    logger('Request Data: ' . json_encode($request->all()));
+
+    // Fetch the employee using the empid
+    $employee = Employee::where('empid', $empid)->first();
+
+    if (!$employee) {
+        logger('Employee not found for empid: ' . $empid);
+        return response()->json(['message' => 'Employee not found'], 404);
+    }
+
+    $emp_count = $employee->emp_count; // Get the corresponding emp_count
+    logger('Resolved emp_count: ' . $emp_count);
+
+    // Ensure work_count is present
+    if (!$request->has('work_count')) {
+        logger('Missing work_count in request.');
+        return response()->json(['message' => 'Missing work_count'], 400);
+    }
+
+    // Log the work_count
+    $work_count = $request->input('work_count');
+    logger('Received work_count: ' . $work_count);
+
+    // Find the specific education record to update using educ_count
+    $emp_work = emp_work::where('empid', $empid)
+        ->where('work_count', $work_count)
+        ->first();
+
+    if (!$emp_work) {
+        logger('Education record not found for work_count: ' . $work_count);
+        return response()->json(['message' => 'Education record not found'], 404);
+    }
+
+    // Update the education record with new values
+    $emp_work->update([
+        'workfr' => $request->workfr,
+        'workto' => $request->workto,
+        'work_pos' => $request->work_pos,
+        'work_dept' => $request->work_dept,
+        'work_salary' => $request->work_salary,
+        'work_salarygrade' => $request->work_salarygrade,
+        'work_stat' => $request->work_stat,
+        'work_gov' => $request->work_gov,
+
+    ]);
+
+    logger('Work Experience data updated successfully for work_count: ' . $work_count);
+    return response()->json(['message' => 'Work Experience data updated successfully']);
 }
 
 

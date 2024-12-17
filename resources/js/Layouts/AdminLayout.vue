@@ -15,15 +15,16 @@
                 @click="navigateTo('dashboard', 'dashboard', 0)"
                 class="flex items-center py-2 space-x-2 text-lg font-bold menu-item"
               >
-                <i class="text-3xl fa-regular fa-circle-user"></i>
-                <span>DASHBOARD</span>
+                <i class="text-3xl fa-solid fa-chart-line"></i>
+                <span> DASHBOARD</span>
               </li>
               <li
                 :class="{ active: activeMenuItem === 'edit-profile' }"
                 @click="navigateTo('edit-profile', 'edit-profile', 0)"
                 class="flex items-center py-2 space-x-2 text-lg font-bold menu-item"
               >
-                <span>Edit Profile</span>
+                <i class="text-3xl fa-solid fa-user-edit"></i>
+                <span>VIEW EMPLOYEE</span>
               </li>
 
               <!--  navigation for import excel function -->
@@ -32,12 +33,13 @@
                 @click="navigateTo('import-excel', 'import-excel', 0)"
                 class="flex items-center py-2 space-x-2 text-lg font-bold menu-item"
               >
-                <span>Add Employee</span>
+              <i class="text-3xl fa-solid fa-user-plus"></i>
+                <span>ADD EMPLOYEE</span>
               </li>
             </ul>
           </nav>
           <button @click="confirmLogout" class="px-2 py-2 mt-0 text-white bg-red-600 rounded w-30 hover:bg-red-700" style="font-size: 16px;">
-            <i class="mr-2 fas fa-sign-out-alt"></i> Log Out
+            <i class="mr-2 fas fa-sign-out-alt"></i> LOG OUT
           </button>
         </div>
       </aside>

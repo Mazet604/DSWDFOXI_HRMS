@@ -1,270 +1,195 @@
 <template>
     <AdminLayout>
-      <!-- ADD EMPLOYEE Tab -->
-      <h1 class="dashboard-title">Admin Dashboard - ADD EMPLOYEE</h1>
+        <!-- ADD EMPLOYEE Tab -->
+        <div class="flex justify-center">
+            <div class="w-2/4 p-8 bg-white border-4 rounded-lg shadow-lg">
+                <h1 class="pb-2 mb-4 text-3xl font-bold text-blue-800 border-b border-yellow-200">
+                    CREATE EMPLOYEE ACCOUNT
+                </h1>
 
-      <h2 class="form-heading">Create Employee Account</h2>
-      <form @submit.prevent="createAccount" class="form">
-        <div class="form-group">
-          <label for="empid">Employee ID:</label>
-          <input
-            v-model="newAccount.empid"
-            type="text"
-            id="empid"
-            placeholder="11-XXXX"
-            required
-          />
+                <!-- Create Account Form -->
+                <form @submit.prevent="createAccount" class="form">
+                    <div class="form-group">
+                        <label for="empid" class="block mb-2 font-semibold">Employee ID:</label>
+                        <input
+                            v-model="newAccount.empid"
+                            type="text"
+                            id="empid"
+                            placeholder="11-XXXX"
+                            class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="position" class="block mb-2 font-semibold">Position:</label>
+                        <input
+                            v-model="newAccount.position"
+                            type="text"
+                            id="position"
+                            placeholder="Enter Position"
+                            class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="empmail" class="block mb-2 font-semibold">Email:</label>
+                        <input
+                            v-model="newAccount.empmail"
+                            type="email"
+                            id="empmail"
+                            placeholder="Enter Email"
+                            class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="empuser" class="block mb-2 font-semibold">Username:</label>
+                        <input
+                            v-model="newAccount.empuser"
+                            type="text"
+                            id="empuser"
+                            placeholder="Enter Username"
+                            class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="emppass" class="block mb-2 font-semibold">Password:</label>
+                        <input
+                            v-model="newAccount.emppass"
+                            type="password"
+                            id="emppass"
+                            placeholder="Enter Password"
+                            class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            required
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        class="w-full px-4 py-2 mt-4 font-semibold text-white bg-blue-800 rounded-md hover:bg-blue-700"
+                    >
+                        CREATE ACCOUNT
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="empmail">Email:</label>
-          <input
-            v-model="newAccount.empmail"
-            type="email"
-            id="empmail"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="empuser">Username:</label>
-          <input
-            v-model="newAccount.empuser"
-            type="text"
-            id="empuser"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="emppass">Password:</label>
-          <input
-            v-model="newAccount.emppass"
-            type="password"
-            id="emppass"
-            required
-          />
-        </div>
-        <button type="submit" class="btn-submit">Create Account</button>
-      </form>
 
-      <!-- Section for uploading and reviewing Excel file -->
-      <h2 class="form-heading">Upload Excel File</h2>
-      <form @submit.prevent="uploadFile" class="form">
-        <input
-          type="file"
-          @change="handleFile"
-          accept=".xlsx,.xls"
-          class="file-input"
-        />
-        <button type="submit" class="btn-submit">Upload and Review</button>
-      </form>
-
-      <!-- Section to display parsed Excel data -->
-      <div v-if="excelData" class="preview-container">
-        <h3 class="preview-heading">Preview Uploaded Data</h3>
-        <pre class="preview-content">{{ excelData }}</pre>
-        <button @click="confirmUpload" class="btn-confirm">Confirm and Save</button>
-      </div>
+        <!-- Success Modal -->
+        <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div class="w-full max-w-lg overflow-hidden transition-all transform bg-white rounded-lg shadow-lg">
+                <div class="p-6">
+                    <div class="text-center">
+                        <i class="mb-4 text-6xl fas fa-check-circle" style="color: green;"></i>
+                        <h2 class="mb-4 text-2xl font-semibold">Account Created Successfully!</h2>
+                        <p class="mb-6 text-gray-600">The new employee account has been created successfully.</p>
+                    </div>
+                    <div class="text-center">
+                        <button
+                            @click="hideSuccessDialog"
+                            class="px-8 py-2 text-sm font-semibold text-white bg-blue-900 rounded-md hover:bg-blue-800"
+                        >
+                            BACK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </AdminLayout>
-  </template>
-
+</template>
 
 <script>
-import { App } from '@inertiajs/inertia-vue3';
-import AdminLayout from '@/Layouts/AdminLayout.vue';
-import axios from 'axios';
-import { nextTick } from 'vue';
-import * as XLSX from 'xlsx';
-
-
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+import axios from "axios";
 
 export default {
-  name: 'AdminDashboard',
+    name: "AdminDashboard",
 
-  props: {
-    successMessage: String, // Define a prop for the success message
-  },
-
-  components: {
-    AdminLayout
-  },
-
-  data() {
-    return {
-      file: null,
-      excelData: null, // For displaying parsed data
-      newAccount: {
-        empid: "",
-        empmail: "",
-        empuser: "",
-        emppass: "",
-      },
-    };
-  },
-
-
-  methods: {
-  formatEmployeeId() {
-      if (!this.employeeId.startsWith('11-')) {
-        this.employeeId = '11-' + this.employeeId.slice(3);
-      }
-      if (this.employeeId.length > 7) {
-        this.employeeId = this.employeeId.slice(0, 7);
-      }
+    components: {
+        AdminLayout,
     },
 
-    handleFile(event) {
-      this.file = event.target.files[0];
+    data() {
+        return {
+            newAccount: {
+                empid: "",
+                empmail: "",
+                empuser: "",
+                emppass: "",
+                position: "",
+            },
+            showSuccessDialog: false, // To show or hide the success modal
+        };
     },
 
-    async createAccount() {
-      try {
-        const response = await axios.post("/create-account", this.newAccount);
-        alert(response.data.message);
-      } catch (error) {
-        alert("Error creating account: " + error.response?.data?.message || error.message);
-      }
+    methods: {
+        // Create an account and show success modal
+        async createAccount() {
+            try {
+                const response = await axios.post("/create-account", this.newAccount);
+                this.showSuccessDialog = true; // Show success modal
+                this.resetForm(); // Clear form fields
+            } catch (error) {
+                alert("Error creating account: ID, Email, or Username already exists.");
+            }
+        },
+
+        // Hide the success modal
+        hideSuccessDialog() {
+            this.showSuccessDialog = false;
+        },
+
+        // Reset form fields
+        resetForm() {
+            this.newAccount = {
+                empid: "",
+                empmail: "",
+                empuser: "",
+                emppass: "",
+                position: "",
+            };
+        },
     },
-
-async uploadFile() {
-  console.log("UploadFile method triggered.");
-  if (!this.file) {
-    alert("Please select a file!");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("file", this.file);
-
-  try {
-    const response = await axios.post("/preview-excel", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    this.excelData = response.data; // Store the parsed data for review
-    console.log("Excel Data:", this.excelData);
-  } catch (error) {
-    alert("Error uploading file: " + error.response?.data?.message || error.message);
-  }
-},
-
-    async previewExcel(file) {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        try {
-            const response = await axios.post('/preview-excel', formData);
-            console.log('Preview Excel Response:', response.data);
-            this.sheet1 = response.data.sheet1; // Save sheet1 data for the next step
-        } catch (error) {
-            console.error('Error previewing Excel:', error.response.data);
-        }
-    },
-    async confirmUpload() {
-        const data = { sheet1: this.sheet1 }; // Send the parsed sheet1 data
-
-        try {
-            const response = await axios.post('/confirm-upload', { data });
-            console.log('Upload Confirm Response:', response.data);
-        } catch (error) {
-            console.error('Error uploading data:', error.response.data);
-        }
-    },
-
-
-
-
-  }
-}
+};
 </script>
 
 <style scoped>
-.dashboard-title {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.form-heading {
-  color: #555;
-  margin-bottom: 15px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
+/* General Form Styles */
 .form-group {
-  margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+    color: #444;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+button {
+    transition: background-color 0.3s;
 }
 
-.file-input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Modal Styling */
+.fixed {
+    position: fixed;
 }
 
-.btn-submit {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.bg-opacity-75 {
+    background-color: rgba(0, 0, 0, 0.75);
 }
 
-.btn-submit:hover {
-  background-color: #0056b3;
+.rounded-lg {
+    border-radius: 8px;
 }
 
-.preview-container {
-  margin-top: 30px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
+.shadow-lg {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-.preview-heading {
-  color: #555;
-  margin-bottom: 15px;
+.text-center {
+    text-align: center;
 }
 
-.preview-content {
-  background-color: #eef;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.btn-confirm {
-  background-color: #ffc107;
-  color: #fff;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.btn-confirm:hover {
-  background-color: #d39e00;
+.text-gray-600 {
+    color: #718096;
 }
 </style>
-

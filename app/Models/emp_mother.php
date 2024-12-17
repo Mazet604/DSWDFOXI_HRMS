@@ -10,9 +10,17 @@ class emp_mother extends Model
     use HasFactory;
 
     protected $table = 'emp_mother';
+
     protected $primaryKey = 'emp_count';
 
-
+    // Add fillable property
+    protected $fillable = [
+        'emp_count',
+        'mother_lname',
+        'mother_fname',
+        'mother_mname',
+        'maidenname'
+    ];
 
 
     public function empMother()

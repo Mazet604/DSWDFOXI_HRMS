@@ -183,7 +183,7 @@ class EmployeeController extends Controller
         }
     }
 
-    public function updateProfile(Request $request,)
+    public function updateProfile(Request $request)
     {
         try {
             $user = Auth::user(); // Get the currently authenticated user
@@ -197,15 +197,31 @@ class EmployeeController extends Controller
                 return response()->json(['error' => 'Employee not found'], 404);
             }
 
-            $emp_address = EmpAddress::where('emp_count', $employee->emp_count)->first(); // Fetch employee address using emp_count
-            if (!$emp_address) {
-                return response()->json(['error' => 'Employee address not found'], 404);
-            }
+            // Handle Employee Address
+            $emp_address = EmpAddress::firstOrNew(['emp_count' => $employee->emp_count]);
+            $emp_address->emp_region = $request->input('Region', ''); // Default to an empty string if not provided
+            $emp_address->emp_prov = $request->input('Province', '');
+            $emp_address->emp_city = $request->input('City', '');
+            $emp_address->emp_brgy = $request->input('Barangay', '');
+            $emp_address->emp_house = $request->input('block', '');
+            $emp_address->emp_subd = $request->input('villsub', '');
+            $emp_address->emp_zip = $request->input('zipcode', '');
+            $emp_address->save();
 
-            $emp_address2 = EmpAddress2::where('emp_count', $employee->emp_count)->first(); // Fetch employee address2 using emp_count
-            if (!$emp_address2) {
-                return response()->json(['error' => 'Employee address 2 not found'], 404);
-            }
+            // Handle Employee Address 2
+            $emp_address2 = EmpAddress2::firstOrNew(['emp_count' => $employee->emp_count]);
+            $emp_address2->emp_region2 = $request->input('Region2', '');
+            $emp_address2->emp_prov2 = $request->input('Province2', '');
+            $emp_address2->emp_city2 = $request->input('City2', '');
+            $emp_address2->emp_brgy2 = $request->input('Barangay2', '');
+            $emp_address2->emp_house2 = $request->input('block2', '');
+            $emp_address2->emp_subd2 = $request->input('villsub2', '');
+            $emp_address2->emp_zip2 = $request->input('zipcode2', '');
+            $emp_address2->save();
+
+            // Handle Employee Account
+            $emp_acc->empmail = $request->input('emailadd');
+            $emp_acc->save();
 
             // Update the employee details
             $employee->emp_fname = $request->input('firstName');
@@ -223,40 +239,14 @@ class EmployeeController extends Controller
             $employee->emp_blood = $request->input('bloodType');
             $employee->emp_cnum = $request->input('mobilenum');
             $employee->emp_telnum = $request->input('telnum');
-
-
-            //Update the address
-            $emp_address->emp_region = $request->input('Region');
-            $emp_address->emp_prov = $request->input('Province');
-            $emp_address->emp_city = $request->input('City');
-            $emp_address->emp_brgy = $request->input('Barangay');
-            $emp_address->emp_house = $request->input('block');
-            $emp_address->emp_subd = $request->input('villsub');
-            $emp_address->emp_zip = $request->input('zipcode');
-
-            //Update the address2
-            $emp_address2->emp_region2 = $request->input('Region2');
-            $emp_address2->emp_prov2 = $request->input('Province2');
-            $emp_address2->emp_city2 = $request->input('City2');
-            $emp_address2->emp_brgy2 = $request->input('Barangay2');
-            $emp_address2->emp_house2 = $request->input('block2');
-            $emp_address2->emp_subd2 = $request->input('villsub2');
-            $emp_address2->emp_zip2 = $request->input('zipcode2');
-
-            // Update the emp_acc details
-            $emp_acc->empmail = $request->input('emailadd');
-
-            // Save the updated information
             $employee->save();
-            $emp_acc->save();
-            $emp_address->save();
-            $emp_address2->save();
 
             return response()->json(['success' => 'Profile updated successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
     public function getSexOptions()
     {
@@ -386,6 +376,20 @@ public function getEmployeeAddress(Request $request)
     return response()->json($emp_address);
 }
 
+public function getEmployeeAddress2(Request $request)
+{
+    $emp_count = $request->query('emp_count');
+
+    // Fetch address based on emp_count
+    $emp_address2 = EmpAddress2::where('emp_count', $emp_count)->first();
+
+    if (!$emp_address2) {
+        return response()->json(['error' => 'Address not found'], 404);
+    }
+
+    return response()->json($emp_address2);
+}
+
 //admin
 public function updateEditProfile(Request $request, $empid)
 {
@@ -401,5 +405,52 @@ public function updateEditProfile(Request $request, $empid)
 
     return response()->json(['message' => 'Profile updated successfully']);
 }
+
+//12/15
+public function updateEditAddress(Request $request, $empid)
+{
+    logger('Received empid: ' . $empid);
+    logger('Request Data: ' . json_encode($request->all()));
+
+    // Fetch the emp_count using the empid
+    $employee = Employee::where('empid', $empid)->first();
+
+    if (!$employee) {
+        logger('Employee not found for empid: ' . $empid);
+        return response()->json(['message' => 'Employee not found'], 404);
+    }
+
+    $emp_count = $employee->emp_count; // Get the corresponding emp_count
+    logger('Resolved emp_count: ' . $emp_count);
+
+    // Fetch the residential address using emp_count
+    $residentialAddress = EmpAddress::where('emp_count', $emp_count)->first();
+    if (!$residentialAddress) {
+        logger('Residential address not found for emp_count: ' . $emp_count);
+        return response()->json(['message' => 'Residential address not found'], 404);
+    }
+
+    // Update the residential address
+    $residentialAddress->update($request->only([
+        'emp_house', 'emp_subd', 'emp_brgy', 'emp_city', 'emp_prov', 'emp_region', 'emp_zip'
+    ]));
+
+    // Fetch the permanent address using emp_count
+    $permanentAddress = EmpAddress2::where('emp_count', $emp_count)->first();
+    if (!$permanentAddress) {
+        logger('Permanent address not found for emp_count: ' . $emp_count);
+        return response()->json(['message' => 'Permanent address not found'], 404);
+    }
+
+    // Update the permanent address
+    $permanentAddress->update($request->only([
+        'emp_house2', 'emp_subd2', 'emp_brgy2', 'emp_city2', 'emp_prov2', 'emp_region2', 'emp_zip2'
+    ]));
+
+    logger('Addresses updated successfully for empid: ' . $empid);
+    return response()->json(['message' => 'Addresses updated successfully']);
+}
+
+
 
 }

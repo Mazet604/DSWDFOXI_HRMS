@@ -22,10 +22,10 @@
                 <h2 class="pb-2 mb-4 text-lg font-semibold text-blue-800 border-b border-yellow-200">CS ELIGIBILITY</h2>
                 <DataTable v-model:selection="selectedRow" :value="cseligibilityData" class="mt-8" :paginator="true" :rows="5" @selection-change="onRowSelect">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
-                    <Column field="eli_service" header="CAREER SERVICE/RA 1080 (BOARD/BAR) UNDER SPECIAL LAWS/CES/CSEE/BARANGAY ELIGIBILITY/DRIVERS LICENSE"></Column>
+                    <Column field="eli_service" header="CAREER SERVICE | RA 1080 (BOARD | BAR) UNDER SPECIAL LAWS | CES | CSEE | BARANGAY ELIGIBILITY | DRIVERS LICENSE"></Column>
                     <Column field="eli_rating" header="RATING (IF APPLICABLE)"></Column>
-                    <Column field="eli_doe" header="DATE OF EXAMINATION/CONFERMENT"></Column>
-                    <Column field="eli_poe" header="PLACE OF EXAMINATION/CONFERMENT"></Column>
+                    <Column field="eli_doe" header="DATE OF EXAMINATION | CONFERMENT"></Column>
+                    <Column field="eli_poe" header="PLACE OF EXAMINATION | CONFERMENT"></Column>
                     <Column field="eli_license_no" header="LICENSE (IF APPLICABLE)"></Column>
                     <Column field="eli_licen_valid" header="VALIDITY"></Column>
                 </DataTable>
@@ -49,7 +49,7 @@
                     <Column field="vol_fr" header="INCLUSIVE DATES FROM"></Column>
                     <Column field="vol_to" header="INCLUSIVE DATES TO"></Column>
                     <Column field="vol_hrs" header="NUMBER OF HOURS"></Column>
-                    <Column field="vol_pos" header="POSITION / NATURE OF WORK"></Column>
+                    <Column field="vol_pos" header="POSITION | NATURE OF WORK"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
                     <button v-if="!isEditingProfile" @click="openAddDialog" class="px-8 py-2 mr-4 font-semibold text-white transition duration-300 bg-blue-900 rounded-md hover:bg-blue-800">ADD</button>
@@ -70,7 +70,7 @@
                     <Column field="learn_fr" header="INCLUSIVE DATES (MM/DD/YYYY) FROM"></Column>
                     <Column field="learn_to" header="INCLUSIVE DATES (MM/DD/YYYY) TO"></Column>
                     <Column field="learn_hrs" header="NUMBER OF HOURS"></Column>
-                    <Column field="learn_type" header="TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)"></Column>
+                    <Column field="learn_type" header="TYPE OF LD (MANAGERIAL | SUPERVISORY | TECHNICAL | ETC)"></Column>
                     <Column field="learn_con" header="CONDUCTED/SPONSORED BY (WRITE IN FULL)"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
@@ -349,7 +349,7 @@
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">CAREER SERVICE/RA 1080</label>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">CAREER SERVICE | RA 1080</label>
                                 <input class="input-field" type="text" v-model="newCSEligibility.eli_service" @input="validateName('eli_service', 'newCSEligibility')"/>
                             </div>
                             <div>
@@ -357,11 +357,11 @@
                                 <input class="input-field" type="text" v-model="newCSEligibility.eli_rating" @input="validateDecimal('eli_rating', 'newCSEligibility')" />
                             </div>
                             <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">DATE OF EXAMINATION/CONFERMENT</label>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">DATE OF EXAMINATION | CONFERMENT</label>
                                 <input class="input-field" type="date" v-model="newCSEligibility.eli_doe" :max="maxDate"/>
                             </div>
                             <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF EXAMINATION/CONFERMENT</label>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">PLACE OF EXAMINATION | CONFERMENT</label>
                                 <input class="input-field" type="text" v-model="newCSEligibility.eli_poe" @input="validateName('eli_poe', 'newCSEligibility')"/>
                             </div>
                             <div>
@@ -417,7 +417,7 @@
                                 <input class="input-field" type="number" v-model="newVoluntaryWork.vol_hrs" @input="validateNumber('vol_hrs', 'newVoluntaryWork')"/>
                             </div>
                             <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">POSITION / NATURE OF WORK</label>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">POSITION | NATURE OF WORK</label>
                                 <input class="input-field" type="text" v-model="newVoluntaryWork.vol_pos" @input="validateName('vol_pos', 'newVoluntaryWork')"/>
                             </div>
                         </div>
@@ -460,7 +460,7 @@
                                 <input class="input-field" type="number" v-model="newLearndev.learn_hrs" @input="validateNumber('learn_hrs', 'newLearndevk')"/>
                             </div>
                             <div>
-                                <label class="block mb-2 text-sm font-bold text-gray-700">TYPE OF LD (MANAGERIAL/SUPERVISORY/TECHNICAL/ETC)</label>
+                                <label class="block mb-2 text-sm font-bold text-gray-700">TYPE OF LD (MANAGERIAL | SUPERVISORY | TECHNICAL | ETC)</label>
                                 <input class="input-field" type="text" v-model="newLearndev.learn_type" @input="validateName('learn_type', 'newLearndev')"/>
                             </div>
                             <div>
@@ -1074,7 +1074,7 @@ export default {
                 console.error('Error updating data:', error);
             });
 
-            location.reload();
+            //location.reload();
     },
 
     onConfirmUpdate() {
@@ -1133,31 +1133,31 @@ export default {
         };
 
         const otherInfo = ref({
-            degree: '',
-            degreeFourth: '',
-            degreeFourthDetails: '',
-            adminOffense: '',
-            adminOffenseDetails: '',
-            criminalCharge: '',
-            criminalChargeDetails: '',
-            dateFiled: '',
-            statusOfCase: '',
-            convictedCrime: '',
-            convictedCrimeDetails: '',
-            separatedService: '',
-            separatedServiceDetails: '',
-            candidateElection: '',
-            candidateElectionDetails: '',
-            resignedGovtService: '',
+            other_34a: '',
+            other_34b: '',
+            other_34bif: '',
+            other_35a: '',
+            other_35aif: '',
+            other_35b: '',
+            other_35bif: '',
+            other_35bfiled: '',
+            other_35stat: '',
+            other_36: '',
+            other_36if: '',
+            other_37: '',
+            other_37if: '',
+            other_38a: '',
+            other_38aif: '',
+            other_38b: '',
             resignedGovtServiceDetails: '',
-            immigrantStatus: '',
-            immigrantStatusDetails: '',
-            indigenousGroup: '',
-            indigenousGroupDetails: '',
-            disability: '',
-            disabilityDetails: '',
-            soloParent: '',
-            soloParentDetails: ''
+            other_39: '',
+            other_39if: '',
+            other_40a: '',
+            other_40aif: '',
+            other_40b: '',
+            other_40bif: '',
+            other_40c: '',
+            other_40cif: ''
         });
 
         const cseligibilityData = ref([]);

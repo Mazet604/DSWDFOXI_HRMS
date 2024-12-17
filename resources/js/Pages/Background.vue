@@ -6,11 +6,6 @@
                 <p class="text-gray-600">Fill and check the necessary information below.</p>
             </div>
         <div class="flex flex-col lg:flex-row">
-            <!-- Sidebar -->
-            <div>
-                <Sidebar />
-            </div>
-
             <!-- Main Content -->
             <div class="relative w-full p-6">
 
@@ -149,7 +144,7 @@
                         <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                         <Column field="educ_level" header="LEVEL OF EDUCATION"></Column>
                         <Column field="educ_school" header="NAME OF SCHOOL"></Column>
-                        <Column field="educ_degree" header="BASIC EDUCATION|DEGREE|COURSE"></Column>
+                        <Column field="educ_degree" header="BASIC EDUCATION | DEGREE | COURSE"></Column>
                         <Column field="educ_from" header="DATE ENROLLED"></Column>
                         <Column field="educ_hl_earned" header="HIGHEST LEVEL EARNED"></Column>
                         <Column field="educ_year_grad" header="YEAR GRADUATED"></Column>
@@ -190,7 +185,7 @@
                         <Column field="workfr" header="WORK FROM"></Column>
                         <Column field="workto" header="WORK TO"></Column>
                         <Column field="work_pos" header="POSITION"></Column>
-                        <Column field="work_dept" header="DEPARTMENT|AGENCY|OFFICE|COMPANY"></Column>
+                        <Column field="work_dept" header="DEPARTMENT | AGENCY | OFFICE | COMPANY"></Column>
                         <Column field="work_salary" header="MONTHLY SALARY"></Column>
                         <Column field="work_salarygrade" header="SALARY GRADE"></Column>
                         <Column field="work_stat" header="STATUS OF APPOINTMENT"></Column>
@@ -229,7 +224,7 @@
                 <DataTable v-model:selection="selectedRow" :value="referencesData" class="mt-8" :paginator="true" :rows="5">
                     <Column v-if="isEditingProfile" selectionMode="single" headerStyle="width: 3em"></Column>
                     <Column field="full_name" header="FULL NAME"></Column>
-                    <Column field="ref_add" header="BLOCK/STREET/PUROK"></Column>
+                    <Column field="ref_add" header="BLOCK | STREET | PUROK"></Column>
                     <Column field="ref_cnum" header="TELEPHONE NUMBER"></Column>
                 </DataTable>
                 <div class="mt-6 text-right">
@@ -556,7 +551,7 @@
                             <input class="input-field" type="text" v-model="newWorkExperience.work_pos" @input="validateName('work_pos', 'newWorkExperience')"/>
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">DEPARTMENT|AGENCY|OFFICE|COMPANY</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">DEPARTMENT | AGENCY | OFFICE | COMPANY</label>
                             <input class="input-field" type="text" v-model="newWorkExperience.work_dept" @input="validateName('work_dept', 'newWorkExperience')"/>
                         </div>
                         <div>
@@ -647,7 +642,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK/STREET/PUROK</label>
+                            <label class="block mb-2 text-sm font-bold text-gray-700">BLOCK | STREET | PUROK</label>
                             <input class="input-field" type="text" v-model="newReference.ref_add" />
                         </div>
                         <div>

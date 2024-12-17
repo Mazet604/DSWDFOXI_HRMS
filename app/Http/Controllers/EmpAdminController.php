@@ -11,28 +11,59 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class EmpAdminController extends Controller
 {
     public function createAccount(Request $request)
-{
-    $request->validate([
-        'empid' => 'required|unique:emp_acc,empid',
-        'empmail' => 'required|email|unique:emp_acc,empmail',
-        'empuser' => 'required|unique:emp_acc,empuser',
-        'emppass' => 'required|min:6',
-    ]);
+    {
+        // Start a transaction
+        DB::beginTransaction();
 
-    EmpAcc::create([
-        'empid' => $request->empid,
-        'empmail' => $request->empmail,
-        'empuser' => $request->empuser,
-        'emppass' => Hash::make($request->emppass),
-        'user_type' => 0, // Default value for user_type
-    ]);
+        try {
+            // Validate the request
+            $request->validate([
+                'empid' => 'required|unique:emp_acc,empid',
+                'empmail' => 'required|email|unique:emp_acc,empmail',
+                'empuser' => 'required|unique:emp_acc,empuser',
+                'emppass' => 'required|min:6',
+            ]);
 
-    return response()->json(['message' => 'Account created successfully!']);
-}
+            // Insert into emp_acc table
+            EmpAcc::create([
+                'empid' => $request->empid,
+                'empmail' => $request->empmail,
+                'empuser' => $request->empuser,
+                'emppass' => Hash::make($request->emppass),
+                'user_type' => 0, // Default value for user_type
+            ]);
+
+            // Calculate the new emp_count
+            $lastEmpCount = DB::table('employee')->max('emp_count');
+            $newEmpCount = $lastEmpCount ? $lastEmpCount + 1 : 1;
+
+            // Insert into employee table
+            DB::table('employee')->insert([
+                'emp_count' => $newEmpCount,
+                'empid' => $request->empid,
+                'emp_position' => $request->position,
+                'emp_pob' => 'Davao City',
+                'emp_citizen' => 'Filipino',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            // Commit the transaction if everything is successful
+            DB::commit();
+
+            return response()->json(['message' => 'Account created successfully!']);
+        } catch (\Exception $e) {
+            // Rollback all changes if an error occurs
+            DB::rollBack();
+
+            return response()->json(['error' => 'ID, Email, or Username already exists.'], 400);
+      }
+    }
 
 public function previewExcel(Request $request)
 {

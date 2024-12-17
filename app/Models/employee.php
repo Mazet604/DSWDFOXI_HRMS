@@ -17,7 +17,7 @@ class employee extends Model
     protected $fillable = [
         'emp_fname', 'emp_mname', 'emp_lname', 'emp_ext', 'emp_citizen', 'emp_dob', 'emp_pob', 'emp_sex', 'emp_civ_stat', 'emp_height', 'emp_weight', 'emp_blood', 'emp_cnum', 'emp_telnum', 'emp_age'
     ];
-    
+
     // Define the relationship with the EmpAcc model
     public function empAcc()
     {

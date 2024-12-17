@@ -121,7 +121,7 @@ Route::middleware(['auth'])->group(function () {
     // Admin side na gidungag nko
     Route::get('/api/get-employee-address', [EmployeeController::class, 'getEmployeeAddress']);
     //11/25
-    Route::get('/api/get-employee-address2', [AddressControllerII::class, 'getAddress2']);
+    Route::get('/api/get-employee-address2', [EmployeeController::class, 'getEmployeeAddress2']);
     Route::get('/api/get-spouse-details', [BackgroundController::class, 'getSpouse']);
     //11/30
     Route::get('/api/get-father-details', [BackgroundController::class, 'getFather']);

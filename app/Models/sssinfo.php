@@ -10,6 +10,12 @@ class sssinfo extends Model
     use HasFactory;
     protected $table = 'sssinfo';
     protected $primaryKey = 'sss_count';
+
+    protected $fillable = [
+        'empid',      // Add this field
+        'sss_num',    // Assuming this is another field in the table
+    ];
+
     public function sssinfo()
     {
         return $this->belongsTo(EmpAcc::class, 'empid', 'empid');
