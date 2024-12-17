@@ -66,7 +66,8 @@ class EmployeeController extends Controller
         try {
             $maleCount = Employee::where('emp_sex', 1)->count();
             $femaleCount = Employee::where('emp_sex', 2)->count();
-            return response()->json(['male' => $maleCount, 'female' => $femaleCount]);
+            $preferCount = Employee::where('emp_sex', 3)->count();
+            return response()->json(['male' => $maleCount, 'female' => $femaleCount, 'prefer' => $preferCount]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

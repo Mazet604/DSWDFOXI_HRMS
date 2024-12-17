@@ -196,7 +196,7 @@ export default {
     },
 
     validateMobileNumber() {
-      this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 10);
+      this.fields.mobilenum = this.fields.mobilenum.replace(/\D/g, '').slice(0, 11);
     },
     validateTelephoneNumber() {
       this.fields.telnum = this.fields.telnum.replace(/\D/g, '').slice(0, 8);

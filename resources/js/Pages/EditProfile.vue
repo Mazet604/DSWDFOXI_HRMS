@@ -28,7 +28,7 @@
                     class="p-4 py-2 font-semibold text-white bg-blue-800 rounded text-md hover:bg-blue-700"
                     @click="search(searchQuery)"
                 >
-                    find ID
+                    Find ID
                 </button>
 
                 <!-- Error Message -->

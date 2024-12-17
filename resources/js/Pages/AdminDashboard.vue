@@ -90,6 +90,7 @@ export default {
             totalEmployees: 0,
             maleEmployees: 0,
             femaleEmployees: 0,
+            prefernottosay: 0,
             civilStatusData: {},
             employeeAddressData: [],
             chartInstances: {}, // Store chart instances for each chart
@@ -127,6 +128,7 @@ export default {
                 .then(response => {
                     this.maleEmployees = response.data.male;
                     this.femaleEmployees = response.data.female;
+                    this.prefernottosay = response.data.prefer;
                     nextTick(() => this.renderGenderChart());
                 })
                 .catch(error => {
@@ -156,11 +158,11 @@ export default {
             this.chartInstances.gender = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['Male', 'Female'],
+                    labels: ['Male', 'Female', 'Prefer not to say'],
                     datasets: [{
-                        data: [this.maleEmployees, this.femaleEmployees],
-                        backgroundColor: ['#007BFF', '#FF4081'],
-                    }],
+                        data: [this.maleEmployees, this.femaleEmployees, this.prefernottosay],
+                        backgroundColor: ['#203c8c', '#a83464', '#AAAAAA'],
+                    }]
                 },
             });
         },
@@ -174,12 +176,12 @@ export default {
             }
 
             const civilStatusColors = {
-                'Single': '#007BFF',        // Deep Blue (Male color adapted for Single)
-                'Married': '#FF4081',       // Vivid Pink (Female color adapted for Married)
-                'Separated': '#36A2EB',     // Light Blue
-                'Widowed': '#FF6384',       // Soft Pink
-                'Divorced': '#4CAF50',      // Green
-                'Unknown Status': '#A9A9A9' // Grey
+                'Single': '#203c8c',        
+                'Married': '#a83464',       
+                'Separated': '#08046c',     
+                'Widowed': '#48444c',       
+                'Divorced': '#282424',      
+                'Unknown Status': '#A9A9A9' 
             };
 
             const backgroundColors = Object.keys(this.civilStatusData).map(status => civilStatusColors[status] || '#CCCCCC');
@@ -200,6 +202,15 @@ export default {
                     responsive: true,
                     maintainAspectRatio: false, // Allow canvas to expand based on the container
                     animation: false,
+                    scales: {
+                        y: {
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: 1,
+                                callback: function(value) { return Number.isInteger(value) ? value : null; }
+                            }
+                        }
+                    },
                     plugins: {
                         legend: {
                             display: true,
@@ -210,21 +221,10 @@ export default {
                                         return {
                                             text: label,  // Show the label for each civil status
                                             fillStyle: civilStatusColors[label],  // Apply corresponding color
-                                            strokeStyle: civilStatusColors[label],
-                                            lineWidth: 1
                                         };
                                     });
                                 }
                             }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { display: true } // Show y-axis ticks
-                        },
-                        x: {
-                            ticks: { display: true } // Show x-axis ticks
                         }
                     }
                 }
@@ -260,26 +260,40 @@ export default {
             );
             const data = this.employeeAddressData.map((emp) => emp.count);
 
+            const backgroundColors = data.map((_, index) => index % 2 === 0 ? '#082c94' : '#203c8c');
+
+            const combined = labels.map((label, index) => ({ label, data: data[index] }));
+            combined.sort((a, b) => a.data - b.data);
+
+            const sortedLabels = combined.map(item => item.label);
+            const sortedData = combined.map(item => item.data);
+
             this.chartInstances.demographic = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: labels,
+                    labels: sortedLabels,
                     datasets: [{
                         label: 'Number of Employees',
-                        data: data,
-                        backgroundColor: '#007BFF',
-                        borderColor: '#007BFF',
+                        data: sortedData,
+                        backgroundColor: backgroundColors,
                         borderWidth: 1,
                     }],
                 },
                 options: {
-                    indexAxis: 'y',
+                    indexAxis: 'x',
                     animation: false,
                     scales: {
                         x: {
                             beginAtZero: true,
-                            ticks: { display: false },
+                            ticks: { display: true },
                         },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,
+                                callback: function(value) { return Number.isInteger(value) ? value : null; }
+                            }
+                        }
                     },
                 },
             });
